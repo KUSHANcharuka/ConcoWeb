@@ -1,0 +1,129 @@
+"use client"
+
+import { useRef, useEffect, useState } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Play } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+export function HeroVideo() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [isPlaying, setIsPlaying] = useState(true)
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3])
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 0.95])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) {
+      video.play().catch(() => {
+        setIsPlaying(false)
+      })
+    }
+  }, [])
+
+  const handlePlayClick = () => {
+    const video = videoRef.current
+    if (video) {
+      if (video.paused) {
+        video.play()
+        setIsPlaying(true)
+      } else {
+        video.pause()
+        setIsPlaying(false)
+      }
+    }
+  }
+
+  return (
+    <section ref={containerRef} className="relative px-6 py-16">
+      <motion.div
+        style={{ opacity, scale }}
+        className="relative max-w-6xl mx-auto"
+      >
+        {/* Video Container */}
+        <div className="relative aspect-video rounded-2xl overflow-hidden bg-card border border-border shadow-2xl">
+          {/* Video Placeholder - using a construction stock video */}
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80"
+            className="w-full h-full object-cover"
+          >
+            {/* Placeholder - replace with actual video */}
+            <source
+              src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
+              type="video/mp4"
+            />
+          </video>
+
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+
+          {/* Content Overlay */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 drop-shadow-lg text-balance">
+                Building the future of construction
+              </h2>
+              <p className="text-white/80 text-sm sm:text-base max-w-xl mx-auto mb-6 drop-shadow-md">
+                See how Concolabs transforms the way construction teams work
+              </p>
+              <Button
+                onClick={handlePlayClick}
+                size="lg"
+                className="bg-primary text-black hover:bg-primary/90"
+              >
+                <Play className="w-5 h-5 mr-2" fill="currentColor" />
+                {isPlaying ? "Pause Video" : "Watch Video"}
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Corner Accents */}
+          <div className="absolute top-4 left-4 w-12 h-12 border-l-2 border-t-2 border-primary/50 rounded-tl-lg" />
+          <div className="absolute top-4 right-4 w-12 h-12 border-r-2 border-t-2 border-primary/50 rounded-tr-lg" />
+          <div className="absolute bottom-4 left-4 w-12 h-12 border-l-2 border-b-2 border-primary/50 rounded-bl-lg" />
+          <div className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-primary/50 rounded-br-lg" />
+        </div>
+
+        {/* Stats below video */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8"
+        >
+          {[
+            { value: "500+", label: "Companies" },
+            { value: "50K+", label: "Projects Managed" },
+            { value: "120+", label: "Countries" },
+            { value: "99.9%", label: "Uptime" },
+          ].map((stat, index) => (
+            <div
+              key={stat.label}
+              className="text-center p-4 rounded-xl bg-card/50 border border-border/50"
+            >
+              <div className="text-2xl sm:text-3xl font-bold text-primary">{stat.value}</div>
+              <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
+    </section>
+  )
+}
