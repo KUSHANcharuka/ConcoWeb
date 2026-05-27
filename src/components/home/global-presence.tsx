@@ -1,24 +1,54 @@
 "use client"
 
-import { useRef, useState, Suspense, useEffect } from "react"
+import { Suspense, useMemo, useRef, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { Html } from "@react-three/drei"
 import { motion, useInView } from "framer-motion"
 import * as THREE from "three"
-import { FileText, Users, TrendingDown, Clock } from "lucide-react"
 
-const locations = [
-  { name: "Al Habtoor Construction", city: "Dubai, UAE", lat: 25.2048, lng: 55.2708 },
-  { name: "Keppel Land", city: "Singapore", lat: 1.3521, lng: 103.8198 },
-  { name: "Lendlease Projects", city: "Sydney, Australia", lat: -33.8688, lng: 151.2093 },
-  { name: "Berkeley Group", city: "London, UK", lat: 51.5074, lng: -0.1278 },
-  { name: "Turner Construction", city: "New York, USA", lat: 40.7128, lng: -74.006 },
-  { name: "Shimizu Corporation", city: "Tokyo, Japan", lat: 35.6762, lng: 139.6503 },
-  { name: "Odebrecht", city: "Sao Paulo, Brazil", lat: -23.5505, lng: -46.6333 },
-  { name: "Hochtief", city: "Frankfurt, Germany", lat: 50.1109, lng: 8.6821 },
+type Location = {
+  country: string
+  city: string
+  lat: number
+  lng: number
+}
+
+type GeoPoint = [number, number]
+
+const locations: Location[] = [
+  { country: "USA", city: "New York", lat: 40.7128, lng: -74.006 },
+  { country: "Australia", city: "Sydney", lat: -33.8688, lng: 151.2093 },
+  { country: "UAE", city: "Dubai", lat: 25.2048, lng: 55.2708 },
+  { country: "Sri Lanka", city: "Colombo", lat: 6.9271, lng: 79.8612 },
+  { country: "India", city: "Mumbai", lat: 19.076, lng: 72.8777 },
+  { country: "Singapore", city: "Singapore", lat: 1.3521, lng: 103.8198 },
 ]
 
-// Convert lat/lng to 3D coordinates
+// Coarse land polygons (lng, lat) used to build a dotted world silhouette without external assets.
+const LAND_POLYGONS: GeoPoint[][] = [
+  // North America
+  [
+    [-168, 15], [-160, 36], [-145, 58], [-125, 72], [-94, 73], [-60, 52], [-82, 24], [-105, 14], [-135, 10], [-168, 15],
+  ],
+  // South America
+  [[-82, 13], [-70, 8], [-55, -8], [-52, -28], [-62, -55], [-78, -42], [-82, -5], [-82, 13]],
+  // Africa
+  [[-18, 36], [4, 37], [20, 33], [34, 20], [51, 9], [43, -20], [30, -35], [8, -34], [-8, -7], [-18, 12], [-18, 36]],
+  // Europe + Asia
+  [
+    [-10, 35], [5, 44], [22, 49], [45, 54], [70, 58], [96, 74], [136, 58], [160, 52], [178, 40], [168, 18], [136, 8], [104, 6], [70, 20],
+    [52, 27], [42, 37], [28, 40], [16, 43], [3, 41], [-10, 35],
+  ],
+  // Australia
+  [[112, -11], [130, -10], [151, -23], [151, -39], [131, -44], [114, -34], [112, -11]],
+  // Greenland
+  [[-74, 58], [-60, 76], [-28, 82], [-16, 68], [-38, 58], [-74, 58]],
+  // Japan / Korea
+  [[126, 31], [131, 43], [146, 45], [143, 34], [133, 30], [126, 31]],
+  // UK + Ireland
+  [[-11, 50], [-5, 58], [2, 58], [2, 51], [-8, 50], [-11, 50]],
+]
+
 function latLngToVector3(lat: number, lng: number, radius: number) {
   const phi = (90 - lat) * (Math.PI / 180)
   const theta = (lng + 180) * (Math.PI / 180)
@@ -30,62 +60,54 @@ function latLngToVector3(lat: number, lng: number, radius: number) {
   return new THREE.Vector3(x, y, z)
 }
 
-interface PinMarkerProps {
-  location: typeof locations[0]
-  position: THREE.Vector3
-  isHovered: boolean
-  onHover: () => void
-  onLeave: () => void
+function isPointInPolygon(point: GeoPoint, polygon: GeoPoint[]) {
+  const [x, y] = point
+  let inside = false
+
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const [xi, yi] = polygon[i]
+    const [xj, yj] = polygon[j]
+
+    const intersects = yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi + Number.EPSILON) + xi
+    if (intersects) inside = !inside
+  }
+
+  return inside
 }
 
-function PinMarker({ location, position, isHovered, onHover, onLeave }: PinMarkerProps) {
-  const meshRef = useRef<THREE.Group>(null)
+function isLand(lat: number, lng: number) {
+  return LAND_POLYGONS.some((polygon) => isPointInPolygon([lng, lat], polygon))
+}
+
+function GlobeLocationMarker({ location }: { location: Location }) {
+  const groupRef = useRef<THREE.Group>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const worldPos = useMemo(() => new THREE.Vector3(), [])
+  const position = useMemo(() => latLngToVector3(location.lat, location.lng, 1.02), [location.lat, location.lng])
 
   useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.scale.lerp(new THREE.Vector3(isHovered ? 1.5 : 1, isHovered ? 1.5 : 1, isHovered ? 1.5 : 1), 0.1)
-    }
+    if (!groupRef.current) return
+    groupRef.current.getWorldPosition(worldPos)
+    const nextVisible = worldPos.z > 0.03
+    setIsVisible((prev) => (prev === nextVisible ? prev : nextVisible))
   })
 
   return (
-    <group
-      ref={meshRef}
-      position={position}
-      onPointerEnter={onHover}
-      onPointerLeave={onLeave}
-    >
-      {/* Pin marker */}
-      <mesh>
-        <coneGeometry args={[0.06, 0.15, 8]} />
-        <meshPhongMaterial
-          color={isHovered ? "#FCFF42" : "#D4A800"}
-          emissive={isHovered ? "#F5C400" : "#C49000"}
-          emissiveIntensity={isHovered ? 0.8 : 0.3}
-        />
-      </mesh>
-      
-      {/* Pin base circle */}
-      <mesh position={[0, -0.08, 0]}>
-        <cylinderGeometry args={[0.04, 0.04, 0.02, 16]} />
-        <meshPhongMaterial
-          color={isHovered ? "#FCFF42" : "#D4A800"}
-          emissive={isHovered ? "#F5C400" : "#C49000"}
-        />
-      </mesh>
-
-      {/* Tooltip */}
-      {isHovered && (
-        <Html
-          center
-          style={{
-            transition: "all 0.2s",
-            opacity: isHovered ? 1 : 0,
-            transform: `scale(${isHovered ? 1 : 0.5})`,
-          }}
-        >
-          <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl whitespace-nowrap">
-            <p className="text-sm font-semibold text-foreground">{location.name}</p>
-            <p className="text-xs text-muted-foreground">{location.city}</p>
+    <group ref={groupRef} position={position}>
+      {isVisible && (
+        <mesh>
+          <sphereGeometry args={[0.016, 12, 12]} />
+          <meshBasicMaterial color="#1f1f1f" />
+        </mesh>
+      )}
+      {isVisible && (
+        <Html center style={{ transform: "translate3d(0, -12px, 0)", pointerEvents: "none" }}>
+          <div
+            className="whitespace-nowrap rounded-md border border-zinc-200 bg-white px-2.5 py-1.5 shadow-sm"
+            style={{ fontSize: "11px", lineHeight: 1.1 }}
+          >
+            <div className="font-semibold text-zinc-900">{location.country}</div>
+            <div className="mt-0.5 text-[10px] text-zinc-500">{location.city}</div>
           </div>
         </Html>
       )}
@@ -93,228 +115,150 @@ function PinMarker({ location, position, isHovered, onHover, onLeave }: PinMarke
   )
 }
 
-interface GlobeProps {
-  hoveredIndex: number | null
-  setHoveredIndex: (index: number | null) => void
-}
-
-function WorldGlobe({ hoveredIndex, setHoveredIndex }: GlobeProps) {
+function RotatingDotGlobe() {
   const globeRef = useRef<THREE.Group>(null)
-  const continentsRef = useRef<THREE.Group>(null)
-  const [continentsMesh, setContinentsMesh] = useState<THREE.Mesh | null>(null)
 
-  useEffect(() => {
-    // Create simplified continents using basic geometries
-    const group = new THREE.Group()
+  const dotPositions = useMemo(() => {
+    const positions: number[] = []
+    const radius = 1.005
 
-    // Create continent shapes using parametric surface
-    const geometry = new THREE.IcosahedronGeometry(1, 4)
-    
-    // Add noise to create landmass appearance
-    const positionAttribute = geometry.getAttribute("position")
-    const originalPositions = new Float32Array(positionAttribute.array as ArrayLike<number>)
-    
-    for (let i = 0; i < originalPositions.length; i += 3) {
-      const x = originalPositions[i]
-      const y = originalPositions[i + 1]
-      const z = originalPositions[i + 2]
-      
-      // Create simple landmass distribution
-      const noise = Math.sin(x * 3) * Math.cos(y * 2) * Math.sin(z * 2.5)
-      const landValue = (noise + 1) / 2
-      
-      // Only show certain regions as land
-      if (landValue > 0.4) {
-        positionAttribute.setXYZ(
-          i / 3,
-          x * (1 + noise * 0.1),
-          y * (1 + noise * 0.1),
-          z * (1 + noise * 0.1)
-        )
+    for (let lat = -88; lat <= 88; lat += 2.8) {
+      const latRadius = Math.cos((Math.abs(lat) * Math.PI) / 180) * radius
+      const circumference = latRadius * Math.PI * 2
+      const dotsForLat = Math.max(12, Math.floor(circumference * 32))
+
+      for (let i = 0; i < dotsForLat; i++) {
+        const lng = -180 + (i * 360) / dotsForLat
+        if (!isLand(lat, lng)) continue
+
+        const seed = Math.sin((lat + 90) * 12.9898 + lng * 78.233) * 43758.5453
+        const fract = seed - Math.floor(seed)
+        const jitterLat = lat + (fract - 0.5) * 0.35
+        const jitterLng = lng + (((fract * 1.618) % 1) - 0.5) * 0.35
+        const v = latLngToVector3(jitterLat, jitterLng, radius)
+        positions.push(v.x, v.y, v.z)
       }
     }
-    
-    positionAttribute.needsUpdate = true
-    
-    const material = new THREE.MeshPhongMaterial({
-      color: "#b8a68f",
-      emissive: "#8b7d6b",
-      emissiveIntensity: 0.2,
-      flatShading: true,
-      wireframe: false,
-      side: THREE.FrontSide,
-    })
-    
-    const mesh = new THREE.Mesh(geometry, material)
-    group.add(mesh)
-    setContinentsMesh(mesh)
 
-    return () => {
-      geometry.dispose()
-      material.dispose()
-    }
+    return new Float32Array(positions)
   }, [])
 
-  useFrame((state) => {
-    if (globeRef.current) {
-      const rotation = state.clock.elapsedTime * 0.08
-      globeRef.current.rotation.y = rotation
-    }
+  useFrame((_, delta) => {
+    if (!globeRef.current) return
+    globeRef.current.rotation.y += delta * 0.2
   })
 
   return (
     <group ref={globeRef}>
-      {/* World map globe with continents */}
-      <mesh ref={continentsRef}>
-        <icosahedronGeometry args={[1, 5]} />
-        <meshPhongMaterial
-          color="#c4a87d"
-          emissive="#a0886d"
-          emissiveIntensity={0.25}
-          flatShading={true}
-          side={THREE.FrontSide}
-        />
-      </mesh>
-
-      {/* Ocean/atmosphere glow */}
       <mesh>
-        <icosahedronGeometry args={[1.02, 5]} />
-        <meshBasicMaterial
-          color="#e8f1f5"
-          transparent
-          opacity={0.15}
-          side={THREE.BackSide}
-        />
+        <sphereGeometry args={[1, 80, 80]} />
+        <meshBasicMaterial color="#d9d9d9" transparent opacity={0.35} />
       </mesh>
 
-      {/* Location pins */}
-      {locations.map((location, index) => {
-        const position = latLngToVector3(location.lat, location.lng, 1.08)
-        return (
-          <PinMarker
-            key={location.name}
-            location={location}
-            position={position}
-            isHovered={hoveredIndex === index}
-            onHover={() => setHoveredIndex(index)}
-            onLeave={() => setHoveredIndex(null)}
-          />
-        )
-      })}
+      <mesh renderOrder={1}>
+        <sphereGeometry args={[1, 80, 80]} />
+        <meshBasicMaterial colorWrite={false} />
+      </mesh>
 
-      {/* Lighting */}
-      <ambientLight intensity={0.6} />
-      <pointLight position={[5, 3, 5]} intensity={0.8} />
+      <points renderOrder={2}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[dotPositions, 3]} />
+        </bufferGeometry>
+        <pointsMaterial color="#2f2f2f" size={1.8} sizeAttenuation={false} depthWrite={false} />
+      </points>
+
+      <mesh scale={1.11}>
+        <sphereGeometry args={[1, 72, 72]} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.06} side={THREE.BackSide} />
+      </mesh>
+
+      {locations.map((location) => (
+        <GlobeLocationMarker key={location.country} location={location} />
+      ))}
     </group>
   )
 }
 
-const benefits = [
-  {
-    icon: FileText,
-    title: "Paperwork reduced",
-    value: "85%",
-    description: "Less manual documentation",
-  },
-  {
-    icon: Users,
-    title: "Teams connected",
-    value: "10K+",
-    description: "Global users collaborating",
-  },
-  {
-    icon: TrendingDown,
-    title: "Cost overruns down",
-    value: "45%",
-    description: "Better budget control",
-  },
-  {
-    icon: Clock,
-    title: "Time saved weekly",
-    value: "12hrs",
-    description: "Per project manager",
-  },
-]
+function WorkflowCard() {
+  return (
+    <div className="relative h-full overflow-hidden rounded-xl border border-zinc-300 bg-[#ECEBEA] p-6">
+      <div className="absolute inset-0 opacity-35" style={{ backgroundImage: "radial-gradient(#bfbfbf 1px, transparent 1px)", backgroundSize: "16px 16px" }} />
+
+      <div className="relative z-10 space-y-5">
+        <div className="inline-flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-sm">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-blue-500 text-xs font-bold text-white">✉</span>
+          <span className="text-sm text-zinc-800">When a bill is created</span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 text-sm text-zinc-700">
+          <span>If the</span>
+          <span className="rounded-lg bg-white px-3 py-2">Amount</span>
+          <span>is greater than or equal to</span>
+          <span className="rounded-lg bg-white px-3 py-2">$5,000.00</span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 text-sm">
+          <span className="text-zinc-700">Require</span>
+          <span className="rounded-lg bg-white px-3 py-2 text-zinc-800">Department Owner</span>
+          <span className="rounded-lg bg-[#DDE7D8] px-2 py-1 text-xs font-semibold text-zinc-700">DO</span>
+          <span className="rounded-lg bg-[#DDE4F0] px-2 py-1 text-xs font-semibold text-zinc-700">IT</span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 text-sm">
+          <span className="text-zinc-700">Notify</span>
+          <span className="rounded-lg bg-white px-3 py-2 text-zinc-800">Vendor Owner Manager</span>
+          <span className="rounded-lg bg-[#DDE4F0] px-2 py-1 text-xs font-semibold text-zinc-700">VO</span>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export function GlobalPresence() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <section ref={containerRef} className="py-24 px-6 bg-card/30 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance">
-              Scale the team,<br />
-              <span className="text-foreground">shrink the paperwork</span>
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Join construction leaders in 120+ countries who trust Concolabs to streamline their operations.
-            </p>
+    <section ref={containerRef} className="bg-[#F4F2F0] px-6 py-24">
+      <div className="mx-auto max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mb-12 text-center"
+        >
+          <h2 className="text-4xl font-medium leading-tight text-zinc-900 sm:text-5xl">
+            Scale the team.
+            <br />
+            <span className="text-zinc-500">Shrink the paperwork.</span>
+          </h2>
+          <p className="mt-4 text-zinc-500">You had a bureaucracy. Now you have a business again.</p>
+        </motion.div>
 
-            {/* Benefits Grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {benefits.map((benefit, index) => (
-                <motion.div
-                  key={benefit.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                  className="p-4 rounded-xl bg-card border border-border"
-                >
-                  <benefit.icon className="w-5 h-5 text-primary mb-2" />
-                  <div className="text-2xl font-bold text-foreground">{benefit.value}</div>
-                  <div className="text-sm text-muted-foreground">{benefit.description}</div>
-                </motion.div>
-              ))}
-            </div>
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="min-h-[420px]"
+          >
+            <WorkflowCard />
           </motion.div>
 
-          {/* Right - 3D Globe with World Map */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative aspect-square"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="relative min-h-[420px] overflow-hidden rounded-xl border border-zinc-300 bg-[#ECEBEA]"
           >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 opacity-20" />
-            <Canvas
-              camera={{ position: [0, 0, 2.8], fov: 45 }}
-              style={{ background: "transparent" }}
-            >
-              <Suspense fallback={null}>
-                <WorldGlobe hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} />
-              </Suspense>
-            </Canvas>
-
-            {/* Location List */}
-            <div className="absolute bottom-4 left-4 right-4">
-              <div className="flex flex-wrap gap-2 justify-center">
-                {locations.slice(0, 4).map((location, index) => (
-                  <motion.button
-                    key={location.city}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.3, delay: 0.5 + index * 0.05 }}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                      hoveredIndex === index
-                        ? "bg-primary text-black"
-                        : "bg-card/80 text-muted-foreground border border-border hover:border-primary/50"
-                    }`}
-                  >
-                    {location.city.split(",")[0]}
-                  </motion.button>
-                ))}
-              </div>
+            <div className="absolute inset-0">
+              <Canvas camera={{ position: [0, 0, 2.6], fov: 44 }}>
+                <Suspense fallback={null}>
+                  <ambientLight intensity={1} />
+                  <pointLight position={[4, 3, 5]} intensity={0.55} />
+                  <RotatingDotGlobe />
+                </Suspense>
+              </Canvas>
             </div>
           </motion.div>
         </div>

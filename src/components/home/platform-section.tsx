@@ -2,6 +2,7 @@
 
 import { useRef } from "react"
 import { useInView, motion } from "framer-motion"
+import Link from "next/link"
 import {
   ArrowUpRight,
   Bot,
@@ -259,45 +260,45 @@ function ReportsMockup() {
 const cards = [
   {
     id: "ai",
-    eyebrow: "AI-Powered Insights",
-    title: "Predictive analytics",
-    highlight: "that prevent delays",
+    title: "Cards & Expenses",
+    highlight: "that handle themselves",
+    href: "/solutions/project-management",
     description: "Concolabs AI monitors every project milestone 24/7, flagging risks before they become costly setbacks.",
     mockup: AIMockup,
     span: 1,
   },
   {
     id: "dashboard",
-    eyebrow: "Unified Dashboard",
-    title: "Every project,",
-    highlight: "one command center",
+    title: "Procure to pay",
+    highlight: "without chasing approvals",
+    href: "/solutions/budget-control",
     description: "Connect field teams and back-office into a single real-time workspace — no more spreadsheet chaos.",
     mockup: DashboardMockup,
     span: 1,
   },
   {
     id: "budget",
-    eyebrow: "Real-time Budgeting",
-    title: "Cost control",
-    highlight: "as it happens",
+    title: "Budget controls",
+    highlight: "that stay on track",
+    href: "/solutions/analytics",
     description: "Track every dollar in real time across all projects with automatic variance alerts.",
     mockup: BudgetMockup,
     span: 1,
   },
   {
     id: "docs",
-    eyebrow: "Smart Documents",
     title: "Blueprints & contracts",
     highlight: "auto-organized",
+    href: "/solutions/documents",
     description: "All your documents structured, version-controlled, and always findable — instantly.",
     mockup: DocumentsMockup,
     span: 1,
   },
   {
     id: "reports",
-    eyebrow: "Custom Reports",
     title: "Stakeholder reports",
-    highlight: "in seconds",
+    highlight: "generated in seconds",
+    href: "/solutions/analytics",
     description: "Generate compliance, financial, and progress reports for any audience with one click.",
     mockup: ReportsMockup,
     span: 1,
@@ -310,7 +311,7 @@ export function PlatformSection() {
 
   return (
     <section ref={containerRef} className="py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -328,7 +329,7 @@ export function PlatformSection() {
         </motion.div>
 
         {/* Top Row — 2 large cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 mb-4">
           {cards.slice(0, 2).map((card, index) => {
             const Mockup = card.mockup
             return (
@@ -337,27 +338,27 @@ export function PlatformSection() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                className="group relative h-[80vh] min-h-[560px] rounded-2xl bg-[#f5f5f4] overflow-hidden cursor-pointer"
+                className="group relative h-[80vh] min-h-[520px] rounded-2xl border border-zinc-300 bg-[#F4F2F0] overflow-hidden cursor-pointer"
               >
                 {/* Card Header */}
-                <div className="flex items-start justify-between p-7 pb-4">
+                <div className="flex items-start justify-between p-7 pb-5">
                   <div>
-                    <p className="text-xs font-semibold text-zinc-400 uppercase tracking-widest mb-2">
-                      {card.eyebrow}
-                    </p>
-                    <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 leading-snug">
+                    <h3 className="text-3xl font-medium text-zinc-900 leading-tight">
                       {card.title}{" "}
-                      <span className="font-normal text-zinc-500">{card.highlight}</span>
+                      <span className="font-normal text-zinc-600">{card.highlight}</span>
                     </h3>
-                    <p className="mt-2 text-sm text-zinc-500 max-w-xs">{card.description}</p>
                   </div>
-                  <button className="flex-shrink-0 w-8 h-8 rounded-full border border-zinc-200 bg-white flex items-center justify-center hover:bg-zinc-900 hover:border-zinc-900 hover:text-white transition-all duration-200 ml-4 mt-0.5">
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
+                  <Link
+                    href={card.href}
+                    aria-label={`Open ${card.title}`}
+                    className="platform-card-link relative ml-4 mt-0.5 flex size-9 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-zinc-300 bg-zinc-100 text-zinc-900 transition-colors duration-200"
+                  >
+                    <ArrowUpRight className="platform-card-arrow h-4 w-4" />
+                  </Link>
                 </div>
 
                 {/* Mockup Area */}
-                <div className="absolute bottom-0 left-0 right-0 px-6 pb-6" style={{ top: "160px" }}>
+                <div className="absolute bottom-0 left-0 right-0 px-6 pb-6" style={{ top: "130px" }}>
                   <Mockup />
                 </div>
               </motion.div>
@@ -375,27 +376,27 @@ export function PlatformSection() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                className="group relative h-[80vh] min-h-[500px] rounded-2xl bg-[#f5f5f4] overflow-hidden cursor-pointer"
+                className="group relative h-[62vh] min-h-[460px] rounded-2xl border border-zinc-300 bg-[#F4F2F0] overflow-hidden cursor-pointer"
               >
                 {/* Card Header */}
-                <div className="flex items-start justify-between p-6 pb-3">
+                <div className="flex items-start justify-between p-6 pb-4">
                   <div>
-                    <p className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest mb-1.5">
-                      {card.eyebrow}
-                    </p>
-                    <h3 className="text-lg font-bold text-zinc-900 leading-snug">
+                    <h3 className="text-2xl font-medium text-zinc-900 leading-tight">
                       {card.title}{" "}
-                      <span className="font-normal text-zinc-500">{card.highlight}</span>
+                      <span className="font-normal text-zinc-600">{card.highlight}</span>
                     </h3>
-                    <p className="mt-1.5 text-xs text-zinc-500">{card.description}</p>
                   </div>
-                  <button className="flex-shrink-0 w-7 h-7 rounded-full border border-zinc-200 bg-white flex items-center justify-center hover:bg-zinc-900 hover:border-zinc-900 hover:text-white transition-all duration-200 ml-3 mt-0.5">
-                    <ArrowUpRight className="w-3 h-3" />
-                  </button>
+                  <Link
+                    href={card.href}
+                    aria-label={`Open ${card.title}`}
+                    className="platform-card-link relative ml-3 mt-0.5 flex size-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-zinc-300 bg-zinc-100 text-zinc-900 transition-colors duration-200"
+                  >
+                    <ArrowUpRight className="platform-card-arrow h-3.5 w-3.5" />
+                  </Link>
                 </div>
 
                 {/* Mockup Area */}
-                <div className="absolute bottom-0 left-0 right-0 px-5 pb-5" style={{ top: "140px" }}>
+                <div className="absolute bottom-0 left-0 right-0 px-5 pb-5" style={{ top: "115px" }}>
                   <Mockup />
                 </div>
               </motion.div>

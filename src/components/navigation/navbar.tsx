@@ -26,14 +26,35 @@ const menuComponents: Record<string, React.FC> = {
   resources: ResourcesMenu,
 }
 
+const menuSlideVariants = {
+  enter: (direction: 1 | -1) => ({
+    x: direction > 0 ? 20 : -20,
+    opacity: 0,
+    position: "absolute" as const,
+    inset: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    position: "absolute" as const,
+    inset: 0,
+  },
+  exit: (direction: 1 | -1) => ({
+    x: direction > 0 ? -20 : 20,
+    opacity: 0,
+    position: "absolute" as const,
+    inset: 0,
+  }),
+}
+
 export function Navbar() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
-  const [menuPosition, setMenuPosition] = useState({ left: 0, width: 0 })
+  const [slideDirection, setSlideDirection] = useState<1 | -1>(1)
+  const [viewportHeight, setViewportHeight] = useState(0)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const navRef = useRef<HTMLDivElement>(null)
-  const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({})
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const measureRef = useRef<HTMLDivElement>(null)
 
   const handleMouseEnter = (itemId: string) => {
     if (timeoutRef.current) {
@@ -44,15 +65,14 @@ export function Navbar() {
     const item = navItems.find((i) => i.id === itemId)
     if (!item?.hasDropdown) return
 
-    const element = itemRefs.current[itemId]
-    if (element && navRef.current) {
-      const rect = element.getBoundingClientRect()
-      const navRect = navRef.current.getBoundingClientRect()
-      setMenuPosition({
-        left: rect.left - navRect.left,
-        width: rect.width,
-      })
+    if (activeMenu && activeMenu !== itemId) {
+      const currentIndex = navItems.findIndex((i) => i.id === activeMenu)
+      const nextIndex = navItems.findIndex((i) => i.id === itemId)
+      if (currentIndex !== -1 && nextIndex !== -1) {
+        setSlideDirection(nextIndex > currentIndex ? 1 : -1)
+      }
     }
+
     setActiveMenu(itemId)
   }
 
@@ -77,12 +97,29 @@ export function Navbar() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!measureRef.current || !activeMenu) return
+
+    const updateHeight = () => {
+      if (measureRef.current) {
+        setViewportHeight(measureRef.current.offsetHeight)
+      }
+    }
+
+    updateHeight()
+
+    const observer = new ResizeObserver(updateHeight)
+    observer.observe(measureRef.current)
+
+    return () => observer.disconnect()
+  }, [activeMenu])
+
   const ActiveMenuComponent = activeMenu ? menuComponents[activeMenu] : null
 
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-sm border-b border-border/30">
-        <nav ref={navRef} className="max-w-7xl mx-auto px-6 py-4">
+        <nav className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
@@ -105,7 +142,6 @@ export function Navbar() {
                     </Link>
                   ) : (
                     <button
-                      ref={(el) => { itemRefs.current[item.id] = el }}
                       onMouseEnter={() => handleMouseEnter(item.id)}
                       onMouseLeave={handleMouseLeave}
                       className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center gap-1 ${
@@ -139,7 +175,7 @@ export function Navbar() {
                 <MessageCircle className="w-4 h-4 mr-2" />
                 Inquiries
               </Button>
-              <Button asChild className="bg-primary text-black hover:bg-primary/90">
+              <Button asChild>
                 <Link href="/demo">Request a Demo</Link>
               </Button>
             </div>
@@ -160,7 +196,7 @@ export function Navbar() {
           </div>
 
           {/* Dropdown Menu */}
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {activeMenu && ActiveMenuComponent && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -169,23 +205,32 @@ export function Navbar() {
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 onMouseEnter={handleDropdownMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="absolute left-0 right-0 top-full mt-2 px-6"
+                className="absolute left-0 right-0 top-full mt-2 px-6 flex justify-center"
               >
                 <motion.div
-                  layoutId="dropdown-container"
-                  className="max-w-7xl mx-auto bg-card border border-border rounded-xl shadow-2xl overflow-hidden"
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  className="relative w-full max-w-[1104px] bg-card border border-border rounded-xl shadow-2xl overflow-hidden"
+                  animate={{ height: viewportHeight }}
+                  transition={{ duration: 0.3, ease: [0.45, 0.05, 0.55, 0.95] }}
                 >
-                  <motion.div
-                    key={activeMenu}
-                    initial={{ opacity: 0, x: activeMenu === "solutions" ? -20 : 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: activeMenu === "solutions" ? 20 : -20 }}
-                    transition={{ duration: 0.2 }}
-                    className="p-6"
-                  >
-                    <ActiveMenuComponent />
-                  </motion.div>
+                  <div className="relative overflow-hidden">
+                    <div ref={measureRef} className="invisible p-6 pointer-events-none" aria-hidden="true">
+                      <ActiveMenuComponent />
+                    </div>
+                    <AnimatePresence initial={false} custom={slideDirection} mode="sync">
+                      <motion.div
+                        key={activeMenu}
+                        custom={slideDirection}
+                        variants={menuSlideVariants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                        className="p-6 will-change-transform"
+                      >
+                        <ActiveMenuComponent />
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
                 </motion.div>
               </motion.div>
             )}
@@ -224,7 +269,7 @@ export function Navbar() {
                     <MessageCircle className="w-4 h-4 mr-2" />
                     Inquiries
                   </Button>
-                  <Button asChild className="w-full bg-primary text-primary-foreground">
+                  <Button asChild className="w-full">
                     <Link href="/demo">Request a Demo</Link>
                   </Button>
                 </div>

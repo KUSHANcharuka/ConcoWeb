@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { Plug, Users, Briefcase, ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const partnerTypes = [
   {
@@ -40,10 +41,10 @@ export function PartnersMenu() {
               className="group flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors"
             >
               <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                <partner.icon className="w-5 h-5 text-primary" />
+                <partner.icon className="w-5 h-5 text-foreground" />
               </div>
               <div>
-                <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                <h4 className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors">
                   {partner.title}
                 </h4>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -64,13 +65,12 @@ export function PartnersMenu() {
           <p className="text-sm text-muted-foreground mb-4">
             Join our partner ecosystem and grow your business while helping construction companies succeed.
           </p>
-          <Link
-            href="/partners/apply"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
-          >
-            Apply Now
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <Button asChild>
+            <Link href="/partners/apply">
+              Apply Now
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </Button>
         </div>
       </div>
     </div>

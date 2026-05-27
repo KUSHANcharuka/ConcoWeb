@@ -61,10 +61,10 @@ export function ResourcesMenu() {
               className="group flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors"
             >
               <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                <resource.icon className="w-5 h-5 text-primary" />
+                <resource.icon className="w-5 h-5 text-foreground" />
               </div>
               <div>
-                <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                <h4 className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors">
                   {resource.title}
                 </h4>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -89,10 +89,10 @@ export function ResourcesMenu() {
               className="group flex items-start gap-3 p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-secondary/30 transition-all"
             >
               <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <item.icon className="w-5 h-5 text-primary" />
+                <item.icon className="w-5 h-5 text-foreground" />
               </div>
               <div>
-                <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                <h4 className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors">
                   {item.title}
                 </h4>
                 <p className="text-xs text-muted-foreground mt-0.5">

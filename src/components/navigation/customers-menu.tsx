@@ -58,10 +58,10 @@ export function CustomersMenu() {
               className="group flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors"
             >
               <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                <segment.icon className="w-5 h-5 text-primary" />
+                <segment.icon className="w-5 h-5 text-foreground" />
               </div>
               <div>
-                <h4 className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                <h4 className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors">
                   {segment.title}
                 </h4>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -86,8 +86,8 @@ export function CustomersMenu() {
               className="group block p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-secondary/30 transition-all"
             >
               <div className="flex items-center gap-2 mb-1">
-                <BookOpen className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                <BookOpen className="w-4 h-4 text-foreground" />
+                <span className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors">
                   {study.company}
                 </span>
               </div>
@@ -100,7 +100,7 @@ export function CustomersMenu() {
 
         <Link
           href="/customers"
-          className="inline-flex items-center gap-1 mt-4 text-sm font-medium text-primary hover:underline"
+          className="inline-flex items-center gap-1 mt-4 text-sm font-medium text-foreground hover:underline"
         >
           View all customers →
         </Link>

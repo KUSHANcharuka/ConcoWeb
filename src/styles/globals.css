@@ -12,7 +12,7 @@
   --popover: oklch(0.99 0 0);
   --popover-foreground: oklch(0.15 0 0);
   --primary: oklch(0.93 0.2 105);
-  --primary-foreground: oklch(0.98 0 0);
+  --primary-foreground: oklch(0.15 0 0);
   --secondary: oklch(0.93 0 0);
   --secondary-foreground: oklch(0.15 0 0);
   --muted: oklch(0.88 0 0);
@@ -33,7 +33,7 @@
   --sidebar: oklch(0.97 0 0);
   --sidebar-foreground: oklch(0.15 0 0);
   --sidebar-primary: oklch(0.93 0.2 105);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-primary-foreground: oklch(0.15 0 0);
   --sidebar-accent: oklch(0.93 0 0);
   --sidebar-accent-foreground: oklch(0.15 0 0);
   --sidebar-border: oklch(0.92 0 0);
@@ -48,7 +48,7 @@
   --popover: oklch(0.99 0 0);
   --popover-foreground: oklch(0.15 0 0);
   --primary: oklch(0.93 0.2 105);
-  --primary-foreground: oklch(0.98 0 0);
+  --primary-foreground: oklch(0.15 0 0);
   --secondary: oklch(0.93 0 0);
   --secondary-foreground: oklch(0.15 0 0);
   --muted: oklch(0.88 0 0);
@@ -68,7 +68,7 @@
   --sidebar: oklch(0.97 0 0);
   --sidebar-foreground: oklch(0.15 0 0);
   --sidebar-primary: oklch(0.93 0.2 105);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-primary-foreground: oklch(0.15 0 0);
   --sidebar-accent: oklch(0.93 0 0);
   --sidebar-accent-foreground: oklch(0.15 0 0);
   --sidebar-border: oklch(0.92 0 0);
@@ -190,4 +190,41 @@ html {
 .nav-backdrop {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+@keyframes platform-card-arrow-out-45 {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  20% {
+    opacity: 0;
+    transform: translate(8px, -8px);
+  }
+  40% {
+    opacity: 0;
+    transform: translate(-8px, 8px);
+  }
+  60% {
+    opacity: 0;
+    transform: translate(-8px, 8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+.platform-card-arrow {
+  flex-shrink: 0;
+}
+
+.group:hover .platform-card-link .platform-card-arrow {
+  animation: platform-card-arrow-out-45 0.5s ease-in-out 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .platform-card-link .platform-card-arrow {
+    animation: none;
+  }
 }

@@ -66,7 +66,7 @@ export function HeroVideo() {
           </video>
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+          {/* <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" /> */}
 
           {/* Content Overlay */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
@@ -118,7 +118,7 @@ export function HeroVideo() {
               key={stat.label}
               className="text-center p-4 rounded-xl bg-card/50 border border-border/50"
             >
-              <div className="text-2xl sm:text-3xl font-bold text-primary">{stat.value}</div>
+              <div className="text-2xl sm:text-3xl font-bold text-zinc-500">{stat.value}</div>
               <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
             </div>
           ))}

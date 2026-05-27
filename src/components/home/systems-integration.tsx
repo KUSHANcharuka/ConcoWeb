@@ -171,7 +171,7 @@ function AppCard({
   delay,
   isInView,
 }: {
-  icon: React.ElementType
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>
   label: string
   style: React.CSSProperties
   delay: number

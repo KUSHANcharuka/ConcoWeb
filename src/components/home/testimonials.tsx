@@ -108,17 +108,17 @@ export function Testimonials() {
                   <div 
                     className={`p-8 rounded-2xl bg-card border transition-all duration-300 ${
                       selectedIndex === index 
-                        ? "border-primary/50 shadow-lg shadow-primary/10" 
+                        ? "border-zinc-500 shadow-lg shadow-zinc-400/20" 
                         : "border-border"
                     }`}
                   >
-                    <Quote className="w-10 h-10 text-primary/30 mb-4" />
+                    <Quote className="w-10 h-10 text-zinc-500/40 mb-4" />
                     <p className="text-lg sm:text-xl text-foreground mb-6 leading-relaxed">
                       &ldquo;{testimonial.quote}&rdquo;
                     </p>
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="text-sm font-bold text-primary">{testimonial.image}</span>
+                      <div className="w-12 h-12 rounded-full bg-zinc-200 flex items-center justify-center">
+                        <span className="text-sm font-bold text-zinc-800">{testimonial.image}</span>
                       </div>
                       <div>
                         <div className="font-semibold text-foreground">{testimonial.author}</div>
@@ -137,7 +137,7 @@ export function Testimonials() {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={scrollPrev}
-              className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center hover:bg-secondary/50 hover:border-primary/50 transition-colors"
+              className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center hover:bg-secondary/50 hover:border-zinc-400 transition-colors"
             >
               <ChevronLeft className="w-5 h-5 text-foreground" />
             </button>
@@ -148,7 +148,7 @@ export function Testimonials() {
                   onClick={() => emblaApi?.scrollTo(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     selectedIndex === index
-                      ? "w-8 bg-primary"
+                      ? "w-8 bg-zinc-700"
                       : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
                   }`}
                 />
@@ -156,7 +156,7 @@ export function Testimonials() {
             </div>
             <button
               onClick={scrollNext}
-              className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center hover:bg-secondary/50 hover:border-primary/50 transition-colors"
+              className="w-10 h-10 rounded-full bg-card border border-border flex items-center justify-center hover:bg-secondary/50 hover:border-zinc-400 transition-colors"
             >
               <ChevronRight className="w-5 h-5 text-foreground" />
             </button>
