@@ -338,7 +338,7 @@ export function PlatformSection() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                className="group relative h-[80vh] min-h-[520px] rounded-2xl border border-zinc-300 bg-[#F4F2F0] overflow-hidden cursor-pointer"
+                className="group relative h-[420px] sm:h-[500px] lg:h-[80vh] lg:min-h-[520px] rounded-2xl border border-zinc-300 bg-[#F4F2F0] overflow-hidden cursor-pointer"
               >
                 {/* Card Header */}
                 <div className="flex items-start justify-between p-7 pb-5">
@@ -376,7 +376,7 @@ export function PlatformSection() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                className="group relative h-[62vh] min-h-[460px] rounded-2xl border border-zinc-300 bg-[#F4F2F0] overflow-hidden cursor-pointer"
+                className="group relative h-[380px] sm:h-[420px] lg:h-[62vh] lg:min-h-[460px] rounded-2xl border border-zinc-300 bg-[#F4F2F0] overflow-hidden cursor-pointer"
               >
                 {/* Card Header */}
                 <div className="flex items-start justify-between p-6 pb-4">

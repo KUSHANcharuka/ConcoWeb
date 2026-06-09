@@ -146,11 +146,11 @@ export function SystemsIntegration() {
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
               >
                 <div
-                  className="w-24 h-24 rounded-2xl flex flex-col items-center justify-center shadow-xl"
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex flex-col items-center justify-center shadow-xl"
                   style={{ background: "linear-gradient(135deg, #C49000 0%, #F5C400 100%)" }}
                 >
-                  <span className="text-black font-black text-2xl tracking-tight">C</span>
-                  <span className="text-black/70 text-[9px] font-semibold tracking-widest uppercase mt-0.5">Concolabs</span>
+                  <span className="text-black font-black text-xl sm:text-2xl tracking-tight">C</span>
+                  <span className="text-black/70 text-[8px] sm:text-[9px] font-semibold tracking-widest uppercase mt-0.5">Concolabs</span>
                 </div>
               </motion.div>
 
@@ -182,14 +182,14 @@ function AppCard({
       initial={{ opacity: 0, scale: 0.75 }}
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.45, delay, type: "spring", stiffness: 180 }}
-      className="absolute w-20 h-20 rounded-2xl flex flex-col items-center justify-center gap-1 shadow-lg"
+      className="absolute w-14 h-14 sm:w-20 sm:h-20 rounded-2xl flex flex-col items-center justify-center gap-0.5 sm:gap-1 shadow-lg"
       style={{
         ...style,
         background: "linear-gradient(145deg, #7A5C00 0%, #C49000 100%)",
       }}
     >
-      <Icon className="w-7 h-7 text-yellow-100" strokeWidth={1.5} />
-      <span className="text-[9px] font-semibold text-yellow-200 tracking-wide">{label}</span>
+      <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-yellow-100" strokeWidth={1.5} />
+      <span className="text-[8px] sm:text-[9px] font-semibold text-yellow-200 tracking-wide text-center px-1 truncate w-full">{label}</span>
     </motion.div>
   )
 }

@@ -281,7 +281,7 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
                       key={idx}
                       className={`rounded-2xl p-6 border flex flex-col justify-between transition-all duration-300 ${
                         col.highlight
-                          ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-transparent shadow-xl scale-[1.03]"
+                          ? "bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 border-transparent shadow-xl md:scale-[1.03]"
                           : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-xs"
                       }`}
                     >

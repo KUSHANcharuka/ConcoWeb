@@ -11,6 +11,7 @@ import { leaders } from "@/lib/team-data"
 import type { Leader } from "@/lib/team-data"
 import { LeaderProfileModal } from "@/components/about/leader-modal"
 import { WorldGlobe } from "@/components/about/world-globe"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 // Types
 interface Milestone {
@@ -80,6 +81,9 @@ const getMilestone = (nodeName: string, currentYear: number, currentMonth: strin
 
 export default function AboutUsPage() {
   const [activeLeader, setActiveLeader] = useState<Leader | null>(null)
+  const isMobile = useIsMobile()
+  const visibleCount = isMobile ? 3 : 5
+
   // Dynamic timeline items based on current date
   const currentDate = new Date()
   const currentYear = currentDate.getFullYear()
@@ -99,10 +103,17 @@ export default function AboutUsPage() {
   }, [currentYear, currentMonthName, futureYear])
 
   const [selectedYear, setSelectedYear] = useState<string>(currentMonthName)
-  const [startIndex, setStartIndex] = useState<number>(Math.max(0, allNodes.length - 5))
+  const [startIndex, setStartIndex] = useState<number>(Math.max(0, allNodes.length - visibleCount))
 
-  const visibleNodes = allNodes.slice(startIndex, startIndex + 5)
-  const showArrows = allNodes.length > 5
+  const visibleNodes = useMemo(() => {
+    return allNodes.slice(startIndex, startIndex + visibleCount)
+  }, [allNodes, startIndex, visibleCount])
+
+  const showArrows = allNodes.length > visibleCount
+
+  useEffect(() => {
+    setStartIndex((prev) => Math.min(Math.max(0, allNodes.length - visibleCount), prev))
+  }, [visibleCount, allNodes.length])
 
   // If selectedYear is not in visibleNodes, select the closest visible clickable node
   useEffect(() => {
@@ -120,19 +131,35 @@ export default function AboutUsPage() {
     }
   }, [startIndex, visibleNodes, selectedYear, allNodes, futureYear])
 
-  const fillPercentages: Record<string, string> = {
-    [visibleNodes[0]]: "52px",
-    [visibleNodes[1]]: "calc(25% + 38px)",
-    [visibleNodes[2]]: "calc(50% + 24px)",
-    [visibleNodes[3]]: "calc(75% + 10px)",
-  }
+  const fillPercentages = useMemo(() => {
+    const pct: Record<string, string> = {}
+    const btnWidth = isMobile ? 40 : 56 // w-10 vs w-14
+    const offset = 24 + btnWidth / 2 // offset from left: "-24px"
+    
+    visibleNodes.forEach((node, i) => {
+      if (i === 0) {
+        pct[node] = `${offset}px`
+      } else {
+        if (isMobile) {
+          if (i === 1) pct[node] = "calc(50% + 20px)"
+          if (i === 2) pct[node] = "calc(100% - 4px)"
+        } else {
+          if (i === 1) pct[node] = "calc(25% + 38px)"
+          if (i === 2) pct[node] = "calc(50% + 24px)"
+          if (i === 3) pct[node] = "calc(75% + 10px)"
+          if (i === 4) pct[node] = "calc(100% - 4px)"
+        }
+      }
+    })
+    return pct
+  }, [visibleNodes, isMobile])
 
   const handlePrev = () => {
     setStartIndex((prev) => Math.max(0, prev - 1))
   }
 
   const handleNext = () => {
-    setStartIndex((prev) => Math.min(allNodes.length - 5, prev + 1))
+    setStartIndex((prev) => Math.min(allNodes.length - visibleCount, prev + 1))
   }
 
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -285,8 +312,8 @@ export default function AboutUsPage() {
                     }`}
                   >
                     <div
-                      className={`w-14 h-14 rounded-full flex items-center justify-center font-bold transition-all duration-300 border ${
-                        node === currentMonthName ? "text-base" : "text-lg"
+                      className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold transition-all duration-300 border ${
+                        node === currentMonthName ? "text-xs sm:text-base" : "text-sm sm:text-lg"
                       } ${
                         node === futureYear
                           ? "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500"
@@ -304,9 +331,9 @@ export default function AboutUsPage() {
               {showArrows && (
                 <button
                   onClick={handleNext}
-                  disabled={startIndex + 5 >= allNodes.length}
+                  disabled={startIndex + visibleCount >= allNodes.length}
                   className={`absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm transition-all ${
-                    startIndex + 5 >= allNodes.length
+                    startIndex + visibleCount >= allNodes.length
                       ? "opacity-30 cursor-not-allowed"
                       : "opacity-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer"
                   }`}
