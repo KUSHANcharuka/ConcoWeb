@@ -30,7 +30,6 @@ export default function RevitToBOQPage() {
   const [activeTab, setActiveTab] = useState<"before" | "after">("after");
   const [autoToggleKey, setAutoToggleKey] = useState(0);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const demoSectionRef = useRef<HTMLDivElement>(null);
 
   // Auto-toggle Before/After every 3.5 seconds
@@ -58,8 +57,8 @@ export default function RevitToBOQPage() {
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#FAFAF8] dark:bg-zinc-950">
         {/* Background gradient */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(16,185,129,0.08),rgba(250,250,248,0.95))]" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-gradient-to-br from-emerald-400/8 via-transparent to-teal-400/5 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(202,236,69,0.15),rgba(250,250,248,0.95))]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-gradient-to-br from-[var(--color-lime)]/10 via-transparent to-yellow-400/5 rounded-full blur-3xl" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#FAFAF8]/60 via-transparent to-[#FAFAF8]/80 dark:from-zinc-950/60 dark:to-zinc-950/80" />
         </div>
 
@@ -89,7 +88,7 @@ export default function RevitToBOQPage() {
             {/* Left Column - Text Content */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100/60 dark:bg-emerald-900/30 border border-emerald-200/40 dark:border-emerald-800/40 text-emerald-700 dark:text-emerald-300">
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[var(--color-lime)]/15 border border-[var(--color-lime)]/30 text-zinc-700 dark:text-zinc-300">
                   Tendering & Estimation
                 </span>
                 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400">
@@ -213,7 +212,7 @@ export default function RevitToBOQPage() {
                         transition={{ duration: 0.2 }}
                         className="space-y-4"
                       >
-                        <div className="text-xs font-bold text-emerald-600 dark:text-emerald-500 uppercase tracking-wider">
+                        <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">
                           Revit to BOQ Plugin
                         </div>
                         <ul className="space-y-3.5">
@@ -270,18 +269,17 @@ export default function RevitToBOQPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="flex justify-center"
+
           >
-            <div className="relative w-full max-w-4xl aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-zinc-300/40 dark:shadow-zinc-900/40 border border-zinc-200 dark:border-zinc-800 bg-zinc-950 flex items-center justify-center group cursor-pointer" onClick={() => setIsLightboxOpen(true)}>
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-transparent to-zinc-950" />
-              <div className="relative z-10 text-center space-y-4">
-                <div className="w-20 h-20 rounded-full bg-[var(--color-lime)] text-black flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform mx-auto">
-                  <Play className="w-8 h-8 fill-black ml-1" />
-                </div>
-                <p className="text-sm text-zinc-300 font-bold uppercase tracking-wider">
-                  Watch Walkthrough Demo
-                </p>
-              </div>
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-zinc-300/40 dark:shadow-zinc-900/40">
+              <video
+                src="/videos/cost-plan-calculator-showcase.mp4"
+                className="w-full h-auto object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
             </div>
           </motion.div>
         </div>
@@ -479,11 +477,11 @@ export default function RevitToBOQPage() {
                   >
                     <Link
                       href={rel.href}
-                      className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-emerald-500/30 transition-all duration-300"
+                      className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-primary/30 transition-all duration-300"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div className="space-y-1.5">
-                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 transition-colors">
+                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-primary transition-colors">
                             {rel.title}
                           </h4>
                           <p className="text-xs text-zinc-500 leading-relaxed">{rel.desc}</p>
@@ -493,8 +491,8 @@ export default function RevitToBOQPage() {
                         </span>
                       </div>
                       <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="text-[10px] font-semibold text-emerald-600">Learn more</span>
-                        <ChevronRight className="w-3 h-3 text-emerald-600 transition-transform group-hover:translate-x-0.5" />
+                        <span className="text-[10px] font-semibold text-primary">Learn more</span>
+                        <ChevronRight className="w-3 h-3 text-primary transition-transform group-hover:translate-x-0.5" />
                       </div>
                     </Link>
                   </motion.div>
@@ -510,7 +508,7 @@ export default function RevitToBOQPage() {
               >
                 <Link
                   href="/learnmore"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-500 transition-colors group"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary/80 transition-colors group"
                 >
                   View full product suite
                   <motion.span
@@ -549,11 +547,11 @@ export default function RevitToBOQPage() {
                   className="w-full rounded-xl py-6 font-bold shadow-md bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer"
                 >
                   <a
-                    href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
+                    href="/pricing"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Book a demo →
+                    Buy Products →
                   </a>
                 </Button>
               </div>
@@ -747,64 +745,6 @@ export default function RevitToBOQPage() {
           </div>
         </div>
       </section>
-
-      {/* ─── Demo Lightbox ─── */}
-      <AnimatePresence>
-        {isLightboxOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsLightboxOpen(false)}
-              className="absolute inset-0 bg-black/90 backdrop-blur-sm cursor-pointer"
-            />
-
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-3xl bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl z-10 p-6 sm:p-8 space-y-6 text-white"
-            >
-              <button
-                onClick={() => setIsLightboxOpen(false)}
-                className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors cursor-pointer"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              <div className="space-y-2">
-                <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest">
-                  Interactive Video Demo
-                </span>
-                <h3 className="text-xl font-bold">Revit to BOQ Walkthrough</h3>
-              </div>
-
-              <div className="relative w-full aspect-video rounded-2xl bg-zinc-950 overflow-hidden border border-zinc-800 flex items-center justify-center group">
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-transparent to-zinc-950" />
-                <div className="relative z-10 text-center space-y-4">
-                  <a
-                    href="https://drive.google.com/file/d/15uOlpBeHmQtmWE9ONeX3FOEfpz2OhTfU/view?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-16 h-16 rounded-full bg-[var(--color-lime)] text-black flex items-center justify-center shadow-lg hover:scale-105 transition-transform mx-auto cursor-pointer"
-                  >
-                    <Play className="w-6 h-6 fill-black ml-1" />
-                  </a>
-                  <p className="text-xs text-zinc-300 font-bold uppercase tracking-wider">
-                    Click to Open Demo in Google Drive
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center pt-2 text-xs text-zinc-500 border-t border-zinc-850">
-                <span>Revit to BOQ Demo</span>
-                <span>Includes automated rate prediction steps</span>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       <Footer />
     </main>
