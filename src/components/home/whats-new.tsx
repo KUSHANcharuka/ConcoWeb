@@ -106,7 +106,7 @@ export function WhatsNew() {
               What&apos;s new at Concolabs
             </h2>
             <p className="text-lg text-muted-foreground">
-              The latest features and product updates
+              The latest features and Company updates
             </p>
           </div>
           <div>

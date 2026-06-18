@@ -788,7 +788,7 @@ export function PricingClient() {
                           PRODUCTS.find((p) => p.id === id)?.priceType ===
                           "per-seat",
                       ) && (
-                        <div className="flex justify-between text-lime-dark dark:text-lime font-bold">
+                        <div className="flex justify-between text-emerald-700 dark:text-emerald-400 font-bold">
                           <span>
                             Workspace Seat Discount (-{seatDiscountPercent}%)
                           </span>
@@ -798,7 +798,7 @@ export function PricingClient() {
 
                     {/* Bundle discount details */}
                     {bundleDiscountPercent > 0 && (
-                      <div className="flex justify-between text-lime-dark dark:text-lime font-bold">
+                      <div className="flex justify-between text-emerald-700 dark:text-emerald-400 font-bold">
                         <span>
                           Stacked Bundle Discount (-{bundleDiscountPercent}%)
                         </span>

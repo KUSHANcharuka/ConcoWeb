@@ -6,26 +6,24 @@ import { motion, animate } from "framer-motion"
 import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-interface ToolItem {
+interface FeatureItem {
   id: string
   name: string
-  price: number
+  hrs: number
   defaultChecked: boolean
 }
 
-const TOOLS: ToolItem[] = [
-  { id: "ai_search", name: "AI Search", price: 35, defaultChecked: false },
-  { id: "ai_chatbot", name: "AI Chatbot", price: 20, defaultChecked: true },
-  { id: "meeting_notes", name: "AI Meeting Notes", price: 18, defaultChecked: false },
-  { id: "writing_assist", name: "AI Writing Assistant", price: 20, defaultChecked: false },
-  { id: "email_app", name: "AI Email App", price: 30, defaultChecked: true },
-  { id: "ai_research", name: "AI Research", price: 40, defaultChecked: false },
-  { id: "calendar", name: "Calendar Scheduling", price: 15, defaultChecked: false },
-  { id: "team_wiki", name: "Team Wiki", price: 10, defaultChecked: true },
-  { id: "pm_tool", name: "Project Management Tool", price: 24, defaultChecked: true },
-  { id: "basic_crm", name: "Basic CRM", price: 20, defaultChecked: false },
-  { id: "site_builder", name: "Site Builder", price: 20, defaultChecked: true },
-  { id: "forms", name: "Forms", price: 15, defaultChecked: true },
+const FEATURES: FeatureItem[] = [
+  { id: "boq", name: "BOQ Automation", hrs: 18, defaultChecked: true },
+  { id: "bim", name: "BIM Quantity Extraction", hrs: 14, defaultChecked: true },
+  { id: "contract", name: "AI Contract Review", hrs: 12, defaultChecked: true },
+  { id: "cost_plan", name: "Cost Plan Generator", hrs: 10, defaultChecked: false },
+  { id: "progress_claim", name: "Progress Claim Processing", hrs: 9, defaultChecked: true },
+  { id: "tender", name: "Tender Analysis", hrs: 8, defaultChecked: false },
+  { id: "variation", name: "Variation Management", hrs: 7, defaultChecked: false },
+  { id: "report", name: "Report Automation", hrs: 6, defaultChecked: true },
+  { id: "doc_intel", name: "Document Intelligence", hrs: 5, defaultChecked: false },
+  { id: "procurement", name: "Procurement Scheduler", hrs: 4, defaultChecked: false },
 ]
 
 function AnimatedSavings({ value }: { value: number }) {
@@ -49,9 +47,10 @@ function AnimatedSavings({ value }: { value: number }) {
 
 export function Productivity() {
   const [selectedTools, setSelectedTools] = useState<string[]>(
-    TOOLS.filter((t) => t.defaultChecked).map((t) => t.id)
+    FEATURES.filter((f) => f.defaultChecked).map((f) => f.id)
   )
   const [teamSizeInput, setTeamSizeInput] = useState<string>("10")
+  const [hourlyRateInput, setHourlyRateInput] = useState<string>("45")
 
   const handleToggle = (id: string) => {
     setSelectedTools((prev) =>
@@ -59,15 +58,13 @@ export function Productivity() {
     )
   }
 
-  const teamSize = parseInt(teamSizeInput, 10) || 1
+  const teamSize = parseInt(teamSizeInput, 10) || 0
+  const hourlyRate = parseInt(hourlyRateInput, 10) || 0
 
-  // Calculate costs
-  const selectedToolsCostPerUser = TOOLS
-    .filter((t) => selectedTools.includes(t.id))
-    .reduce((sum, t) => sum + t.price, 0)
-
-  const concolabsCostPerUser = 20 // Concolabs flat price per user
-  const monthlySavings = Math.max(0, (selectedToolsCostPerUser - concolabsCostPerUser) * teamSize)
+  // Calculations
+  const selectedFeatures = FEATURES.filter((f) => selectedTools.includes(f.id))
+  const totalHrsPerUser = selectedFeatures.reduce((sum, f) => sum + f.hrs, 0)
+  const monthlySavings = totalHrsPerUser * teamSize * hourlyRate
   const annualSavings = monthlySavings * 12
 
   return (
@@ -110,7 +107,7 @@ export function Productivity() {
         <div className="bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xs">
           {/* Checkboxes Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 mb-8">
-            {TOOLS.map((tool) => {
+            {FEATURES.map((tool) => {
               const isChecked = selectedTools.includes(tool.id)
               return (
                 <label
@@ -136,11 +133,9 @@ export function Productivity() {
                   </div>
                   <span className="text-foreground/90 font-medium text-sm sm:text-base transition-colors group-hover:text-foreground flex items-baseline flex-wrap">
                     <span>{tool.name}</span>
-                    {isChecked && (
-                      <span className="ml-1.5 text-xs sm:text-sm text-muted-foreground font-normal whitespace-nowrap">
-                        ${tool.price}/user
-                      </span>
-                    )}
+                    <span className="ml-1.5 text-xs sm:text-sm text-muted-foreground font-normal whitespace-nowrap">
+                      ({tool.hrs} hrs/user)
+                    </span>
                   </span>
                 </label>
               )
@@ -148,7 +143,7 @@ export function Productivity() {
           </div>
 
           {/* Results Summary Box */}
-          <div className="bg-secondary/20 dark:bg-muted/10 border border-border/50 rounded-2xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          <div className="bg-secondary/20 dark:bg-muted/10 border border-border/50 rounded-2xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-4 gap-8 items-center">
             {/* Team Size input */}
             <div className="flex flex-col gap-2">
               <label htmlFor="team-size-input" className="text-sm font-semibold text-muted-foreground">
@@ -157,10 +152,25 @@ export function Productivity() {
               <input
                 id="team-size-input"
                 type="number"
-                min="1"
+                min="0"
                 value={teamSizeInput}
                 onChange={(e) => setTeamSizeInput(e.target.value)}
-                className="w-full max-w-[180px] bg-background border border-border rounded-xl px-4 py-3 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-foreground/20 text-foreground"
+                className="w-full bg-background border border-border rounded-xl px-4 py-3 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-foreground/20 text-foreground"
+              />
+            </div>
+
+            {/* Hourly Rate input */}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="hourly-rate-input" className="text-sm font-semibold text-muted-foreground">
+                Hourly rate ($/hr)
+              </label>
+              <input
+                id="hourly-rate-input"
+                type="number"
+                min="0"
+                value={hourlyRateInput}
+                onChange={(e) => setHourlyRateInput(e.target.value)}
+                className="w-full bg-background border border-border rounded-xl px-4 py-3 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-foreground/20 text-foreground"
               />
             </div>
 
@@ -189,4 +199,3 @@ export function Productivity() {
     </section>
   )
 }
-

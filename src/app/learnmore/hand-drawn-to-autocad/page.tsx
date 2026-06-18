@@ -23,8 +23,13 @@ import {
   FileText,
   Camera,
   Upload,
+  Cpu,
+  Box,
+  MessageSquare,
+  Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ComparisonGrid from "@/components/learnmore/comparison-grid";
 
 
 // Apple-style animation variants
@@ -64,6 +69,19 @@ export default function HandDrawnToAutoCADPage() {
   const [autoToggleKey, setAutoToggleKey] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [activeStep, setActiveStep] = useState(0);
+
+  const stepImages = [
+    "/images/2d_structural_drawing.png",
+    "/images/cv_blueprint_analysis.png",
+    "/images/3d_revit_model.png",
+  ];
+
+  const stepCaptions = [
+    "Upload DXF or DWG structural drawing",
+    "Computer vision detects outlines, thickness, and dimensions",
+    "3D Revit/IFC model generated, completed via WordToBIM prompts",
+  ];
 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroScrollProgress } = useScroll({
@@ -139,11 +157,10 @@ export default function HandDrawnToAutoCADPage() {
         {/* Animated Background with Video */}
         <motion.div
           style={!isVideoPlaying ? { y: heroY, scale: heroScale } : {}}
-          className={`transition-all duration-700 ease-in-out ${
-            isVideoPlaying
-              ? "fixed inset-0 z-50 bg-black"
-              : "absolute inset-0 z-0"
-          }`}
+          className={`transition-all duration-700 ease-in-out ${isVideoPlaying
+            ? "fixed inset-0 z-50 bg-black"
+            : "absolute inset-0 z-0"
+            }`}
           onClick={() => isVideoPlaying && exitVideoMode()}
         >
           {/* Background Video */}
@@ -158,7 +175,7 @@ export default function HandDrawnToAutoCADPage() {
           {/* Overlay for readability - reduced when video playing */}
           <div className={`absolute inset-0 transition-opacity duration-500 ${isVideoPlaying ? 'bg-black/30' : 'bg-[#FAFAF8]/60 dark:bg-black/50'}`} />
           <div className={`absolute inset-0 bg-gradient-to-b transition-opacity duration-500 ${isVideoPlaying ? 'from-black/20 via-transparent to-black/40' : 'from-[#FAFAF8]/60 via-transparent to-[#FAFAF8]/90'}`} />
-          
+
           {/* Floating sketch elements - hidden during demo mode */}
           {!isVideoPlaying && (
             <>
@@ -174,7 +191,7 @@ export default function HandDrawnToAutoCADPage() {
                   <div className="w-1/2 h-2 bg-zinc-200 rounded" />
                 </div>
               </motion.div>
-              
+
               <motion.div
                 aria-hidden="true"
                 animate={{ y: [0, 15, 0], rotate: [0, -3, 0] }}
@@ -192,10 +209,10 @@ export default function HandDrawnToAutoCADPage() {
         </motion.div>
 
         {/* Breadcrumb */}
-        <div className="absolute top-28 left-6 z-10">
+        <div className="absolute top-28 left-6 z-30">
           <Link
             href="/learnmore"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-500 hover:text-zinc-900 transition-colors group"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-black/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-xs cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back to Learn More
@@ -227,29 +244,29 @@ export default function HandDrawnToAutoCADPage() {
 
                 <motion.h1
                   variants={fadeInUp}
-                  className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-950 leading-[1.05]"
+                  className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-950 leading-[1.05] product-title-sweep"
                 >
                   Hand Drawn
                   <br />
-                  <span className="bg-gradient-to-r from-zinc-900 to-zinc-600 bg-clip-text text-transparent">
+                  
                     to AutoCAD
-                  </span>
+                  
                 </motion.h1>
 
                 <motion.p
                   variants={fadeInUp}
                   className="text-2xl sm:text-3xl text-zinc-500 font-medium leading-relaxed max-w-xl"
                 >
-                  Your sketch. Digital in minutes.
+                  From drawing to working 3D model,
                   <br />
-                  <span className="text-zinc-400">No outsourcing.</span>
+                  <span className="text-zinc-400">without the manual rebuild.</span>
                 </motion.p>
 
                 <motion.p
                   variants={fadeInUp}
                   className="text-lg text-zinc-600 leading-relaxed max-w-xl"
                 >
-                  Photograph your hand-drawn floor plan. Get a clean CAD file — without waiting for an outsourcing firm or losing the nuance of your design.
+                  Computer vision reads your 2D DXF structural drawing and converts elements straight into 3D BIM, accurate to a solid working level. It comes paired with WordToBIM, our Revit plugin that models elements straight from a text prompt, so your modellers add and complete elements by typing what they need instead of drawing them by hand. Slab automation is production-ready now.
                 </motion.p>
 
                 <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
@@ -293,17 +310,15 @@ export default function HandDrawnToAutoCADPage() {
                   <div className="relative flex bg-zinc-100 p-1.5 rounded-2xl w-52 justify-between">
                     <button
                       onClick={() => handleTabClick("before")}
-                      className={`relative z-10 w-24 py-2 text-xs font-bold rounded-xl transition-colors cursor-pointer ${
-                        activeTab === "before" ? "text-zinc-900" : "text-zinc-400"
-                      }`}
+                      className={`relative z-10 w-24 py-2 text-xs font-bold rounded-xl transition-colors cursor-pointer ${activeTab === "before" ? "text-zinc-900" : "text-zinc-400"
+                        }`}
                     >
                       Before
                     </button>
                     <button
                       onClick={() => handleTabClick("after")}
-                      className={`relative z-10 w-24 py-2 text-xs font-bold rounded-xl transition-colors cursor-pointer ${
-                        activeTab === "after" ? "text-zinc-900" : "text-zinc-400"
-                      }`}
+                      className={`relative z-10 w-24 py-2 text-xs font-bold rounded-xl transition-colors cursor-pointer ${activeTab === "after" ? "text-zinc-900" : "text-zinc-400"
+                        }`}
                     >
                       After
                     </button>
@@ -331,28 +346,28 @@ export default function HandDrawnToAutoCADPage() {
                         className="space-y-5"
                       >
                         <div className="text-xs font-bold text-red-500 uppercase tracking-wider">
-                          Outsourcing Sketch-to-CAD
+                          Manual Polyline Tracing
                         </div>
                         <ul className="space-y-4">
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>Hand-drawn sketch sent to outsourcing firm (India/SL)</span>
+                            <span>1 to 2 weeks per drawing set</span>
                           </li>
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>3–7 day turnaround</span>
+                            <span>Labor-intensive, error-prone</span>
                           </li>
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>Multiple back-and-forth corrections</span>
+                            <span>Require manual redraw and validation at every step</span>
                           </li>
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>Design details lost in translation</span>
+                            <span>Not trained on structural drawings, no prompt-based modelling layer inside Revit</span>
                           </li>
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>Outsourcing cost: USD 200–500 per drawing</span>
+                            <span>Geometry duplicated unnecessarily</span>
                           </li>
                         </ul>
                       </motion.div>
@@ -366,28 +381,28 @@ export default function HandDrawnToAutoCADPage() {
                         className="space-y-5"
                       >
                         <div className="text-xs font-bold text-emerald-500 uppercase tracking-wider">
-                          Hand Drawn to AutoCAD
+                          Auto Conversion 2D to 3D
                         </div>
                         <ul className="space-y-4">
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Photograph the sketch</span>
+                            <span>1 to 2 days per drawing set (vector files processed in minutes)</span>
                           </li>
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>CAD file ready in minutes</span>
+                            <span>AI conversion plus prompt-based modelling, consistent results</span>
                           </li>
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Learns your drawing style over time</span>
+                            <span>Slab automation production-ready, WordToBIM Revit plugin included</span>
                           </li>
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>No outsourcing delays or communication gaps</span>
+                            <span>Modeller time freed for coordination</span>
                           </li>
                           <li className="flex gap-3 text-zinc-600 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Saves 100+ USD per drawing</span>
+                            <span>Modeller starts from a working model, not a blank screen</span>
                           </li>
                         </ul>
                       </motion.div>
@@ -470,7 +485,7 @@ export default function HandDrawnToAutoCADPage() {
               </h2>
               <div className="w-20 h-1.5 bg-[var(--color-lime)] rounded-full" />
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, x: 100 }}
               animate={isProblemInView ? { opacity: 1, x: 0 } : {}}
@@ -478,21 +493,19 @@ export default function HandDrawnToAutoCADPage() {
               className="lg:col-span-7 space-y-6"
             >
               <p className="text-xl text-zinc-600 leading-relaxed">
-                Architects prefer to hand-draw because it preserves creative flow and spontaneity. But hand-drawn sketches need to be converted to CAD before the design can move to the rest of the team.
+                ...recreating that same geometry in 3D, tracing every slab, beam, column, and opening with polylines...
               </p>
               <p className="text-lg text-zinc-500 leading-relaxed">
-                Historically, this means sending sketches to an outsourcing firm, waiting 3–7 days, and then doing multiple correction cycles when details get lost in translation.
+                It is the same geometry, drawn twice, and the second pass is mechanical, time your modellers could spend on coordination, clash detection, and detailed design. Auto Conversion takes that repetitive pass off their plate so their hours go where their expertise actually matters.
               </p>
-              <p className="text-lg text-zinc-500 leading-relaxed">
-                The process costs money, slows the project timeline, and removes the architect from control of the digital interpretation of their design.
-              </p>
+
               <p className="text-lg font-semibold text-zinc-900 leading-relaxed">
-                Hand Drawn to AutoCAD eliminates this, turning the conversion from a multi-day external service into a local, minute-long process.
+                Auto Conversion 2D to 3D handles the heavy lifting of that conversion step, so the duplication leaves your workflow and your modeller starts from a working model.
               </p>
             </motion.div>
           </div>
         </div>
-        
+
         {/* Decorative background element */}
         <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-zinc-50 to-transparent pointer-events-none" />
       </section>
@@ -522,17 +535,33 @@ export default function HandDrawnToAutoCADPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="lg:sticky lg:top-32"
             >
-              <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-zinc-200/50">
-                <img
-                  src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop"
-                  alt="Hand drawn floor plan sketch"
-                  className="w-full h-[500px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-8 left-8 right-8">
-                  <p className="text-white text-lg font-semibold">
-                    From sketch to CAD in minutes
-                  </p>
+              <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-zinc-200/50 w-full h-[500px] bg-zinc-950">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeStep}
+                    src={stepImages[activeStep]}
+                    alt="Hand Drawn to AutoCAD workflow step"
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="absolute inset-0 w-full h-full object-cover opacity-80"
+                  />
+                </AnimatePresence>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-8 left-8 right-8 z-10">
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={activeStep}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-white text-lg font-semibold"
+                    >
+                      {stepCaptions[activeStep]}
+                    </motion.p>
+                  </AnimatePresence>
                 </div>
               </div>
             </motion.div>
@@ -544,6 +573,8 @@ export default function HandDrawnToAutoCADPage() {
                 initial={{ opacity: 0, x: 100 }}
                 animate={isSolutionInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.3 }}
+                onViewportEnter={() => setActiveStep(0)}
+                viewport={{ margin: "-40% 0px -40% 0px" }}
                 className="space-y-6"
               >
                 <div className="flex items-center gap-4">
@@ -553,10 +584,10 @@ export default function HandDrawnToAutoCADPage() {
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Step 1</span>
                 </div>
                 <h3 className="text-2xl font-bold text-zinc-950">
-                  Photograph your hand-drawn floor plan
+                  Upload your 2D structural drawing in PDF, DWG, or DXF format.
                 </h3>
                 <p className="text-lg text-zinc-600 leading-relaxed">
-                  Take a clear photo of the sketch on paper or whiteboard. The tool accepts standard smartphone camera photos — no scanner required.
+                  Upload your 2D structural drawing as DXF or DWG, the clean CAD vector formats the tool reads most accurately. PDF is supported best-effort, since flattened PDFs carry less reliable geometry.
                 </p>
               </motion.div>
 
@@ -565,6 +596,8 @@ export default function HandDrawnToAutoCADPage() {
                 initial={{ opacity: 0, x: 100 }}
                 animate={isSolutionInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.5 }}
+                onViewportEnter={() => setActiveStep(1)}
+                viewport={{ margin: "-40% 0px -40% 0px" }}
                 className="space-y-6"
               >
                 <div className="flex items-center gap-4">
@@ -574,10 +607,10 @@ export default function HandDrawnToAutoCADPage() {
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Step 2</span>
                 </div>
                 <h3 className="text-2xl font-bold text-zinc-950">
-                  Upload to Hand Drawn to AutoCAD
+                  Walls, slabs, beams, columns, and openings are converted to 3D Revit or IFC elements with accurate dimensions. Slab automation is production-ready now.
                 </h3>
                 <p className="text-lg text-zinc-600 leading-relaxed">
-                  The tool processes the image and identifies lines, walls, doors, windows, and text annotations using deep learning.
+                  Walls, slabs, beams, columns, and openings are converted to 3D Revit or IFC elements, accurate to a working level. Your modeller then completes the model with WordToBIM, our Revit plugin that creates elements from a text prompt, so missing or custom geometry is added by prompt rather than manual redraw. Slab automation is production-ready now.
                 </p>
               </motion.div>
 
@@ -586,6 +619,8 @@ export default function HandDrawnToAutoCADPage() {
                 initial={{ opacity: 0, x: 100 }}
                 animate={isSolutionInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.7 }}
+                onViewportEnter={() => setActiveStep(2)}
+                viewport={{ margin: "-40% 0px -40% 0px" }}
                 className="space-y-6"
               >
                 <div className="flex items-center gap-4">
@@ -595,10 +630,10 @@ export default function HandDrawnToAutoCADPage() {
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Step 3</span>
                 </div>
                 <h3 className="text-2xl font-bold text-zinc-950">
-                  Receive CAD file
+                  Slab automation, PRODUCTION READY.
                 </h3>
                 <p className="text-lg text-zinc-600 leading-relaxed">
-                  Clean, layered AutoCAD DWG file ready for coordinate with other disciplines. Standard architectural layers included.
+                  Reliable conversion of floor slabs with accurate thickness, slopes, and openings identified, ready for your modeller to extend in Revit, prompting WordToBIM for any elements outside the slab scope.
                 </p>
               </motion.div>
             </div>
@@ -616,7 +651,7 @@ export default function HandDrawnToAutoCADPage() {
               <div className="space-y-6">
                 <h3 className="text-3xl font-bold text-zinc-950">The tool learns</h3>
                 <p className="text-lg text-zinc-600">
-                  Accuracy improves with every drawing — by the 5th project, accuracy approaches 95%.
+                  Accuracy improves with every drawing, by the 5th project, accuracy approaches 95%.
                 </p>
                 <ul className="space-y-4">
                   <li className="flex gap-3 items-start">
@@ -648,7 +683,7 @@ export default function HandDrawnToAutoCADPage() {
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-emerald-200/20 rounded-3xl blur-xl" />
                 <img
-                  src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop"
+                  src="/images/cv_blueprint_analysis.png"
                   alt="AI learning process"
                   className="relative rounded-2xl shadow-lg w-full h-80 object-cover"
                 />
@@ -684,8 +719,8 @@ export default function HandDrawnToAutoCADPage() {
               className="p-8 bg-zinc-800/50 border border-zinc-700/50 rounded-3xl space-y-4 backdrop-blur-sm"
             >
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">What feeds in</span>
-              <h4 className="font-bold text-2xl text-white">Hand-drawn sketch</h4>
-              <p className="text-zinc-400">Accepts photographs (smartphone camera), scanned PDF, or tablet drawings.</p>
+              <h4 className="font-bold text-2xl text-white">DXF and DWG Vector Files</h4>
+              <p className="text-zinc-400">Accepts DXF and DWG vector files from architects or structural engineers. PDF and TIFF are accepted best-effort, with lower geometry confidence.</p>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -694,8 +729,8 @@ export default function HandDrawnToAutoCADPage() {
               className="p-8 bg-zinc-800/50 border border-zinc-700/50 rounded-3xl space-y-4 backdrop-blur-sm"
             >
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">What it feeds into</span>
-              <h4 className="font-bold text-2xl text-white">Auto Conversion + Revit to BOQ</h4>
-              <p className="text-zinc-400">The CAD file feeds into structural modelling and downstream estimating workflows.</p>
+              <h4 className="font-bold text-2xl text-white">Automated Estimating</h4>
+              <p className="text-zinc-400">The working model opens in Revit, where WordToBIM lets your modeller add or adjust elements by prompt, then it flows on into automated estimating via Revit to BOQ and site measurement via MeasureonAir.</p>
             </motion.div>
           </div>
 
@@ -706,45 +741,55 @@ export default function HandDrawnToAutoCADPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="mt-20"
           >
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
               {/* Step 1 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Camera className="w-8 h-8 text-orange-400" />
+                  <Upload className="w-8 h-8 text-yellow-400" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 1</span>
-                <h4 className="font-bold text-lg text-white">Hand Sketch</h4>
-                <p className="text-sm text-zinc-400">Photograph or scan hand-drawn sketch</p>
+                <h4 className="font-bold text-lg text-white">Upload</h4>
+                <p className="text-sm text-zinc-400">Upload your 2D structural drawing (DXF or DWG, PDF best-effort).</p>
               </div>
 
               {/* Step 2 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <div className="text-2xl">🤖</div>
+                  <Cpu className="w-8 h-8 text-yellow-400" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 2</span>
-                <h4 className="font-bold text-lg text-white">Hand Drawn to AutoCAD</h4>
-                <p className="text-sm text-zinc-400">AI analyzes and produces clean CAD vector</p>
+                <h4 className="font-bold text-lg text-white">Computer Vision</h4>
+                <p className="text-sm text-zinc-400">AI scans layout, thickness, dimensions, and annotations</p>
               </div>
 
               {/* Step 3 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <FileText className="w-8 h-8 text-zinc-300" />
+                  <Box className="w-8 h-8 text-yellow-400" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 3</span>
-                <h4 className="font-bold text-lg text-white">Clean CAD File</h4>
-                <p className="text-sm text-zinc-400">DWG/DXF ready for structural modelling</p>
+                <h4 className="font-bold text-lg text-white">3D Generation</h4>
+                <p className="text-sm text-zinc-400">3D Revit/IFC model generated to a working level, completed by prompt in WordToBIM.</p>
               </div>
 
               {/* Step 4 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <div className="text-2xl">🏗️</div>
+                  <MessageSquare className="w-8 h-8 text-yellow-400" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 4</span>
-                <h4 className="font-bold text-lg text-white">Output</h4>
-                <p className="text-sm text-zinc-400">Feeds into Auto Conversion or Revit workflows</p>
+                <h4 className="font-bold text-lg text-white">Prompt in WordToBIM</h4>
+                <p className="text-sm text-zinc-400">Revit plugin models custom or detailed elements from text prompts</p>
+              </div>
+
+              {/* Step 5 */}
+              <div className="text-center space-y-4">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
+                  <Layers className="w-8 h-8 text-yellow-400" />
+                </div>
+                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 5</span>
+                <h4 className="font-bold text-lg text-white">BOQ & Coordination</h4>
+                <p className="text-sm text-zinc-400">modeller prompts WordToBIM for remaining elements, then the model feeds estimating, clash detection, and site workflows.</p>
               </div>
             </div>
           </motion.div>
@@ -764,58 +809,49 @@ export default function HandDrawnToAutoCADPage() {
               <div className="space-y-8">
                 <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest block">Deployment</span>
                 <h2 className="text-4xl sm:text-5xl font-bold text-zinc-950">Pricing & Availability</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 gap-6 max-w-md">
                   <div className="p-8 bg-white border border-zinc-200 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Per-Architect License</span>
-                    <p className="text-4xl font-black tracking-tight">$4,000</p>
-                    <p className="text-sm text-zinc-500">One-off per architect. Includes calibration.</p>
-                  </div>
-                  <div className="p-8 bg-white border border-zinc-200 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Annual Support</span>
-                    <p className="text-4xl font-black tracking-tight">$300<span className="text-base font-normal text-zinc-400">/yr</span></p>
-                    <p className="text-sm text-zinc-500">Maintenance and model updates.</p>
-                  </div>
-                  <div className="p-8 bg-white border border-zinc-200 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Implementation</span>
-                    <p className="text-4xl font-black tracking-tight">1 week</p>
-                    <p className="text-sm text-zinc-500">Calibration period for your drawing style.</p>
+                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Auto Conversion 2D to 3D</span>
+                    <p className="text-4xl font-black tracking-tight">$3,500 to $4,500</p>
+                    <p className="text-sm text-zinc-500 font-medium">Final price depends on drawing complexity and module scope.</p>
+                    <p className="text-xs text-zinc-400">IFC or DWG export and the WordToBIM Revit plugin included.</p>
                   </div>
                 </div>
 
-              {/* Related Products - Moved from sidebar */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-sm"
-              >
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-6">Related Products</h4>
-                <ul className="space-y-4 text-sm">
-                  <li>
-                    <Link href="/learnmore/auto-conversion-2d-to-3d" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                      <span>Auto Conversion 2D to 3D</span>
-                      <span className="text-xs text-zinc-400 font-medium">Next step</span>
+                {/* Related Products - Moved from sidebar */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-sm"
+                >
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-6">Related Products</h4>
+                  <ul className="space-y-4 text-sm">
+                    <li>
+                      <Link href="/learnmore/auto-conversion-2d-to-3d" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>Auto Conversion 2D to 3D</span>
+                        <span className="text-xs text-zinc-400 font-medium">Next step</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/learnmore/revit-to-boq" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>Revit to BOQ</span>
+                        <span className="text-xs text-zinc-400 font-medium">Workflow</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/learnmore/planning-law-chatbot" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>Planning Law Chatbot</span>
+                        <span className="text-xs text-zinc-400 font-medium">Pre-design</span>
+                      </Link>
+                    </li>
+                  </ul>
+                  <div className="pt-4 mt-4 border-t border-zinc-100">
+                    <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                      View full suite <ChevronRight className="w-3.5 h-3.5" />
                     </Link>
-                  </li>
-                  <li>
-                    <Link href="/learnmore/revit-to-boq" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                      <span>Revit to BOQ</span>
-                      <span className="text-xs text-zinc-400 font-medium">Workflow</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/learnmore/planning-law-chatbot" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                      <span>Planning Law Chatbot</span>
-                      <span className="text-xs text-zinc-400 font-medium">Pre-design</span>
-                    </Link>
-                  </li>
-                </ul>
-                <div className="pt-4 mt-4 border-t border-zinc-100">
-                  <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
-                    View full suite <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </motion.div>
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
 
@@ -838,16 +874,12 @@ export default function HandDrawnToAutoCADPage() {
                     <span className="font-bold text-zinc-900 text-right">Architects, Firms</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-zinc-500 font-semibold">Regions</span>
-                    <span className="font-bold text-zinc-900">UK, Australia</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
                     <span className="text-zinc-500 font-semibold">Calibration</span>
                     <span className="font-bold text-zinc-900">1 week</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-zinc-500 font-semibold">Pricing</span>
-                    <span className="font-bold text-zinc-900">$4,000 + $300/yr</span>
+                    <span className="font-bold text-zinc-900">USD 3,500 to 4,500, depending on complexity</span>
                   </div>
                 </div>
 
@@ -864,146 +896,47 @@ export default function HandDrawnToAutoCADPage() {
                   </a>
                 </Button>
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* ─── Comparison Section - Apple Style ─── */}
-      <section ref={comparisonRef} className="py-32 px-6 bg-white">
-        <div className="max-w-6xl mx-auto space-y-16">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={isComparisonInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest block mb-4">
-              Comparative Advantage
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-950">
-              Why choose Hand Drawn to AutoCAD
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Outsourcing */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={isComparisonInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              whileHover={{ y: -12 }}
-              className="p-8 rounded-3xl border border-zinc-200 bg-zinc-50 flex flex-col"
-            >
-              <h4 className="text-sm font-bold text-zinc-400 uppercase tracking-wider mb-6">Outsourcing</h4>
-              <div className="h-0.5 bg-zinc-200 w-full mb-6" />
-              <ul className="space-y-4 text-sm text-zinc-600 flex-1">
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  3–7 day turnaround
-                </li>
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  USD 200–500 per drawing
-                </li>
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  Multiple correction cycles
-                </li>
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  Quality depends on provider
-                </li>
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  Communication delays
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Hand Drawn to AutoCAD - Highlighted */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={isComparisonInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              whileHover={{ y: -16, scale: 1.02 }}
-              className="relative p-8 rounded-3xl bg-zinc-900 text-white flex flex-col shadow-2xl border-2 border-[var(--color-lime)]"
-            >
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-[var(--color-lime)] text-black text-[10px] font-bold uppercase tracking-wider">
-                ★ Recommended
-              </div>
-              <h4 className="text-lg font-extrabold text-white uppercase tracking-wider mb-6">Hand Drawn to AutoCAD</h4>
-              <div className="h-1 bg-zinc-700 w-full mb-6 rounded-full" />
-              <ul className="space-y-4 text-sm font-semibold flex-1">
-                <li className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-[var(--color-lime)] flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 text-black" />
-                  </div>
-                  Minutes per drawing
-                </li>
-                <li className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-[var(--color-lime)] flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 text-black" />
-                  </div>
-                  Saves 100+ USD per drawing
-                </li>
-                <li className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-[var(--color-lime)] flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 text-black" />
-                  </div>
-                  Learns your style over time
-                </li>
-                <li className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-[var(--color-lime)] flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 text-black" />
-                  </div>
-                  Consistent quality
-                </li>
-                <li className="flex gap-3 items-start">
-                  <div className="w-6 h-6 rounded-full bg-[var(--color-lime)] flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 text-black" />
-                  </div>
-                  No communication needed
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Manual CAD Redraw */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={isComparisonInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              whileHover={{ y: -12 }}
-              className="p-8 rounded-3xl border border-zinc-200 bg-zinc-50 flex flex-col"
-            >
-              <h4 className="text-sm font-bold text-zinc-400 uppercase tracking-wider mb-6">Manual CAD Redraw</h4>
-              <div className="h-0.5 bg-zinc-200 w-full mb-6" />
-              <ul className="space-y-4 text-sm text-zinc-600 flex-1">
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  Architect does it themselves
-                </li>
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  Defeats the purpose
-                </li>
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  Architect time is more valuable
-                </li>
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  Time-consuming for complex sketches
-                </li>
-                <li className="flex gap-3 items-start">
-                  <X className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
-                  No AI assistance
-                </li>
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <div ref={comparisonRef}>
+        <ComparisonGrid
+          sectionTitle="Why choose Auto Conversion 2D to 3D"
+          card1={{
+            title: "Manual Tracing",
+            subtitle: "Manual Polyline Tracing",
+            features: [
+              "1 to 2 weeks per drawing set",
+              "Labor-intensive, error-prone",
+              "Modeller time wasted on conversion",
+              "Geometry duplicated unnecessarily",
+            ],
+            metric: { value: "1-2", label: "WEEKS" },
+            button: { text: "Traditional Route", href: "/pricing" },
+          }}
+          card2={{
+            title: "Auto Conversion",
+            subtitle: "Hand Drawn to AutoCAD",
+            features: [
+              "1 to 2 days per drawing set",
+              "AI conversion plus prompt-based modelling, consistent results",
+              "Modeller time freed for coordination",
+              "Slab automation production-ready, WordToBIM Revit plugin included",
+            ],
+            metric: { value: "1-2", label: "DAYS" },
+            button: { text: "Book A Demo", href: "https://calendar.app.google/mCq7zBhXrDnEAJvB7" },
+          }}
+          card3={{
+            title: "Other Tools",
+            subtitle: "Other PDF-to-3D Tools",
+            features: [
+              "Require manual redraw and validation at every step",
+              "Work only for simple geometry",
+              "Not trained on structural drawings, no prompt layer",
+            ],
+            metric: { value: "UNRELIABLE", label: "FAST /" },
+            button: { text: "Other Tools", href: "https://chat.openai.com" },
+          }}
+        />
+      </div>
 
       {/* ─── FAQ Section ─── */}
       <section ref={faqRef} className="py-32 px-6 bg-[#FAFAF8]">
@@ -1025,9 +958,9 @@ export default function HandDrawnToAutoCADPage() {
           <div className="space-y-4">
             {[
               { q: 'Does it work with sketches on whiteboard or paper?', a: 'Yes to both. Paper sketches photograph well with standard smartphone camera. Whiteboard sketches work best if photographed in good light (avoid reflections).' },
-              { q: 'What file formats does it output?', a: 'AutoCAD DWG format with standard architectural layers. Can also export to DXF if needed.' },
+              { q: 'What file formats does it accept?', a: 'We recommend DXF and DWG formats for the highest accuracy. PDF and TIFF work best-effort because flattened drawings lose vector precision.' },
               { q: 'Can it handle complex sketches with lots of detail?', a: 'Yes, but best results are with clear floor plan sketches. Complex sections and details are handled as separate uploads.' },
-              { q: 'How long does the calibration take?', a: '1 week. We process 3–5 sample drawings from the architect to train the model to recognize their specific drawing conventions.' },
+              { q: 'How long does the calibration take?', a: '1 week. We process 3 to 5 sample drawings from the architect to train the model to recognize their specific drawing conventions.' },
               { q: 'What if the architect\'s drawing style changes?', a: 'The model adapts automatically with each new drawing. If a significant change occurs, we can recalibrate (recommend annually or after style shift).' },
             ].map((faq, idx) => (
               <motion.div
@@ -1045,9 +978,8 @@ export default function HandDrawnToAutoCADPage() {
                     {faq.q}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-zinc-400 transition-transform duration-300 shrink-0 ${
-                      activeFaq === idx ? "rotate-180" : ""
-                    }`}
+                    className={`w-5 h-5 text-zinc-400 transition-transform duration-300 shrink-0 ${activeFaq === idx ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
                 <AnimatePresence>
@@ -1072,44 +1004,48 @@ export default function HandDrawnToAutoCADPage() {
       </section>
 
       {/* ─── Footer CTA - Apple Style ─── */}
-      <section className="py-32 px-6 bg-zinc-900 relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-[var(--color-lime)]/15 via-[var(--color-lime)]/8 to-[var(--color-lime)]/15 rounded-full blur-3xl" />
-        </div>
-        
-        <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
+      <section className="py-24 px-6 bg-[#F4F2F0] dark:bg-zinc-900/40 border-t border-zinc-200 dark:border-zinc-800 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-955 dark:text-zinc-50 leading-tight uppercase"
           >
             Keep designing creatively.
             <br />
-            <span className="text-zinc-400">Let us handle the digital conversion.</span>
+            <span className="text-zinc-500 dark:text-zinc-400">Let us handle the digital conversion.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-zinc-400 text-xl max-w-2xl mx-auto leading-relaxed"
+            className="text-zinc-500 dark:text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
           >
-            See how Hand Drawn to AutoCAD eliminates the outsourcing cycle.
+            See how Auto Conversion 2D to 3D eliminates geometry duplication from your workflow.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="pt-6 flex justify-center gap-4"
+            className="pt-4 flex justify-center gap-4"
           >
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-10 py-7 font-bold shadow-xl bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer hover:scale-105 transition-all duration-300"
+              className="rounded-2xl px-8 py-6 font-bold border border-zinc-300 dark:border-zinc-700 text-zinc-955 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer transition-all duration-300"
+            >
+              <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
+                Book a Demo →
+              </a>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl bg-[#ecf000] text-zinc-955 hover:bg-[#ecf000]/90 cursor-pointer transition-all duration-300"
             >
               <a href="/pricing">
                 Buy Products →
@@ -1123,3 +1059,4 @@ export default function HandDrawnToAutoCADPage() {
     </main>
   );
 }
+

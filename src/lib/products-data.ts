@@ -190,6 +190,6 @@ export const allProducts: Product[] = [
     regions: ["Sri Lanka", "Global Licensing"],
     status: "Scaling",
     personas: ["contractors"],
-    image: "/images/perk-setup.png",
+    image: "/images/buildmarketlk_dashboard.png",
   },
 ]

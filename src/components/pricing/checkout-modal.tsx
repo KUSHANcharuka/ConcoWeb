@@ -194,14 +194,14 @@ export function CheckoutModal({
                 )}
                 
                 {seatDiscountPercent > 0 && calculations.hasPerSeat && (
-                  <div className="flex justify-between text-lime-dark dark:text-lime font-bold">
+                  <div className="flex justify-between text-emerald-700 dark:text-emerald-400 font-bold">
                     <span>Seat Discount</span>
                     <span>-{seatDiscountPercent}%</span>
                   </div>
                 )}
 
                 {bundleDiscountPercent > 0 && (
-                  <div className="flex justify-between text-lime-dark dark:text-lime font-bold">
+                  <div className="flex justify-between text-emerald-700 dark:text-emerald-400 font-bold">
                     <span>Bundle Discount</span>
                     <span>-{bundleDiscountPercent}%</span>
                   </div>

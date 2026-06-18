@@ -310,4 +310,34 @@ button:not([role="switch"]):not([role="checkbox"]):not([role="menuitem"]),
   transform: translateY(0) scale(0.98) !important;
 }
 
+/* Product page title gradient sweep animation */
+.product-title-sweep {
+  background: linear-gradient(
+    to right,
+    currentColor 0%,
+    currentColor 25%,
+    var(--color-lime) 40%,
+    #ffffff 50%,
+    #a1a1aa 60%,
+    #27272a 75%,
+    currentColor 85%,
+    currentColor 100%
+  );
+  background-size: 300% 100%;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: text-gradient-sweep 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes text-gradient-sweep {
+  0% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+
 

@@ -61,44 +61,46 @@ export function VideoLightbox({ isOpen, onClose, videoUrl }: VideoLightboxProps)
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-md">
-        {/* Background Click Close */}
-        <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-black/80 backdrop-blur-md">
+          {/* Background Click Close */}
+          <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="relative w-full max-w-5xl aspect-video rounded-2xl bg-zinc-950 border border-zinc-800 overflow-hidden shadow-2xl z-10"
-        >
-          {/* Close button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-black/60 text-white hover:bg-black/85 transition-colors z-20 cursor-pointer"
-            aria-label="Close video player"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="relative w-full max-w-5xl aspect-video rounded-2xl bg-zinc-950 border border-zinc-800 overflow-hidden shadow-2xl z-10"
           >
-            <X className="w-5 h-5" />
-          </button>
+            {/* Close button */}
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 rounded-full bg-black/60 text-white hover:bg-black/85 transition-colors z-20 cursor-pointer"
+              aria-label="Close video player"
+            >
+              <X className="w-5 h-5" />
+            </button>
 
-          {/* Video Iframe container */}
-          <div className="w-full h-full">
-            {embedUrl ? (
-              <iframe
-                src={embedUrl}
-                title="Concolabs Demo Video"
-                className="w-full h-full border-0"
-                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-                allowFullScreen
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-zinc-400">
-                Invalid video link.
-              </div>
-            )}
-          </div>
-        </motion.div>
-      </div>
+            {/* Video Iframe container */}
+            <div className="w-full h-full">
+              {embedUrl ? (
+                <iframe
+                  src={embedUrl}
+                  title="Concolabs Demo Video"
+                  className="w-full h-full border-0"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-zinc-400">
+                  Invalid video link.
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
     </AnimatePresence>
   )
 }

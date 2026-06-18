@@ -50,7 +50,7 @@ export function FinalCTA() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
         >
-          Join the leading construction companies transforming their operations with Concolabs. 
+          Join the leading construction companies transforming their operations with Concolabs.
           Get started in minutes, not months.
         </motion.p>
 
@@ -67,8 +67,8 @@ export function FinalCTA() {
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg" className="h-14 px-8 text-base group">
-            <Link href="/pricing">
-              View Pricing
+            <Link href="/learnmore#products">
+              View All Products
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>
@@ -80,11 +80,7 @@ export function FinalCTA() {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground"
         >
-          <span>14-day free trial</span>
-          <span className="hidden sm:inline">•</span>
-          <span>No credit card required</span>
-          <span className="hidden sm:inline">•</span>
-          <span>Setup in 5 minutes</span>
+
         </motion.div>
       </motion.div>
     </section>

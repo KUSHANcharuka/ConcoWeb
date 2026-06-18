@@ -189,7 +189,7 @@ export default function AboutUsPage() {
   const isOfficesInView = useInView(officesRef, { once: true, margin: "-100px" })
 
   return (
-    <main className="min-h-screen bg-background pt-20">
+    <main className="min-h-screen bg-lime/10 pt-20">
       <Navbar />
 
       {/* Hero Section */}
@@ -211,7 +211,7 @@ export default function AboutUsPage() {
             />
           </video>
           {/* Dark overlay for readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/25" />
+          <div className="absolute inset-0 bg-lime/10 from-black/85 via-black/55 to-black/25" />
         </div>
 
         <div className="max-w-6xl mx-auto w-full relative z-10">
@@ -219,15 +219,15 @@ export default function AboutUsPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-6 max-w-3xl text-left"
+            className="space-y-6 max-w-3xl text-zinc-600"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-tight">
+            <h1 className="text-zinc-600 sm:text-zinc-600 md:text-zinc-600 font-bold tracking-tight text-white leading-tight">
               We free smart teams <br />
               <span className="text-white/70">
                 to build great things.
               </span>
             </h1>
-            <p className="text-lg sm:text-xl text-zinc-300 max-w-2xl leading-relaxed">
+            <p className="text-zinc-600 sm:text-zinc-600 text-zinc-300 max-w-2xl leading-relaxed">
               Concolabs is on a mission to eliminate administrative drag and busywork from construction operations, freeing field and office teams to focus on building.
             </p>
           </motion.div>
@@ -235,7 +235,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Eliminating Friction Section */}
-      <section ref={frictionRef} className="py-24 px-6 bg-background">
+      <section ref={frictionRef} className="py-24 px-6 bg-lime/10">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -243,17 +243,17 @@ export default function AboutUsPage() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-6 space-y-6"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 text-balance leading-tight">
+            <h2 className="text-zinc-600 sm:text-zinc-600 md:text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50 text-zinc-600 leading-tight">
               Concolabs unifies field operations, finance, and workflows
             </h2>
-            <div className="w-20 h-1 bg-primary rounded-full" />
+            <div className="w-20 h-1 bg-lime/10 rounded-full" />
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isFrictionInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-6 space-y-6 text-zinc-600 dark:text-zinc-400 leading-relaxed text-base sm:text-lg"
+            className="lg:col-span-6 space-y-6 text-zinc-600 dark:text-zinc-400 leading-relaxed text-zinc-600 sm:text-zinc-600"
           >
             <p>
               We believe that running a construction company shouldn&apos;t require shuffling through paper logs, chasing spreadsheet updates, or wrestling with disconnected software.
@@ -266,11 +266,11 @@ export default function AboutUsPage() {
       </section>
 
       {/* Interactive Journey Timeline Section */}
-      <section ref={journeyRef} className="py-24 px-6 bg-[#F4F2F0] dark:bg-zinc-950 overflow-hidden">
+      <section ref={journeyRef} className="py-24 px-6 bg-lime/10 dark:bg-zinc-950 overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Our Journey</h2>
-            <p className="text-lg text-zinc-500">How we are building the future of construction ops</p>
+          <div className="text-zinc-600 mb-16 space-y-4">
+            <h2 className="text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Our Journey</h2>
+            <p className="text-zinc-600 text-zinc-500">How we are building the future of construction ops</p>
           </div>
 
           <div className="relative bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-6 sm:p-12 shadow-sm">
@@ -280,11 +280,7 @@ export default function AboutUsPage() {
                 <button
                   onClick={handlePrev}
                   disabled={startIndex === 0}
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm transition-all ${
-                    startIndex === 0
-                      ? "opacity-30 cursor-not-allowed"
-                      : "opacity-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer"
-                  }`}
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm transition-all ${ startIndex === 0 ? "opacity-30 cursor-not-allowed" : "opacity-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer" }`}
                 >
                   <ChevronLeft className="w-5 h-5 text-zinc-500" />
                 </button>
@@ -295,7 +291,7 @@ export default function AboutUsPage() {
                 
                 {/* Animated fill line */}
                 <motion.div
-                  className="absolute h-1 bg-primary top-1/2 -translate-y-1/2 z-0 origin-left"
+                  className="absolute h-1 bg-lime/10 top-1/2 -translate-y-1/2 z-0 origin-left"
                   style={{ left: "-24px" }}
                   initial={{ width: "0%" }}
                   animate={{ width: fillPercentages[selectedYear] || "0%" }}
@@ -312,15 +308,7 @@ export default function AboutUsPage() {
                     }`}
                   >
                     <div
-                      className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold transition-all duration-300 border ${
-                        node === currentMonthName ? "text-xs sm:text-base" : "text-sm sm:text-lg"
-                      } ${
-                        node === futureYear
-                          ? "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500"
-                          : selectedYear === node
-                          ? "bg-primary border-primary text-primary-foreground shadow-md scale-110"
-                          : "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 hover:border-zinc-800 dark:hover:border-zinc-200 hover:text-zinc-800 dark:hover:text-zinc-200"
-                      }`}
+                      className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold transition-all duration-300 border ${ node === currentMonthName ? "text-xs sm:text-sm" : "text-sm sm:text-base" } ${ node === futureYear ? "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500" : selectedYear === node ? "bg-primary border-primary text-primary-foreground shadow-md scale-110" : "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 hover:border-zinc-800 dark:hover:border-zinc-200 hover:text-zinc-800 dark:hover:text-zinc-200" }`}
                     >
                       {node}
                     </div>
@@ -355,16 +343,16 @@ export default function AboutUsPage() {
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
                 >
                   <div className="lg:col-span-7 space-y-6">
-                    <h3 className="text-3xl font-bold text-zinc-950 dark:text-zinc-50">
+                    <h3 className="text-zinc-600 font-bold text-zinc-950 dark:text-zinc-50">
                       {getMilestone(selectedYear, currentYear, currentMonthName).title}
                     </h3>
-                    <p className="text-lg font-medium text-zinc-700 dark:text-zinc-300">
+                    <p className="text-zinc-600 font-medium text-zinc-700 dark:text-zinc-300">
                       {getMilestone(selectedYear, currentYear, currentMonthName).description}
                     </p>
                     <ul className="space-y-3">
                       {getMilestone(selectedYear, currentYear, currentMonthName).details.map((detail, idx) => (
-                        <li key={idx} className="flex gap-3 text-zinc-600 dark:text-zinc-400 text-sm sm:text-base">
-                          <ChevronRight className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                        <li key={idx} className="flex gap-3 text-zinc-600 dark:text-zinc-400 text-zinc-600 sm:text-zinc-600">
+                          <ChevronRight className="w-5 h-5 text-lime shrink-0 mt-0.5" />
                           <span>{detail}</span>
                         </li>
                       ))}
@@ -372,11 +360,11 @@ export default function AboutUsPage() {
                   </div>
 
                   {getMilestone(selectedYear, currentYear, currentMonthName).stats && (
-                    <div className="lg:col-span-5 flex flex-col items-center justify-center p-8 bg-[#F4F2F0] dark:bg-zinc-950 rounded-2xl border border-zinc-200 dark:border-zinc-800">
-                      <span className="text-5xl sm:text-6xl font-black text-zinc-950 dark:text-zinc-50 tracking-tight">
+                    <div className="lg:col-span-5 flex flex-col items-center justify-center p-8 bg-lime/10 dark:bg-zinc-950 rounded-2xl border border-zinc-200 dark:border-zinc-800">
+                      <span className="text-zinc-600 sm:text-zinc-600 font-black text-zinc-950 dark:text-zinc-50 tracking-tight">
                         {getMilestone(selectedYear, currentYear, currentMonthName).stats?.value}
                       </span>
-                      <span className="text-sm font-semibold text-zinc-500 uppercase tracking-wider mt-2 text-center">
+                      <span className="text-zinc-600 font-semibold text-zinc-500 uppercase tracking-wider mt-2 text-zinc-600">
                         {getMilestone(selectedYear, currentYear, currentMonthName).stats?.label}
                       </span>
                     </div>
@@ -389,11 +377,11 @@ export default function AboutUsPage() {
       </section>
 
       {/* Leadership Team Section */}
-      <section ref={teamRef} className="py-24 px-6 bg-background">
+      <section ref={teamRef} className="py-24 px-6 bg-lime/10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Meet our leadership team</h2>
-            <p className="text-lg text-zinc-500">Concolabs executives have helped grow the likes of Autodesk, Procore, and Salesforce.</p>
+          <div className="text-zinc-600 mb-16 space-y-4">
+            <h2 className="text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Meet our leadership team</h2>
+            <p className="text-zinc-600 text-zinc-500">Concolabs executives have helped grow the likes of Autodesk, Procore, and Salesforce.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -415,11 +403,11 @@ export default function AboutUsPage() {
                       className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-103 transition-all duration-500"
                     />
                   </div>
-                  <h3 className="text-xl font-bold text-zinc-950 dark:text-zinc-50">{leader.name}</h3>
-                  <p className="text-sm font-semibold text-zinc-500 mt-0.5">{leader.role}</p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed">{leader.bio}</p>
+                  <h3 className="text-zinc-600 font-bold text-zinc-950 dark:text-zinc-50">{leader.name}</h3>
+                  <p className="text-zinc-600 font-semibold text-zinc-500 mt-0.5">{leader.role}</p>
+                  <p className="text-zinc-600 text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed">{leader.bio}</p>
                 </div>
-                <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                <div className="mt-6 pt-4 border-lime/20 border-zinc-200 dark:border-zinc-800">
                   <a
                     href={leader.linkedin}
                     target="_blank"
@@ -438,11 +426,11 @@ export default function AboutUsPage() {
       </section>
 
       {/* Office Locations Section */}
-      <section ref={officesRef} className="py-24 px-6 bg-[#F4F2F0] dark:bg-zinc-950">
+      <section ref={officesRef} className="py-24 px-6 bg-lime/10 dark:bg-zinc-950">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Where we work</h2>
-            <p className="text-lg text-zinc-500">Our offices span four continents, bringing together world-class talent.</p>
+          <div className="text-zinc-600 mb-16 space-y-4">
+            <h2 className="text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Where we work</h2>
+            <p className="text-zinc-600 text-zinc-500">Our offices span four continents, bringing together world-class talent.</p>
           </div>
 
           <motion.div
@@ -456,20 +444,20 @@ export default function AboutUsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-6 bg-background relative overflow-hidden">
+      <section className="py-24 px-6 bg-lime/10 relative overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
-          <div className="w-[800px] h-[800px] bg-primary rounded-full blur-3xl" />
+          <div className="w-[800px] h-[800px] bg-lime/10 rounded-full blur-3xl" />
         </div>
 
-        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-8">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 text-balance leading-tight">
+        <div className="max-w-4xl mx-auto text-zinc-600 relative z-10 space-y-8">
+          <h2 className="text-zinc-600 sm:text-zinc-600 md:text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50 text-zinc-600 leading-tight">
             Ready to make an impact?
           </h2>
-          <p className="text-lg sm:text-xl text-zinc-500 max-w-xl mx-auto leading-relaxed">
+          <p className="text-zinc-600 sm:text-zinc-600 text-zinc-500 max-w-xl mx-auto leading-relaxed">
             Join us to modernize finance and help every business thrive.
           </p>
           <div className="flex justify-center">
-            <Button asChild size="lg" className="bg-primary text-black hover:bg-primary/90 px-8 py-6 rounded-xl font-bold shadow-md min-w-[200px]">
+            <Button asChild size="lg" className="bg-lime/10 text-black hover:bg-lime/10 px-8 py-6 rounded-xl font-bold shadow-md min-w-[200px]">
               <Link href="/careers">See open positions</Link>
             </Button>
           </div>

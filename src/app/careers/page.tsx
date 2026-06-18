@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function CareersPage() {
   return (
-    <main className="min-h-screen bg-[#FAFAF8] dark:bg-black text-foreground antialiased">
+    <main className="min-h-screen bg-lime/20 dark:bg-black text-zinc-600 antialiased">
       <Navbar />
       <CareersHero />
       <CareersValues />

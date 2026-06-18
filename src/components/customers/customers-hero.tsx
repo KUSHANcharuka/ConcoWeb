@@ -6,17 +6,40 @@ import { ArrowRight, ArrowDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-import Image from "next/image"
 
 const companies = [
-  { name: "KKR", logo: "/logos/trusted/kkr.svg", width: 120, height: 34 },
-  { name: "Morgan Stanley", logo: "/logos/trusted/morgan-stanley.svg", width: 240, height: 34 },
-  { name: "MetLife", logo: "/logos/trusted/metlife.svg", width: 140, height: 34 },
-  { name: "Centerview", logo: "/logos/trusted/centerview.svg", width: 210, height: 34 },
-  { name: "OHA", logo: "/logos/trusted/oha.svg", width: 120, height: 38 },
-  { name: "Rice Management", logo: "/logos/trusted/rice.svg", width: 130, height: 38 },
-  { name: "New Mountain Capital", logo: "/logos/trusted/new-mountain-capital.svg", width: 230, height: 42 },
-  { name: "Latham & Watkins", logo: "/logos/trusted/latham-watkins.svg", width: 280, height: 34 },
+  {
+    name: "Ark Draft Pty Ltd",
+    logo: "https://images.squarespace-cdn.com/content/v1/65fa19a21657386c527d70e8/2f5be0b6-6c14-478f-bd47-7480ef0ced4c/Arkdraft+Logo+Text.png?format=1500w",
+  },
+  {
+    name: "International Construction Consortium",
+    logo: "https://icc-construct.com/wp-content/uploads/2023/01/cropped-ICC-LOGO-192x192.jpg",
+  },
+  {
+    name: "Sanken overseas Pvt Ltd",
+    logo: "https://www.sankenoverseas.com/wp-content/themes/sanken/assets/img/logo.svg",
+  },
+  {
+    name: "Design Group Five Pvt Ltd",
+    logo: "https://www.dgfivei.com/wp-content/uploads/2025/11/Main-LOGO-2048x1098-1sss.png",
+  },
+  {
+    name: "Downer Group Nz",
+    logo: "https://downergroup.co.nz/wp-content/uploads/sites/5/2025/10/Downer-Logo.svg",
+  },
+  {
+    name: "John Keells Properties",
+    logo: "https://www.johnkeellsproperties.com/images/logos/sitelogo.svg",
+  },
+  {
+    name: "Land Sterling",
+    logo: "https://landsterling.com/wp-content/uploads/2023/12/LS-logo.svg",
+  },
+  {
+    name: "NEOM",
+    logo: "https://neom.scene7.com/is/image/neom/logo-neom-en-spaced?fmt=png-alpha&scl=1",
+  },
 ]
 
 const featuredReviews = [
@@ -218,12 +241,15 @@ export function CustomersHero() {
                   key={`${company.name}-${index}`}
                   className="flex items-center justify-center min-w-[150px] shrink-0"
                 >
-                  <Image
+                  <img
                     src={company.logo}
                     alt={company.name}
-                    width={company.width}
-                    height={company.height}
-                    className="h-7 w-auto opacity-40 dark:opacity-60 dark:invert transition-opacity hover:opacity-100 duration-300"
+                    loading="lazy"
+                    className={`h-7 w-auto object-contain opacity-50 dark:opacity-70 transition-opacity hover:opacity-100 duration-300 ${
+                      company.name === "John Keells Properties"
+                        ? "brightness-0 dark:brightness-100"
+                        : "grayscale hover:grayscale-0 dark:invert"
+                    }`}
                   />
                 </div>
               ))}
