@@ -165,14 +165,14 @@ export default function TenderEvaluationsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased selection:bg-[#ecf000]/30 selection:text-black">
+    <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased selection:bg-lime/30 selection:text-black">
       <Navbar />
 
       {/* ─── HERO SECTION ─── */}
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-zinc-50 dark:bg-zinc-950 pt-16">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-[#ecf000]/20 via-[#ecf000]/10 to-transparent rounded-full blur-[130px] mix-blend-multiply dark:mix-blend-screen opacity-75 animate-pulse" style={{ animationDuration: '10s' }} />
-          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-[#ecf000]/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] mix-blend-multiply dark:mix-blend-screen opacity-65" />
+          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/20 via-lime/10 to-transparent rounded-full blur-[130px] mix-blend-multiply dark:mix-blend-screen opacity-75 animate-pulse" style={{ animationDuration: '10s' }} />
+          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-lime/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] mix-blend-multiply dark:mix-blend-screen opacity-65" />
           <div className="absolute inset-0 bg-white/40 dark:bg-zinc-950/60 backdrop-blur-[1px]" />
           
           {/* Blueprint grid pattern */}
@@ -210,7 +210,7 @@ export default function TenderEvaluationsPage() {
                 className="space-y-6"
               >
                 <motion.div variants={fadeInUp} className="flex items-center gap-3">
-                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-[#ecf000]/10 border border-[#ecf000]/30 text-zinc-900 dark:text-white backdrop-blur-md">
+                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-lime/10 border border-lime/30 text-zinc-900 dark:text-white backdrop-blur-md">
                     Tendering & Intake
                   </span>
                   <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-250/50 dark:bg-zinc-800 border border-zinc-350 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400">
@@ -235,7 +235,7 @@ export default function TenderEvaluationsPage() {
                 >
                   Side-by-side bid comparison reports compiled instantly.
                   <br />
-                  <span className="text-[#ecf000] dark:text-[#ecf000] font-bold">No manual data entry.</span>
+                  <span className="text-lime dark:text-lime font-bold">No manual data entry.</span>
                 </motion.p>
 
                 {/* Switcher Widget inside Hero Left */}
@@ -355,14 +355,14 @@ export default function TenderEvaluationsPage() {
                     size="lg"
                     className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
                   >
-                    <Play className="w-4 h-4 mr-2 text-[#ecf000] dark:text-[#ecf000] fill-[#ecf000]" />
+                    <Play className="w-4 h-4 mr-2 text-lime dark:text-lime fill-lime" />
                     Watch Demo
                   </Button>
                   
                   <Button
                     asChild
                     size="lg"
-                    className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-[#ecf000]/10 cursor-pointer bg-[#ecf000] text-black hover:bg-[#ecf000]/90 border-0 transition-transform hover:scale-105"
+                    className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-lime/10 cursor-pointer bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-105"
                   >
                     <a
                       href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
@@ -384,24 +384,24 @@ export default function TenderEvaluationsPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative"
               >
-                <div className="absolute -inset-1 rounded-[30px] bg-gradient-to-tr from-[#ecf000] to-transparent opacity-20 blur-lg" />
+                <div className="absolute -inset-1 rounded-[30px] bg-gradient-to-tr from-lime to-transparent opacity-20 blur-lg" />
                 <div className="relative rounded-[28px] overflow-hidden border border-zinc-200/70 dark:border-zinc-800/70 bg-zinc-900/5 dark:bg-zinc-900/40 shadow-xl p-6 space-y-6">
                   <div className="flex items-center justify-between border-b border-zinc-250 dark:border-zinc-800 pb-4">
                     <div>
                       <div className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest">Intake System</div>
                       <div className="text-base font-bold text-zinc-900 dark:text-white">Active Tender Packages</div>
                     </div>
-                    <Mail className="w-5 h-5 text-[#ecf000]" />
+                    <Mail className="w-5 h-5 text-lime" />
                   </div>
                   
                   {/* Parsing flow animation visual */}
                   <div className="bg-zinc-950/80 rounded-2xl p-4 space-y-3 font-mono text-xs">
                     <div className="flex justify-between items-center text-zinc-400">
                       <span>Analyzing bids...</span>
-                      <span className="text-[#ecf000] animate-pulse">Processing</span>
+                      <span className="text-lime animate-pulse">Processing</span>
                     </div>
                     <div className="w-full bg-zinc-900 rounded-full h-1.5 overflow-hidden">
-                      <div className="bg-[#ecf000] h-1.5 rounded-full" style={{ width: '92%' }} />
+                      <div className="bg-lime h-1.5 rounded-full" style={{ width: '92%' }} />
                     </div>
                     <div className="space-y-1.5 text-[11px]">
                       <div className="flex justify-between text-zinc-400">
@@ -449,7 +449,7 @@ export default function TenderEvaluationsPage() {
             <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-950 dark:text-white leading-tight uppercase">
               Bid evaluation is manual data entry.
             </h2>
-            <div className="w-16 h-1 bg-[#ecf000] rounded-full" />
+            <div className="w-16 h-1 bg-lime rounded-full" />
           </motion.div>
 
           <motion.div
@@ -500,7 +500,7 @@ export default function TenderEvaluationsPage() {
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-10">
             <div className="space-y-4 max-w-2xl">
-              <span className="text-xs font-bold text-[#ecf000] uppercase tracking-widest block">
+              <span className="text-xs font-bold text-lime uppercase tracking-widest block">
                 Key Capabilities
               </span>
               <h2 className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.1] uppercase">
@@ -549,10 +549,10 @@ export default function TenderEvaluationsPage() {
               <div className="mt-10 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 shadow-sm space-y-3 font-mono text-xs">
                 <div className="flex justify-between items-center">
                   <span className="text-zinc-400">Compliance Grade</span>
-                  <span className="text-[#ecf000] font-bold">A+ (Compliant)</span>
+                  <span className="text-lime font-bold">A+ (Compliant)</span>
                 </div>
                 <div className="w-full bg-zinc-900 rounded-full h-1.5">
-                  <div className="bg-[#ecf000] h-1.5 rounded-full" style={{ width: '95%' }} />
+                  <div className="bg-lime h-1.5 rounded-full" style={{ width: '95%' }} />
                 </div>
                 <div className="text-[10px] text-zinc-550">0 exclusions found in bidder attachments.</div>
               </div>
@@ -647,20 +647,20 @@ export default function TenderEvaluationsPage() {
                     >
                       <Link
                         href={rel.href}
-                        className="group flex flex-col justify-between p-5 h-full bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-[#ecf000]/30 transition-all duration-300"
+                        className="group flex flex-col justify-between p-5 h-full bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
                       >
                         <div className="space-y-1.5">
                           <span className="px-2 py-0.5 rounded-full bg-zinc-150 dark:bg-zinc-800 text-[8px] font-bold text-zinc-550 dark:text-zinc-450 uppercase tracking-wider">
                             {rel.tag}
                           </span>
-                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-[#ecf000] transition-colors pt-1">
+                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-lime transition-colors pt-1">
                             {rel.title}
                           </h4>
                           <p className="text-xs text-zinc-500 leading-relaxed">{rel.desc}</p>
                         </div>
                         <div className="flex items-center gap-1 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <span className="text-[10px] font-semibold text-[#ecf000]">Explore</span>
-                          <ChevronRight className="w-3 h-3 text-[#ecf000] transition-transform group-hover:translate-x-0.5" />
+                          <span className="text-[10px] font-semibold text-lime">Explore</span>
+                          <ChevronRight className="w-3 h-3 text-lime transition-transform group-hover:translate-x-0.5" />
                         </div>
                       </Link>
                     </motion.div>
@@ -691,7 +691,7 @@ export default function TenderEvaluationsPage() {
 
                 <Button
                   asChild
-                  className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-[#ecf000] text-black hover:bg-[#ecf000]/90 cursor-pointer"
+                  className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer"
                 >
                   <a
                     href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
@@ -799,7 +799,7 @@ export default function TenderEvaluationsPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-[#ecf000] text-zinc-950 hover:bg-[#ecf000]/90 cursor-pointer"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-zinc-950 hover:bg-lime/90 cursor-pointer"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"

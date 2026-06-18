@@ -32,14 +32,14 @@ export default function AccToBoqPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-555 antialiased selection:bg-[#ecf000]/30 selection:text-black">
+    <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-555 antialiased selection:bg-lime/30 selection:text-black">
       <Navbar />
 
       {/* ─── HERO SECTION ─── */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#FAFAF8] dark:bg-zinc-950">
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-[#ecf000]/20 via-[#ecf000]/10 to-transparent rounded-full blur-[130px] opacity-70 animate-pulse" style={{ animationDuration: '9s' }} />
-          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-[#ecf000]/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] opacity-65" />
+          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/20 via-lime/10 to-transparent rounded-full blur-[130px] opacity-70 animate-pulse" style={{ animationDuration: '9s' }} />
+          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-lime/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] opacity-65" />
           <div className="absolute inset-0 bg-white/45 dark:bg-zinc-950/65 backdrop-blur-[1px]" />
         </div>
 
@@ -68,7 +68,7 @@ export default function AccToBoqPage() {
             {/* Left Column */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#ecf000]/10 text-zinc-900 dark:text-white border border-[#ecf000]/30">
+                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-lime/10 text-zinc-900 dark:text-white border border-lime/30">
                   Tendering
                 </span>
                 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400">
@@ -92,7 +92,7 @@ export default function AccToBoqPage() {
                 <Button
                   asChild
                   size="lg"
-                  className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-[#ecf000]/15 cursor-pointer bg-[#ecf000] text-black hover:bg-[#ecf000]/90 border-0 transition-transform hover:scale-105"
+                  className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-lime/15 cursor-pointer bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-105"
                 >
                   <a
                     href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
@@ -188,28 +188,28 @@ export default function AccToBoqPage() {
                         transition={{ duration: 0.2 }}
                         className="space-y-4"
                       >
-                        <div className="text-xs font-bold text-[#ecf000] uppercase tracking-wider">
+                        <div className="text-xs font-bold text-lime uppercase tracking-wider">
                           ACC to BOQ
                         </div>
                         <ul className="space-y-3.5">
                           <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <Check className="w-4 h-4 text-[#ecf000] shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-lime shrink-0 mt-0.5" />
                             <span>Model changes in ACC</span>
                           </li>
                           <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <Check className="w-4 h-4 text-[#ecf000] shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-lime shrink-0 mt-0.5" />
                             <span>Click &quot;Generate BOQ&quot; directly in cloud</span>
                           </li>
                           <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <Check className="w-4 h-4 text-[#ecf000] shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-lime shrink-0 mt-0.5" />
                             <span>BOQ updated with new costs automatically</span>
                           </li>
                           <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <Check className="w-4 h-4 text-[#ecf000] shrink-0 mt-0.5" />
+                            <Check className="w-4 h-4 text-lime shrink-0 mt-0.5" />
                             <span>Repricing done instantly</span>
                           </li>
-                          <li className="flex gap-3 text-[#ecf000] text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50 font-bold">
-                            <Check className="w-4 h-4 text-[#ecf000] shrink-0 mt-0.5" />
+                          <li className="flex gap-3 text-lime text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50 font-bold">
+                            <Check className="w-4 h-4 text-lime shrink-0 mt-0.5" />
                             <span>Takes 5 minutes per BOQ</span>
                           </li>
                         </ul>
@@ -280,8 +280,8 @@ export default function AccToBoqPage() {
               className="relative bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
             >
               <div className="flex items-start justify-between">
-                <div className="w-14 h-14 rounded-2xl bg-[#ecf000]/10 border border-[#ecf000]/20 flex items-center justify-center group-hover:bg-[#ecf000]/20 transition-colors">
-                  <Cloud className="w-7 h-7 text-[#ecf000]" />
+                <div className="w-14 h-14 rounded-2xl bg-lime/10 border border-lime/20 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
+                  <Cloud className="w-7 h-7 text-lime" />
                 </div>
                 <span className="text-5xl font-black text-zinc-100 dark:text-zinc-800 select-none">01</span>
               </div>
@@ -304,8 +304,8 @@ export default function AccToBoqPage() {
               className="relative bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
             >
               <div className="flex items-start justify-between">
-                <div className="w-14 h-14 rounded-2xl bg-[#ecf000]/10 border border-[#ecf000]/20 flex items-center justify-center group-hover:bg-[#ecf000]/20 transition-colors">
-                  <Zap className="w-7 h-7 text-[#ecf000]" />
+                <div className="w-14 h-14 rounded-2xl bg-lime/10 border border-lime/20 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
+                  <Zap className="w-7 h-7 text-lime" />
                 </div>
                 <span className="text-5xl font-black text-zinc-100 dark:text-zinc-800 select-none">02</span>
               </div>
@@ -328,8 +328,8 @@ export default function AccToBoqPage() {
               className="relative bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
             >
               <div className="flex items-start justify-between">
-                <div className="w-14 h-14 rounded-2xl bg-[#ecf000]/10 border border-[#ecf000]/20 flex items-center justify-center group-hover:bg-[#ecf000]/20 transition-colors">
-                  <FileSpreadsheet className="w-7 h-7 text-[#ecf000]" />
+                <div className="w-14 h-14 rounded-2xl bg-lime/10 border border-lime/20 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
+                  <FileSpreadsheet className="w-7 h-7 text-lime" />
                 </div>
                 <span className="text-5xl font-black text-zinc-100 dark:text-zinc-800 select-none">03</span>
               </div>
@@ -349,7 +349,7 @@ export default function AccToBoqPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="relative bg-[#ecf000] border border-[#ecf000] rounded-3xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
+              className="relative bg-lime border border-lime rounded-3xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
             >
               <div className="flex items-start justify-between">
                 <div className="w-14 h-14 rounded-2xl bg-zinc-950/10 border border-zinc-950/20 flex items-center justify-center group-hover:bg-zinc-950/20 transition-colors">
@@ -431,7 +431,7 @@ export default function AccToBoqPage() {
                 
                 <div className="bg-zinc-50 dark:bg-zinc-900/60 rounded-xl p-3 border border-zinc-100 dark:border-zinc-800/80 space-y-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#ecf000]" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-lime" />
                     <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest">Active ACC Project</span>
                   </div>
                   <p className="text-[10px] font-mono text-zinc-650 dark:text-zinc-300 bg-white dark:bg-zinc-950/80 p-2.5 rounded-lg border border-zinc-150 dark:border-zinc-800/80 leading-normal">
@@ -445,7 +445,7 @@ export default function AccToBoqPage() {
             <div className="lg:col-span-2 bg-zinc-950 text-white border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-[#ecf000] uppercase tracking-widest block">Revit-to-ACC Cloud Sync</span>
+                  <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Revit-to-ACC Cloud Sync</span>
                   <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">Live cost engine updates directly inside ACC Hub</h3>
                   <p className="text-zinc-400 text-sm leading-relaxed">
                     Our cloud engine scans updated elements on sync and computes the pricing delta dynamically.
@@ -453,25 +453,25 @@ export default function AccToBoqPage() {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#ecf000] animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-[#ecf000]">ACC Webhook Active</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-lime">ACC Webhook Active</span>
                 </div>
               </div>
 
               {/* Graphical flowchart mockup */}
               <div className="flex-1 bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6 min-h-[190px] relative overflow-hidden flex flex-col justify-center shadow-inner">
                 {/* Grid canvas background */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(236,240,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(236,240,0,0.02)_1px,transparent_1px)] bg-[size:14px_20px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(var(--color-lime-rgb,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(var(--color-lime-rgb,0.02)_1px,transparent_1px)] bg-[size:14px_20px]" />
                 
                 {/* Connected flow path SVG */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="#ecf000" strokeWidth="1.5" strokeDasharray="3 3" className="opacity-30" />
-                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="url(#yellow-flow)" strokeWidth="2.5" />
+                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="var(--color-lime)" strokeWidth="1.5" strokeDasharray="3 3" className="opacity-30" />
+                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="url(#lime-flow)" strokeWidth="2.5" />
                   <defs>
-                    <linearGradient id="yellow-flow" x1="0%" y1="100%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#ecf000" stopOpacity="0.05" />
-                      <stop offset="60%" stopColor="#ecf000" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="#ecf000" stopOpacity="1" />
+                    <linearGradient id="lime-flow" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="var(--color-lime)" stopOpacity="0.05" />
+                      <stop offset="60%" stopColor="var(--color-lime)" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="var(--color-lime)" stopOpacity="1" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -480,7 +480,7 @@ export default function AccToBoqPage() {
                 <div className="absolute top-[32px] right-[24px] z-10 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
                   <div className="text-left leading-none">
                     <span className="text-[8px] font-bold text-white block">ACC model</span>
-                    <span className="text-[6px] text-[#ecf000] font-black uppercase tracking-wider">Synced</span>
+                    <span className="text-[6px] text-lime font-black uppercase tracking-wider">Synced</span>
                   </div>
                 </div>
 
@@ -489,7 +489,7 @@ export default function AccToBoqPage() {
                 </div>
 
                 {/* Collaborative Cursors (yellow active style) */}
-                <div className="absolute bottom-[48px] right-[88px] z-20 flex items-center gap-1 bg-[#ecf000] text-black px-2 py-0.5 rounded-md text-[8px] font-extrabold tracking-wider shadow-md">
+                <div className="absolute bottom-[48px] right-[88px] z-20 flex items-center gap-1 bg-lime text-black px-2 py-0.5 rounded-md text-[8px] font-extrabold tracking-wider shadow-md">
                   <svg className="w-2 h-2 fill-black" viewBox="0 0 24 24">
                     <path d="M7 2l12 11.2-5.8.8 3.8 6.5-2.2 1.3-3.8-6.5-4 4.7V2z" />
                   </svg>
@@ -499,16 +499,16 @@ export default function AccToBoqPage() {
             </div>
 
             {/* Bottom Left Card */}
-            <div className="bg-[#12130e] text-white border border-[#ecf000]/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-[#ecf000]/30 transition-all duration-300 shadow-md">
+            <div className="bg-[#12130e] text-white border border-lime/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-lime/30 transition-all duration-300 shadow-md">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-[#ecf000] uppercase tracking-widest block">Standard Rates</span>
+                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Standard Rates</span>
                 <h3 className="text-xl font-bold tracking-tight text-white leading-tight">Dynamic Pricer</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
                   Maintain standard rate lists by location, project scale, or building type directly in the cloud.
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-[#ecf000] transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
 
@@ -522,7 +522,7 @@ export default function AccToBoqPage() {
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-[#ecf000] transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
             
@@ -550,18 +550,18 @@ export default function AccToBoqPage() {
                 <div className="sm:w-1/2 space-y-4">
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm text-zinc-650 dark:text-zinc-400">
-                      <Check className="w-4 h-4 text-[#ecf000]" /> Integration with Revit standards
+                      <Check className="w-4 h-4 text-lime" /> Integration with Revit standards
                     </li>
                     <li className="flex items-center gap-2 text-sm text-zinc-650 dark:text-zinc-400">
-                      <Check className="w-4 h-4 text-[#ecf000]" /> 1–2 weeks implementation
+                      <Check className="w-4 h-4 text-lime" /> 1–2 weeks implementation
                     </li>
                     <li className="flex items-center gap-2 text-sm text-zinc-650 dark:text-zinc-400">
-                      <Check className="w-4 h-4 text-[#ecf000]" /> Scaling with sales
+                      <Check className="w-4 h-4 text-lime" /> Scaling with sales
                     </li>
                   </ul>
                   <Button
                     asChild
-                    className="w-full rounded-2xl py-7 font-bold shadow-xl shadow-[#ecf000]/15 bg-[#ecf000] text-black hover:bg-[#ecf000]/90 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
+                    className="w-full rounded-2xl py-7 font-bold shadow-xl shadow-lime/15 bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
                   >
                     <Link href="/pricing">
                       Buy Products
@@ -607,7 +607,7 @@ export default function AccToBoqPage() {
                       className="w-full px-6 py-4 flex items-center justify-between font-bold text-left text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer"
                     >
                       <span>{faq.q}</span>
-                      <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === i ? "bg-[#ecf000]/20 dark:bg-zinc-800 text-[#ecf000] dark:text-[#ecf000]" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"}`}>
+                      <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === i ? "bg-lime/20 dark:bg-zinc-800 text-lime dark:text-lime" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"}`}>
                         {activeFaq === i ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                       </div>
                     </button>
@@ -656,7 +656,7 @@ export default function AccToBoqPage() {
                 </li>
                 <li className="flex justify-between items-center">
                   <span className="text-zinc-555">Pricing</span>
-                  <span className="font-bold text-[#ecf000]">USD 1,200/month</span>
+                  <span className="font-bold text-lime">USD 1,200/month</span>
                 </li>
               </ul>
             </div>
@@ -735,7 +735,7 @@ export default function AccToBoqPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-[#ecf000] text-zinc-955 hover:bg-[#ecf000]/90 cursor-pointer"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-zinc-955 hover:bg-lime/90 cursor-pointer"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"

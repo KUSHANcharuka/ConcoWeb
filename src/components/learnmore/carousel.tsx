@@ -116,7 +116,7 @@ export default function Carousel({ items, themeColor = "#ecf000" }: CarouselProp
               transition={{ type: "spring", stiffness: 350, damping: 28 }}
               className={`shrink-0 w-[300px] sm:w-[360px] md:w-[380px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-2xl relative transition-shadow duration-500 bg-zinc-900 border ${
                 isCenter 
-                  ? "border-[#ecf000]/40 shadow-[#ecf000]/10" 
+                  ? "border-lime/40 shadow-lime/10" 
                   : "border-zinc-800/80 opacity-60 hover:opacity-85 shadow-black/50"
               }`}
             >
@@ -166,7 +166,7 @@ export default function Carousel({ items, themeColor = "#ecf000" }: CarouselProp
                 </div>
 
                 <div className="absolute top-4 right-4 z-10">
-                  <span className="px-3 py-1 text-[9px] font-mono font-bold tracking-wider bg-black/60 border border-zinc-850 text-[#ecf000] rounded-md shadow-sm">
+                  <span className="px-3 py-1 text-[9px] font-mono font-bold tracking-wider bg-black/60 border border-zinc-850 text-lime rounded-md shadow-sm">
                     STEP {item.stepNumber}
                   </span>
                 </div>
@@ -176,7 +176,7 @@ export default function Carousel({ items, themeColor = "#ecf000" }: CarouselProp
               <div className="p-6 bg-zinc-950 flex flex-col justify-between min-h-[190px]">
                 <div className="space-y-2">
                   <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
-                    {isCenter && <Sparkles className="w-4 h-4 text-[#ecf000] animate-pulse" />}
+                    {isCenter && <Sparkles className="w-4 h-4 text-lime animate-pulse" />}
                     {item.title}
                   </h3>
                   <p className="text-xs text-zinc-400 leading-relaxed line-clamp-3">
@@ -187,7 +187,7 @@ export default function Carousel({ items, themeColor = "#ecf000" }: CarouselProp
                 {/* Simulated Interactive elements inside mockup */}
                 <div className="mt-4 pt-4 border-t border-zinc-900 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${isCenter ? "bg-[#ecf000] animate-ping" : "bg-zinc-700"}`} />
+                    <div className={`w-2 h-2 rounded-full ${isCenter ? "bg-lime animate-ping" : "bg-zinc-700"}`} />
                     <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
                       {isCenter ? "Active Step" : "Queued"}
                     </span>
@@ -197,9 +197,9 @@ export default function Carousel({ items, themeColor = "#ecf000" }: CarouselProp
                     <motion.div 
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="flex items-center gap-1 text-[9px] font-bold text-[#ecf000] uppercase tracking-wider bg-[#ecf000]/10 px-2.5 py-1 rounded-full border border-[#ecf000]/30"
+                      className="flex items-center gap-1 text-[9px] font-bold text-lime uppercase tracking-wider bg-lime/10 px-2.5 py-1 rounded-full border border-lime/30"
                     >
-                      <Check className="w-3 h-3 text-[#ecf000]" />
+                      <Check className="w-3 h-3 text-lime" />
                       Ready
                     </motion.div>
                   )}
@@ -226,7 +226,7 @@ export default function Carousel({ items, themeColor = "#ecf000" }: CarouselProp
               onClick={() => scrollToCard(idx)}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 idx === activeIndex 
-                  ? "w-8 bg-[#ecf000]" 
+                  ? "w-8 bg-lime" 
                   : "w-2 bg-zinc-700 hover:bg-zinc-500"
               }`}
             />

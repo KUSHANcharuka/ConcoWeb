@@ -385,54 +385,54 @@ function ConcolabsLogoIcon({ className = "w-8 h-8" }: { className?: string }) {
       {/* Left Tower */}
       <path
         d="M 25 80 L 25 35 L 43 35 L 43 80"
-        className="text-yellow-500 stroke-current"
+        className="text-lime stroke-current"
       />
       {/* Middle Tower */}
       <path
         d="M 49 80 L 49 20 L 67 20 L 67 80"
-        className="text-yellow-500 stroke-current"
+        className="text-lime stroke-current"
       />
       {/* Right Tower */}
       <path
         d="M 73 80 L 73 10 L 91 10 L 91 80"
-        className="text-yellow-500 stroke-current"
+        className="text-lime stroke-current"
       />
 
       {/* Slanted foundation circuit lines at the bottom */}
       <path
         d="M 15 85 L 50 60"
-        className="text-yellow-500 stroke-current"
+        className="text-lime stroke-current"
         strokeWidth="3.2"
       />
       <circle
         cx="15"
         cy="85"
         r="3"
-        className="fill-yellow-500 text-yellow-500"
+        className="fill-lime text-lime"
       />
       <circle
         cx="50"
         cy="60"
         r="3"
-        className="fill-yellow-500 text-yellow-500"
+        className="fill-lime text-lime"
       />
 
       <path
         d="M 30 95 L 75 62"
-        className="text-yellow-500 stroke-current"
+        className="text-lime stroke-current"
         strokeWidth="3.2"
       />
       <circle
         cx="30"
         cy="95"
         r="3"
-        className="fill-yellow-500 text-yellow-500"
+        className="fill-lime text-lime"
       />
       <circle
         cx="75"
         cy="62"
         r="3"
-        className="fill-yellow-500 text-yellow-500"
+        className="fill-lime text-lime"
       />
     </svg>
   );

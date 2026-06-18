@@ -208,14 +208,14 @@ export default function Drawing2DToBOQPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased selection:bg-[#ecf000]/30 selection:text-black">
+    <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased selection:bg-lime/30 selection:text-black">
       <Navbar />
 
       {/* ─── Apple-Style Hero Section ─── */}
       <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-zinc-50 dark:bg-zinc-950 pt-16">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-[#ecf000]/20 via-[#ecf000]/10 to-transparent rounded-full blur-[130px] mix-blend-multiply dark:mix-blend-screen opacity-70 animate-pulse" style={{ animationDuration: '9s' }} />
-          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-[#ecf000]/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] mix-blend-multiply dark:mix-blend-screen opacity-65" />
+          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/20 via-lime/10 to-transparent rounded-full blur-[130px] mix-blend-multiply dark:mix-blend-screen opacity-70 animate-pulse" style={{ animationDuration: '9s' }} />
+          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-lime/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] mix-blend-multiply dark:mix-blend-screen opacity-65" />
           <div className="absolute inset-0 bg-white/45 dark:bg-zinc-950/65 backdrop-blur-[1px]" />
           
           {/* Blueprint grid pattern */}
@@ -251,7 +251,7 @@ export default function Drawing2DToBOQPage() {
                 className="space-y-6"
               >
                 <motion.div variants={fadeInUp} className="flex items-center gap-3">
-                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-[#ecf000]/10 border border-[#ecf000]/30 text-zinc-900 dark:text-white backdrop-blur-md">
+                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-lime/10 border border-lime/30 text-zinc-900 dark:text-white backdrop-blur-md">
                     Estimation &amp; Tendering
                   </span>
                 </motion.div>
@@ -273,7 +273,7 @@ export default function Drawing2DToBOQPage() {
                 >
                   Priced BOQ straight from any PDF drawing.
                   <br />
-                  <span className="text-[#ecf000] dark:text-[#ecf000] font-bold">No 3D model required.</span>
+                  <span className="text-lime dark:text-lime font-bold">No 3D model required.</span>
                 </motion.p>
 
                 <motion.p
@@ -290,13 +290,13 @@ export default function Drawing2DToBOQPage() {
                     size="lg"
                     className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
                   >
-                    <Play className="w-4 h-4 mr-2 text-[#ecf000] dark:text-[#ecf000] fill-[#ecf000] dark:fill-[#ecf000]" />
+                    <Play className="w-4 h-4 mr-2 text-lime dark:text-lime fill-lime dark:fill-lime" />
                     Watch Demo
                   </Button>
                   <Button
                     asChild
                     size="lg"
-                    className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-[#ecf000]/15 cursor-pointer bg-[#ecf000] text-black hover:bg-[#ecf000]/90 border-0 transition-transform hover:scale-105"
+                    className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-lime/15 cursor-pointer bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-105"
                   >
                     <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
                       Book a Demo
@@ -312,7 +312,7 @@ export default function Drawing2DToBOQPage() {
               transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="lg:col-span-5"
             >
-              <div className="relative bg-white/70 dark:bg-zinc-900/70 backdrop-blur-2xl border border-white dark:border-zinc-800 rounded-[2rem] p-8 shadow-2xl shadow-[#ecf000]/5">
+              <div className="relative bg-white/70 dark:bg-zinc-900/70 backdrop-blur-2xl border border-white dark:border-zinc-800 rounded-[2rem] p-8 shadow-2xl shadow-lime/5">
                 <div className="flex items-center justify-between mb-8 border-b border-zinc-200/50 dark:border-zinc-800/50 pb-5">
                   <h3 className="font-bold text-zinc-900 dark:text-white tracking-tight">
                     Compare Workflows
@@ -394,7 +394,7 @@ export default function Drawing2DToBOQPage() {
                             "Extends automation to non-BIM projects"
                           ].map((item, i) => (
                             <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-350 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                              <Check className="w-5 h-5 text-[#ecf000] shrink-0 mt-0.5" />
+                              <Check className="w-5 h-5 text-lime shrink-0 mt-0.5" />
                               <span className="font-medium">{item}</span>
                             </li>
                           ))}
@@ -506,7 +506,7 @@ export default function Drawing2DToBOQPage() {
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-10">
             <div className="space-y-4 max-w-2xl">
-              <span className="text-xs font-bold text-[#ecf000] uppercase tracking-widest block">
+              <span className="text-xs font-bold text-lime uppercase tracking-widest block">
                 Workflow Hook
               </span>
               <h2 className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.1] uppercase">
@@ -551,7 +551,7 @@ export default function Drawing2DToBOQPage() {
                 
                 <div className="bg-zinc-900/60 rounded-xl p-3 border border-zinc-800 space-y-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#ecf000]" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-lime" />
                     <span className="text-[8px] font-bold text-zinc-550 uppercase tracking-widest">Selected sheet</span>
                   </div>
                   <p className="text-[10px] font-mono text-zinc-350 bg-zinc-950/80 p-2.5 rounded-lg border border-zinc-850 leading-normal">
@@ -565,7 +565,7 @@ export default function Drawing2DToBOQPage() {
             <div className="lg:col-span-2 bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-[#ecf000] uppercase tracking-widest block">AI Vision Engine</span>
+                  <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">AI Vision Engine</span>
                   <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">Extract structured elements from line geometries</h3>
                   <p className="text-zinc-400 text-sm leading-relaxed">
                     Our model processes raster vector outlines, detects dimension text annotations, and classifies concrete/steel elements accurately.
@@ -573,25 +573,25 @@ export default function Drawing2DToBOQPage() {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#ecf000] animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-[#ecf000]">Live Analysis Active</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-lime">Live Analysis Active</span>
                 </div>
               </div>
 
               {/* Graphical flowchart mockup */}
               <div className="flex-1 bg-zinc-950/60 border border-zinc-900 rounded-2xl p-6 min-h-[190px] relative overflow-hidden flex flex-col justify-center shadow-inner">
                 {/* Grid canvas background */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(236,240,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(236,240,0,0.02)_1px,transparent_1px)] bg-[size:14px_20px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(var(--color-lime-rgb,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(var(--color-lime-rgb,0.02)_1px,transparent_1px)] bg-[size:14px_20px]" />
                 
                 {/* Connected flow path SVG */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="#ecf000" strokeWidth="1.5" strokeDasharray="3 3" className="opacity-30" />
-                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="url(#yellow-flow)" strokeWidth="2.5" />
+                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="var(--color-lime)" strokeWidth="1.5" strokeDasharray="3 3" className="opacity-30" />
+                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="url(#lime-flow)" strokeWidth="2.5" />
                   <defs>
-                    <linearGradient id="yellow-flow" x1="0%" y1="100%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#ecf000" stopOpacity="0.05" />
-                      <stop offset="60%" stopColor="#ecf000" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="#ecf000" stopOpacity="1" />
+                    <linearGradient id="lime-flow" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="var(--color-lime)" stopOpacity="0.05" />
+                      <stop offset="60%" stopColor="var(--color-lime)" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="var(--color-lime)" stopOpacity="1" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -600,7 +600,7 @@ export default function Drawing2DToBOQPage() {
                 <div className="absolute top-[32px] right-[24px] z-10 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
                   <div className="text-left leading-none">
                     <span className="text-[8px] font-bold text-white block">BOQ Table</span>
-                    <span className="text-[6px] text-[#ecf000] font-black uppercase tracking-wider">Generated</span>
+                    <span className="text-[6px] text-lime font-black uppercase tracking-wider">Generated</span>
                   </div>
                 </div>
 
@@ -609,7 +609,7 @@ export default function Drawing2DToBOQPage() {
                 </div>
 
                 {/* Collaborative Cursors (yellow active style) */}
-                <div className="absolute bottom-[48px] right-[88px] z-20 flex items-center gap-1 bg-[#ecf000] text-black px-2 py-0.5 rounded-md text-[8px] font-extrabold tracking-wider shadow-md">
+                <div className="absolute bottom-[48px] right-[88px] z-20 flex items-center gap-1 bg-lime text-black px-2 py-0.5 rounded-md text-[8px] font-extrabold tracking-wider shadow-md">
                   <svg className="w-2 h-2 fill-black" viewBox="0 0 24 24">
                     <path d="M7 2l12 11.2-5.8.8 3.8 6.5-2.2 1.3-3.8-6.5-4 4.7V2z" />
                   </svg>
@@ -626,16 +626,16 @@ export default function Drawing2DToBOQPage() {
             </div>
 
             {/* Bottom Left Card */}
-            <div className="bg-[#12130e] text-white border border-[#ecf000]/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-[#ecf000]/30 transition-all duration-300 shadow-md">
+            <div className="bg-[#12130e] text-white border border-lime/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-lime/30 transition-all duration-300 shadow-md">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-[#ecf000] uppercase tracking-widest block">Cost Database Sync</span>
+                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Cost Database Sync</span>
                 <h3 className="text-xl font-bold tracking-tight text-white leading-tight">Instant Estimating</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
                   Automatically pairs recognized elements with regional pricing standards or custom builder rate lists.
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-[#ecf000] transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
 
@@ -649,7 +649,7 @@ export default function Drawing2DToBOQPage() {
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-[#ecf000] transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
             
@@ -749,7 +749,7 @@ export default function Drawing2DToBOQPage() {
 
                 <Button
                   asChild
-                  className="w-full rounded-2xl py-7 font-bold shadow-xl shadow-[#ecf000]/15 bg-[#ecf000] text-black hover:bg-[#ecf000]/90 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
+                  className="w-full rounded-2xl py-7 font-bold shadow-xl shadow-lime/15 bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
                 >
                   <Link href="/pricing">
                     Buy Products &rarr;
@@ -846,7 +846,7 @@ export default function Drawing2DToBOQPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-[#ecf000] text-zinc-955 hover:bg-[#ecf000]/90 cursor-pointer"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-zinc-955 hover:bg-lime/90 cursor-pointer"
             >
               <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
                 Book a demo →

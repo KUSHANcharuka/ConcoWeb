@@ -55,7 +55,7 @@ export default function CostPlanCalculatorPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased selection:bg-[#ecf000]/30 selection:text-black">
+    <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased selection:bg-lime/30 selection:text-black">
       <Navbar />
 
       {/* ─── HERO SECTION ─── */}
@@ -64,8 +64,8 @@ export default function CostPlanCalculatorPage() {
         className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#FAFAF8] dark:bg-zinc-950"
       >
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-[#ecf000]/20 via-[#ecf000]/10 to-transparent rounded-full blur-[130px] opacity-70 animate-pulse" style={{ animationDuration: '9s' }} />
-          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-[#ecf000]/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] opacity-65" />
+          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/20 via-lime/10 to-transparent rounded-full blur-[130px] opacity-70 animate-pulse" style={{ animationDuration: '9s' }} />
+          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-lime/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] opacity-65" />
           <div className="absolute inset-0 bg-white/45 dark:bg-zinc-950/65 backdrop-blur-[1px]" />
         </div>
 
@@ -89,7 +89,7 @@ export default function CostPlanCalculatorPage() {
             {/* Left Column - Text Content */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex items-center gap-3">
-                <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-[#ecf000]/10 border border-[#ecf000]/30 text-zinc-900 dark:text-white backdrop-blur-md">
+                <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-lime/10 border border-lime/30 text-zinc-900 dark:text-white backdrop-blur-md">
                   Pre-design
                 </span>
                 <span className="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-150/80 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-550 dark:text-zinc-400">
@@ -115,13 +115,13 @@ export default function CostPlanCalculatorPage() {
                   size="lg"
                   className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
                 >
-                  <Play className="w-4 h-4 mr-2 text-[#ecf000]" />
+                  <Play className="w-4 h-4 mr-2 text-lime" />
                   Watch Demo
                 </Button>
                 <Button
                   asChild
                   size="lg"
-                  className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-[#ecf000]/15 cursor-pointer bg-[#ecf000] text-black hover:bg-[#ecf000]/90 border-0 transition-transform hover:scale-105"
+                  className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-lime/15 cursor-pointer bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-105"
                 >
                   <a
                     href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
@@ -212,7 +212,7 @@ export default function CostPlanCalculatorPage() {
                         transition={{ duration: 0.2 }}
                         className="space-y-4"
                       >
-                        <div className="text-xs font-bold text-[#ecf000] uppercase tracking-wider">
+                        <div className="text-xs font-bold text-lime uppercase tracking-wider">
                           Cost Plan Calculator
                         </div>
                         <ul className="space-y-3.5">
@@ -223,7 +223,7 @@ export default function CostPlanCalculatorPage() {
                             "Outputs ready for client presentation."
                           ].map((item, i) => (
                             <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                              <Check className="w-5 h-5 text-[#ecf000] shrink-0 mt-0.5" />
+                              <Check className="w-5 h-5 text-lime shrink-0 mt-0.5" />
                               <span>{item}</span>
                             </li>
                           ))}
@@ -266,13 +266,13 @@ export default function CostPlanCalculatorPage() {
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 aspect-video max-w-4xl mx-auto bg-zinc-950 flex items-center justify-center group">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#ecf000]/10 via-transparent to-zinc-950 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-br from-lime/10 via-transparent to-zinc-950 pointer-events-none" />
               <div className="relative z-10 text-center space-y-4">
                 <a
                   href="https://drive.google.com/drive/folders/1C8KTwemod1FyxAuZr7jefJLqbs1LCn2L?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-16 h-16 rounded-full bg-[#ecf000] text-black flex items-center justify-center shadow-lg hover:scale-105 transition-transform mx-auto cursor-pointer"
+                  className="w-16 h-16 rounded-full bg-lime text-black flex items-center justify-center shadow-lg hover:scale-105 transition-transform mx-auto cursor-pointer"
                 >
                   <Play className="w-6 h-6 fill-black ml-1" />
                 </a>
@@ -295,7 +295,7 @@ export default function CostPlanCalculatorPage() {
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 uppercase">
               The cost planning bottleneck
             </h2>
-            <div className="w-16 h-1 bg-[#ecf000] rounded-full" />
+            <div className="w-16 h-1 bg-lime rounded-full" />
           </div>
           <div className="lg:col-span-7 text-zinc-650 dark:text-zinc-450 text-base sm:text-lg leading-relaxed space-y-6 font-medium">
             <p>QS firms are still calculating Gross Floor Area by hand from PDF concept drawings and plugging numbers into Excel to produce a cost plan at the feasibility stage.</p>
@@ -356,7 +356,7 @@ export default function CostPlanCalculatorPage() {
                 
                 <div className="bg-zinc-50 dark:bg-zinc-900/60 rounded-xl p-3 border border-zinc-100 dark:border-zinc-800/80 space-y-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#ecf000]" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-lime" />
                     <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest">Active Calculator</span>
                   </div>
                   <p className="text-[10px] font-mono text-zinc-650 dark:text-zinc-300 bg-white dark:bg-zinc-950/80 p-2.5 rounded-lg border border-zinc-150 dark:border-zinc-800/80 leading-normal">
@@ -370,7 +370,7 @@ export default function CostPlanCalculatorPage() {
             <div className="lg:col-span-2 bg-zinc-950 text-white border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-[#ecf000] uppercase tracking-widest block">AI Estimating Engine</span>
+                  <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">AI Estimating Engine</span>
                   <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">Your cost plans calculated on a live connected pricer canvas</h3>
                   <p className="text-zinc-400 text-sm leading-relaxed">
                     Instantly detects building footprint zones, floor numbers, and calculates consultancy fees based on region standard rules.
@@ -378,25 +378,25 @@ export default function CostPlanCalculatorPage() {
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#ecf000] animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-[#ecf000]">Calculation Engine Sync Active</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-lime">Calculation Engine Sync Active</span>
                 </div>
               </div>
 
               {/* Graphical flowchart mockup */}
               <div className="flex-1 bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6 min-h-[190px] relative overflow-hidden flex flex-col justify-center shadow-inner">
                 {/* Grid canvas background */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(236,240,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(236,240,0,0.02)_1px,transparent_1px)] bg-[size:14px_20px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(var(--color-lime-rgb,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(var(--color-lime-rgb,0.02)_1px,transparent_1px)] bg-[size:14px_20px]" />
                 
                 {/* Connected flow path SVG */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="#ecf000" strokeWidth="1.5" strokeDasharray="3 3" className="opacity-30" />
-                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="url(#yellow-flow)" strokeWidth="2.5" />
+                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="var(--color-lime)" strokeWidth="1.5" strokeDasharray="3 3" className="opacity-30" />
+                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="url(#lime-flow)" strokeWidth="2.5" />
                   <defs>
-                    <linearGradient id="yellow-flow" x1="0%" y1="100%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#ecf000" stopOpacity="0.05" />
-                      <stop offset="60%" stopColor="#ecf000" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="#ecf000" stopOpacity="1" />
+                    <linearGradient id="lime-flow" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="var(--color-lime)" stopOpacity="0.05" />
+                      <stop offset="60%" stopColor="var(--color-lime)" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="var(--color-lime)" stopOpacity="1" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -405,7 +405,7 @@ export default function CostPlanCalculatorPage() {
                 <div className="absolute top-[32px] right-[24px] z-10 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
                   <div className="text-left leading-none">
                     <span className="text-[8px] font-bold text-white block">Budget</span>
-                    <span className="text-[6px] text-[#ecf000] font-black uppercase tracking-wider">Calculated</span>
+                    <span className="text-[6px] text-lime font-black uppercase tracking-wider">Calculated</span>
                   </div>
                 </div>
 
@@ -414,7 +414,7 @@ export default function CostPlanCalculatorPage() {
                 </div>
 
                 {/* Collaborative Cursors */}
-                <div className="absolute bottom-[48px] right-[88px] z-20 flex items-center gap-1 bg-[#ecf000] text-black px-2 py-0.5 rounded-md text-[8px] font-extrabold tracking-wider shadow-md">
+                <div className="absolute bottom-[48px] right-[88px] z-20 flex items-center gap-1 bg-lime text-black px-2 py-0.5 rounded-md text-[8px] font-extrabold tracking-wider shadow-md">
                   <svg className="w-2 h-2 fill-black" viewBox="0 0 24 24">
                     <path d="M7 2l12 11.2-5.8.8 3.8 6.5-2.2 1.3-3.8-6.5-4 4.7V2z" />
                   </svg>
@@ -424,16 +424,16 @@ export default function CostPlanCalculatorPage() {
             </div>
 
             {/* Bottom Left Card */}
-            <div className="bg-[#12130e] text-white border border-[#ecf000]/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-[#ecf000]/30 transition-all duration-300 shadow-md">
+            <div className="bg-[#12130e] text-white border border-lime/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-lime/30 transition-all duration-300 shadow-md">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-[#ecf000] uppercase tracking-widest block">Dashboard Sync</span>
+                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Dashboard Sync</span>
                 <h3 className="text-xl font-bold tracking-tight text-white leading-tight">Pipeline Control</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
                   Track consultancy fees, revenue forecasts, and project lists directly in your firm's pipeline.
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-[#ecf000] transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
 
@@ -447,7 +447,7 @@ export default function CostPlanCalculatorPage() {
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-[#ecf000] transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
             
@@ -505,11 +505,11 @@ export default function CostPlanCalculatorPage() {
                 >
                   <Link
                     href="/learnmore/planning-law-chatbot"
-                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-[#ecf000]/30 transition-all duration-300"
+                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="space-y-1.5">
-                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-[#ecf000] transition-colors">
+                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-lime transition-colors">
                           Planning Law Chatbot
                         </h4>
                         <p className="text-xs text-zinc-550 leading-relaxed">
@@ -521,8 +521,8 @@ export default function CostPlanCalculatorPage() {
                       </span>
                     </div>
                     <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-[10px] font-semibold text-[#ecf000]">Learn more</span>
-                      <ChevronRight className="w-3 h-3 text-[#ecf000] transition-transform group-hover:translate-x-0.5" />
+                      <span className="text-[10px] font-semibold text-lime">Learn more</span>
+                      <ChevronRight className="w-3 h-3 text-lime transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </Link>
                 </motion.div>
@@ -536,11 +536,11 @@ export default function CostPlanCalculatorPage() {
                 >
                   <Link
                     href="/learnmore/revit-to-boq"
-                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-[#ecf000]/30 transition-all duration-300"
+                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="space-y-1.5">
-                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-[#ecf000] transition-colors">
+                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-lime transition-colors">
                           Revit to BOQ
                         </h4>
                         <p className="text-xs text-zinc-550 leading-relaxed">
@@ -552,8 +552,8 @@ export default function CostPlanCalculatorPage() {
                       </span>
                     </div>
                     <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-[10px] font-semibold text-[#ecf000]">Learn more</span>
-                      <ChevronRight className="w-3 h-3 text-[#ecf000] transition-transform group-hover:translate-x-0.5" />
+                      <span className="text-[10px] font-semibold text-lime">Learn more</span>
+                      <ChevronRight className="w-3 h-3 text-lime transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </Link>
                 </motion.div>
@@ -567,11 +567,11 @@ export default function CostPlanCalculatorPage() {
                 >
                   <Link
                     href="/learnmore/measureonair"
-                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-[#ecf000]/30 transition-all duration-300"
+                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="space-y-1.5">
-                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-[#ecf000] transition-colors">
+                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-lime transition-colors">
                           MeasureonAir
                         </h4>
                         <p className="text-xs text-zinc-550 leading-relaxed">
@@ -583,8 +583,8 @@ export default function CostPlanCalculatorPage() {
                       </span>
                     </div>
                     <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-[10px] font-semibold text-[#ecf000]">Learn more</span>
-                      <ChevronRight className="w-3 h-3 text-[#ecf000] transition-transform group-hover:translate-x-0.5" />
+                      <span className="text-[10px] font-semibold text-lime">Learn more</span>
+                      <ChevronRight className="w-3 h-3 text-lime transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </Link>
                 </motion.div>
@@ -606,7 +606,7 @@ export default function CostPlanCalculatorPage() {
                     animate={{ x: [0, 4, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
-                    <ChevronRight className="w-3.5 h-3.5 text-[#ecf000]" />
+                    <ChevronRight className="w-3.5 h-3.5 text-lime" />
                   </motion.span>
                 </Link>
               </motion.div>
@@ -643,7 +643,7 @@ export default function CostPlanCalculatorPage() {
               <div className="pt-2">
                 <Button
                   asChild
-                  className="w-full rounded-2xl py-7 font-bold shadow-xl shadow-[#ecf000]/15 bg-[#ecf000] text-black hover:bg-[#ecf000]/90 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
+                  className="w-full rounded-2xl py-7 font-bold shadow-xl shadow-lime/15 bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
                 >
                   <Link href="/pricing">
                     Buy Products &rarr;
@@ -725,7 +725,7 @@ export default function CostPlanCalculatorPage() {
                   className="w-full flex items-center justify-between p-5 text-left font-bold text-zinc-900 dark:text-zinc-50 cursor-pointer"
                 >
                   <span>{faq.q}</span>
-                  <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === idx ? "bg-[#ecf000]/20 dark:bg-zinc-800 text-[#ecf000] dark:text-[#ecf000]" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-555"}`}>
+                  <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === idx ? "bg-lime/20 dark:bg-zinc-800 text-lime dark:text-lime" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-555"}`}>
                     {activeFaq === idx ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                   </div>
                 </button>
@@ -763,7 +763,7 @@ export default function CostPlanCalculatorPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-[#ecf000] text-zinc-955 hover:bg-[#ecf000]/90 cursor-pointer"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-zinc-955 hover:bg-lime/90 cursor-pointer"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"

@@ -183,7 +183,7 @@ export function CustomerSpotlight() {
                   <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-4 mb-4">
                     <div className="flex items-center gap-2">
                       <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-lime" />
                       <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
                       <span className="text-xs font-mono text-zinc-400 ml-2">concolabs_cloud_v3.0</span>
                     </div>

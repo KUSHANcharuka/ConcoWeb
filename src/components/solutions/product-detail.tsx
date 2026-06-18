@@ -614,7 +614,7 @@ export function ProductDetail({ slug }: ProductDetailProps) {
               {product.title}
             </h1>
             <p className="text-lg text-zinc-500 leading-normal">
-              <span className="yellow-highlight">{product.tagline}</span>
+              <span className="text-lime font-bold">{product.tagline}</span>
             </p>
             <p className="text-zinc-650 dark:text-zinc-400 leading-relaxed text-sm sm:text-base">
               {product.intro}

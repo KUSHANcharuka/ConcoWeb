@@ -694,7 +694,7 @@ export default function PlanningLawChatbotPage() {
                 <div className="w-full bg-zinc-900/90 rounded-2xl border border-white/10 p-2 shadow-2xl shadow-zinc-400/20 dark:shadow-black/80 backdrop-blur-md overflow-hidden">
                   <div className="flex items-center gap-1.5 pb-2 px-2 border-b border-white/5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-lime/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
                     <span className="ml-4 text-[9px] text-zinc-500 font-mono select-none">concolabs.ai/planning-chatbot</span>
                   </div>
@@ -718,7 +718,7 @@ export default function PlanningLawChatbotPage() {
                 <div className="w-full bg-zinc-900/90 rounded-2xl border border-white/10 p-2 shadow-2xl shadow-zinc-400/20 dark:shadow-black/80 backdrop-blur-md overflow-hidden">
                   <div className="flex items-center gap-1.5 pb-2 px-2 border-b border-white/5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-lime/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
                     <span className="ml-4 text-[9px] text-zinc-500 font-mono select-none">concolabs.ai/planning-chatbot</span>
                   </div>
@@ -742,7 +742,7 @@ export default function PlanningLawChatbotPage() {
                 <div className="w-full bg-zinc-900/90 rounded-2xl border border-white/10 p-2 shadow-2xl shadow-zinc-400/20 dark:shadow-black/80 backdrop-blur-md overflow-hidden">
                   <div className="flex items-center gap-1.5 pb-2 px-2 border-b border-white/5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-lime/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
                     <span className="ml-4 text-[9px] text-zinc-500 font-mono select-none">concolabs.ai/planning-chatbot</span>
                   </div>
@@ -766,7 +766,7 @@ export default function PlanningLawChatbotPage() {
                 <div className="w-full bg-zinc-900/90 rounded-2xl border border-white/10 p-2 shadow-2xl shadow-zinc-400/20 dark:shadow-black/80 backdrop-blur-md overflow-hidden">
                   <div className="flex items-center gap-1.5 pb-2 px-2 border-b border-white/5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-lime/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
                     <span className="ml-4 text-[9px] text-zinc-500 font-mono select-none">concolabs.ai/planning-chatbot</span>
                   </div>
