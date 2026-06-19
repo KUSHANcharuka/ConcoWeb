@@ -25,11 +25,11 @@ import {
   Download,
   Calendar,
   FileSpreadsheet,
+  ArrowUpRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
 import Carousel from "@/components/learnmore/carousel";
-import { VideoLightbox } from "@/components/persona/video-lightbox";
 
 // Apple-style animation variants
 const fadeInUp = {
@@ -44,6 +44,152 @@ const staggerContainer = {
     transition: { staggerChildren: 0.12, delayChildren: 0.15 },
   },
 };
+
+// 3D Isometric Holographic Building Mascot SVG
+function RevitHologramMascot() {
+  return (
+    <div className="relative w-72 h-72 sm:w-[380px] sm:h-[380px] mx-auto flex items-center justify-center">
+      {/* Background radial glow */}
+      <div className="absolute inset-0 bg-lime/10 rounded-full filter blur-3xl opacity-50 animate-pulse" />
+      <motion.svg
+        viewBox="0 0 400 400"
+        className="w-full h-full text-lime-400 dark:text-lime-300 drop-shadow-[0_0_20px_rgba(163,230,53,0.25)]"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1 }}
+      >
+        {/* Isometric Grid Floor (Background) */}
+        <g className="stroke-zinc-300 dark:stroke-zinc-800" strokeWidth="0.75" fill="none" opacity="0.3">
+          <path d="M 50,200 L 200,120 L 350,200 L 200,280 Z" />
+          <path d="M 50,200 L 200,280 L 350,200" />
+          <path d="M 200,120 L 200,280" />
+          <path d="M 125,160 L 275,240" />
+          <path d="M 275,160 L 125,240" />
+        </g>
+
+        {/* 3D Wireframe building structure */}
+        <g stroke="currentColor" strokeWidth="1.25" fill="none" className="text-lime-500 dark:text-lime-400">
+          {/* Main Tower (Left Block) */}
+          <path d="M 120,240 L 180,210 L 240,240 L 180,270 Z" />
+          <path d="M 120,240 L 120,150" />
+          <path d="M 180,270 L 180,180" />
+          <path d="M 240,240 L 240,150" />
+          <path d="M 180,210 L 180,150" />
+          <path d="M 120,150 L 180,120 L 240,150 L 180,180 Z" />
+          
+          {/* Floor Slab Slices */}
+          <path d="M 120,195 L 180,165 L 240,195 L 180,225 Z" className="opacity-60 stroke-emerald-500" />
+          
+          {/* Right Annex Block */}
+          <path d="M 240,240 L 300,210 L 240,180" />
+          <path d="M 300,210 L 300,140" />
+          <path d="M 240,150 L 300,120 L 240,90 Z" />
+          <path d="M 300,120 L 240,150" strokeWidth="0.75" />
+          
+          {/* Hologram Data Connectors (Glowing Circles) */}
+          <circle cx="120" cy="150" r="3.5" fill="#a3e635" className="animate-ping" />
+          <circle cx="180" cy="120" r="3" fill="#10b981" />
+          <circle cx="240" cy="150" r="3" fill="#a3e635" />
+          <circle cx="300" cy="120" r="3.5" fill="#10b981" />
+          <circle cx="180" cy="180" r="3" fill="#a3e635" />
+          <circle cx="180" cy="270" r="3" fill="#10b981" />
+        </g>
+        
+        {/* Scanning Laser Line */}
+        <motion.line
+          x1="80"
+          y1="100"
+          x2="320"
+          y2="100"
+          stroke="#10b981"
+          strokeWidth="1.5"
+          initial={{ y: 20 }}
+          animate={{ y: 150 }}
+          transition={{
+            repeat: Infinity,
+            repeatType: "reverse",
+            duration: 4,
+            ease: "easeInOut",
+          }}
+          className="drop-shadow-[0_0_6px_#10b981]"
+        />
+      </motion.svg>
+    </div>
+  );
+}
+
+// 3D Glowing Rotating Network Globe SVG
+function GlowingDigitalGlobe({ className = "w-32 h-32 text-emerald-500" }: { className?: string }) {
+  return (
+    <div className={`relative ${className} mx-auto flex items-center justify-center overflow-hidden`}>
+      <div className="absolute inset-0 bg-emerald-500/10 rounded-full filter blur-xl opacity-60" />
+      <motion.svg
+        viewBox="0 0 100 100"
+        className="w-full h-full drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+      >
+        <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 3" fill="none" className="opacity-30" />
+        <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="0.75" fill="none" className="opacity-70" />
+        
+        <ellipse cx="50" cy="50" rx="38" ry="12" stroke="currentColor" strokeWidth="0.5" fill="none" className="opacity-30" />
+        <ellipse cx="50" cy="50" rx="12" ry="38" stroke="currentColor" strokeWidth="0.5" fill="none" className="opacity-30" />
+        <line x1="12" y1="50" x2="88" y2="50" stroke="currentColor" strokeWidth="0.5" className="opacity-25" />
+        <line x1="50" y1="12" x2="50" y2="88" stroke="currentColor" strokeWidth="0.5" className="opacity-25" />
+
+        <circle cx="28" cy="30" r="2" fill="#a3e635" />
+        <circle cx="72" cy="30" r="2.5" fill="#10b981" />
+        <circle cx="34" cy="65" r="2" fill="#10b981" />
+        <circle cx="66" cy="65" r="2" fill="#a3e635" />
+        <circle cx="50" cy="12" r="1.5" fill="#a3e635" />
+        <circle cx="50" cy="88" r="1.5" fill="#10b981" />
+
+        <path d="M 28,30 Q 50,20 72,30" stroke="#a3e635" strokeWidth="0.5" fill="none" className="opacity-50" />
+        <path d="M 34,65 Q 50,80 66,65" stroke="#10b981" strokeWidth="0.5" fill="none" className="opacity-50" />
+        <path d="M 28,30 Q 30,50 34,65" stroke="#a3e635" strokeWidth="0.5" fill="none" className="opacity-40" />
+        <path d="M 72,30 Q 70,50 66,65" stroke="#10b981" strokeWidth="0.5" fill="none" className="opacity-40" />
+      </motion.svg>
+    </div>
+  );
+}
+
+// Estimator Avatar Profile Card
+function EstimatorAvatarCard() {
+  return (
+    <div className="relative rounded-[28px] overflow-hidden border border-zinc-200/70 dark:border-zinc-800/70 bg-white/60 dark:bg-zinc-900/50 backdrop-blur-xl shadow-xl p-6 space-y-6 max-w-sm mx-auto group">
+      <div className="absolute -inset-1 bg-gradient-to-r from-lime/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[28px]" />
+
+      <div className="flex items-center gap-4">
+        <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-lime to-emerald-500 flex items-center justify-center text-black font-black text-lg shadow-md border-2 border-white dark:border-zinc-800 shrink-0">
+          EW
+          <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white dark:border-zinc-800" />
+        </div>
+        <div className="text-left">
+          <h4 className="font-extrabold text-zinc-900 dark:text-white text-sm">Emily Watson</h4>
+          <p className="text-[10px] text-zinc-500 font-bold tracking-wider uppercase">BIM Lead &amp; QS Coordinator</p>
+          <p className="text-[10px] text-lime font-bold">@qs_lead</p>
+        </div>
+      </div>
+
+      <div className="h-px bg-zinc-200 dark:bg-zinc-800" />
+
+      <div className="space-y-2.5 font-mono text-[11px] text-left">
+        <div className="flex justify-between items-center text-zinc-700 dark:text-zinc-300">
+          <span>Active Extraction</span>
+          <span className="text-lime font-bold">100% Sync</span>
+        </div>
+        <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-1 overflow-hidden">
+          <div className="bg-lime h-1 rounded-full" style={{ width: '100%' }} />
+        </div>
+        <div className="space-y-1 text-zinc-500 dark:text-zinc-400 text-[10px]">
+          <div>&gt; Model: Terminal_T3_Final.rvt</div>
+          <div>&gt; Mapping elements to SMM7 standard...</div>
+          <div>&gt; 4,821 elements mapped successfully.</div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // FAQ Accordion
 function AppleAccordion({ items }: { items: { q: string; a: string }[] }) {
@@ -127,7 +273,22 @@ const carouselSteps = [
 export default function RevitToBOQPage() {
   const [activeTab, setActiveTab] = useState<"before" | "after">("after");
   const [autoToggleKey, setAutoToggleKey] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [heroVideoActive, setHeroVideoActive] = useState(false);
+
+  const stopHeroVideo = useCallback(() => {
+    setHeroVideoActive(false);
+  }, []);
+
+  useEffect(() => {
+    if (heroVideoActive) {
+      window.addEventListener("click", stopHeroVideo);
+      window.addEventListener("scroll", stopHeroVideo, { passive: true });
+    }
+    return () => {
+      window.removeEventListener("click", stopHeroVideo);
+      window.removeEventListener("scroll", stopHeroVideo);
+    };
+  }, [heroVideoActive, stopHeroVideo]);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroScrollProgress } = useScroll({
@@ -169,20 +330,55 @@ export default function RevitToBOQPage() {
       <Navbar />
 
       {/* ─── HERO SECTION ─── */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-zinc-50 dark:bg-zinc-950 pt-16">
+      <section
+        ref={heroRef}
+        className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-gradient-to-br from-[#E8F3F6] via-[#F4F9FA] to-white dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 pt-28 pb-12 border-b border-zinc-200/40 dark:border-zinc-900"
+      >
+        <AnimatePresence>
+          {heroVideoActive && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="absolute inset-0 z-40 bg-zinc-950 flex items-center justify-center"
+            >
+              <video
+                src="/videos/word2bim_video_3.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900/90 backdrop-blur-md border border-zinc-800 text-[10px] text-zinc-400 font-extrabold tracking-widest px-4 py-2.5 rounded-full pointer-events-none select-none z-50 uppercase">
+                Click or scroll anywhere to exit demo
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Neon blue and teal blur blobs */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/20 via-lime/10 to-transparent rounded-full blur-[130px] mix-blend-multiply dark:mix-blend-screen opacity-75 animate-pulse" style={{ animationDuration: '10s' }} />
-          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-lime/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] mix-blend-multiply dark:mix-blend-screen opacity-65" />
-          <div className="absolute inset-0 bg-white/40 dark:bg-zinc-950/60 backdrop-blur-[1px]" />
+          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/15 via-emerald-500/10 to-transparent rounded-full blur-[130px] opacity-75 animate-pulse" style={{ animationDuration: '12s' }} />
+          <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-emerald-500/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] opacity-65" />
+          <div className="absolute inset-0 bg-white/30 dark:bg-zinc-950/60 backdrop-blur-[1px]" />
           
           {/* Blueprint grid pattern */}
           <div
-            className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
+            className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
             style={{
               backgroundImage: `linear-gradient(rgba(0,0,0,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,1) 1px, transparent 1px)`,
               backgroundSize: "44px 44px",
             }}
           />
+        </div>
+
+        {/* Massive Background Typography Watermark */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
+          <span className="text-[20vw] font-black text-zinc-900/[0.02] dark:text-white/[0.01] tracking-widest uppercase">
+            BOQ
+          </span>
         </div>
 
         <div className="absolute top-28 left-6 z-30">
@@ -199,272 +395,284 @@ export default function RevitToBOQPage() {
           style={{ y: textY, opacity: heroOpacity }}
           className="relative w-full z-10"
         >
-          <div className="px-6 pt-32 pb-20 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Hero Header Typography Block */}
+          <div className="max-w-4xl mx-auto text-center px-6 space-y-4 pb-8 pt-12">
+            <span className="text-xs font-bold text-zinc-450 dark:text-zinc-555 uppercase tracking-widest block">
+              Revit to BOQ Plugin
+            </span>
+            <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-zinc-950 dark:text-white leading-[1.05] uppercase">
+              Revit to BOQ
+              <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-550 dark:from-white dark:via-zinc-300 dark:to-zinc-500">
+                Automated Takeoff
+              </span>
+            </h1>
+            <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed font-medium pb-2">
+              Natively parses 3D models to generate fully priced, SMM7-compliant Bill of Quantities in hours instead of weeks.
+            </p>
             
-            {/* Left Column - Hero Content & Switcher */}
-            <div className="lg:col-span-7 space-y-8">
-              <motion.div
-                variants={staggerContainer}
-                initial="hidden"
-                animate="visible"
-                className="space-y-6"
-              >
-
-
-                <motion.h1
-                  variants={fadeInUp}
-                  className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.05]"
+            {/* Added Watch Demo & Book a demo buttons with tag line directly in Hero Section */}
+            <div className="flex flex-col items-center justify-center space-y-3 pt-2">
+              <div className="flex gap-3">
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setHeroVideoActive(true);
+                  }}
+                  variant="outline"
+                  className="rounded-full bg-white dark:bg-zinc-950 font-extrabold text-xs px-5 py-3 cursor-pointer border-zinc-200 dark:border-zinc-800"
                 >
-                  Revit to BOQ
-                  <br />
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-950 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-300 dark:to-zinc-500">
-                    Automated Takeoff
-                  </span>
-                </motion.h1>
-
-                <motion.p
-                  variants={fadeInUp}
-                  className="text-lg sm:text-xl text-zinc-700 dark:text-zinc-300 font-semibold leading-relaxed max-w-xl"
+                  <Play className="w-3 h-3 mr-1 text-zinc-900 dark:text-white fill-zinc-900 dark:fill-white" />
+                  Watch Demo
+                </Button>
+                <Button
+                  asChild
+                  className="rounded-full bg-zinc-900 text-white hover:bg-zinc-850 dark:bg-white dark:text-black dark:hover:bg-zinc-100 font-extrabold text-xs px-5 py-3 cursor-pointer border-0 shadow-md transition-transform hover:scale-105"
                 >
-                  The BOQ that used to take three weeks. Done today.
-                  <br />
-                  <span className="text-zinc-950 dark:text-white font-bold">Automated quantity mapping.</span>
-                </motion.p>
-
-                {/* Switcher Widget inside Hero Left */}
-                <motion.div
-                  variants={fadeInUp}
-                  className="relative bg-white/60 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/70 dark:border-zinc-800/70 rounded-3xl p-6 shadow-xl"
-                >
-                  <div className="flex items-center justify-between mb-4 border-b border-zinc-150 dark:border-zinc-850 pb-3">
-                    <h3 className="font-bold text-sm tracking-tight text-zinc-900 dark:text-white">
-                      Compare Workflows
-                    </h3>
-                    <div className="relative flex bg-zinc-100 dark:bg-zinc-950 p-1 rounded-xl w-48 justify-between border border-zinc-200/50 dark:border-zinc-850/50">
-                      <button
-                        onClick={() => handleTabClick("before")}
-                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                          activeTab === "before"
-                            ? "text-zinc-900 dark:text-white"
-                            : "text-zinc-400"
-                        }`}
-                      >
-                        Before
-                      </button>
-                      <button
-                        onClick={() => handleTabClick("after")}
-                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                          activeTab === "after"
-                            ? "text-zinc-900 dark:text-white"
-                            : "text-zinc-400"
-                        }`}
-                      >
-                        After
-                      </button>
-
-                      <motion.div
-                        layout
-                        className="absolute top-1 bottom-1 bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-800 rounded-lg"
-                        style={{ width: "calc(50% - 4px)" }}
-                        animate={{
-                          left:
-                            activeTab === "before" ? 4 : "calc(100% / 2 + 4px)",
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 350,
-                          damping: 25,
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="min-h-[140px] flex flex-col justify-center">
-                    <AnimatePresence mode="wait">
-                      {activeTab === "before" ? (
-                        <motion.div
-                          key="before"
-                          initial={{ opacity: 0, x: -14 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 14 }}
-                          transition={{ duration: 0.2 }}
-                          className="space-y-2.5"
-                        >
-                          <div className="text-[10px] font-bold text-red-500 uppercase tracking-wider">
-                            Manual Measuring
-                          </div>
-                          <ul className="space-y-1.5">
-                            <li className="flex gap-2 text-zinc-650 dark:text-zinc-400 text-xs">
-                              <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                              <span>QS isolates elements visually in the Revit model.</span>
-                            </li>
-                            <li className="flex gap-2 text-zinc-650 dark:text-zinc-400 text-xs">
-                              <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                              <span>Rules of measurement applied manually line by line.</span>
-                            </li>
-                            <li className="flex gap-2 text-zinc-650 dark:text-zinc-400 text-xs">
-                              <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                              <span>Rates are looked up and typed into Excel by hand.</span>
-                            </li>
-                          </ul>
-                        </motion.div>
-                      ) : (
-                        <motion.div
-                          key="after"
-                          initial={{ opacity: 0, x: 14 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -14 }}
-                          transition={{ duration: 0.2 }}
-                          className="space-y-2.5"
-                        >
-                          <div className="text-[10px] font-bold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider">
-                            Revit to BOQ Plugin
-                          </div>
-                          <ul className="space-y-1.5">
-                            <li className="flex gap-2 text-zinc-650 dark:text-zinc-350 text-xs">
-                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                              <span>Identifies all elements directly from Revit files.</span>
-                            </li>
-                            <li className="flex gap-2 text-zinc-650 dark:text-zinc-350 text-xs">
-                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                              <span>AI predicts and applies rates for each line item automatically.</span>
-                            </li>
-                            <li className="flex gap-2 text-zinc-650 dark:text-zinc-350 text-xs">
-                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                              <span>Priced BOQ generated in hours, ready for expert review.</span>
-                            </li>
-                          </ul>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </motion.div>
-
-                {/* CTAs */}
-                <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-2">
-                  <Button
-                    onClick={() => setLightboxOpen(true)}
-                    variant="outline"
-                    size="lg"
-                    className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
+                  <a
+                    href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <Play className="w-4 h-4 mr-2 text-zinc-900 dark:text-zinc-300 fill-zinc-900 dark:fill-zinc-300" />
-                    Watch Demo
-                  </Button>
-                  
-                  <Button
-                    asChild
-                    size="lg"
-                    className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-lime/10 cursor-pointer bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-105"
-                  >
-                    <a
-                      href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Book a demo →
-                    </a>
-                  </Button>
-                </motion.div>
-              </motion.div>
+                    Book a demo →
+                  </a>
+                </Button>
+              </div>
+              <h4 className="text-[10px] font-extrabold tracking-widest text-zinc-450 dark:text-zinc-500 leading-none uppercase pt-1">
+                FAST EXTRACT, FASTER ESTIMATION
+              </h4>
             </div>
+          </div>
 
-            {/* Right Column - Custom Mockup/Image */}
-            <div className="lg:col-span-5">
+          {/* 3-Column Floating Card Deck */}
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-6 relative z-10 pb-16">
+            
+            {/* Left Column: Floating Globe Card */}
+            <div className="lg:col-span-4 space-y-6">
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative"
+                className="bg-white/50 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 p-6 rounded-[2.5rem] shadow-xl space-y-5"
               >
-                <div className="absolute -inset-1 rounded-[30px] bg-gradient-to-tr from-lime to-transparent opacity-20 blur-lg" />
-                <div className="relative rounded-[28px] overflow-hidden border border-zinc-200/70 dark:border-zinc-800/70 bg-zinc-900/5 dark:bg-zinc-900/40 shadow-xl p-6 space-y-6">
-                  <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-4">
-                    <div>
-                      <div className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest">Interactive Plugin</div>
-                      <div className="text-base font-bold text-zinc-900 dark:text-white">Revit_Model_v3.rvt</div>
-                    </div>
-                    <Box className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
-                  </div>
-                  
-                  {/* File scan simulator */}
-                  <div className="bg-zinc-950/80 rounded-2xl p-4 space-y-3 font-mono text-xs">
-                    <div className="flex justify-between items-center text-zinc-400">
-                      <span>Extracting families...</span>
-                      <span className="text-zinc-900 dark:text-zinc-300 animate-pulse">Running</span>
-                    </div>
-                    <div className="w-full bg-zinc-900 rounded-full h-1.5 overflow-hidden">
-                      <div className="bg-lime h-1.5 rounded-full animate-pulse" style={{ width: '85%' }} />
-                    </div>
-                    <div className="space-y-1 text-zinc-500 text-[10px]">
-                      <div>&gt; Found 1,245 Structural Columns</div>
-                      <div>&gt; Mapping 834 Concrete Walls to POMI standard</div>
-                      <div>&gt; Rate database sync successful.</div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 text-[10px]">
-                    <span className="px-2.5 py-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg text-zinc-650 dark:text-zinc-300 border border-zinc-200/50 dark:border-zinc-700">Native Plugin</span>
-                    <span className="px-2.5 py-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg text-zinc-650 dark:text-zinc-300 border border-zinc-200/50 dark:border-zinc-700">POMI / SMM7</span>
-                  </div>
+                <GlowingDigitalGlobe className="w-28 h-28 text-emerald-500" />
+                <div className="space-y-2 text-left">
+                  <h3 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tight">
+                    Automatic Quantity Takeoff
+                  </h3>
+                  <p className="text-xs text-zinc-650 dark:text-zinc-450 leading-relaxed font-medium">
+                    Concolabs extracts dimensions directly from RVT model schedules. Fast, secure, and completely error-free.
+                  </p>
                 </div>
               </motion.div>
             </div>
 
+            {/* Center Column: 3D Holographic Building Mascot */}
+            <div className="lg:col-span-4 flex items-center justify-center">
+              <RevitHologramMascot />
+            </div>
+
+            {/* Right Column: Workflow Compare Switcher Card */}
+            <div className="lg:col-span-4 space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="relative bg-white/50 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-[2.5rem] p-6 shadow-xl"
+              >
+                <div className="flex items-center justify-between mb-4 border-b border-zinc-200/60 dark:border-zinc-800/60 pb-3">
+                  <h3 className="font-extrabold text-xs tracking-wider uppercase text-zinc-900 dark:text-white">
+                    Compare Workflows
+                  </h3>
+                  <div className="relative flex bg-zinc-200/60 dark:bg-zinc-950 p-0.5 rounded-xl w-36 justify-between border border-zinc-200/30 dark:border-zinc-800/30">
+                    <button
+                      onClick={() => handleTabClick("before")}
+                      className={`relative z-10 w-[50%] py-0.5 text-[10px] font-bold rounded-lg transition-colors cursor-pointer ${
+                        activeTab === "before"
+                          ? "text-zinc-900 dark:text-white"
+                          : "text-zinc-500"
+                      }`}
+                    >
+                      Before
+                    </button>
+                    <button
+                      onClick={() => handleTabClick("after")}
+                      className={`relative z-10 w-[50%] py-0.5 text-[10px] font-bold rounded-lg transition-colors cursor-pointer ${
+                        activeTab === "after"
+                          ? "text-zinc-900 dark:text-white"
+                          : "text-zinc-500"
+                      }`}
+                    >
+                      After
+                    </button>
+
+                    <motion.div
+                      layout
+                      className="absolute top-0.5 bottom-0.5 bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-850 rounded-lg"
+                      style={{ width: "calc(50% - 2px)" }}
+                      animate={{
+                        left:
+                          activeTab === "before" ? 2 : "calc(100% / 2 + 2px)",
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 26,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="min-h-[110px] flex flex-col justify-center text-left">
+                  <AnimatePresence mode="wait">
+                    {activeTab === "before" ? (
+                      <motion.div
+                        key="before"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 10 }}
+                        transition={{ duration: 0.15 }}
+                        className="space-y-2"
+                      >
+                        <div className="text-[9px] font-bold text-red-500 uppercase tracking-wider">
+                          Manual Measuring
+                        </div>
+                        <ul className="space-y-1">
+                          <li className="flex gap-2 text-zinc-500 dark:text-zinc-400 text-[11px] font-medium">
+                            <X className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
+                            <span>QS isolates elements visually in the Revit model.</span>
+                          </li>
+                          <li className="flex gap-2 text-zinc-500 dark:text-zinc-400 text-[11px] font-medium">
+                            <X className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
+                            <span>Rules applied manually line by line.</span>
+                          </li>
+                        </ul>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="after"
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -10 }}
+                        transition={{ duration: 0.15 }}
+                        className="space-y-2"
+                      >
+                        <div className="text-[9px] font-bold text-emerald-500 uppercase tracking-wider">
+                          Revit to BOQ Plugin
+                        </div>
+                        <ul className="space-y-1">
+                          <li className="flex gap-2 text-zinc-650 dark:text-zinc-350 text-[11px] font-medium">
+                            <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                            <span>Identifies all elements directly from Revit files.</span>
+                          </li>
+                          <li className="flex gap-2 text-zinc-650 dark:text-zinc-350 text-[11px] font-medium">
+                            <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                            <span>AI predicts and applies rates automatically.</span>
+                          </li>
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </section>
 
-      {/* Video Lightbox */}
-      <VideoLightbox
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-        videoUrl="https://www.youtube.com/watch?v=1u8_royKFEE"
-      />
 
-      {/* ─── PROBLEM SECTION ─── */}
-      <section ref={problemRef} className="relative py-32 px-6 bg-white dark:bg-zinc-950 overflow-hidden border-y border-zinc-200 dark:border-zinc-900">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={isProblemInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="lg:col-span-5 space-y-6"
-          >
-            <span className="text-xs font-bold text-zinc-450 dark:text-zinc-550 uppercase tracking-widest block">
-              The Friction
+      {/* ─── MIDDLE FEATURE SECTION ─── */}
+      <section
+        ref={problemRef}
+        className="py-24 px-6 bg-white dark:bg-zinc-950 border-t border-zinc-150 dark:border-zinc-900 overflow-hidden relative"
+      >
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-left">
+          {/* Left Column */}
+          <div className="lg:col-span-6 space-y-6">
+            <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest block">
+              Standardized Takeoffs
             </span>
-            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-950 dark:text-white leading-tight uppercase">
-              Judgment is your value, not measuring.
+            <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
+              Manage and estimate globally with Revit to BOQ
             </h2>
-            <div className="w-16 h-1 bg-lime rounded-full" />
-          </motion.div>
+            <p className="text-zinc-650 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">
+              Concolabs Revit to BOQ Plugin helps QS teams automate element matching across 150+ element families quickly, securely, and without manual takeoff errors. By mapping concrete volumes, steel weights, and wall areas directly to standard rules of measurement (POMI/SMM7), you deliver reliable baseline schedules on day one.
+            </p>
+            <div className="pt-2">
+              <Button
+                asChild
+                className="rounded-2xl px-6 py-5 font-bold shadow-md cursor-pointer border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
+              >
+                <Link href="/learnmore/cost-plan-calculator">
+                  Explore Feasibility Feeds →
+                </Link>
+              </Button>
+            </div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isProblemInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-7 space-y-6 text-zinc-650 dark:text-zinc-400 text-base sm:text-lg leading-relaxed"
-          >
-            <p>
-              Your estimators are manually measuring every element in a Revit model, applying standard measurement rules, and typing the bill by hand — it's the exact same process for every project.
-            </p>
-            <p>
-              This manual data entry creates a bottleneck during the tendering phase, increasing the risk of human error and pulling expert Quantity Surveyors away from strategic cost advice. Concolabs automates the measurement and the rate predictions, so your team focuses entirely on the advice clients are actually paying for.
-            </p>
-          </motion.div>
+          {/* Right Column: Portrait Card Mockup with floating badges */}
+          <div className="lg:col-span-6 relative flex items-center justify-center py-12">
+            <div className="absolute -inset-4 rounded-[40px] bg-gradient-to-tr from-lime/10 to-emerald-500/5 blur-xl opacity-80" />
+            
+            {/* Central Portrait Card Mockup */}
+            <div className="relative z-10 bg-zinc-50 dark:bg-zinc-900/60 p-6 rounded-[2.5rem] border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl max-w-sm w-full">
+              {/* Mock photo display using premium vector graphics */}
+              <div className="relative rounded-[2rem] overflow-hidden aspect-[4/5] bg-zinc-900 flex items-center justify-center border border-zinc-200/20">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-lime/20" />
+                <svg className="w-32 h-32 text-zinc-850 opacity-60" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+                <div className="absolute bottom-4 left-4 right-4 bg-zinc-950/85 backdrop-blur-md px-4 py-3 rounded-2xl border border-zinc-850 flex items-center justify-between">
+                  <div className="text-left">
+                    <span className="text-[9px] text-zinc-400 font-bold uppercase tracking-wider block">QS Coordinator</span>
+                    <span className="text-xs font-bold text-white">Emily Watson</span>
+                  </div>
+                  <span className="px-2 py-0.5 bg-lime text-black rounded text-[9px] font-bold uppercase tracking-wider">ONLINE</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Badge 1: Top Left */}
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-8 left-4 sm:left-12 z-20 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-lg flex items-center gap-2.5"
+            >
+              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+                <Check className="w-4 h-4" />
+              </div>
+              <div className="text-left">
+                <span className="text-[9px] text-zinc-400 font-bold block uppercase tracking-wider">BOQ Schedule</span>
+                <span className="text-xs font-bold text-zinc-850 dark:text-zinc-150">Generated Successfully</span>
+              </div>
+            </motion.div>
+
+            {/* Floating Badge 2: Bottom Right */}
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-8 right-4 sm:right-12 z-20 bg-zinc-950/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-zinc-800 shadow-xl flex items-center gap-2.5 text-white"
+            >
+              <div className="w-7 h-7 rounded-lg bg-lime/20 flex items-center justify-center text-lime font-bold text-xs">
+                $
+              </div>
+              <div className="text-left font-mono">
+                <span className="text-[8px] text-zinc-400 block uppercase tracking-wider">Predicted Rate</span>
+                <span className="text-xs font-bold text-lime">$1,250 / m³</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
-
       {/* ─── HOW IT WORKS (CAROUSEL) ─── */}
       <section ref={solutionRef} className="relative py-32 px-6 bg-zinc-50 dark:bg-zinc-950 overflow-hidden">
         <div className="max-w-6xl mx-auto space-y-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-200 dark:border-zinc-900 pb-10">
-            <div className="space-y-4 max-w-2xl">
+            <div className="space-y-4 max-w-2xl text-left">
               <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest block">
                 How It Works
               </span>
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-950 dark:text-white leading-[1.1] uppercase">
+              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
                 The Extraction Steps
               </h2>
               <p className="text-zinc-500 dark:text-zinc-400 text-base sm:text-lg font-medium">
@@ -479,112 +687,15 @@ export default function RevitToBOQPage() {
         </div>
       </section>
 
-      {/* ─── WORKFLOW BENTO GRID ─── */}
-      <section ref={workflowRef} className="bg-zinc-950 text-white border-t border-zinc-900 py-32 px-6 overflow-hidden">
-        <div className="max-w-6xl mx-auto space-y-16">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-10">
-            <div className="space-y-4 max-w-2xl">
-              <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block">
-                Workflow Hook
-              </span>
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.1] uppercase">
-                Fits into your workflow
-              </h2>
-              <p className="text-zinc-400 text-base sm:text-lg font-medium">
-                Integrates seamlessly with existing desktop apps and cloud-based site certificate pipelines.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
-            
-            {/* Bento Card 1 */}
-            <div className="bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-800 transition-all duration-300 shadow-sm">
-              <div className="space-y-4">
-                <span className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest block">Input model</span>
-                <h3 className="text-2xl font-bold tracking-tight text-white">Revit Integration</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  Support for native `.rvt` models. Natively reads parameter schedules without requiring manual export configs.
-                </p>
-              </div>
-
-              <div className="mt-10 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 shadow-sm space-y-3">
-                <div className="flex justify-between items-center text-xs font-mono text-zinc-400">
-                  <span>Revit Extraction</span>
-                  <span className="text-zinc-100 font-bold flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />Success</span>
-                </div>
-                <div className="h-px bg-zinc-900" />
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-zinc-300">Structural Columns</span>
-                    <span className="text-zinc-900 dark:text-zinc-300 font-mono">1,402 nr</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-zinc-300">Foundation Walls</span>
-                    <span className="text-zinc-900 dark:text-zinc-300 font-mono">2,850 m²</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bento Card 2 */}
-            <div className="bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-800 transition-all duration-300 shadow-sm">
-              <div className="space-y-4">
-                <span className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest block">AI Classifier</span>
-                <h3 className="text-2xl font-bold tracking-tight text-white">POMI / SMM7 Rules</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  Automatically classifies structural and architectural elements and applies international standard rules of measurement.
-                </p>
-              </div>
-
-              <div className="mt-10 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 shadow-sm space-y-2">
-                <div className="flex justify-between items-center bg-zinc-900/50 p-2 rounded-xl border border-zinc-900 text-xs">
-                  <span className="font-mono text-zinc-300">{"Wall-200mm -> Concrete"}</span>
-                  <span className="px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-300 rounded text-[10px]">Identified</span>
-                </div>
-                <div className="flex justify-between items-center bg-zinc-900/50 p-2 rounded-xl border border-zinc-900 text-xs">
-                  <span className="font-mono text-zinc-300">{"Slab-150mm -> Structural"}</span>
-                  <span className="px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-300 rounded text-[10px]">Identified</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bento Card 3 */}
-            <div className="bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-800 transition-all duration-300 shadow-sm">
-              <div className="space-y-4">
-                <span className="text-[10px] font-bold text-zinc-550 uppercase tracking-widest block">Handoffs</span>
-                <h3 className="text-2xl font-bold tracking-tight text-white">Downstream Pipelines</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  Generated BOQs serve as the quantity baseline for construction site measurements and interim certificates in MeasureonAir.
-                </p>
-              </div>
-
-              <div className="mt-10 bg-zinc-950 border border-zinc-900 rounded-2xl p-4 shadow-sm space-y-2">
-                <div className="flex items-center justify-between text-xs text-zinc-400">
-                  <span>MeasureonAir Sync</span>
-                  <span className="text-zinc-900 dark:text-white">Linked</span>
-                </div>
-                <div className="flex items-center justify-between text-xs text-zinc-450">
-                  <span>Cost Plan Engine</span>
-                  <span className="text-zinc-300">Connected</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
       {/* ─── PRICING & SIDEBAR ─── */}
       <section ref={pricingRef} className="py-32 px-6 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start text-left">
             
             {/* Left Content */}
             <div className="lg:col-span-8 space-y-16">
               <div className="space-y-6">
-                <span className="text-xs font-bold text-zinc-450 dark:text-zinc-550 uppercase tracking-widest block">Deployment</span>
+                <span className="text-xs font-bold text-zinc-450 dark:text-zinc-555 uppercase tracking-widest block">Deployment</span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-zinc-950 dark:text-zinc-50">Pricing &amp; Availability</h2>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
@@ -596,7 +707,7 @@ export default function RevitToBOQPage() {
                   <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
                     <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Enterprise Add-on</span>
                     <p className="text-4xl font-black tracking-tight">Custom Plan</p>
-                    <p className="text-xs text-zinc-500">For multi-office deployment and training on complex proprietary historical rates.</p>
+                    <p className="text-xs text-zinc-505">For multi-office deployment and training on complex proprietary historical rates.</p>
                   </div>
                 </div>
               </div>
@@ -693,7 +804,6 @@ export default function RevitToBOQPage() {
                 </Button>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -746,7 +856,7 @@ export default function RevitToBOQPage() {
             <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
               FAQ
             </span>
-            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-950 dark:text-white leading-tight">
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-955 dark:text-white leading-tight">
               Frequently Asked Questions
             </h2>
           </div>
@@ -774,21 +884,36 @@ export default function RevitToBOQPage() {
         </div>
       </section>
 
-      {/* ─── Footer CTA ─── */}
-      <section className="py-24 px-6 bg-[#F4F2F0] dark:bg-zinc-900/40 border-t border-zinc-200 dark:border-zinc-800 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-955 dark:text-zinc-50 leading-tight uppercase">
-            THE BOQ THAT USED TO TAKE THREE WEEKS. DONE TODAY.
+      {/* ─── BOTTOM BANNER (GREY WITH DESIGN) ─── */}
+      <section className="relative bg-zinc-100 dark:bg-zinc-900/40 text-zinc-900 dark:text-zinc-100 overflow-hidden py-32 border-t border-zinc-200 dark:border-zinc-800">
+        
+        {/* Design: Subtle Blueprint Grid pattern overlay */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-[0.03] dark:opacity-[0.05]">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0,0,0,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,1) 1px, transparent 1px)`,
+              backgroundSize: "28px 28px",
+            }}
+          />
+        </div>
+
+        {/* Soft emerald radial glow to add a subtle design touch to the background */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto text-center space-y-8 px-6 relative z-20">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight uppercase text-zinc-955 dark:text-white">
+            Scale beyond limits with Revit to BOQ
           </h2>
-          <p className="text-zinc-500 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            Automate measurement takeoff from Revit files directly into priced estimates.
+          <p className="text-zinc-550 dark:text-zinc-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed font-medium">
+            Whether you're pricing a high-rise tower or a residential complex, Revit to BOQ automates quantity takeoff instantly.
           </p>
 
           <div className="pt-4 flex justify-center">
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-zinc-955 hover:bg-lime/90 cursor-pointer"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-zinc-900 hover:bg-zinc-850 text-white dark:bg-zinc-100 dark:hover:bg-zinc-200 dark:text-zinc-900 cursor-pointer transition-transform hover:scale-105"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"

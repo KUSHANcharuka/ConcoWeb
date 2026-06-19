@@ -568,7 +568,7 @@ export default function CostPlanCalculatorPage() {
 
               <div className="relative rounded-[2rem] overflow-hidden bg-black aspect-video flex items-center justify-center">
                 <video
-                  src="/videos/cost-plan-calculator-demo.mp4"
+                  src="/videos/check_video_exact_interface_an.mp4"
                   autoPlay
                   loop
                   muted
