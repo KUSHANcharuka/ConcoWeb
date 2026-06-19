@@ -233,14 +233,7 @@ export default function HandDrawnToAutoCADPage() {
                 animate="visible"
                 className="space-y-6"
               >
-                <motion.div variants={fadeInUp} className="flex items-center gap-3">
-                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-primary/10 border border-primary/20 text-primary">
-                    Design
-                  </span>
-                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-zinc-200/50 border border-zinc-300 text-zinc-600">
-                    UK & Australia
-                  </span>
-                </motion.div>
+
 
                 <motion.h1
                   variants={fadeInUp}
@@ -745,7 +738,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 1 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-lime" />
+                  <Upload className="w-8 h-8 text-emerald-600 dark:text-lime" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 1</span>
                 <h4 className="font-bold text-lg text-white">Upload</h4>
@@ -755,7 +748,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 2 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Cpu className="w-8 h-8 text-lime" />
+                  <Cpu className="w-8 h-8 text-emerald-600 dark:text-lime" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 2</span>
                 <h4 className="font-bold text-lg text-white">Computer Vision</h4>
@@ -765,7 +758,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 3 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Box className="w-8 h-8 text-lime" />
+                  <Box className="w-8 h-8 text-emerald-600 dark:text-lime" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 3</span>
                 <h4 className="font-bold text-lg text-white">3D Generation</h4>
@@ -775,7 +768,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 4 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <MessageSquare className="w-8 h-8 text-lime" />
+                  <MessageSquare className="w-8 h-8 text-emerald-600 dark:text-lime" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 4</span>
                 <h4 className="font-bold text-lg text-white">Prompt in WordToBIM</h4>
@@ -785,7 +778,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 5 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Layers className="w-8 h-8 text-lime" />
+                  <Layers className="w-8 h-8 text-emerald-600 dark:text-lime" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 5</span>
                 <h4 className="font-bold text-lg text-white">BOQ & Coordination</h4>

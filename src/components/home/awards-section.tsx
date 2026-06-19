@@ -115,7 +115,7 @@ export function AwardsSection() {
             >
               <div className="text-4xl font-extrabold text-foreground">4.8</div>
               <div className="flex flex-col">
-                <div className="flex gap-0.5 text-amber-500">
+                <div className="flex gap-0.5 text-lime">
                   {[...Array(5)].map((_, i) => (
                     <StarIcon key={i} className="w-5 h-5 fill-current" />
                   ))}
@@ -149,7 +149,7 @@ export function AwardsSection() {
                     {badge.title}
                   </p>
                   {/* Stars */}
-                  <div className="flex gap-0.5 text-amber-500 mb-2">
+                  <div className="flex gap-0.5 text-lime mb-2">
                     {[...Array(5)].map((_, i) => (
                       <StarIcon key={i} className="w-4 h-4 fill-current" />
                     ))}

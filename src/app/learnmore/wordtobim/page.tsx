@@ -207,7 +207,7 @@ export default function WordToBIMPage() {
                 variant="outline"
                 className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
               >
-                <Play className="w-4 h-4 mr-2 text-lime dark:text-lime fill-lime dark:fill-lime" />
+                <Play className="w-4 h-4 mr-2 text-emerald-600 dark:text-lime fill-emerald-600 dark:fill-lime" />
                 Watch Demo
               </Button>
             </div>
@@ -231,7 +231,7 @@ export default function WordToBIMPage() {
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-8 border-b border-zinc-200/50 dark:border-zinc-800/50 pb-6">
                   <h3 className="font-bold text-xl tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-lime" />
+                    <Sparkles className="w-5 h-5 text-emerald-600 dark:text-lime" />
                     Compare Workflows
                   </h3>
                   <div className="relative flex bg-zinc-100/80 dark:bg-zinc-950/80 backdrop-blur-sm p-1.5 rounded-xl w-52 justify-between border border-zinc-200/50 dark:border-zinc-800/50 shadow-inner">
@@ -304,7 +304,7 @@ export default function WordToBIMPage() {
                             "Schedules generated automatically as elements added."
                           ].map((item, i) => (
                             <li key={i} className="flex gap-3 text-zinc-600 dark:text-zinc-300 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                              <Check className="w-5 h-5 text-lime shrink-0" />
+                              <Check className="w-5 h-5 text-emerald-500 shrink-0" />
                               <span className="font-medium">{item}</span>
                             </li>
                           ))}
@@ -331,7 +331,7 @@ export default function WordToBIMPage() {
             <h2 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[0.95] uppercase">
               We <br />
               design <br />
-              <span className="text-lime">BIM.</span>
+              <span className="text-emerald-600 dark:text-lime">BIM.</span>
             </h2>
             <div className="h-[2px] bg-zinc-800 w-32 my-2" />
             <p className="text-zinc-400 text-sm tracking-wider uppercase font-semibold">
@@ -450,7 +450,7 @@ export default function WordToBIMPage() {
               <div className="absolute top-0 right-0 w-64 h-64 bg-lime/10 dark:bg-lime/5 rounded-full blur-[80px] -mr-20 -mt-20 pointer-events-none" />
               <div className="relative z-10 space-y-6">
                 <div className="w-14 h-14 bg-lime/20 dark:bg-zinc-800 rounded-2xl flex items-center justify-center">
-                  <Bot className="w-7 h-7 text-lime dark:text-lime" />
+                  <Bot className="w-7 h-7 text-emerald-600 dark:text-lime" />
                 </div>
                 <div className="space-y-3">
                   <h3 className="text-2xl font-bold text-zinc-900 dark:text-white">Open WordToBIM inside Revit</h3>
@@ -500,7 +500,7 @@ export default function WordToBIMPage() {
               <div className="absolute top-0 left-0 w-48 h-48 bg-lime/10 dark:bg-lime/5 rounded-full blur-[60px] -ml-10 -mt-10 pointer-events-none" />
               <div className="relative z-10 space-y-6">
                 <div className="w-14 h-14 bg-lime/20 dark:bg-zinc-800 rounded-2xl flex items-center justify-center">
-                  <PencilRuler className="w-7 h-7 text-lime dark:text-lime" />
+                  <PencilRuler className="w-7 h-7 text-emerald-600 dark:text-lime" />
                 </div>
                 <div className="space-y-3">
                   <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Hand drawing to element</h3>
@@ -534,13 +534,13 @@ export default function WordToBIMPage() {
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
                 <span className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 rounded-xl text-xs font-bold text-zinc-600 dark:text-zinc-300 shadow-sm border border-zinc-100 dark:border-zinc-700">
-                  <Check className="w-3.5 h-3.5 text-lime" /> 2D to 3D detailing
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> 2D to 3D detailing
                 </span>
                 <span className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 rounded-xl text-xs font-bold text-zinc-600 dark:text-zinc-300 shadow-sm border border-zinc-100 dark:border-zinc-700">
-                  <Check className="w-3.5 h-3.5 text-lime" /> Auto Schedules
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Auto Schedules
                 </span>
                 <span className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 rounded-xl text-xs font-bold text-zinc-600 dark:text-zinc-300 shadow-sm border border-zinc-100 dark:border-zinc-700">
-                  <Check className="w-3.5 h-3.5 text-lime" /> Custom Training
+                  <Check className="w-3.5 h-3.5 text-emerald-500" /> Custom Training
                 </span>
               </div>
             </motion.div>
@@ -618,7 +618,7 @@ export default function WordToBIMPage() {
             <div className="lg:col-span-2 bg-zinc-950 text-white border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">AI Translation Engine</span>
+                  <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">AI Translation Engine</span>
                   <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">Your entire modeling process on one connected AI canvas</h3>
                   <p className="text-zinc-450 text-sm leading-relaxed">
                     Our core AI translation engine connects directly to your active Revit model, creating clean native elements in real time.
@@ -627,7 +627,7 @@ export default function WordToBIMPage() {
                 
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-lime">Active Revit Native Bridge</span>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-emerald-600 dark:text-lime">Active Revit Native Bridge</span>
                 </div>
               </div>
 
@@ -656,7 +656,7 @@ export default function WordToBIMPage() {
                   </div>
                   <div className="text-left leading-none">
                     <span className="text-[8px] font-bold text-white block">Revit 3D</span>
-                    <span className="text-[6px] text-lime font-black uppercase tracking-wider">Modelled</span>
+                    <span className="text-[6px] text-emerald-600 dark:text-lime font-black uppercase tracking-wider">Modelled</span>
                   </div>
                 </div>
 
@@ -684,14 +684,14 @@ export default function WordToBIMPage() {
             {/* Bottom Left Card */}
             <div className="bg-[#12130e] text-white border border-lime/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-lime/30 transition-all duration-300 shadow-md">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Autodesk Integration</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Autodesk Integration</span>
                 <h3 className="text-xl font-bold tracking-tight text-white leading-tight">One place, whole team</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
                   Sync models directly into Autodesk Construction Cloud or local Revit files, maintaining firm standards.
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors duration-300">→</span>
               </div>
             </div>
 
@@ -705,7 +705,7 @@ export default function WordToBIMPage() {
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors duration-300">→</span>
               </div>
             </div>
             
@@ -713,7 +713,7 @@ export default function WordToBIMPage() {
 
           {/* Workflow Steps - Snapping Horizontal Carousel */}
           <div className="w-full">
-            <Carousel items={carouselSteps} themeColor="#ecf000" />
+            <Carousel items={carouselSteps} />
           </div>
 
           <motion.div
@@ -959,7 +959,7 @@ export default function WordToBIMPage() {
 
         <div className="max-w-4xl mx-auto space-y-16 relative z-10">
           <div className="text-center space-y-4">
-            <span className="text-xs font-bold text-lime dark:text-lime uppercase tracking-widest block">
+            <span className="text-xs font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">
               Questions
             </span>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white">
@@ -1003,7 +1003,7 @@ export default function WordToBIMPage() {
                   className="w-full flex items-center justify-between p-6 sm:p-8 text-left font-bold text-base sm:text-lg tracking-tight text-zinc-900 dark:text-zinc-50 cursor-pointer"
                 >
                   <span>{faq.q}</span>
-                  <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === idx ? "bg-lime/20 dark:bg-zinc-800 text-lime dark:text-lime" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"}`}>
+                  <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === idx ? "bg-lime/20 dark:bg-zinc-800 text-emerald-600 dark:text-lime" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"}`}>
                     {activeFaq === idx ? (
                       <Minus className="w-4 h-4" />
                     ) : (
@@ -1085,7 +1085,7 @@ export default function WordToBIMPage() {
               </button>
 
               <div className="space-y-2">
-                <span className="text-xs font-bold text-lime uppercase tracking-widest">
+                <span className="text-xs font-bold text-emerald-600 dark:text-lime uppercase tracking-widest">
                   Interactive Video Demo
                 </span>
                 <h3 className="text-xl font-bold">WordToBIM Walkthrough</h3>

@@ -126,14 +126,7 @@ export default function ERPAutomationsPage() {
                 animate="visible"
                 className="space-y-6"
               >
-                <motion.div variants={fadeInUp} className="flex items-center gap-3">
-                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-lime/10 border border-lime/30 text-zinc-900 dark:text-white backdrop-blur-md">
-                    Operations
-                  </span>
-                  <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-250/50 dark:bg-zinc-800 border border-zinc-350 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400">
-                    Global
-                  </span>
-                </motion.div>
+
 
                 <motion.h1
                   variants={fadeInUp}
@@ -151,7 +144,7 @@ export default function ERPAutomationsPage() {
                   className="text-lg sm:text-xl text-zinc-700 dark:text-zinc-300 font-semibold leading-relaxed max-w-xl"
                 >
                   Mobile to finance.{" "}
-                  <span className="text-lime dark:text-lime font-bold">Automated end-to-end.</span>
+                  <span className="text-emerald-600 dark:text-lime font-bold">Automated end-to-end.</span>
                 </motion.p>
 
                 {/* Before/After mini-switcher in hero */}
@@ -248,7 +241,7 @@ export default function ERPAutomationsPage() {
                     size="lg"
                     className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
                   >
-                    <Play className="w-4 h-4 mr-2 text-lime dark:text-lime fill-lime" />
+                    <Play className="w-4 h-4 mr-2 text-emerald-600 dark:text-lime fill-emerald-600 dark:fill-lime" />
                     Watch Demo
                   </Button>
                   <Button
@@ -293,7 +286,7 @@ export default function ERPAutomationsPage() {
                   {/* Stats row */}
                   <div className="grid grid-cols-3 gap-3">
                     {[
-                      { label: "Model Efficiency", value: "99.4%", color: "text-lime" },
+                      { label: "Model Efficiency", value: "99.4%", color: "text-emerald-600 dark:text-lime" },
                       { label: "Jobs Automated", value: "14,204", color: "text-zinc-900 dark:text-white" },
                       { label: "Errors Flagged", value: "12", color: "text-red-500" },
                     ].map(({ label, value, color }) => (
@@ -309,14 +302,14 @@ export default function ERPAutomationsPage() {
                     <div className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Email → Job Card Pipeline</div>
                     <div className="flex items-center gap-2 text-[10px] font-mono">
                       <span className="px-2 py-1 bg-lime/10 border border-lime/20 rounded text-zinc-700 dark:text-zinc-300 truncate max-w-[140px]">"Order 50m³ concrete..."</span>
-                      <ArrowRight className="w-3 h-3 text-lime shrink-0" />
+                      <ArrowRight className="w-3 h-3 text-emerald-600 dark:text-lime shrink-0" />
                       <span className="px-2 py-1 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded text-emerald-700 dark:text-emerald-400">JC-4821 ✓</span>
                     </div>
                     <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-1.5 overflow-hidden">
                       <div className="bg-lime h-1.5 rounded-full" style={{ width: "92%" }} />
                     </div>
                     <div className="flex justify-between text-[9px] text-zinc-400 font-mono">
-                      <span>Parsing</span><span>Validation</span><span className="text-lime font-bold">ERP Posted ✓</span>
+                      <span>Parsing</span><span>Validation</span><span className="text-emerald-600 dark:text-lime font-bold">ERP Posted ✓</span>
                     </div>
                   </div>
 
@@ -445,7 +438,7 @@ export default function ERPAutomationsPage() {
                       ? "bg-zinc-950/10 border border-zinc-950/20 group-hover:bg-zinc-950/20"
                       : "bg-lime/10 border border-lime/20 group-hover:bg-lime/20"
                   }`}>
-                    <Icon className={`w-7 h-7 ${highlight ? "text-zinc-950" : "text-lime"}`} />
+                    <Icon className={`w-7 h-7 ${highlight ? "text-zinc-950" : "text-emerald-600 dark:text-lime"}`} />
                   </div>
                   <span className={`text-5xl font-black select-none ${highlight ? "text-zinc-950/20" : "text-zinc-100 dark:text-zinc-800"}`}>{num}</span>
                 </div>
@@ -485,7 +478,7 @@ export default function ERPAutomationsPage() {
                 {[{ label: "Model Efficiency", val: "99.4%", accent: true }, { label: "Jobs Automated", val: "14,204", accent: false }, { label: "Errors Flagged", val: "12", red: true }].map(({ label, val, accent, red }) => (
                   <div key={label} className="bg-white/60 dark:bg-zinc-800/60 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 space-y-1">
                     <span className="text-[10px] text-zinc-500 uppercase font-bold">{label}</span>
-                    <p className={`text-2xl font-mono ${accent ? "text-lime" : red ? "text-red-400" : "text-zinc-900 dark:text-white"}`}>{val}</p>
+                    <p className={`text-2xl font-mono ${accent ? "text-emerald-600 dark:text-lime" : red ? "text-red-400" : "text-zinc-900 dark:text-white"}`}>{val}</p>
                   </div>
                 ))}
               </div>
@@ -502,7 +495,7 @@ export default function ERPAutomationsPage() {
             {/* Badge */}
             <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center bg-white/80 dark:bg-black/80 backdrop-blur-md px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800">
               <span className="text-[11px] font-medium text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
-                <Lock className="w-3.5 h-3.5 text-lime" /> Restricted: Client Configurations Shown
+                <Lock className="w-3.5 h-3.5 text-emerald-600 dark:text-lime" /> Restricted: Client Configurations Shown
               </span>
               <span className="text-[10px] font-mono text-zinc-500">Requires Access Credentials</span>
             </div>
@@ -541,7 +534,7 @@ export default function ERPAutomationsPage() {
             {/* Tall card — Email Parsing */}
             <div className="lg:row-span-2 bg-white dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-350 dark:hover:border-zinc-700 transition-all duration-300 shadow-sm">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Layer 1</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Layer 1</span>
                 <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Email-to-ERP Parsing</h3>
                 <p className="text-zinc-550 dark:text-zinc-400 text-sm leading-relaxed">
                   Manager sends email instructions. The ML model extracts vendor details, cost centers, and quantities to populate job cards automatically. No admin needed.
@@ -553,7 +546,7 @@ export default function ERPAutomationsPage() {
                   &quot;Order 50m³ concrete, vendor Holcim, Cost Centre CC-441&quot;
                 </div>
                 <div className="flex items-center gap-2">
-                  <ArrowRight className="w-3.5 h-3.5 text-lime" />
+                  <ArrowRight className="w-3.5 h-3.5 text-emerald-600 dark:text-lime" />
                   <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">Job Card JC-4821 created ✓</span>
                 </div>
               </div>
@@ -563,7 +556,7 @@ export default function ERPAutomationsPage() {
             <div className="lg:col-span-2 bg-zinc-950 text-white border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Layer 2</span>
+                  <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Layer 2</span>
                   <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">SAP &amp; Oracle Live Sync</h3>
                   <p className="text-zinc-400 text-sm leading-relaxed">
                     Continuous synchronization of site timesheets, material receipts, and machinery records directly to standard ledger architectures.
@@ -571,7 +564,7 @@ export default function ERPAutomationsPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-lime">Sync Webhooks Active</span>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-emerald-600 dark:text-lime">Sync Webhooks Active</span>
                 </div>
               </div>
 
@@ -592,14 +585,14 @@ export default function ERPAutomationsPage() {
             {/* ML card */}
             <div className="bg-white dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 flex flex-col justify-between shadow-sm hover:border-zinc-350 dark:hover:border-zinc-700 transition-all duration-300 group">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Layer 3</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Layer 3</span>
                 <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">Adaptive ML Models</h3>
                 <p className="text-zinc-550 dark:text-zinc-400 text-sm leading-relaxed">
                   Custom ML configurations trained on your legacy email records to auto-populate codes. Improves continuously over time.
                 </p>
               </div>
               <div className="mt-8 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-lime" />
+                <Sparkles className="w-4 h-4 text-emerald-600 dark:text-lime" />
                 <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">Trained on your data</span>
               </div>
             </div>
@@ -625,7 +618,7 @@ export default function ERPAutomationsPage() {
           {/* Discovery callout */}
           <div className="p-8 bg-white dark:bg-zinc-950/40 rounded-3xl flex flex-col md:flex-row items-start md:items-center gap-6 shadow-sm border border-zinc-200 dark:border-zinc-800">
             <div className="w-12 h-12 bg-lime/10 border border-lime/20 rounded-2xl flex items-center justify-center shrink-0">
-              <Sparkles className="w-6 h-6 text-lime" />
+              <Sparkles className="w-6 h-6 text-emerald-600 dark:text-lime" />
             </div>
             <div className="space-y-1 flex-1">
               <h4 className="font-bold text-lg text-zinc-900 dark:text-white">Discovery &amp; Model Training</h4>
@@ -776,7 +769,7 @@ export default function ERPAutomationsPage() {
                   className="w-full flex items-center justify-between text-left py-4 font-bold text-zinc-900 dark:text-white cursor-pointer"
                 >
                   <span>{faq.q}</span>
-                  <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === i ? "bg-lime/20 text-lime" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400"}`}>
+                  <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === i ? "bg-lime/20 text-emerald-600 dark:text-lime" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400"}`}>
                     {activeFaq === i ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                   </div>
                 </button>
@@ -827,7 +820,7 @@ export default function ERPAutomationsPage() {
               size="lg"
               className="rounded-2xl px-8 py-6 font-bold border-zinc-300 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 cursor-pointer hover:scale-105 transition-transform"
             >
-              <Play className="w-4 h-4 mr-2 text-lime fill-lime" />
+              <Play className="w-4 h-4 mr-2 text-emerald-600 dark:text-lime fill-emerald-600 dark:fill-lime" />
               Watch Demo
             </Button>
           </div>
@@ -862,7 +855,7 @@ export default function ERPAutomationsPage() {
               </button>
 
               <div className="space-y-2">
-                <span className="text-xs font-bold text-lime uppercase tracking-widest block">Restricted Walkthrough</span>
+                <span className="text-xs font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Restricted Walkthrough</span>
                 <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
                   ERP Automations Video Demonstration
                 </h3>
@@ -875,7 +868,7 @@ export default function ERPAutomationsPage() {
                     transition={{ duration: 0.4 }}
                     className="max-w-md w-full px-6 text-center space-y-6"
                   >
-                    <div className="w-14 h-14 bg-zinc-950 border border-zinc-800 rounded-2xl flex items-center justify-center mx-auto text-lime shadow-inner">
+                    <div className="w-14 h-14 bg-zinc-950 border border-zinc-800 rounded-2xl flex items-center justify-center mx-auto text-emerald-600 dark:text-lime shadow-inner">
                       <Lock className="w-6 h-6" />
                     </div>
                     <div className="space-y-2">
@@ -913,7 +906,7 @@ export default function ERPAutomationsPage() {
                     />
                     <div className="absolute bottom-4 left-4 right-4 bg-zinc-950/90 backdrop-blur-md px-4 py-3 rounded-xl border border-zinc-800 flex justify-between items-center shadow-lg">
                       <span className="text-[11px] font-medium text-emerald-400 flex items-center gap-1.5">
-                        <ShieldCheck className="w-4 h-4 text-lime" /> Credentials Validated (Access Granted)
+                        <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-lime" /> Credentials Validated (Access Granted)
                       </span>
                       <a
                         href="https://drive.google.com/drive/folders/18J2VjOiLVjqKuZjIgUzGHVGSg2eFR1hd?usp=sharing"

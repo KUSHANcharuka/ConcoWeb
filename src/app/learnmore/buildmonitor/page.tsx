@@ -71,16 +71,7 @@ export default function BuildmonitorPage() {
               Back to Learn More
             </Link>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: appleEase, delay: 0.1 }}
-            className="flex justify-center"
-          >
-            <span className="px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-black/5 dark:bg-white/10 backdrop-blur-md text-zinc-800 dark:text-zinc-200">
-              Stage: Construction
-            </span>
-          </motion.div>
+
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}

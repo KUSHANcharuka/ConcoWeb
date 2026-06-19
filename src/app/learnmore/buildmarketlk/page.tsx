@@ -129,16 +129,7 @@ export default function BuildmarketlkPage() {
               Back to Learn More
             </Link>
 
-          {/* Tag / Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: appleEase }}
-          >
-            <span className="px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-lime/25 border border-lime/30 text-zinc-800 dark:text-zinc-200 flex items-center gap-2 shadow-xs">
-              <Store className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> Operations / Marketplace
-            </span>
-          </motion.div>
+
 
           {/* Massive Apple-style Title */}
           <motion.h1

@@ -330,11 +330,11 @@ function EcosystemTree({ hoveredIndex, setHoveredIndex, isMobileSize }: Ecosyste
               x2="100%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="#dae910" />
-              <stop offset="25%" stopColor="#ead708" />
-              <stop offset="50%" stopColor="#edf500" />
-              <stop offset="75%" stopColor="#d6eb0a" />
-              <stop offset="100%" stopColor="#eadf08" />
+              <stop offset="0%" stopColor="var(--color-lime)" />
+              <stop offset="25%" stopColor="var(--color-lime)" />
+              <stop offset="50%" stopColor="var(--color-lime)" />
+              <stop offset="75%" stopColor="var(--color-lime)" />
+              <stop offset="100%" stopColor="var(--color-lime)" />
             </linearGradient>
           </defs>
 
@@ -345,7 +345,7 @@ function EcosystemTree({ hoveredIndex, setHoveredIndex, isMobileSize }: Ecosyste
             strokeLinecap="round"
             strokeLinejoin="round"
             className={`pointer-events-none transition-colors duration-300 ${
-              isMobileSize ? "text-[#dae910] opacity-80" : "text-zinc-300 opacity-40"
+              isMobileSize ? "text-lime opacity-80" : "text-zinc-300 opacity-40"
             }`}
           >
             {basePaths.map((p, i) => (
@@ -396,7 +396,7 @@ function EcosystemTree({ hoveredIndex, setHoveredIndex, isMobileSize }: Ecosyste
                       ease: "linear",
                     },
                   }}
-                  className="drop-shadow-[0_0_8px_rgba(218,233,16,0.8)] pointer-events-none"
+                  className="drop-shadow-[0_0_8px_var(--color-lime)] pointer-events-none"
                 />
               </>
             )}
@@ -427,7 +427,7 @@ function EcosystemTree({ hoveredIndex, setHoveredIndex, isMobileSize }: Ecosyste
                   {isMobileSize ? (
                     // Mobile view: static circle with product name in black rectangle (no animations, all lines yellow)
                     <>
-                      <div className="w-12 h-12 rounded-full border-2 border-[#dae910] bg-white text-zinc-900 flex items-center justify-center shadow-xs flex-shrink-0">
+                      <div                      className="w-12 h-12 rounded-full border-2 border-lime bg-white text-zinc-900 flex items-center justify-center shadow-xs flex-shrink-0">
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="mt-1.5 px-2 py-1.5 rounded-md bg-zinc-950 text-white text-[9px] font-extrabold text-center leading-none tracking-tight shadow-md max-w-[110px] truncate select-none border border-zinc-800">
@@ -441,7 +441,7 @@ function EcosystemTree({ hoveredIndex, setHoveredIndex, isMobileSize }: Ecosyste
                       onMouseLeave={() => setHoveredIndex(null)}
                       className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 relative focus:outline-hidden cursor-pointer border-2 bg-white text-zinc-800 ${
                         isHovered
-                          ? "border-lime bg-lime text-black scale-110 shadow-[0_0_20px_rgba(218,233,16,0.6)] ring-4 ring-lime/20"
+                          ? "border-lime bg-lime text-black scale-110 shadow-[0_0_20px_var(--color-lime)] ring-4 ring-lime/20"
                           : "border-zinc-200 hover:border-lime/60 hover:scale-105"
                       }`}
                     >

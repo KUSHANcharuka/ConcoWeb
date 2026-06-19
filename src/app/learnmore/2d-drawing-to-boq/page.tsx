@@ -250,11 +250,7 @@ export default function Drawing2DToBOQPage() {
                 animate="visible"
                 className="space-y-6"
               >
-                <motion.div variants={fadeInUp} className="flex items-center gap-3">
-                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-lime/10 border border-lime/30 text-zinc-900 dark:text-white backdrop-blur-md">
-                    Estimation &amp; Tendering
-                  </span>
-                </motion.div>
+
 
                 <motion.h1
                   variants={fadeInUp}
@@ -273,7 +269,7 @@ export default function Drawing2DToBOQPage() {
                 >
                   Priced BOQ straight from any PDF drawing.
                   <br />
-                  <span className="text-lime dark:text-lime font-bold">No 3D model required.</span>
+                  <span className="text-emerald-600 dark:text-lime font-bold">No 3D model required.</span>
                 </motion.p>
 
                 <motion.p
@@ -290,7 +286,7 @@ export default function Drawing2DToBOQPage() {
                     size="lg"
                     className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
                   >
-                    <Play className="w-4 h-4 mr-2 text-lime dark:text-lime fill-lime dark:fill-lime" />
+                    <Play className="w-4 h-4 mr-2 text-emerald-600 dark:text-lime fill-emerald-600 dark:fill-lime" />
                     Watch Demo
                   </Button>
                   <Button
@@ -394,7 +390,7 @@ export default function Drawing2DToBOQPage() {
                             "Extends automation to non-BIM projects"
                           ].map((item, i) => (
                             <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-350 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                              <Check className="w-5 h-5 text-lime shrink-0 mt-0.5" />
+                              <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
                               <span className="font-medium">{item}</span>
                             </li>
                           ))}
@@ -495,7 +491,7 @@ export default function Drawing2DToBOQPage() {
           </div>
 
           <div className="w-full">
-            <Carousel items={carouselSteps} themeColor="#ecf000" />
+            <Carousel items={carouselSteps} />
           </div>
         </div>
       </section>
@@ -506,7 +502,7 @@ export default function Drawing2DToBOQPage() {
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-10">
             <div className="space-y-4 max-w-2xl">
-              <span className="text-xs font-bold text-lime uppercase tracking-widest block">
+              <span className="text-xs font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">
                 Workflow Hook
               </span>
               <h2 className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.1] uppercase">
@@ -565,7 +561,7 @@ export default function Drawing2DToBOQPage() {
             <div className="lg:col-span-2 bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">AI Vision Engine</span>
+                  <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">AI Vision Engine</span>
                   <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">Extract structured elements from line geometries</h3>
                   <p className="text-zinc-400 text-sm leading-relaxed">
                     Our model processes raster vector outlines, detects dimension text annotations, and classifies concrete/steel elements accurately.
@@ -574,7 +570,7 @@ export default function Drawing2DToBOQPage() {
                 
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-lime">Live Analysis Active</span>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-emerald-600 dark:text-lime">Live Analysis Active</span>
                 </div>
               </div>
 
@@ -600,7 +596,7 @@ export default function Drawing2DToBOQPage() {
                 <div className="absolute top-[32px] right-[24px] z-10 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
                   <div className="text-left leading-none">
                     <span className="text-[8px] font-bold text-white block">BOQ Table</span>
-                    <span className="text-[6px] text-lime font-black uppercase tracking-wider">Generated</span>
+                    <span className="text-[6px] text-emerald-600 dark:text-lime font-black uppercase tracking-wider">Generated</span>
                   </div>
                 </div>
 
@@ -628,14 +624,14 @@ export default function Drawing2DToBOQPage() {
             {/* Bottom Left Card */}
             <div className="bg-[#12130e] text-white border border-lime/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-lime/30 transition-all duration-300 shadow-md">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Cost Database Sync</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Cost Database Sync</span>
                 <h3 className="text-xl font-bold tracking-tight text-white leading-tight">Instant Estimating</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
                   Automatically pairs recognized elements with regional pricing standards or custom builder rate lists.
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
 
@@ -649,7 +645,7 @@ export default function Drawing2DToBOQPage() {
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
             

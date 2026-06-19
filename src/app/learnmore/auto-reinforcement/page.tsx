@@ -250,14 +250,7 @@ export default function AutoReinforcementPage() {
                 animate="visible"
                 className="space-y-6"
               >
-                <motion.div variants={fadeInUp} className="flex items-center gap-3">
-                  <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-lime/10 border border-lime/30 text-zinc-900 dark:text-white backdrop-blur-md">
-                    Estimation & Detail
-                  </span>
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100/50 dark:bg-white/5 border border-zinc-205 dark:border-white/10 text-zinc-600 dark:text-zinc-300">
-                    UAE & Australia
-                  </span>
-                </motion.div>
+
 
                 <motion.h1 variants={fadeInUp} className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.05] uppercase">
                   Auto Reinforcement
@@ -266,7 +259,7 @@ export default function AutoReinforcementPage() {
                 <motion.p variants={fadeInUp} className="text-2xl sm:text-3xl text-zinc-700 dark:text-zinc-300 font-medium leading-relaxed max-w-xl">
                   Rebar schedules from drawings.
                   <br />
-                  <span className="text-lime font-bold">Automatically.</span>
+                  <span className="text-emerald-600 dark:text-lime font-bold">Automatically.</span>
                 </motion.p>
 
                 <motion.p variants={fadeInUp} className="text-sm sm:text-base text-zinc-650 dark:text-zinc-400 leading-relaxed max-w-xl font-medium">
@@ -275,7 +268,7 @@ export default function AutoReinforcementPage() {
 
                 <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
                   <Button onClick={enterDemoMode} variant="outline" size="lg" className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105">
-                    <Play className="w-4 h-4 mr-2 text-lime fill-lime" />
+                    <Play className="w-4 h-4 mr-2 text-emerald-600 dark:text-lime fill-emerald-600 dark:fill-lime" />
                     Watch Demo
                   </Button>
                   <Button asChild size="lg" className="rounded-2xl px-8 py-7 font-bold shadow-xl shadow-lime/15 cursor-pointer bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-105">
@@ -365,7 +358,7 @@ export default function AutoReinforcementPage() {
                         transition={{ duration: 0.3 }}
                         className="space-y-5"
                       >
-                        <div className="text-xs font-bold text-lime uppercase tracking-wider">
+                        <div className="text-xs font-bold text-emerald-600 dark:text-lime uppercase tracking-wider">
                           Auto Reinforcement Plugin
                         </div>
                         <ul className="space-y-4">
@@ -378,7 +371,7 @@ export default function AutoReinforcementPage() {
                             "Consistent results across projects"
                           ].map((item, i) => (
                             <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-350 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                              <Check className="w-4 h-4 text-lime shrink-0 mt-0.5" />
+                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                               <span>{item}</span>
                             </li>
                           ))}
@@ -472,7 +465,7 @@ export default function AutoReinforcementPage() {
           </div>
 
           <div className="w-full">
-            <Carousel items={carouselSteps} themeColor="#ecf000" />
+            <Carousel items={carouselSteps} />
           </div>
         </div>
       </section>
@@ -483,7 +476,7 @@ export default function AutoReinforcementPage() {
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-10">
             <div className="space-y-4 max-w-2xl">
-              <span className="text-xs font-bold text-lime uppercase tracking-widest block">
+              <span className="text-xs font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">
                 Capabilities
               </span>
               <h2 className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.1] uppercase">
@@ -512,7 +505,7 @@ export default function AutoReinforcementPage() {
             {/* Left Column Tall Card */}
             <div className="lg:row-span-2 bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-800 transition-all duration-300 shadow-sm">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Notations Scanner</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Notations Scanner</span>
                 <h3 className="text-2xl font-bold tracking-tight text-white">Full Notation Recognition</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
                   Support for complex overlapping schedules, stirrup parameters, clear cover rules, and hooks automatically.
@@ -541,7 +534,7 @@ export default function AutoReinforcementPage() {
             <div className="lg:col-span-2 bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">3D detailing engine</span>
+                  <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">3D detailing engine</span>
                   <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">Match rebar sizes and geometries on a live flow canvas</h3>
                   <p className="text-zinc-400 text-sm leading-relaxed">
                     Instantly translates 2D schedules into fully-formed 3D rebar elements that map perfectly to Revit libraries.
@@ -550,7 +543,7 @@ export default function AutoReinforcementPage() {
 
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-lime">ACC Synced Detailing</span>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-emerald-600 dark:text-lime">ACC Synced Detailing</span>
                 </div>
               </div>
 
@@ -576,7 +569,7 @@ export default function AutoReinforcementPage() {
                 <div className="absolute top-[32px] right-[24px] z-10 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
                   <div className="text-left leading-none">
                     <span className="text-[8px] font-bold text-white block">Rebar 3D</span>
-                    <span className="text-[6px] text-lime font-black uppercase tracking-wider">Coordinated</span>
+                    <span className="text-[6px] text-emerald-600 dark:text-lime font-black uppercase tracking-wider">Coordinated</span>
                   </div>
                 </div>
 
@@ -597,14 +590,14 @@ export default function AutoReinforcementPage() {
             {/* Bottom Left Card */}
             <div className="bg-[#12130e] text-white border border-lime/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-lime/30 transition-all duration-300 shadow-md">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-lime uppercase tracking-widest block">Bar-bending diagrams</span>
+                <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Bar-bending diagrams</span>
                 <h3 className="text-xl font-bold tracking-tight text-white leading-tight">Code Compliance</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
                   Generates precise bending profiles, hook types, and scheduling matrices aligned to national rules.
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
 
@@ -618,7 +611,7 @@ export default function AutoReinforcementPage() {
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-lime transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
 

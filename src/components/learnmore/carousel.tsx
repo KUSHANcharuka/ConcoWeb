@@ -15,10 +15,9 @@ export interface CarouselItem {
 
 interface CarouselProps {
   items: CarouselItem[];
-  themeColor?: string; // e.g. "#ecf000"
 }
 
-export default function Carousel({ items, themeColor = "#ecf000" }: CarouselProps) {
+export default function Carousel({ items }: CarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -154,12 +153,11 @@ export default function Carousel({ items, themeColor = "#ecf000" }: CarouselProp
                 {/* Floating Tags */}
                 <div className="absolute top-4 left-4 z-10">
                   <span 
-                    className="px-3 py-1 text-[9px] font-bold uppercase tracking-widest rounded-full border shadow-sm backdrop-blur-md"
-                    style={{
-                      backgroundColor: isCenter ? `${themeColor}20` : "rgba(39, 39, 42, 0.6)",
-                      borderColor: isCenter ? themeColor : "rgba(63, 63, 70, 0.5)",
-                      color: isCenter ? "#white" : "#d4d4d8",
-                    }}
+                    className={`px-3 py-1 text-[9px] font-bold uppercase tracking-widest rounded-full border shadow-sm backdrop-blur-md ${
+                      isCenter 
+                        ? "bg-lime/10 border-lime/50 text-white" 
+                        : "bg-zinc-800/60 border-zinc-700/50 text-zinc-400"
+                    }`}
                   >
                     Workflow
                   </span>

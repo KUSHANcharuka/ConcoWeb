@@ -274,7 +274,7 @@ function HeroStorylineVisual() {
             exit={{ scale: 0.95, opacity: 0 }}
             className="absolute inset-0 bg-lime/10 border border-lime/25 flex flex-col justify-center items-center backdrop-blur-xs rounded-3xl"
           >
-            <Check className="w-12 h-12 text-lime mb-2 animate-bounce" />
+            <Check className="w-12 h-12 text-emerald-600 dark:text-lime mb-2 animate-bounce" />
             <span className="text-xs font-mono font-bold text-zinc-900 dark:text-white uppercase tracking-wider text-center px-4">Conversion Completed Automatically</span>
           </motion.div>
         )}
@@ -285,7 +285,7 @@ function HeroStorylineVisual() {
         {activeScene === 0 && <span className="text-blue-500 font-bold">Scene 1: Architect draws 2D layout</span>}
         {activeScene === 1 && <span className="text-red-500 font-bold">Scene 2: Modeller redraws same lines</span>}
         {activeScene === 2 && <span className="text-rose-500 font-black">Scene 3: Wasted duplication hours</span>}
-        {activeScene === 3 && <span className="text-lime font-black">Scene 4: Instant 3D Conversion</span>}
+        {activeScene === 3 && <span className="text-emerald-600 dark:text-lime font-black">Scene 4: Instant 3D Conversion</span>}
       </div>
 
       {/* Step Indicators */}
@@ -351,7 +351,7 @@ function InteractiveBeforeAfterSlider() {
       >
         {/* Right side: 3D Revit Model (After) */}
         <div className="absolute inset-0 w-full h-full bg-zinc-950 flex items-center justify-center">
-          <svg viewBox="0 0 800 450" className="w-full h-full text-lime p-2 sm:p-6">
+          <svg viewBox="0 0 800 450" className="w-full h-full text-emerald-600 dark:text-lime p-2 sm:p-6">
             <g stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.8">
               {/* Isometric Slab wireframes */}
               <polygon points="400,120 650,230 520,290 400,240 280,290 150,230" fill="var(--color-lime)" fillOpacity={0.12} />
@@ -838,7 +838,7 @@ export default function AutoConversion2Dto3DPage() {
                   className="rounded-2xl h-14 px-6 font-bold shadow-md cursor-pointer border border-zinc-300 dark:border-white/10 bg-white/50 dark:bg-white/5 text-zinc-900 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/15 hover:scale-105 transition-all duration-300 backdrop-blur-sm"
                   onClick={() => document.getElementById("demo-showcase")?.scrollIntoView({ behavior: "smooth" })}
                 >
-                  <Play className="w-4 h-4 mr-2 text-lime" />
+                  <Play className="w-4 h-4 mr-2 text-emerald-600 dark:text-lime" />
                   Watch Demo
                 </MagneticButton>
                 <MagneticButton
@@ -984,7 +984,7 @@ export default function AutoConversion2Dto3DPage() {
                       <div className="relative w-full max-w-sm rounded-2xl border border-zinc-200 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/60 p-6 flex flex-col items-center justify-center shadow-lg transition-colors">
                         <div className="relative mb-4">
                           <div className="absolute inset-0 rounded-full bg-lime/10 animate-ping opacity-75" />
-                          <div className="relative w-16 h-16 rounded-full bg-lime/10 border border-lime/30 flex items-center justify-center text-lime">
+                          <div className="relative w-16 h-16 rounded-full bg-lime/10 border border-lime/30 flex items-center justify-center text-emerald-600 dark:text-lime">
                             <Upload className="w-7 h-7" />
                           </div>
                         </div>
@@ -997,7 +997,7 @@ export default function AutoConversion2Dto3DPage() {
                           animate={{ y: [10, 0, 10], opacity: [0.9, 1, 0.9] }}
                           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                         >
-                          <div className="w-8 h-8 rounded-lg bg-lime/10 border border-lime/20 flex items-center justify-center text-lime">
+                          <div className="w-8 h-8 rounded-lg bg-lime/10 border border-lime/20 flex items-center justify-center text-emerald-600 dark:text-lime">
                             <FileText className="w-4 h-4" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -1097,7 +1097,7 @@ export default function AutoConversion2Dto3DPage() {
                           transformOrigin: "center center"
                         }} />
 
-                        <svg viewBox="0 0 400 250" className="w-[85%] h-[85%] relative z-10 text-lime">
+                        <svg viewBox="0 0 400 250" className="w-[85%] h-[85%] relative z-10 text-emerald-600 dark:text-lime">
                           <g stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" opacity="0.3">
                             <line x1="50" y1="200" x2="350" y2="200" />
                             <line x1="200" y1="50" x2="200" y2="235" />
@@ -1137,7 +1137,7 @@ export default function AutoConversion2Dto3DPage() {
                         </svg>
 
                         <div className="absolute bottom-4 left-4 bg-zinc-950/80 border border-lime/30 rounded-xl px-3 py-1.5 text-[10px] font-mono text-zinc-900 dark:text-white font-black shadow-lg flex items-center gap-2">
-                          <Sparkles className="w-3.5 h-3.5 text-lime animate-spin-slow" />
+                          <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-lime animate-spin-slow" />
                           <span>3D Model: Generation Complete</span>
                         </div>
                       </div>
@@ -1192,13 +1192,13 @@ export default function AutoConversion2Dto3DPage() {
                       <div className="relative w-full max-w-xs rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/85 dark:bg-zinc-950/70 p-4 flex flex-col items-center justify-center shadow-sm">
                         <div className="relative mb-3">
                           <div className="absolute inset-0 rounded-full bg-lime/10 animate-ping opacity-75" />
-                          <div className="relative w-12 h-12 rounded-full bg-lime/10 border border-lime/30 flex items-center justify-center text-lime">
+                          <div className="relative w-12 h-12 rounded-full bg-lime/10 border border-lime/30 flex items-center justify-center text-emerald-600 dark:text-lime">
                             <Upload className="w-5 h-5" />
                           </div>
                         </div>
                         <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-105">Upload structural PDF</h4>
                         <div className="w-full mt-4 bg-zinc-50 dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800/80 rounded-lg p-2.5 flex items-center gap-2.5">
-                          <div className="w-6.5 h-6.5 rounded bg-lime/10 border border-lime/20 flex items-center justify-center text-lime shrink-0">
+                          <div className="w-6.5 h-6.5 rounded bg-lime/10 border border-lime/20 flex items-center justify-center text-emerald-600 dark:text-lime shrink-0">
                             <FileText className="w-3.5 h-3.5" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -1280,7 +1280,7 @@ export default function AutoConversion2Dto3DPage() {
                           transform: "rotateX(60deg) rotateZ(45deg) scale(1.8)",
                           transformOrigin: "center center"
                         }} />
-                        <svg viewBox="0 0 400 250" className="w-[80%] h-[80%] relative z-10 text-lime">
+                        <svg viewBox="0 0 400 250" className="w-[80%] h-[80%] relative z-10 text-emerald-600 dark:text-lime">
                           <g stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" opacity="0.3">
                             <line x1="50" y1="200" x2="350" y2="200" />
                           </g>
@@ -1469,7 +1469,7 @@ export default function AutoConversion2Dto3DPage() {
                     Pricing structure is built on a per-module customization model of USD 2,200 per customized module, allowing custom mapping configurations for beams, columns, or ramps. The slab module is currently available standalone.
                   </p>
                   <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400 border-t border-zinc-100 dark:border-zinc-850 pt-4">
-                    <Check className="w-4 h-4 text-lime" />
+                    <Check className="w-4 h-4 text-emerald-500" />
                     <span>Slab automation module ready for immediate implementation</span>
                   </div>
                 </div>
