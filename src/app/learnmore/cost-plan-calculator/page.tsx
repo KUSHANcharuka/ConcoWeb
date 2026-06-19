@@ -13,6 +13,7 @@ import {
   Play,
   Calendar,
   ChevronRight,
+  ChevronLeft,
   ChevronDown,
   Check,
   X,
@@ -26,33 +27,68 @@ import {
   Download,
   ArrowUpRight,
   Plus,
-  Minus
+  Minus,
+  Layers,
+  Sparkles,
+  HelpCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
 
 export default function CostPlanCalculatorPage() {
-  const [activeTab, setActiveTab] = useState<"before" | "after">("after");
-  const [autoToggleKey, setAutoToggleKey] = useState(0);
+  const [activeCard, setActiveCard] = useState(1);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveTab((prev) => (prev === "before" ? "after" : "before"));
-    }, 3500);
-    return () => clearInterval(timer);
-  }, [autoToggleKey]);
-
-  const handleTabClick = (tab: "before" | "after") => {
-    setActiveTab(tab);
-    setAutoToggleKey((k) => k + 1);
-  };
-
   const scrollToVideo = useCallback(() => {
     videoSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, []);
+
+  const cards = [
+    {
+      id: 0,
+      title: "Manual Cost Planning",
+      badge: "Traditional Route",
+      badgeColor: "text-red-650 bg-red-500/10 border-red-500/20 dark:text-red-400",
+      icon: X,
+      iconColor: "text-red-500",
+      bullets: [
+        "QS GFA takeoff takes 1-2 days",
+        "QS GFA manual calculations from PDF blueprints.",
+        "Plugs numbers into Excel with manual formulas.",
+        "No integrated project pipeline forecasting."
+      ]
+    },
+    {
+      id: 1,
+      title: "Cost Plan Calculator",
+      badge: "AI Platform",
+      badgeColor: "text-emerald-650 bg-emerald-500/10 border-emerald-500/20 dark:text-emerald-400",
+      icon: Check,
+      iconColor: "text-emerald-500",
+      bullets: [
+        "Upload concept drawing — GFA generated instantly.",
+        "Estimate & consultancy fee computed automatically.",
+        "Financial planning module tracks project pipeline.",
+        "Outputs ready for client presentation."
+      ]
+    },
+    {
+      id: 2,
+      title: "Pipeline Control Mode",
+      badge: "Dashboard Sync",
+      badgeColor: "text-blue-650 bg-blue-500/10 border-blue-500/20 dark:text-blue-400",
+      icon: BarChart3,
+      iconColor: "text-blue-500",
+      bullets: [
+        "Track GFA and consultancy fees per region.",
+        "Live sync to pipeline revenue forecast charts.",
+        "Standardized rates applied across the entire firm.",
+        "Clear visibility on project pipeline statuses."
+      ]
+    }
+  ];
 
   return (
     <main className="min-h-screen bg-[#FAFAF8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 antialiased selection:bg-lime/30 selection:text-black">
@@ -61,589 +97,676 @@ export default function CostPlanCalculatorPage() {
       {/* ─── HERO SECTION ─── */}
       <section
         ref={heroRef}
-        className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#FAFAF8] dark:bg-zinc-950"
+        className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-zinc-50 dark:bg-zinc-950/40 border-b border-zinc-200/60 dark:border-zinc-900 pt-32 pb-24"
       >
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/20 via-lime/10 to-transparent rounded-full blur-[130px] opacity-70 animate-pulse" style={{ animationDuration: '9s' }} />
+          <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/20 via-lime/10 to-transparent rounded-full blur-[130px] opacity-75 animate-pulse" style={{ animationDuration: '10s' }} />
           <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-lime/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] opacity-65" />
           <div className="absolute inset-0 bg-white/45 dark:bg-zinc-950/65 backdrop-blur-[1px]" />
+          <div
+            className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0,0,0,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,1) 1px, transparent 1px)`,
+              backgroundSize: "32px 32px",
+            }}
+          />
         </div>
 
-        {/* Hero Content */}
-        <div className="relative w-full z-10">
-          <motion.div
-            className="relative z-30 max-w-6xl mx-auto px-6 pt-28"
+        {/* Back Button */}
+        <div className="relative max-w-6xl mx-auto w-full px-6 z-20 mb-8">
+          <Link
+            href="/learnmore"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-black/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-955 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
           >
-            <Link
-              href="/learnmore"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-black/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-955 dark:text-zinc-405 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Back
-            </Link>
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back
+          </Link>
+        </div>
+
+        {/* Centered Typography Hero Header */}
+        <div className="relative w-full z-10 text-center max-w-4xl mx-auto px-6 space-y-6 flex-1 flex flex-col justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-4"
+          >
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase">
+              Cost Plan Calculator
+            </h1>
+            <p className="text-xl sm:text-2xl text-zinc-650 dark:text-zinc-300 font-medium max-w-2xl mx-auto leading-relaxed">
+              GFA to budget in minutes. Not days.
+            </p>
+            <p className="text-sm sm:text-base text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed font-medium">
+              Upload a concept drawing. Get the Gross Floor Area, project cost, and consultancy fee automatically — with a financial planning module built in.
+            </p>
           </motion.div>
 
+          {/* CTA Buttons */}
           <motion.div
-            className="px-6 pt-10 pb-20 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex flex-wrap justify-center gap-4 pt-2"
           >
-            {/* Left Column - Text Content */}
-            <div className="lg:col-span-7 space-y-6">
+            <Button
+              onClick={scrollToVideo}
+              size="lg"
+              className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
+            >
+              <Play className="w-4 h-4 mr-2 text-zinc-900 dark:text-zinc-300" />
+              Watch Demo
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              className="rounded-2xl px-8 py-7 font-bold shadow-md cursor-pointer bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-transform hover:scale-105"
+            >
+              <a
+                href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Book a Demo
+              </a>
+            </Button>
+          </motion.div>
+        </div>
 
+        {/* 3D Overlapping Card Stack Slider */}
+        <div className="relative w-full max-w-5xl mx-auto px-6 mt-16 z-20">
+          <div className="relative w-full max-w-xl mx-auto h-[380px] flex items-center justify-center">
+            
+            {cards.map((card, idx) => {
+              const isActive = idx === activeCard;
+              const isLeft = idx < activeCard;
+              const isRight = idx > activeCard;
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-950 dark:text-white leading-tight uppercase">
-                Cost Plan Calculator
-              </h1>
+              let x = 0;
+              let scale = 1;
+              let zIndex = 30;
+              let rotate = 0;
+              let opacity = 1;
 
-              <p className="text-xl sm:text-2xl text-zinc-600 dark:text-zinc-300 font-medium leading-normal">
-                GFA to budget in minutes. Not days.
-              </p>
+              if (isActive) {
+                x = 0;
+                scale = 1.02;
+                zIndex = 30;
+                rotate = 0;
+                opacity = 1;
+              } else if (isLeft) {
+                x = -150;
+                scale = 0.88;
+                zIndex = 10;
+                rotate = -5;
+                opacity = 0.5;
+              } else if (isRight) {
+                x = 150;
+                scale = 0.88;
+                zIndex = 10;
+                rotate = 5;
+                opacity = 0.5;
+              }
 
-              <p className="text-base sm:text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-xl font-medium">
-                Upload a concept drawing. Get the Gross Floor Area, project cost, and consultancy fee automatically — with a financial planning module built in.
-              </p>
-
-              <div className="flex flex-wrap gap-4 pt-4">
-                <Button
-                  onClick={scrollToVideo}
-                  size="lg"
-                  className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
+              return (
+                <motion.div
+                  key={card.id}
+                  style={{ zIndex }}
+                  animate={{
+                    x,
+                    scale,
+                    rotate,
+                    opacity,
+                  }}
+                  transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                  onClick={() => setActiveCard(idx)}
+                  className={`absolute w-[330px] p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-2xl shadow-zinc-200/50 dark:shadow-black/60 flex flex-col justify-between ${
+                    isActive ? "cursor-default border-zinc-300 dark:border-zinc-700" : "cursor-pointer hover:opacity-75 transition-opacity"
+                  }`}
                 >
-                  <Play className="w-4 h-4 mr-2 text-zinc-900 dark:text-zinc-300" />
-                  Watch Demo
-                </Button>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
+                      <h4 className="font-extrabold text-sm text-zinc-900 dark:text-zinc-50">
+                        {card.title}
+                      </h4>
+                      <span className={`px-2 py-0.5 rounded-full border text-[9px] font-bold uppercase tracking-wider ${card.badgeColor}`}>
+                        {card.badge}
+                      </span>
+                    </div>
+
+                    <ul className="space-y-3">
+                      {card.bullets.map((bullet, i) => (
+                        <li key={i} className="flex gap-2.5 text-zinc-650 dark:text-zinc-350 text-xs">
+                          <card.icon className={`w-4 h-4 shrink-0 mt-0.5 ${card.iconColor}`} />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-zinc-100 dark:border-zinc-800 mt-4 text-[9px] font-bold text-zinc-400 uppercase tracking-wider">
+                    <span>{`Canvas node 0${idx + 1}`}</span>
+                    {isActive && <span className="text-zinc-900 dark:text-white animate-pulse">Active View</span>}
+                  </div>
+                </motion.div>
+              );
+            })}
+
+            {/* Slider Controls */}
+            <div className="absolute inset-x-0 bottom-[-50px] flex justify-center gap-6 z-40">
+              <button
+                onClick={() => setActiveCard((prev) => (prev > 0 ? prev - 1 : cards.length - 1))}
+                className="w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 flex items-center justify-center hover:scale-105 hover:bg-white dark:hover:bg-zinc-800 active:scale-95 transition-all cursor-pointer shadow-md text-zinc-900 dark:text-white"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setActiveCard((prev) => (prev < cards.length - 1 ? prev + 1 : 0))}
+                className="w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 flex items-center justify-center hover:scale-105 hover:bg-white dark:hover:bg-zinc-800 active:scale-95 transition-all cursor-pointer shadow-md text-zinc-900 dark:text-white"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      {/* ─── REALISE YOUR IDEAS (THE BOTTLENECK LAYERED SECTION) ─── */}
+      <section className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-900 py-32 px-6 overflow-hidden">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          
+          {/* Left Column: Text & CTA */}
+          <div className="lg:col-span-5 space-y-6">
+            <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
+              The Friction
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
+              Realize Your Ideas
+            </h2>
+            <div className="w-16 h-1 bg-lime rounded-full" />
+            <div className="text-zinc-650 dark:text-zinc-400 text-sm sm:text-base leading-relaxed space-y-4">
+              <p>QS firms are still calculating Gross Floor Area by hand from PDF concept drawings and plugging numbers into Excel to produce a cost plan at the feasibility stage.</p>
+              <p>This is the moment when speed matters most — the client is waiting for budget validation before committing to design. But the process takes 1-2 days and relies on manual Excel formulas that differ from firm to firm.</p>
+              <p className="text-zinc-955 dark:text-zinc-200 font-bold">Cost Plan Calculator automates this, turning the cost planning step from a bottleneck into a two-minute output that is ready to present.</p>
+            </div>
+            
+            <div className="pt-4">
+              <Button
+                onClick={scrollToVideo}
+                className="rounded-2xl px-6 py-5 font-bold shadow-md cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-zinc-900 text-white dark:bg-white dark:text-black hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-transform hover:scale-105"
+              >
+                Watch Demo walktrough &rarr;
+              </Button>
+            </div>
+          </div>
+
+          {/* Right Column: Layered 3D Mockup Stack */}
+          <div className="lg:col-span-7 flex items-center justify-center relative min-h-[380px] lg:min-h-[440px]">
+            {/* Grid canvas background decoration */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:24px_24px] rounded-3xl" />
+            
+            {/* Back Card: Concept PDF Blueprint */}
+            <div className="absolute w-[80%] max-w-[420px] aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-xl p-4 -rotate-6 -translate-x-12 -translate-y-6 opacity-60 transition-transform duration-500 hover:rotate-0 hover:-translate-x-6 hover:opacity-90">
+              <div className="flex justify-between items-center border-b border-zinc-250 dark:border-zinc-800 pb-2 mb-3 text-[10px] text-zinc-400 font-mono">
+                <span>Drawing Set 01</span>
+                <span>PDF Blueprint</span>
+              </div>
+              <div className="w-full h-[80%] border-2 border-dashed border-zinc-300 dark:border-zinc-800 rounded-xl p-3 flex flex-col justify-between">
+                <div className="space-y-1">
+                  <div className="h-1 bg-zinc-350 dark:bg-zinc-850 rounded w-1/2" />
+                  <div className="h-1 bg-zinc-305 dark:bg-zinc-850 rounded w-1/3" />
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="h-12 border border-zinc-250 dark:border-zinc-800 rounded flex items-center justify-center text-[9px] text-zinc-400 font-bold">Zone A</div>
+                  <div className="h-12 border border-zinc-250 dark:border-zinc-800 rounded flex items-center justify-center text-[9px] text-zinc-400 font-bold">Zone B</div>
+                  <div className="h-12 border border-zinc-250 dark:border-zinc-800 rounded flex items-center justify-center text-[9px] text-zinc-400 font-bold">Zone C</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Front Card: GFA Pricer Canvas with vertical scanning animation line */}
+            <div className="absolute w-[80%] max-w-[420px] aspect-[4/3] bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-2xl rounded-3xl p-5 translate-x-8 translate-y-6 transition-transform duration-500 hover:scale-[1.02]">
+              {/* Scanning Line */}
+              <motion.div
+                animate={{ top: ["8%", "90%", "8%"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="absolute left-4 right-4 h-0.5 bg-lime shadow-[0_0_8px_rgba(163,230,53,0.8)] z-30"
+              />
+
+              <div className="flex justify-between items-center border-b border-zinc-150 dark:border-zinc-850 pb-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-lime animate-ping" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-900 dark:text-white">Live Calculation Canvas</span>
+                </div>
+                <span className="text-[9px] font-bold text-zinc-400 font-mono">CostPlanCalc.ai</span>
+              </div>
+
+              <div className="space-y-4">
+                <div className="p-3 bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-150 dark:border-zinc-850 rounded-xl space-y-2">
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-zinc-500 font-medium">Calculated GFA</span>
+                    <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">14,850 m²</span>
+                  </div>
+                  <div className="flex justify-between text-[11px]">
+                    <span className="text-zinc-500 font-medium">Construction Budget</span>
+                    <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">$22,450,000</span>
+                  </div>
+                  <div className="flex justify-between text-[11px] border-t border-zinc-200/50 dark:border-zinc-800/50 pt-2 mt-2">
+                    <span className="text-zinc-500 font-medium">Consultancy Fee</span>
+                    <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">$340,000</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center text-[10px] text-zinc-400">
+                  <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />Output Compiled</span>
+                  <span className="font-bold text-zinc-650 dark:text-zinc-350">100% Verified</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─── OUR FEATURES (4-COLUMN GRID) ─── */}
+      <section className="bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-900 py-32 px-6 overflow-hidden">
+        <div className="max-w-6xl mx-auto space-y-16">
+          
+          <div className="text-center space-y-4 max-w-2xl mx-auto border-b border-zinc-200 dark:border-zinc-900 pb-10">
+            <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
+              Our Features
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
+              Fits into your workflow
+            </h2>
+            <p className="text-zinc-500 dark:text-zinc-400 text-sm sm:text-base font-medium">
+              Connected estimations, GFA detection, and pipeline forecasting modules in one place.
+            </p>
+          </div>
+
+          {/* 4 Column Features Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            {/* Card 1: Concept Blueprints */}
+            <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 flex flex-col justify-between min-h-[360px] relative group hover:border-zinc-350 dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300">
+              <div className="space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+                  <FileText className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
+                </div>
+                <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white uppercase">Concept Blueprints</h3>
+                <p className="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed">
+                  Support for multi-page concept files, PDF blueprints, Revit models, or DWG exports up to 50MB.
+                </p>
+              </div>
+
+              {/* Graphical insert */}
+              <div className="mt-8 bg-zinc-50 dark:bg-zinc-950/60 p-3 rounded-2xl border border-zinc-150 dark:border-zinc-850 flex items-center justify-between text-[9px] font-mono">
+                <span className="text-zinc-500 truncate max-w-[120px]">Alpha_Project.pdf</span>
+                <span className="px-2 py-0.5 bg-zinc-200 dark:bg-zinc-800 rounded text-zinc-650 dark:text-zinc-350">50MB</span>
+              </div>
+            </div>
+
+            {/* Card 2: Live Pricer Canvas */}
+            <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 flex flex-col justify-between min-h-[360px] relative group hover:border-zinc-350 dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300">
+              <div className="space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+                  <Calculator className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
+                </div>
+                <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white uppercase">Pricer Canvas</h3>
+                <p className="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed">
+                  Instantly detects building footprint zones, floor numbers, and calculates consultancy fees based on region standard rules.
+                </p>
+              </div>
+
+              {/* Graphical flowchart mockup */}
+              <div className="mt-8 bg-zinc-50 dark:bg-zinc-950/60 rounded-2xl p-3 border border-zinc-150 dark:border-zinc-850 h-16 relative overflow-hidden flex items-center justify-center shadow-inner">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:8px_8px]" />
+                <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M 10,40 Q 60,10 120,50 T 220,10" fill="none" stroke="#a3e635" strokeWidth="1.5" />
+                </svg>
+                <span className="relative z-10 text-[9px] font-mono font-bold bg-white dark:bg-zinc-950 px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-250">GFA Sync</span>
+              </div>
+            </div>
+
+            {/* Card 3: Pipeline Control */}
+            <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 flex flex-col justify-between min-h-[360px] relative group hover:border-zinc-350 dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300">
+              <div className="space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+                  <BarChart3 className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
+                </div>
+                <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white uppercase">Pipeline Control</h3>
+                <p className="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed">
+                  Track GFA estimates, consultancy fees, and pipeline revenue forecasts directly in your firm's pipeline.
+                </p>
+              </div>
+
+              {/* Mini revenue chart mockup */}
+              <div className="mt-8 bg-zinc-50 dark:bg-zinc-950/60 p-3 rounded-2xl border border-zinc-150 dark:border-zinc-850 flex items-end justify-between h-16 gap-1.5">
+                {[40, 65, 35, 80, 50, 95, 60].map((height, i) => (
+                  <div key={i} className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-t-sm relative group" style={{ height: `${height}%` }}>
+                    <div className="absolute inset-0 bg-lime opacity-0 group-hover:opacity-100 transition-opacity rounded-t-sm" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Card 4: Revit Integration */}
+            <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 flex flex-col justify-between min-h-[360px] relative group hover:border-zinc-350 dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300">
+              <div className="space-y-4">
+                <div className="w-11 h-11 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+                  <Cpu className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
+                </div>
+                <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white uppercase">Revit integration</h3>
+                <p className="text-zinc-500 dark:text-zinc-400 text-xs leading-relaxed">
+                  Lock cost plans to design briefs, feeding directly into Revit to BOQ baseline models.
+                </p>
+              </div>
+
+              {/* Icon visual link */}
+              <div className="mt-8 bg-zinc-50 dark:bg-zinc-950/60 p-3 rounded-2xl border border-zinc-150 dark:border-zinc-850 flex items-center justify-between text-[9px] font-mono">
+                <span className="text-zinc-500">BOQ Model Feed</span>
+                <span className="text-lime font-bold uppercase">Linked</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Centered Features CTA Button */}
+          <div className="flex justify-center pt-4">
+            <Button
+              asChild
+              size="lg"
+              className="rounded-2xl px-8 py-6 font-bold shadow-md cursor-pointer bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-transform hover:scale-105"
+            >
+              <a
+                href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Schedule Interactive walkthrough →
+              </a>
+            </Button>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─── Video Showcase Section ─── */}
+      <section
+        ref={videoSectionRef}
+        className="py-24 px-6 bg-zinc-950 text-white relative overflow-hidden border-t border-zinc-900"
+      >
+        {/* High-tech radial glow effects */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-lime/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+        {/* Subtle Mesh blueprint grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02] pointer-events-none"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)`,
+            backgroundSize: "44px 44px",
+          }}
+        />
+
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+
+          {/* Left Column: Stacked High-Impact Typography & Metadata */}
+          <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-8">
+            <div className="space-y-4">
+              <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
+                See It In Action
+              </span>
+              <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-[1.1] uppercase">
+                Cost Plan Calculator Demo
+              </h2>
+              <p className="text-zinc-450 text-sm sm:text-base leading-relaxed">
+                Watch how a concept drawing becomes a complete cost plan in minutes.
+              </p>
+            </div>
+
+            <div className="space-y-6 pt-2">
+              <a
+                href="https://drive.google.com/drive/folders/1C8KTwemod1FyxAuZr7jefJLqbs1LCn2L?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-lime font-bold uppercase tracking-wider text-sm hover:text-lime-400 group transition-colors cursor-pointer"
+              >
+                Open Demo Walkthrough in Google Drive
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+
+              {/* Autoplay Active Indicator */}
+              <div className="flex items-center gap-2 bg-zinc-900/60 border border-zinc-800 rounded-full py-1.5 px-3 w-fit text-[11px] text-zinc-450">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-lime"></span>
+                </span>
+                Autoplay active
+              </div>
+            </div>
+
+            {/* Pagination numbers at the bottom */}
+            <div className="flex items-center gap-4 pt-8 border-t border-zinc-900">
+              <span className="text-xs font-mono font-bold text-white">01</span>
+              <div className="w-16 h-[2px] bg-zinc-800 relative">
+                <div className="absolute top-0 left-0 h-full w-1/3 bg-lime" />
+              </div>
+              <span className="text-xs font-mono text-zinc-550">03</span>
+            </div>
+          </div>
+
+          {/* Right Column: Premium Glass-Bordered Mockup Player */}
+          <div className="lg:col-span-7 w-full">
+            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border border-zinc-800 bg-zinc-900 group">
+              {/* Decorative green glow inside the border on hover */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-lime/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2rem]" />
+
+              <div className="relative rounded-[2rem] overflow-hidden bg-black aspect-video flex items-center justify-center">
+                <video
+                  src="/videos/cost-plan-calculator-demo.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Custom Video Control Overlay */}
+                <div className="absolute bottom-4 left-4 right-4 bg-zinc-950/80 backdrop-blur-md px-4 py-3 rounded-2xl border border-zinc-850/80 flex items-center justify-between z-20 opacity-90 hover:opacity-100 transition-opacity">
+                  {/* Left Controls */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-lime flex items-center justify-center">
+                      <Play className="w-3 h-3 text-black fill-black ml-0.5" />
+                    </div>
+                    <span className="text-[11px] font-mono text-zinc-300">00:00 / 00:54</span>
+                  </div>
+
+                  {/* Center Control: Progress Bar */}
+                  <div className="flex-1 mx-4 relative h-1 bg-zinc-850 rounded-full overflow-hidden">
+                    <div className="absolute top-0 left-0 h-full w-[45%] bg-lime animate-pulse" />
+                  </div>
+
+                  {/* Right Controls */}
+                  <div className="flex items-center gap-3">
+                    <span className="px-1.5 py-0.5 text-[9px] font-bold bg-zinc-800 text-zinc-350 rounded border border-zinc-700 font-mono tracking-wider">
+                      HD
+                    </span>
+                    <svg className="w-4 h-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ─── SCREENSHOTS GALLERY & DETAILS (PRICING & FAQ) ─── */}
+      <section className="py-24 px-6 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900">
+        <div className="max-w-6xl mx-auto space-y-16">
+          
+          <div className="text-center space-y-4 max-w-2xl mx-auto">
+            <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
+              Pricing &amp; FAQs
+            </span>
+            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
+              Screenshots Gallery &amp; Details
+            </h2>
+            <p className="text-zinc-500 dark:text-zinc-400 text-sm sm:text-base font-medium">
+              Flexible setups, related estimating tools, and deployment FAQs tailored to your company scale.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            {/* Gallery-style pricing cards */}
+            <div className="lg:col-span-8 space-y-12">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                
+                {/* Plan 1 */}
+                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-4 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group relative">
+                  <div className="space-y-1">
+                    <span className="text-[9px] text-zinc-400 font-extrabold uppercase tracking-widest block">Standard Tier</span>
+                    <h4 className="font-extrabold text-sm text-zinc-900 dark:text-white">One-Off Setup</h4>
+                  </div>
+                  <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">$3,500</p>
+                  <p className="text-xs text-zinc-500 leading-normal">Includes deployment, customized cost database rate setup, and dedicated training.</p>
+                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowUpRight className="w-4 h-4 text-zinc-900 dark:text-white" />
+                  </div>
+                </div>
+
+                {/* Plan 2 */}
+                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-4 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group relative">
+                  <div className="space-y-1">
+                    <span className="text-[9px] text-zinc-400 font-extrabold uppercase tracking-widest block">Updates Tier</span>
+                    <h4 className="font-extrabold text-sm text-zinc-900 dark:text-white">Annual Support</h4>
+                  </div>
+                  <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">$300<span className="text-xs font-normal text-zinc-400">/yr</span></p>
+                  <p className="text-xs text-zinc-500 leading-normal">Covers quarterly cost index updates, API maintenance, and standard system support.</p>
+                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowUpRight className="w-4 h-4 text-zinc-900 dark:text-white" />
+                  </div>
+                </div>
+
+                {/* Plan 3 */}
+                <div className="p-6 bg-zinc-950 border border-zinc-900 rounded-3xl space-y-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group relative text-white">
+                  <div className="space-y-1">
+                    <span className="text-[9px] text-zinc-500 font-extrabold uppercase tracking-widest block">Enterprise Tier</span>
+                    <h4 className="font-extrabold text-sm text-white">Custom Setup</h4>
+                  </div>
+                  <p className="text-3xl font-black tracking-tight text-white">Enterprise</p>
+                  <p className="text-xs text-zinc-400 leading-normal">Custom licensing limits, custom ERP integrations, and custom regional models.</p>
+                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowUpRight className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Related Products */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-px flex-1 bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-800" />
+                  <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Related Estimating Modules</span>
+                  <div className="h-px flex-1 bg-gradient-to-l from-zinc-200 to-transparent dark:from-zinc-800" />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    {
+                      href: "/learnmore/planning-law-chatbot",
+                      title: "Planning Law",
+                      desc: "Instant planning regulations at your fingertips. Parallel stage product.",
+                      tag: "Parallel",
+                    },
+                    {
+                      href: "/learnmore/revit-to-boq",
+                      title: "Revit to BOQ",
+                      desc: "Automated BOQ generation from Revit models with AI rate prediction.",
+                      tag: "Next Stage",
+                    },
+                    {
+                      href: "/learnmore/measureonair",
+                      title: "MeasureonAir",
+                      desc: "Site measurement to payment certificate, fully automated.",
+                      tag: "Construction",
+                    },
+                  ].map((rel, i) => (
+                    <motion.div key={i} whileHover={{ y: -4, scale: 1.01 }} className="h-full">
+                      <Link
+                        href={rel.href}
+                        className="group flex flex-col justify-between p-5 h-full bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
+                      >
+                        <div className="space-y-2">
+                          <span className="px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[8px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                            {rel.tag}
+                          </span>
+                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors pt-1">
+                            {rel.title}
+                          </h4>
+                          <p className="text-xs text-zinc-500 leading-relaxed">{rel.desc}</p>
+                        </div>
+                        <div className="flex items-center gap-1 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <span className="text-[10px] font-semibold text-zinc-900 dark:text-zinc-300">Explore</span>
+                          <ChevronRight className="w-3 h-3 text-zinc-900 dark:text-zinc-300 transition-transform group-hover:translate-x-0.5" />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Facts Widget */}
+            <div className="lg:col-span-4 sticky top-28 space-y-6">
+              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2rem] p-8 shadow-sm space-y-6 group hover:border-zinc-350 dark:hover:border-zinc-800 transition-colors">
+                
+                {/* Header Facts */}
+                <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-4">
+                  <h3 className="font-extrabold text-base uppercase tracking-tight text-zinc-900 dark:text-white">Quick Facts</h3>
+                  <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                </div>
+
+                <div className="space-y-4 text-xs">
+                  {[
+                    { label: "Stage", value: "Pre-design" },
+                    { label: "Best For", value: "QS Firms, Cost Consultancies, Developers" },
+                    { label: "Target Regions", value: "UAE, UK, Australia, Sri Lanka" },
+                    { label: "Time to Implement", value: "3-5 Days" },
+                    { label: "Pricing Model", value: "$3,500 + $300/yr" },
+                  ].map((fact, i) => (
+                    <div key={i} className="flex justify-between items-start border-b border-zinc-50 dark:border-zinc-850/50 pb-2.5 gap-4">
+                      <span className="text-zinc-500 font-semibold shrink-0">{fact.label}</span>
+                      <span className="font-bold text-zinc-900 dark:text-zinc-200 text-right">{fact.value}</span>
+                    </div>
+                  ))}
+                </div>
+
                 <Button
                   asChild
-                  size="lg"
-                  className="rounded-2xl px-8 py-7 font-bold shadow-md cursor-pointer bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-transform hover:scale-105"
+                  className="w-full rounded-2xl py-6 font-bold shadow-md bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
                 >
                   <a
                     href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Book a Demo
+                    Schedule Demo &rarr;
                   </a>
                 </Button>
               </div>
             </div>
 
-            {/* Right Column - Before/After Widget */}
-            <motion.div
-              className="lg:col-span-5"
-            >
-              <div className="relative bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-zinc-200/50 dark:shadow-black/50">
-                <div className="flex items-center justify-between mb-6 border-b border-zinc-150 dark:border-zinc-800 pb-4">
-                  <h3 className="font-bold text-base tracking-tight text-zinc-900 dark:text-zinc-50">
-                    Compare Workflows
-                  </h3>
-                  <div className="relative flex bg-zinc-150/80 dark:bg-zinc-950/80 p-1 rounded-xl w-48 justify-between border border-zinc-200/50 dark:border-zinc-850/50">
-                    <button
-                      onClick={() => handleTabClick("before")}
-                      className={`relative z-10 w-24 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "before"
-                        ? "text-zinc-900 dark:text-white"
-                        : "text-zinc-500"
-                        }`}
-                    >
-                      Before
-                    </button>
-                    <button
-                      onClick={() => handleTabClick("after")}
-                      className={`relative z-10 w-24 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "after"
-                        ? "text-zinc-900 dark:text-white"
-                        : "text-zinc-500"
-                        }`}
-                    >
-                      After
-                    </button>
-                    <motion.div
-                      layoutId="toggle-pill-cost"
-                      className="absolute top-1 bottom-1 bg-white dark:bg-zinc-800 shadow-sm border border-zinc-200/50 dark:border-zinc-700/50 rounded-lg"
-                      animate={{
-                        left: activeTab === "before" ? 4 : 92,
-                        width: 92,
-                      }}
-                      transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                    />
-                  </div>
-                </div>
-
-                <div className="min-h-[220px] flex flex-col justify-center">
-                  <AnimatePresence mode="wait">
-                    {activeTab === "before" ? (
-                      <motion.div
-                        key="before"
-                        initial={{ opacity: 0, x: -15 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 15 }}
-                        transition={{ duration: 0.2 }}
-                        className="space-y-4"
-                      >
-                        <div className="text-xs font-bold text-red-500 uppercase tracking-wider">
-                          Manual Cost Planning
-                        </div>
-                        <ul className="space-y-3.5">
-                          {[
-                            "QS calculates GFA by hand from PDF drawings.",
-                            "Plugs numbers into Excel with manual formulas.",
-                            "Cost plan takes 1-2 days to produce.",
-                            "No integrated project pipeline tracking."
-                          ].map((item, i) => (
-                            <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-350 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                              <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="after"
-                        initial={{ opacity: 0, x: 15 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -15 }}
-                        transition={{ duration: 0.2 }}
-                        className="space-y-4"
-                      >
-                        <div className="text-xs font-bold text-zinc-900 dark:text-zinc-300 uppercase tracking-wider">
-                          Cost Plan Calculator
-                        </div>
-                        <ul className="space-y-3.5">
-                          {[
-                            "Upload concept drawing — GFA generated instantly.",
-                            "Estimate & consultancy fee computed automatically.",
-                            "Financial planning module tracks project pipeline.",
-                            "Outputs ready for client presentation."
-                          ].map((item, i) => (
-                            <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                              <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── Video Showcase Section ─── */}
-      <section ref={videoSectionRef} className="py-24 px-6 bg-white dark:bg-zinc-950 border-t border-zinc-150 dark:border-zinc-900">
-        <div className="max-w-6xl mx-auto space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center space-y-3"
-          >
-            <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
-              See It In Action
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white uppercase">
-              Cost Plan Calculator Demo
-            </h2>
-            <p className="text-zinc-500 dark:text-zinc-450 text-sm max-w-lg mx-auto leading-relaxed">
-              Watch how a concept drawing becomes a complete cost plan in minutes.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-zinc-200 dark:border-zinc-800 aspect-video max-w-4xl mx-auto bg-zinc-950 flex items-center justify-center group">
-              <div className="absolute inset-0 bg-gradient-to-br from-lime/10 via-transparent to-zinc-950 pointer-events-none" />
-              <div className="relative z-10 text-center space-y-4">
-                <a
-                  href="https://drive.google.com/drive/folders/1C8KTwemod1FyxAuZr7jefJLqbs1LCn2L?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-16 h-16 rounded-full bg-lime text-black flex items-center justify-center shadow-lg hover:scale-105 transition-transform mx-auto cursor-pointer"
-                >
-                  <Play className="w-6 h-6 fill-black ml-1" />
-                </a>
-                <p className="text-xs text-zinc-350 font-bold uppercase tracking-wider">
-                  Open Demo Walkthrough in Google Drive
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ─── Problem Section ─── */}
-      <section className="bg-zinc-50 dark:bg-zinc-900/40 border-y border-zinc-200 dark:border-zinc-800 py-24 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
-              The Friction
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 uppercase">
-              The cost planning bottleneck
-            </h2>
-            <div className="w-16 h-1 bg-lime rounded-full" />
-          </div>
-          <div className="lg:col-span-7 text-zinc-650 dark:text-zinc-450 text-base sm:text-lg leading-relaxed space-y-6 font-medium">
-            <p>QS firms are still calculating Gross Floor Area by hand from PDF concept drawings and plugging numbers into Excel to produce a cost plan at the feasibility stage.</p>
-            <p>This is the moment when speed matters most — the client is waiting for budget validation before committing to design. But the process takes 1-2 days and relies on manual Excel formulas that differ from firm to firm.</p>
-            <p className="text-zinc-950 dark:text-zinc-200 font-bold">Cost Plan Calculator automates this, turning the cost planning step from a bottleneck into a two-minute output that is ready to present.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Bento Grid Capabilities & Integration ─── */}
-      <section className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-900 py-24 px-6 overflow-hidden">
-        <div className="max-w-6xl mx-auto space-y-16">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-150 dark:border-zinc-800 pb-10">
-            <div className="space-y-4 max-w-2xl">
-              <span className="text-xs font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-widest block">
-                Capabilities
-              </span>
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
-                Fits into your workflow
-              </h2>
-              <p className="text-zinc-550 dark:text-zinc-400 text-base sm:text-lg font-medium">
-                Connected estimations, instant footprint measurements, and pipeline dashboards in one place.
-              </p>
-            </div>
-            
-            <div className="flex md:justify-end items-center shrink-0">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-2xl px-6 py-5 font-bold shadow-md bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black border-0 transition-all hover:-translate-y-0.5 cursor-pointer text-sm"
-              >
-                <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
-                  Book a Demo
-                </a>
-              </Button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
-            
-            {/* Left Column Tall Card */}
-            <div className="lg:row-span-2 bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-350 dark:hover:border-zinc-700 transition-all duration-300 shadow-sm">
-              <div className="space-y-4">
-                <span className="text-[9px] font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-widest block">Input Variables</span>
-                <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Concept Blueprints</h3>
-                <p className="text-zinc-550 dark:text-zinc-400 text-sm leading-relaxed">
-                  Support for multi-page concept files, PDF blueprints, Revit models, or DWG exports up to 50MB.
-                </p>
-              </div>
-              
-              <div className="mt-10 bg-white dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-900 rounded-2xl p-4 shadow-sm space-y-4">
-                <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none text-[9px] font-extrabold uppercase tracking-wider">
-                  <span className="px-2.5 py-1.5 bg-zinc-950 text-white dark:bg-white dark:text-black rounded-lg">FILES</span>
-                  <span className="px-2.5 py-1.5 bg-zinc-100 text-zinc-500 dark:bg-zinc-900 rounded-lg">RVT</span>
-                  <span className="px-2.5 py-1.5 bg-zinc-100 text-zinc-500 dark:bg-zinc-900 rounded-lg">PDF</span>
-                </div>
-                
-                <div className="bg-zinc-50 dark:bg-zinc-900/60 rounded-xl p-3 border border-zinc-100 dark:border-zinc-800/80 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    <span className="text-[8px] font-bold text-zinc-450 uppercase tracking-widest">Active Calculator</span>
-                  </div>
-                  <p className="text-[10px] font-mono text-zinc-650 dark:text-zinc-300 bg-white dark:bg-zinc-950/80 p-2.5 rounded-lg border border-zinc-150 dark:border-zinc-800/80 leading-normal">
-                    "GFA_Calculated_Project_Alpha.pdf"
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column Wide Card */}
-            <div className="lg:col-span-2 bg-zinc-950 text-white border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
-              <div className="flex-1 flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest block">AI Estimating Engine</span>
-                  <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">Your cost plans calculated on a live connected pricer canvas</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">
-                    Instantly detects building footprint zones, floor numbers, and calculates consultancy fees based on region standard rules.
-                  </p>
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-400">Calculation Engine Sync Active</span>
-                </div>
-              </div>
-
-              {/* Graphical flowchart mockup */}
-              <div className="flex-1 bg-zinc-900/40 border border-zinc-800 rounded-2xl p-6 min-h-[190px] relative overflow-hidden flex flex-col justify-center shadow-inner">
-                {/* Grid canvas background */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:14px_20px]" />
-                
-                {/* Connected flow path SVG */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="3 3" className="opacity-30" />
-                  <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="url(#flow)" strokeWidth="2.5" />
-                  <defs>
-                    <linearGradient id="flow" x1="0%" y1="100%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="white" stopOpacity="0.05" />
-                      <stop offset="60%" stopColor="white" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="white" stopOpacity="1" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-
-                {/* Floating Mockup Nodes */}
-                <div className="absolute top-[32px] right-[24px] z-10 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
-                  <div className="text-left leading-none">
-                    <span className="text-[8px] font-bold text-white block">Budget</span>
-                    <span className="text-[6px] text-white font-black uppercase tracking-wider">Calculated</span>
-                  </div>
-                </div>
-
-                <div className="absolute bottom-[24px] left-[20px] z-10 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
-                  <span className="text-[9px] font-bold text-zinc-300">GFA</span>
-                </div>
-
-                {/* Collaborative Cursors */}
-                <div className="absolute bottom-[48px] right-[88px] z-20 flex items-center gap-1 bg-zinc-900 text-white dark:bg-white dark:text-black px-2 py-0.5 rounded-md text-[8px] font-extrabold tracking-wider shadow-md">
-                  <svg className="w-2 h-2 fill-white dark:fill-black" viewBox="0 0 24 24">
-                    <path d="M7 2l12 11.2-5.8.8 3.8 6.5-2.2 1.3-3.8-6.5-4 4.7V2z" />
-                  </svg>
-                  QS Estimator
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Left Card */}
-            <div className="bg-[#12130e] text-white border border-zinc-800 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-700 transition-all duration-300 shadow-md">
-              <div className="space-y-4">
-                <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest block">Dashboard Sync</span>
-                <h3 className="text-xl font-bold tracking-tight text-white leading-tight">Pipeline Control</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  Track consultancy fees, revenue forecasts, and project lists directly in your firm's pipeline.
-                </p>
-              </div>
-              <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-white transition-colors duration-300 font-serif">→</span>
-              </div>
-            </div>
-
-            {/* Bottom Right Card */}
-            <div className="bg-[#0f1115] text-white border border-zinc-900 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-800 transition-all duration-300 shadow-md">
-              <div className="space-y-4">
-                <span className="text-[9px] font-bold text-zinc-550 uppercase tracking-widest block">Downstream Workflow</span>
-                <h3 className="text-xl font-bold tracking-tight text-white leading-tight">Revit integration</h3>
-                <p className="text-zinc-455 text-sm leading-relaxed">
-                  Lock cost plans to design briefs, feeding directly into Revit to BOQ baseline models.
-                </p>
-              </div>
-              <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-white transition-colors duration-300 font-serif">→</span>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Pricing & Quick Facts Section ─── */}
-      <section className="py-24 px-6 max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-8 space-y-16">
-            <div className="space-y-6">
-              <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">Deployment</span>
-              <h2 className="text-3xl font-bold text-zinc-950 dark:text-zinc-50 tracking-tight uppercase">Pricing &amp; Availability</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-sm">
-                  <span className="text-xs text-zinc-450 font-bold uppercase tracking-widest">One-Off Implementation</span>
-                  <p className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">$3,500</p>
-                  <p className="text-xs text-zinc-500">Includes setup, custom rate integration, and team training.</p>
-                </div>
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-sm">
-                  <span className="text-xs text-zinc-450 font-bold uppercase tracking-widest">Annual Support</span>
-                  <p className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">$300<span className="text-sm font-normal text-zinc-450">/year</span></p>
-                  <p className="text-xs text-zinc-500">Covers quarterly rate updates and priority support.</p>
-                </div>
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-sm">
-                  <span className="text-xs text-zinc-450 font-bold uppercase tracking-widest">Enterprise</span>
-                  <p className="text-2xl font-black tracking-tight text-zinc-900 dark:text-white">Custom</p>
-                  <p className="text-xs text-zinc-500">Multi-user licensing and custom database integrations.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Related Products */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6 }}
-              className="space-y-6"
-            >
-              <div className="flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-800" />
-                <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Related Products in this suite</span>
-                <div className="h-px flex-1 bg-gradient-to-l from-zinc-200 to-transparent dark:from-zinc-800" />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                  whileHover={{ y: -4, scale: 1.01 }}
-                >
-                  <Link
-                    href="/learnmore/planning-law-chatbot"
-                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-1.5">
-                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors">
-                          Planning Law Chatbot
-                        </h4>
-                        <p className="text-xs text-zinc-550 leading-relaxed">
-                          Instant planning regulations at your fingertips. Parallel stage product.
-                        </p>
-                      </div>
-                      <span className="shrink-0 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-805 text-[9px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                        Parallel
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-[10px] font-semibold text-zinc-900 dark:text-zinc-300">Learn more</span>
-                      <ChevronRight className="w-3 h-3 text-zinc-900 dark:text-zinc-300 transition-transform group-hover:translate-x-0.5" />
-                    </div>
-                  </Link>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 0 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.4, delay: 0.15 }}
-                  whileHover={{ y: -4, scale: 1.01 }}
-                >
-                  <Link
-                    href="/learnmore/revit-to-boq"
-                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-1.5">
-                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors">
-                          Revit to BOQ
-                        </h4>
-                        <p className="text-xs text-zinc-550 leading-relaxed">
-                          Automated BOQ generation from Revit models with AI-powered rate prediction.
-                        </p>
-                      </div>
-                      <span className="shrink-0 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-805 text-[9px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                        Next stage
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-[10px] font-semibold text-zinc-900 dark:text-zinc-300">Learn more</span>
-                      <ChevronRight className="w-3 h-3 text-zinc-900 dark:text-zinc-300 transition-transform group-hover:translate-x-0.5" />
-                    </div>
-                  </Link>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                  whileHover={{ y: -4, scale: 1.01 }}
-                >
-                  <Link
-                    href="/learnmore/measureonair"
-                    className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="space-y-1.5">
-                        <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors">
-                          MeasureonAir
-                        </h4>
-                        <p className="text-xs text-zinc-555 leading-relaxed">
-                          Site measurement to payment certificate, fully digital and automated.
-                        </p>
-                      </div>
-                      <span className="shrink-0 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-805 text-[9px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                        Construction
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-[10px] font-semibold text-zinc-900 dark:text-zinc-300">Learn more</span>
-                      <ChevronRight className="w-3 h-3 text-zinc-900 dark:text-zinc-300 transition-transform group-hover:translate-x-0.5" />
-                    </div>
-                  </Link>
-                </motion.div>
-              </div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: 0.3 }}
-                className="text-center"
-              >
-                <Link
-                  href="/learnmore"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-900 dark:text-white hover:text-zinc-650 transition-colors group"
-                >
-                  View full product suite
-                  <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ChevronRight className="w-3.5 h-3.5 text-zinc-900 dark:text-white" />
-                  </motion.span>
-                </Link>
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Quick Facts Sidebar */}
-          <div className="lg:col-span-4 sticky top-28 space-y-6">
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 shadow-sm space-y-6">
-              <h3 className="font-bold text-lg border-b border-zinc-100 dark:border-zinc-800 pb-3 uppercase">Quick Facts</h3>
-              <div className="space-y-4 text-sm">
-                <div className="flex justify-between items-center border-b border-zinc-100 dark:border-zinc-800 pb-2 gap-4">
-                  <span className="text-zinc-500 font-semibold shrink-0">Stage</span>
-                  <span className="font-bold text-zinc-900 dark:text-white text-right">Pre-design</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-zinc-100 dark:border-zinc-800 pb-2 gap-4">
-                  <span className="text-zinc-500 font-semibold shrink-0">Best For</span>
-                  <span className="font-bold text-zinc-900 dark:text-white text-right">QS Firms, Cost Consultancies, Developers</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-zinc-100 dark:border-zinc-800 pb-2 gap-4">
-                  <span className="text-zinc-500 font-semibold shrink-0">Target Regions</span>
-                  <span className="font-bold text-zinc-900 dark:text-white text-right">UAE, UK, Australia, Sri Lanka</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-zinc-100 dark:border-zinc-800 pb-2 gap-4">
-                  <span className="text-zinc-500 font-semibold shrink-0">Time to Implement</span>
-                  <span className="font-bold text-zinc-900 dark:text-white text-right">3-5 Days</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-zinc-500 font-semibold shrink-0">Pricing</span>
-                  <span className="font-bold text-zinc-900 dark:text-white text-right">$3,500 + $300/yr</span>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <Button
-                  asChild
-                  className="w-full rounded-2xl py-7 font-bold shadow-md bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
-                >
-                  <Link href="/pricing">
-                    Buy Products &rarr;
-                  </Link>
-                </Button>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -690,7 +813,7 @@ export default function CostPlanCalculatorPage() {
       />
 
       {/* ─── FAQ Section ─── */}
-      <section className="py-24 px-6 bg-zinc-50 dark:bg-zinc-900/20 border-y border-zinc-200/50 dark:border-zinc-800/50">
+      <section className="py-24 px-6 bg-[#FAFAF8] dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900">
         <div className="max-w-3xl mx-auto">
           <div className="text-center space-y-3 mb-16">
             <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
@@ -711,13 +834,16 @@ export default function CostPlanCalculatorPage() {
             ].map((faq, idx) => (
               <div
                 key={idx}
-                className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-md"
+                className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-md animate-fade-in"
               >
                 <button
                   onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
                   className="w-full flex items-center justify-between p-5 text-left font-bold text-zinc-900 dark:text-zinc-50 cursor-pointer"
                 >
-                  <span>{faq.q}</span>
+                  <span className="flex items-center gap-3">
+                    <HelpCircle className="w-4 h-4 text-zinc-400" />
+                    {faq.q}
+                  </span>
                   <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === idx ? "bg-zinc-900 dark:bg-white text-white dark:text-black" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-555"}`}>
                     {activeFaq === idx ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                   </div>
@@ -731,7 +857,7 @@ export default function CostPlanCalculatorPage() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 pb-5 text-sm text-zinc-650 dark:text-zinc-400 leading-relaxed border-t border-zinc-100 dark:border-zinc-800 pt-4">
+                      <div className="px-5 pb-5 text-sm text-zinc-650 dark:text-zinc-400 leading-relaxed border-t border-zinc-150 dark:border-zinc-800/80 pt-4 ml-7 pr-8">
                         {faq.a}
                       </div>
                     </motion.div>

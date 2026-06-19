@@ -7,7 +7,7 @@ import { Navbar } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer";
 import {
   ArrowLeft, Play, Calendar, Check, X,
-  Cloud, FileSpreadsheet, RefreshCw, Zap, Lock,
+  Cloud, FileSpreadsheet, RefreshCw, Zap, Lock, Cpu,
   Building, Plus, Minus, FileText, Download, ArrowUpRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -181,7 +181,7 @@ export default function AccToBoqPage() {
                         transition={{ duration: 0.2 }}
                         className="space-y-4"
                       >
-                        <div className="text-xs font-bold text-emerald-600 dark:text-lime uppercase tracking-wider">
+                        <div className="text-xs font-bold text-zinc-900 dark:text-zinc-300 uppercase tracking-wider">
                           ACC to BOQ
                         </div>
                         <ul className="space-y-3.5">
@@ -201,7 +201,7 @@ export default function AccToBoqPage() {
                             <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                             <span>Repricing done instantly</span>
                           </li>
-                          <li className="flex gap-3 text-emerald-600 dark:text-emerald-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50 font-bold">
+                          <li className="flex gap-3 text-zinc-900 dark:text-zinc-100 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50 font-bold">
                             <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                             <span>Takes 5 minutes per BOQ</span>
                           </li>
@@ -274,7 +274,7 @@ export default function AccToBoqPage() {
             >
               <div className="flex items-start justify-between">
                 <div className="w-14 h-14 rounded-2xl bg-lime/10 border border-lime/20 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
-                  <Cloud className="w-7 h-7 text-emerald-600 dark:text-lime" />
+                  <Cloud className="w-7 h-7 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <span className="text-5xl font-black text-zinc-100 dark:text-zinc-800 select-none">01</span>
               </div>
@@ -298,7 +298,7 @@ export default function AccToBoqPage() {
             >
               <div className="flex items-start justify-between">
                 <div className="w-14 h-14 rounded-2xl bg-lime/10 border border-lime/20 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
-                  <Zap className="w-7 h-7 text-emerald-600 dark:text-lime" />
+                  <Cpu className="w-7 h-7 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <span className="text-5xl font-black text-zinc-100 dark:text-zinc-800 select-none">02</span>
               </div>
@@ -322,7 +322,7 @@ export default function AccToBoqPage() {
             >
               <div className="flex items-start justify-between">
                 <div className="w-14 h-14 rounded-2xl bg-lime/10 border border-lime/20 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
-                  <FileSpreadsheet className="w-7 h-7 text-emerald-600 dark:text-lime" />
+                  <FileSpreadsheet className="w-7 h-7 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <span className="text-5xl font-black text-zinc-100 dark:text-zinc-800 select-none">03</span>
               </div>
@@ -438,7 +438,7 @@ export default function AccToBoqPage() {
             <div className="lg:col-span-2 bg-zinc-950 text-white border border-zinc-900 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row justify-between gap-8 overflow-hidden relative group shadow-xl">
               <div className="flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Revit-to-ACC Cloud Sync</span>
+                  <span className="text-[9px] font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block">Revit-to-ACC Cloud Sync</span>
                   <h3 className="text-2xl font-bold tracking-tight text-white leading-tight">Live cost engine updates directly inside ACC Hub</h3>
                   <p className="text-zinc-400 text-sm leading-relaxed">
                     Our cloud engine scans updated elements on sync and computes the pricing delta dynamically.
@@ -447,7 +447,7 @@ export default function AccToBoqPage() {
                 
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-emerald-600 dark:text-lime">ACC Webhook Active</span>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-650 dark:text-zinc-400">ACC Webhook Active</span>
                 </div>
               </div>
 
@@ -473,7 +473,7 @@ export default function AccToBoqPage() {
                 <div className="absolute top-[32px] right-[24px] z-10 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
                   <div className="text-left leading-none">
                     <span className="text-[8px] font-bold text-white block">ACC model</span>
-                    <span className="text-[6px] text-emerald-600 dark:text-lime font-black uppercase tracking-wider">Synced</span>
+                    <span className="text-[6px] text-zinc-950 dark:text-white font-black uppercase tracking-wider">Synced</span>
                   </div>
                 </div>
 
@@ -494,14 +494,14 @@ export default function AccToBoqPage() {
             {/* Bottom Left Card */}
             <div className="bg-[#12130e] text-white border border-lime/15 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-lime/30 transition-all duration-300 shadow-md">
               <div className="space-y-4">
-                <span className="text-[9px] font-bold text-emerald-600 dark:text-lime uppercase tracking-widest block">Standard Rates</span>
+                <span className="text-[9px] font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block">Standard Rates</span>
                 <h3 className="text-xl font-bold tracking-tight text-white leading-tight">Dynamic Pricer</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">
                   Maintain standard rate lists by location, project scale, or building type directly in the cloud.
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
 
@@ -515,7 +515,7 @@ export default function AccToBoqPage() {
                 </p>
               </div>
               <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors duration-300 font-serif">→</span>
+                <span className="text-xl font-bold text-zinc-700 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors duration-300 font-serif">→</span>
               </div>
             </div>
             
@@ -600,7 +600,7 @@ export default function AccToBoqPage() {
                       className="w-full px-6 py-4 flex items-center justify-between font-bold text-left text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer"
                     >
                       <span>{faq.q}</span>
-                      <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === i ? "bg-lime/20 dark:bg-zinc-800 text-emerald-600 dark:text-lime" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"}`}>
+                      <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === i ? "bg-zinc-900 dark:bg-white text-white dark:text-black" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"}`}>
                         {activeFaq === i ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                       </div>
                     </button>
@@ -649,7 +649,7 @@ export default function AccToBoqPage() {
                 </li>
                 <li className="flex justify-between items-center">
                   <span className="text-zinc-555">Pricing</span>
-                  <span className="font-bold text-emerald-600 dark:text-lime">USD 1,200/month</span>
+                  <span className="font-bold text-zinc-950 dark:text-white">USD 1,200/month</span>
                 </li>
               </ul>
             </div>

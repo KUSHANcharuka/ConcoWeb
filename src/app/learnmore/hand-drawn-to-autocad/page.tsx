@@ -27,6 +27,8 @@ import {
   Box,
   MessageSquare,
   Layers,
+  FileUp,
+  Boxes,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
@@ -373,7 +375,7 @@ export default function HandDrawnToAutoCADPage() {
                         transition={{ duration: 0.3 }}
                         className="space-y-5"
                       >
-                        <div className="text-xs font-bold text-emerald-500 uppercase tracking-wider">
+                        <div className="text-xs font-bold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider">
                           Auto Conversion 2D to 3D
                         </div>
                         <ul className="space-y-4">
@@ -572,7 +574,7 @@ export default function HandDrawnToAutoCADPage() {
               >
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <Camera className="w-7 h-7 text-primary" />
+                    <FileUp className="w-7 h-7 text-primary" />
                   </div>
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Step 1</span>
                 </div>
@@ -595,7 +597,7 @@ export default function HandDrawnToAutoCADPage() {
               >
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center">
-                    <Upload className="w-7 h-7 text-purple-600" />
+                    <Boxes className="w-7 h-7 text-purple-600" />
                   </div>
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Step 2</span>
                 </div>
@@ -618,7 +620,7 @@ export default function HandDrawnToAutoCADPage() {
               >
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center">
-                    <FileText className="w-7 h-7 text-emerald-600" />
+                    <Layers className="w-7 h-7 text-emerald-600" />
                   </div>
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Step 3</span>
                 </div>
@@ -738,7 +740,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 1 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-emerald-600 dark:text-lime" />
+                  <Upload className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 1</span>
                 <h4 className="font-bold text-lg text-white">Upload</h4>
@@ -748,7 +750,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 2 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Cpu className="w-8 h-8 text-emerald-600 dark:text-lime" />
+                  <Cpu className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 2</span>
                 <h4 className="font-bold text-lg text-white">Computer Vision</h4>
@@ -758,7 +760,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 3 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Box className="w-8 h-8 text-emerald-600 dark:text-lime" />
+                  <Box className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 3</span>
                 <h4 className="font-bold text-lg text-white">3D Generation</h4>
@@ -768,7 +770,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 4 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <MessageSquare className="w-8 h-8 text-emerald-600 dark:text-lime" />
+                  <MessageSquare className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 4</span>
                 <h4 className="font-bold text-lg text-white">Prompt in WordToBIM</h4>
@@ -778,7 +780,7 @@ export default function HandDrawnToAutoCADPage() {
               {/* Step 5 */}
               <div className="text-center space-y-4">
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Layers className="w-8 h-8 text-emerald-600 dark:text-lime" />
+                  <Layers className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 5</span>
                 <h4 className="font-bold text-lg text-white">BOQ & Coordination</h4>

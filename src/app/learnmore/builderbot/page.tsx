@@ -139,7 +139,7 @@ export default function BuilderbotPage() {
               variant="outline"
               className="w-full sm:w-auto rounded-full px-8 py-7 text-lg font-semibold cursor-pointer hover:scale-105 transition-transform duration-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm"
             >
-              <Play className="w-4 h-4 mr-2 text-emerald-600 dark:text-lime" />
+              <Play className="w-4 h-4 mr-2 text-zinc-900 dark:text-zinc-300" />
               Watch Demo
             </Button>
           </motion.div>
@@ -166,12 +166,12 @@ export default function BuilderbotPage() {
 
               <div className="self-start bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-2xl rounded-tl-sm p-5 max-w-lg shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
-                  <BrainCircuit className="w-5 h-5 text-emerald-600 dark:text-lime" />
+                  <BrainCircuit className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
                   <span className="font-bold text-sm">BuilderBot.ai</span>
                 </div>
                 <p className="text-sm leading-relaxed mb-4">Yes, based on the uploaded Site Diary entry for 15 March and the project timeline, you can submit a claim for an Extension of Time (EOT).</p>
                 <div className="bg-zinc-100 dark:bg-black rounded-xl p-3 border border-zinc-200 dark:border-zinc-800">
-                  <span className="text-xs font-bold text-emerald-600 dark:text-lime mb-1 block">Clause Reference: FIDIC Sub-Clause 8.4</span>
+                  <span className="text-xs font-bold text-zinc-950 dark:text-white mb-1 block">Clause Reference: FIDIC Sub-Clause 8.4</span>
                   <p className="text-xs text-zinc-500 leading-relaxed italic">"The Contractor shall be entitled... to an extension of the Time for Completion if and to the extent that completion... is or will be delayed by... Unforeseeable shortages in the availability of personnel or Goods..."</p>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function BuilderbotPage() {
               <button
                 onClick={() => setActiveToggle("after")}
                 className={`flex-1 py-3 px-6 rounded-xl text-sm sm:text-base font-semibold transition-all cursor-pointer ${activeToggle === "after"
-                  ? "bg-white dark:bg-zinc-900 text-zinc-950 dark:text-lime shadow-sm border border-zinc-200/50 dark:border-zinc-800/50"
+                  ? "bg-white dark:bg-zinc-900 text-zinc-950 dark:text-white shadow-sm border border-zinc-200/50 dark:border-zinc-800/50"
                   : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300"
                   }`}
               >
@@ -296,7 +296,7 @@ export default function BuilderbotPage() {
             <motion.div variants={fadeUp} className="md:col-span-8 bg-white/70 dark:bg-[#111]/70 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-[2.5rem] p-10 md:p-14 flex flex-col justify-center overflow-hidden relative group">
               <div className="relative z-10 space-y-4 max-w-lg">
                 <div className="w-12 h-12 bg-lime/20 rounded-2xl flex items-center justify-center mb-6">
-                  <Layers className="w-6 h-6 text-emerald-600 dark:text-lime" />
+                  <Layers className="w-6 h-6 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <h3 className="text-3xl font-semibold tracking-tight dark:text-white">Upload all project documents</h3>
                 <p className="text-lg text-zinc-500">Upload contract PDFs (FIDIC, NEC, JCT), 2D or 3D drawings, correspondence, site records, and photos into a single secure workspace.</p>
@@ -306,7 +306,7 @@ export default function BuilderbotPage() {
             {/* Medium Bento Card */}
             <motion.div variants={fadeUp} className="md:col-span-4 bg-white/70 dark:bg-[#111]/70 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-[2.5rem] p-10 flex flex-col justify-center">
               <div className="w-12 h-12 bg-lime/20 rounded-2xl flex items-center justify-center mb-6">
-                <MessageSquare className="w-6 h-6 text-emerald-600 dark:text-lime" />
+                <MessageSquare className="w-6 h-6 text-zinc-900 dark:text-zinc-300" />
               </div>
               <h3 className="text-2xl font-semibold tracking-tight dark:text-white mb-2">Natural Language Queries</h3>
               <p className="text-zinc-500 text-sm leading-relaxed">Ask questions in plain English via the web interface or directly through WhatsApp integration.</p>
@@ -315,7 +315,7 @@ export default function BuilderbotPage() {
             {/* Medium Bento Card 2 */}
             <motion.div variants={fadeUp} className="md:col-span-4 bg-white/70 dark:bg-[#111]/70 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-[2.5rem] p-10 flex flex-col justify-center">
               <div className="w-12 h-12 bg-lime/20 rounded-2xl flex items-center justify-center mb-6">
-                <Box className="w-6 h-6 text-emerald-600 dark:text-lime" />
+                <Box className="w-6 h-6 text-zinc-900 dark:text-zinc-300" />
               </div>
               <h3 className="text-2xl font-semibold tracking-tight dark:text-white mb-2">3D Model Support</h3>
               <p className="text-zinc-500 text-sm leading-relaxed">The only legal AI tool capable of reading and cross-referencing 3D models alongside contracts.</p>
@@ -326,7 +326,7 @@ export default function BuilderbotPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/50 to-transparent"></div>
               <div className="relative z-10 space-y-4 max-w-xl">
                 <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6">
-                  <ShieldCheck className="w-6 h-6 text-emerald-600 dark:text-lime" />
+                  <ShieldCheck className="w-6 h-6 text-zinc-900 dark:text-zinc-300" />
                 </div>
                 <h3 className="text-3xl font-semibold tracking-tight">Clause-Referenced Answers</h3>
                 <p className="text-lg text-zinc-400">BuilderBot analyzes everything together and returns exact clause numbers, how they apply, project evidence, related clauses, and recommended next steps.</p>
@@ -364,7 +364,7 @@ export default function BuilderbotPage() {
 
             <div className="flex flex-col items-center gap-2">
               <div className="px-8 py-4 bg-lime text-black rounded-[2rem] font-bold shadow-[0_0_40px_rgba(var(--color-lime-rgb,0.3)] whitespace-nowrap">BuilderBot.ai</div>
-              <span className="text-xs text-emerald-600 dark:text-lime uppercase tracking-widest font-bold">Engine</span>
+              <span className="text-xs text-zinc-600 dark:text-zinc-400 uppercase tracking-widest font-bold">Engine</span>
             </div>
             <ArrowRight className="w-6 h-6 text-zinc-655 rotate-90 md:rotate-0 mb-6 md:mb-0" />
 
@@ -439,7 +439,7 @@ export default function BuilderbotPage() {
             {/* Pricing */}
             <motion.div variants={fadeUp} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2.5rem] p-10 flex flex-col">
               <div className="w-12 h-12 bg-lime/20 rounded-2xl flex items-center justify-center mb-6">
-                <Database className="w-6 h-6 text-emerald-600 dark:text-lime" />
+                <Database className="w-6 h-6 text-zinc-900 dark:text-zinc-300" />
               </div>
               <h3 className="text-2xl font-semibold tracking-tight dark:text-white mb-2">Pricing</h3>
               <div className="text-4xl font-bold text-zinc-900 dark:text-white mb-2">$20<span className="text-lg text-zinc-550 font-medium">/month</span></div>
@@ -468,7 +468,7 @@ export default function BuilderbotPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <Zap className="w-6 h-6 text-zinc-400 shrink-0" />
+                  <Clock className="w-6 h-6 text-zinc-400 shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-zinc-900 dark:text-white">Implementation</p>
                     <p className="text-sm text-zinc-500">1 day (upload and start asking)</p>
@@ -483,24 +483,24 @@ export default function BuilderbotPage() {
               <div className="space-y-4 flex-1">
                 <Link href="/learnmore/measureonair" className="group flex items-center justify-between p-4 rounded-2xl bg-zinc-50 dark:bg-white/5 hover:bg-primary/10 transition-colors">
                   <div>
-                    <p className="font-semibold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors">MeasureonAir</p>
+                    <p className="font-semibold text-zinc-900 dark:text-white group-hover:text-zinc-955 dark:group-hover:text-white transition-colors">MeasureonAir</p>
                     <p className="text-xs text-zinc-500">Evidence for claims</p>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-zinc-400 group-hover:text-emerald-600 dark:group-hover:text-lime group-hover:translate-x-1 transition-all" />
+                  <ArrowRight className="w-5 h-5 text-zinc-400 group-hover:text-zinc-955 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
                 </Link>
                 <Link href="/learnmore/buildmonitor" className="group flex items-center justify-between p-4 rounded-2xl bg-zinc-50 dark:bg-white/5 hover:bg-primary/10 transition-colors">
                   <div>
-                    <p className="font-semibold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors">BuildMonitor App</p>
+                    <p className="font-semibold text-zinc-900 dark:text-white group-hover:text-zinc-955 dark:group-hover:text-white transition-colors">BuildMonitor App</p>
                     <p className="text-xs text-zinc-500">Site records</p>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-zinc-400 group-hover:text-emerald-600 dark:group-hover:text-lime group-hover:translate-x-1 transition-all" />
+                  <ArrowRight className="w-5 h-5 text-zinc-400 group-hover:text-zinc-955 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
                 </Link>
                 <Link href="/learnmore/tender-evaluations" className="group flex items-center justify-between p-4 rounded-2xl bg-zinc-50 dark:bg-white/5 hover:bg-primary/10 transition-colors">
                   <div>
-                    <p className="font-semibold text-zinc-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-lime transition-colors">Tender Evaluations</p>
+                    <p className="font-semibold text-zinc-900 dark:text-white group-hover:text-zinc-955 dark:group-hover:text-white transition-colors">Tender Evaluations</p>
                     <p className="text-xs text-zinc-500">Contract baseline</p>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-zinc-400 group-hover:text-emerald-600 dark:group-hover:text-lime group-hover:translate-x-1 transition-all" />
+                  <ArrowRight className="w-5 h-5 text-zinc-400 group-hover:text-zinc-955 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
                 </Link>
               </div>
             </motion.div>
@@ -552,7 +552,7 @@ export default function BuilderbotPage() {
                   className="w-full flex items-center justify-between py-6 text-left font-bold text-xl tracking-tight text-zinc-900 dark:text-white cursor-pointer hover:opacity-75 transition-opacity"
                 >
                   <span>{faq.q}</span>
-                  <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === idx ? "bg-lime/20 dark:bg-zinc-800 text-emerald-600 dark:text-lime" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"}`}>
+                  <div className={`w-8 h-8 rounded-full shrink-0 ml-4 flex items-center justify-center transition-colors duration-300 ${activeFaq === idx ? "bg-zinc-900 dark:bg-white text-white dark:text-black" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"}`}>
                     {activeFaq === idx ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                   </div>
                 </button>
@@ -607,7 +607,7 @@ export default function BuilderbotPage() {
               className="w-full sm:w-auto rounded-2xl px-8 py-6 font-bold border border-zinc-300 dark:border-zinc-700 text-zinc-955 dark:text-zinc-300 bg-transparent hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
             >
               <a href="https://builderbot.ai" target="_blank" rel="noopener noreferrer">
-                Visit BuilderBot.ai directly <ExternalLink className="w-4 h-4 ml-2 text-emerald-600 dark:text-lime" />
+                Visit BuilderBot.ai directly <ExternalLink className="w-4 h-4 ml-2 text-zinc-900 dark:text-zinc-300" />
               </a>
             </Button>
           </div>
@@ -640,7 +640,7 @@ export default function BuilderbotPage() {
               </button>
 
               <div className="space-y-2">
-                <span className="text-xs font-bold text-emerald-600 dark:text-lime uppercase tracking-widest">
+                <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-widest">
                   Video Demo
                 </span>
                 <h3 className="text-3xl font-semibold tracking-tight text-white">

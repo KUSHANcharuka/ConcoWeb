@@ -475,7 +475,7 @@ export default function PlanningLawChatbotPage() {
                         transition={{ duration: 0.3 }}
                         className="space-y-5"
                       >
-                        <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                        <div className="text-xs font-bold text-zinc-650 dark:text-zinc-400 uppercase tracking-wider">
                           Planning Law Chatbot
                         </div>
                         <ul className="space-y-4">
@@ -606,7 +606,7 @@ export default function PlanningLawChatbotPage() {
                 }}
                 className="absolute inset-x-0 flex flex-col space-y-4 max-w-md"
               >
-                <span className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-500">
+                <span className="text-xs font-black uppercase tracking-widest text-zinc-550 dark:text-zinc-400">
                   Step 01 — Plot Data Entry
                 </span>
                 <h3 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-white">
@@ -626,7 +626,7 @@ export default function PlanningLawChatbotPage() {
                 }}
                 className="absolute inset-x-0 flex flex-col space-y-4 max-w-md"
               >
-                <span className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-500">
+                <span className="text-xs font-black uppercase tracking-widest text-zinc-550 dark:text-zinc-400">
                   Step 02 — AI Processing
                 </span>
                 <h3 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-white">
@@ -646,7 +646,7 @@ export default function PlanningLawChatbotPage() {
                 }}
                 className="absolute inset-x-0 flex flex-col space-y-4 max-w-md"
               >
-                <span className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-500">
+                <span className="text-xs font-black uppercase tracking-widest text-zinc-550 dark:text-zinc-400">
                   Step 03 — Envelope Summary
                 </span>
                 <h3 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-white">
@@ -666,7 +666,7 @@ export default function PlanningLawChatbotPage() {
                 }}
                 className="absolute inset-x-0 flex flex-col space-y-4 max-w-md"
               >
-                <span className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-500">
+                <span className="text-xs font-black uppercase tracking-widest text-zinc-550 dark:text-zinc-400">
                   Step 04 — Feasibility Output
                 </span>
                 <h3 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-900 dark:text-white">
