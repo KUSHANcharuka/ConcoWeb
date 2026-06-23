@@ -149,33 +149,13 @@ export default function BuilderbotPage() {
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: appleEase, delay: 0.5 }}
-            className="mt-20 mx-auto max-w-3xl bg-white/70 dark:bg-[#111] border border-zinc-200 dark:border-zinc-800 rounded-[2rem] shadow-2xl relative overflow-hidden"
+            className="mt-20 mx-auto max-w-3xl rounded-[2rem] overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-2xl bg-white dark:bg-[#111]"
           >
-            {/* Mock Header */}
-            <div className="flex items-center gap-4 p-4 border-b border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-white/5 backdrop-blur-md">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-lime"></div>
-              <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
-              <span className="text-xs font-semibold text-zinc-550 ml-4">Project: UAE Tower 4 (FIDIC Yellow Book)</span>
-            </div>
-            {/* Mock Chat UI */}
-            <div className="w-full p-6 sm:p-10 flex flex-col gap-6 relative z-10 text-left">
-              <div className="self-end bg-lime/20 border border-lime/30 text-zinc-900 dark:text-white rounded-2xl rounded-tr-sm p-4 max-w-md shadow-sm">
-                <p className="text-sm font-semibold">Can we claim an extension of time based on the lack of site access on 15 March?</p>
-              </div>
-
-              <div className="self-start bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-2xl rounded-tl-sm p-5 max-w-lg shadow-sm">
-                <div className="flex items-center gap-2 mb-3">
-                  <BrainCircuit className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
-                  <span className="font-bold text-sm">BuilderBot.ai</span>
-                </div>
-                <p className="text-sm leading-relaxed mb-4">Yes, based on the uploaded Site Diary entry for 15 March and the project timeline, you can submit a claim for an Extension of Time (EOT).</p>
-                <div className="bg-zinc-100 dark:bg-black rounded-xl p-3 border border-zinc-200 dark:border-zinc-800">
-                  <span className="text-xs font-bold text-zinc-950 dark:text-white mb-1 block">Clause Reference: FIDIC Sub-Clause 8.4</span>
-                  <p className="text-xs text-zinc-500 leading-relaxed italic">"The Contractor shall be entitled... to an extension of the Time for Completion if and to the extent that completion... is or will be delayed by... Unforeseeable shortages in the availability of personnel or Goods..."</p>
-                </div>
-              </div>
-            </div>
+            <img
+              src="/images/BuilderBot.AIInBrowser.png"
+              alt="BuilderBot.ai in Browser"
+              className="w-full h-auto object-cover"
+            />
           </motion.div>
 
           {/* Before / After Toggle */}
@@ -444,9 +424,11 @@ export default function BuilderbotPage() {
               <h3 className="text-2xl font-semibold tracking-tight dark:text-white mb-2">Pricing</h3>
               <div className="text-4xl font-bold text-zinc-900 dark:text-white mb-2">$20<span className="text-lg text-zinc-550 font-medium">/month</span></div>
               <p className="text-sm text-zinc-500 mb-6 flex-1">Single user (includes 10 projects). Enterprise plan available at $250/month for unlimited projects and users.</p>
-              <div className="bg-zinc-100 dark:bg-white/5 rounded-2xl p-4 text-sm font-medium text-zinc-650 dark:text-zinc-400">
-                Subscription model
-              </div>
+              <Button asChild className="w-full rounded-2xl py-6 font-bold shadow-lg bg-lime text-black hover:bg-lime/90 cursor-pointer mt-auto border-0">
+                <a href="/pricing">
+                  Buy Products →
+                </a>
+              </Button>
             </motion.div>
 
             {/* Quick Facts */}

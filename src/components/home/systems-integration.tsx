@@ -1,15 +1,14 @@
 "use client"
 
-import { useRef, Suspense } from "react"
+import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
+import Link from "next/link"
 import {
   RefreshCw,
   LayoutGrid,
   Sparkles,
   Users,
 } from "lucide-react"
-import { Canvas } from "@react-three/fiber"
-import { RotatingDotGlobe } from "./global-presence"
 
 const features = [
   {
@@ -97,18 +96,17 @@ export function SystemsIntegration() {
             className="w-full flex items-center justify-center"
           >
             <div className="flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-300 bg-[#ECEBEA] p-6 min-h-[420px] h-full w-full max-w-[480px] mx-auto">
-              {/* Globe Canvas Container */}
-              <div className="relative w-full h-[280px] overflow-hidden rounded-lg bg-white border border-zinc-200 shadow-xs flex items-center justify-center">
-                <div className="absolute inset-0">
-                  <Canvas camera={{ position: [0, 0, 2.6], fov: 44 }}>
-                    <Suspense fallback={null}>
-                      <ambientLight intensity={1} />
-                      <pointLight position={[4, 3, 5]} intensity={0.55} />
-                      <RotatingDotGlobe />
-                    </Suspense>
-                  </Canvas>
-                </div>
-              </div>
+              {/* Globe Video Container linked to customers page */}
+              <Link href="/customers" className="relative w-full h-[280px] overflow-hidden rounded-lg bg-white border border-zinc-200 shadow-xs flex items-center justify-center cursor-pointer group/globe">
+                <video
+                  src="/videos/loop_video_for_globe_show_belo.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover/globe:scale-[1.03]"
+                />
+              </Link>
 
               {/* Description Text under the globe */}
               <div className="mt-6 flex flex-col justify-between flex-grow text-left">
@@ -119,17 +117,6 @@ export function SystemsIntegration() {
                   <p className="mt-3 text-sm text-zinc-500 leading-relaxed">
                     Issue cards in 30+ currencies and reimburse employees in local currencies, including pounds, euros, yen, and pesos.
                   </p>
-                </div>
-                <div className="mt-6">
-                  <a
-                    href="/global-spend"
-                    className="inline-flex items-center gap-1.5 font-semibold text-zinc-900 hover:opacity-80 transition-opacity group underline underline-offset-4 decoration-zinc-300 hover:decoration-zinc-900 text-sm"
-                  >
-                    Global Spend Management
-                    <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">
-                      →
-                    </span>
-                  </a>
                 </div>
               </div>
             </div>

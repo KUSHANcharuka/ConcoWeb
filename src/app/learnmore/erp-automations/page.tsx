@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Link from "next/link";
 import { Navbar } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer";
@@ -16,6 +16,7 @@ import {
   Cpu,
   ExternalLink,
   ChevronDown,
+  ChevronRight,
   Calendar,
   Lock,
   ShieldCheck,
@@ -53,6 +54,8 @@ export default function ERPAutomationsPage() {
   const [isSubmitShake, setIsSubmitShake] = useState(false);
 
   const videoSectionRef = useRef<HTMLDivElement>(null);
+  const pricingRef = useRef<HTMLElement>(null);
+  const isPricingInView = useInView(pricingRef, { once: true });
 
   // Auto-toggle Before/After every 3.5 seconds
   useEffect(() => {
@@ -159,17 +162,15 @@ export default function ERPAutomationsPage() {
                     <div className="relative flex bg-zinc-100 dark:bg-zinc-950 p-1 rounded-xl w-52 justify-between border border-zinc-200/50 dark:border-zinc-850/50">
                       <button
                         onClick={() => handleTabClick("before")}
-                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                          activeTab === "before" ? "text-zinc-900 dark:text-white" : "text-zinc-400"
-                        }`}
+                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "before" ? "text-zinc-900 dark:text-white" : "text-zinc-400"
+                          }`}
                       >
                         Manual
                       </button>
                       <button
                         onClick={() => handleTabClick("after")}
-                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                          activeTab === "after" ? "text-zinc-900 dark:text-white" : "text-zinc-400"
-                        }`}
+                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "after" ? "text-zinc-900 dark:text-white" : "text-zinc-400"
+                          }`}
                       >
                         Automated
                       </button>
@@ -418,7 +419,7 @@ export default function ERPAutomationsPage() {
               { icon: Mail, num: "01", title: "Email Received", desc: "Manager sends email instructions for ordering materials, starting tasks, or assigning vendors." },
               { icon: Cpu, num: "02", title: "AI Parsing", desc: "ML model extracts vendor, quantities, cost centers, and job codes from the email automatically." },
               { icon: Database, num: "03", title: "ERP Job Card Created", desc: "Populated job card is created in SAP, Oracle, NetSuite, or your ERP — zero typing required." },
-              { icon: TrendingUp, num: "04", title: "Finance Updated", desc: "Site mobile data flows directly to finance. Ledger reflects reality in real time.", highlight: true },
+              { icon: TrendingUp, num: "04", title: "Finance Updated", desc: "Site mobile data flows directly to finance. Ledger reflects reality in real time." },
             ].map(({ icon: Icon, num, title, desc, highlight }, i) => (
               <motion.div
                 key={num}
@@ -426,18 +427,16 @@ export default function ERPAutomationsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`relative rounded-3xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group ${
-                  highlight
-                    ? "bg-lime border border-lime"
-                    : "bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
-                }`}
+                className={`relative rounded-3xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group ${highlight
+                  ? "bg-lime border border-lime"
+                  : "bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
+                  }`}
               >
                 <div className="flex items-start justify-between">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${
-                    highlight
-                      ? "bg-zinc-950/10 border border-zinc-950/20 group-hover:bg-zinc-950/20"
-                      : "bg-lime/10 border border-lime/20 group-hover:bg-lime/20"
-                  }`}>
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${highlight
+                    ? "bg-zinc-950/10 border border-zinc-950/20 group-hover:bg-zinc-950/20"
+                    : "bg-lime/10 border border-lime/20 group-hover:bg-lime/20"
+                    }`}>
                     <Icon className={`w-7 h-7 ${highlight ? "text-zinc-950" : "text-zinc-900 dark:text-white"}`} />
                   </div>
                   <span className={`text-5xl font-black select-none ${highlight ? "text-zinc-950/20" : "text-zinc-100 dark:text-zinc-800"}`}>{num}</span>
@@ -520,7 +519,7 @@ export default function ERPAutomationsPage() {
               <Button
                 asChild
                 size="lg"
-                className="rounded-xl px-6 py-5 font-bold shadow-md bg-zinc-950 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-all hover:-translate-y-0.5 cursor-pointer"
+                className="rounded-xl px-6 py-5 font-bold shadow-md bg-lime text-black hover:bg-lime/90 border-0 transition-all hover:-translate-y-0.5 cursor-pointer"
               >
                 <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
                   Book a Demo →
@@ -541,14 +540,8 @@ export default function ERPAutomationsPage() {
                 </p>
               </div>
               <div className="mt-10 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900 rounded-2xl p-4 shadow-sm space-y-3">
-                <p className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1.5">Input Email</p>
-                <div className="bg-white dark:bg-zinc-900/60 rounded-xl p-3 border border-zinc-100 dark:border-zinc-800 text-[10px] font-mono text-zinc-650 dark:text-zinc-350 leading-relaxed">
-                  &quot;Order 50m³ concrete, vendor Holcim, Cost Centre CC-441&quot;
-                </div>
-                <div className="flex items-center gap-2">
-                  <ArrowRight className="w-3.5 h-3.5 text-zinc-900 dark:text-zinc-300" />
-                  <span className="text-[10px] font-bold text-zinc-900 dark:text-zinc-100">Job Card JC-4821 created <span className="text-emerald-500">✓</span></span>
-                </div>
+
+
               </div>
             </div>
 
@@ -564,7 +557,7 @@ export default function ERPAutomationsPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-650 dark:text-zinc-400">Sync Webhooks Active</span>
+
                 </div>
               </div>
 
@@ -591,10 +584,7 @@ export default function ERPAutomationsPage() {
                   Custom ML configurations trained on your legacy email records to auto-populate codes. Improves continuously over time.
                 </p>
               </div>
-              <div className="mt-8 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-zinc-900 dark:text-zinc-300" />
-                <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">Trained on your data</span>
-              </div>
+
             </div>
 
             {/* Legacy connectors card */}
@@ -606,36 +596,12 @@ export default function ERPAutomationsPage() {
                   Pre-built connectors to link legacy financial modules without rebuilding IT stacks.
                 </p>
               </div>
-              <div className="mt-8 flex flex-wrap gap-1.5">
-                {["SAP", "Oracle", "NetSuite", "Sage"].map((tag) => (
-                  <span key={tag} className="px-2 py-0.5 text-[9px] font-bold bg-zinc-100 dark:bg-zinc-800 rounded border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400">{tag}</span>
-                ))}
-              </div>
+
             </div>
 
           </div>
 
-          {/* Discovery callout */}
-          <div className="p-8 bg-white dark:bg-zinc-950/40 rounded-3xl flex flex-col md:flex-row items-start md:items-center gap-6 shadow-sm border border-zinc-200 dark:border-zinc-800">
-            <div className="w-12 h-12 bg-lime/10 border border-lime/20 rounded-2xl flex items-center justify-center shrink-0">
-              <Sparkles className="w-6 h-6 text-zinc-900 dark:text-zinc-300" />
-            </div>
-            <div className="space-y-1 flex-1">
-              <h4 className="font-bold text-lg text-zinc-900 dark:text-white">Discovery &amp; Model Training</h4>
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">
-                We work with your team for 2–3 weeks to understand your ERP structure, email conventions, and decision workflows. The model learns from your data and continuously improves.
-              </p>
-            </div>
-            <Button
-              asChild
-              size="sm"
-              className="rounded-xl px-5 py-4 font-bold bg-lime text-black hover:bg-lime/90 border-0 shrink-0 cursor-pointer"
-            >
-              <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
-                Start Discovery →
-              </a>
-            </Button>
-          </div>
+
         </div>
       </section>
 
@@ -658,11 +624,10 @@ export default function ERPAutomationsPage() {
                 { label: "Dashboards", icon: Sparkles }
               ].map((step, i) => (
                 <div key={i} className="flex flex-col items-center text-center space-y-2.5 w-full max-w-[120px] relative">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md relative z-10 transition-colors ${
-                    step.highlight
-                      ? "bg-lime text-black"
-                      : "bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200"
-                  }`}>
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md relative z-10 transition-colors ${step.highlight
+                    ? "bg-lime text-black"
+                    : "bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200"
+                    }`}>
                     <step.icon className="w-5 h-5" />
                   </div>
                   <span className="text-[11px] font-bold tracking-tight text-zinc-900 dark:text-zinc-300 leading-tight">
@@ -674,6 +639,105 @@ export default function ERPAutomationsPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section ref={pricingRef} className="py-32 px-6 bg-[#FAFAF8]">
+        <div className="space-y-16 max-w-4xl mx-auto">
+          <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest block mb-2">Deployment</span>
+              <h2 className="text-4xl sm:text-5xl font-bold text-zinc-950">Pricing & Availability</h2>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4"
+            >
+              <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-all duration-300">
+                <span className="text-xs text-zinc-400 dark:text-zinc-550 font-bold uppercase tracking-widest font-mono">Enterprise Subscription</span>
+                <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">USD 800<span className="text-sm font-normal text-zinc-400 font-sans">/month</span></p>
+                <p className="text-xs text-zinc-500 leading-normal">Billed monthly. Covers core ML email-to-ERP parsing, real-time sync, and standard system support.</p>
+              </div>
+              <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-all duration-300">
+                <span className="text-xs text-zinc-400 dark:text-zinc-550 font-bold uppercase tracking-widest font-mono">Enterprise Add-on</span>
+                <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">Custom Plan</p>
+                <p className="text-xs text-zinc-500 leading-normal">One-off customized configuration and API mappings for proprietary ERP workflows (SAP, Oracle, NetSuite).</p>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800">
+            {/* Quick Facts Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8 flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
+                <div className="space-y-5 pt-4">
+                  {[
+                    { label: "Stage", value: "Operations" },
+                    { label: "Best For", value: "Contractors, Developers" },
+                    { label: "Calibration", value: "2 weeks" },
+                    { label: "Pricing", value: "USD 800/month flat-rate" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2">
+                      <span className="text-zinc-500 font-semibold">{item.label}</span>
+                      <span className="font-bold text-zinc-900 dark:text-zinc-100 text-right">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <Button
+                asChild
+                className="w-full rounded-2xl py-7 font-bold shadow-lg bg-lime text-black hover:bg-lime/90 cursor-pointer border-0 mt-8"
+              >
+                <a href="/pricing">
+                  Buy Products →
+                </a>
+              </Button>
+            </motion.div>
+
+            {/* Related Products Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm flex flex-col justify-between"
+            >
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6">Related Products</h4>
+                <ul className="space-y-4 text-sm">
+                  {[
+                    { href: "/learnmore/auto-conversion-2d-to-3d", label: "Auto Conversion 2D to 3D", tag: "Next step" },
+                    { href: "/learnmore/revit-to-boq", label: "Revit to BOQ", tag: "Workflow" },
+                    { href: "/learnmore/planning-law-chatbot", label: "Planning Law Chatbot", tag: "Pre-design" },
+                  ].map((item, i) => (
+                    <li key={i}>
+                      <Link href={item.href} className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>{item.label}</span>
+                        <span className="text-xs text-zinc-400 font-medium">{item.tag}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800">
+                <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                  View full suite <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -723,29 +787,6 @@ export default function ERPAutomationsPage() {
         </div>
       </section>
 
-      {/* ─── QUICK FACTS ─── */}
-      <section className="py-24 px-6 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-900">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="text-center space-y-3">
-            <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest block">Product Details</span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-white uppercase">Quick Facts</h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {[
-              { label: "Stage", value: "Operations" },
-              { label: "Best For", value: "Contractors & Developers" },
-              { label: "Regions", value: "Global" },
-              { label: "Time to Implement", value: "2–4 Weeks" },
-              { label: "Pricing", value: "USD 500–6,000 one-off" },
-            ].map(({ label, value }) => (
-              <div key={label} className="bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 space-y-2">
-                <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest block">{label}</span>
-                <p className="text-sm font-bold text-zinc-900 dark:text-white leading-snug">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ─── FAQ ─── */}
       <section className="py-24 px-6 bg-[#F4F2F0] dark:bg-zinc-900/30 border-b border-zinc-200 dark:border-zinc-800">
@@ -808,7 +849,7 @@ export default function ERPAutomationsPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-zinc-950 hover:bg-lime/90 cursor-pointer hover:scale-105 transition-transform"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer hover:scale-105 transition-transform"
             >
               <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
                 Book a demo →

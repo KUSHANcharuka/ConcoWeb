@@ -160,7 +160,7 @@ export default function CostPlanCalculatorPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-7 font-bold shadow-md cursor-pointer bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-transform hover:scale-105"
+              className="rounded-2xl px-8 py-7 font-bold shadow-md cursor-pointer bg-lime text-black hover:bg-lime/90 border-0 transition-transform hover:scale-105"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
@@ -177,7 +177,7 @@ export default function CostPlanCalculatorPage() {
         {/* 3D Overlapping Card Stack Slider */}
         <div className="relative w-full max-w-5xl mx-auto px-6 mt-16 z-20">
           <div className="relative w-full max-w-xl mx-auto h-[380px] flex items-center justify-center">
-            
+
             {cards.map((card, idx) => {
               const isActive = idx === activeCard;
               const isLeft = idx < activeCard;
@@ -221,9 +221,8 @@ export default function CostPlanCalculatorPage() {
                   }}
                   transition={{ type: "spring", stiffness: 350, damping: 28 }}
                   onClick={() => setActiveCard(idx)}
-                  className={`absolute w-[330px] p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-2xl shadow-zinc-200/50 dark:shadow-black/60 flex flex-col justify-between ${
-                    isActive ? "cursor-default border-zinc-300 dark:border-zinc-700" : "cursor-pointer hover:opacity-75 transition-opacity"
-                  }`}
+                  className={`absolute w-[330px] p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-2xl shadow-zinc-200/50 dark:shadow-black/60 flex flex-col justify-between ${isActive ? "cursor-default border-zinc-300 dark:border-zinc-700" : "cursor-pointer hover:opacity-75 transition-opacity"
+                    }`}
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
@@ -277,7 +276,7 @@ export default function CostPlanCalculatorPage() {
       {/* ─── REALISE YOUR IDEAS (THE BOTTLENECK LAYERED SECTION) ─── */}
       <section className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-900 py-32 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          
+
           {/* Left Column: Text & CTA */}
           <div className="lg:col-span-5 space-y-6">
             <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
@@ -292,13 +291,13 @@ export default function CostPlanCalculatorPage() {
               <p>This is the moment when speed matters most — the client is waiting for budget validation before committing to design. But the process takes 1-2 days and relies on manual Excel formulas that differ from firm to firm.</p>
               <p className="text-zinc-955 dark:text-zinc-200 font-bold">Cost Plan Calculator automates this, turning the cost planning step from a bottleneck into a two-minute output that is ready to present.</p>
             </div>
-            
+
             <div className="pt-4">
               <Button
                 onClick={scrollToVideo}
                 className="rounded-2xl px-6 py-5 font-bold shadow-md cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-zinc-900 text-white dark:bg-white dark:text-black hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-transform hover:scale-105"
               >
-                Watch Demo walktrough &rarr;
+                Watch Demo
               </Button>
             </div>
           </div>
@@ -307,7 +306,7 @@ export default function CostPlanCalculatorPage() {
           <div className="lg:col-span-7 flex items-center justify-center relative min-h-[380px] lg:min-h-[440px]">
             {/* Grid canvas background decoration */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.01)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:24px_24px] rounded-3xl" />
-            
+
             {/* Back Card: Concept PDF Blueprint */}
             <div className="absolute w-[80%] max-w-[420px] aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-xl p-4 -rotate-6 -translate-x-12 -translate-y-6 opacity-60 transition-transform duration-500 hover:rotate-0 hover:-translate-x-6 hover:opacity-90">
               <div className="flex justify-between items-center border-b border-zinc-250 dark:border-zinc-800 pb-2 mb-3 text-[10px] text-zinc-400 font-mono">
@@ -375,11 +374,9 @@ export default function CostPlanCalculatorPage() {
       {/* ─── OUR FEATURES (4-COLUMN GRID) ─── */}
       <section className="bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-900 py-32 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto space-y-16">
-          
+
           <div className="text-center space-y-4 max-w-2xl mx-auto border-b border-zinc-200 dark:border-zinc-900 pb-10">
-            <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
-              Our Features
-            </span>
+
             <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
               Fits into your workflow
             </h2>
@@ -390,7 +387,7 @@ export default function CostPlanCalculatorPage() {
 
           {/* 4 Column Features Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
+
             {/* Card 1: Concept Blueprints */}
             <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 flex flex-col justify-between min-h-[360px] relative group hover:border-zinc-350 dark:hover:border-zinc-700 hover:shadow-lg transition-all duration-300">
               <div className="space-y-4">
@@ -469,28 +466,13 @@ export default function CostPlanCalculatorPage() {
               {/* Icon visual link */}
               <div className="mt-8 bg-zinc-50 dark:bg-zinc-950/60 p-3 rounded-2xl border border-zinc-150 dark:border-zinc-850 flex items-center justify-between text-[9px] font-mono">
                 <span className="text-zinc-500">BOQ Model Feed</span>
-                <span className="text-lime font-bold uppercase">Linked</span>
+                <span className="text-emerald-500 font-bold uppercase">Linked</span>
               </div>
             </div>
 
           </div>
 
-          {/* Centered Features CTA Button */}
-          <div className="flex justify-center pt-4">
-            <Button
-              asChild
-              size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-md cursor-pointer bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-transform hover:scale-105"
-            >
-              <a
-                href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Schedule Interactive walkthrough →
-              </a>
-            </Button>
-          </div>
+
 
         </div>
       </section>
@@ -534,7 +516,7 @@ export default function CostPlanCalculatorPage() {
                 href="https://drive.google.com/drive/folders/1C8KTwemod1FyxAuZr7jefJLqbs1LCn2L?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-lime font-bold uppercase tracking-wider text-sm hover:text-lime-400 group transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 text-white hover:text-white/80 font-bold uppercase tracking-wider text-sm group transition-colors cursor-pointer"
               >
                 Open Demo Walkthrough in Google Drive
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -542,21 +524,18 @@ export default function CostPlanCalculatorPage() {
 
               {/* Autoplay Active Indicator */}
               <div className="flex items-center gap-2 bg-zinc-900/60 border border-zinc-800 rounded-full py-1.5 px-3 w-fit text-[11px] text-zinc-450">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-lime"></span>
-                </span>
-                Autoplay active
+
+
               </div>
             </div>
 
             {/* Pagination numbers at the bottom */}
             <div className="flex items-center gap-4 pt-8 border-t border-zinc-900">
-              <span className="text-xs font-mono font-bold text-white">01</span>
-              <div className="w-16 h-[2px] bg-zinc-800 relative">
-                <div className="absolute top-0 left-0 h-full w-1/3 bg-lime" />
-              </div>
-              <span className="text-xs font-mono text-zinc-550">03</span>
+
+
+
+
+
             </div>
           </div>
 
@@ -608,136 +587,79 @@ export default function CostPlanCalculatorPage() {
         </div>
       </section>
 
-      {/* ─── SCREENSHOTS GALLERY & DETAILS (PRICING & FAQ) ─── */}
+      {/* ─── PRICING & DETAILS (PRICING & FAQ) ─── */}
       <section className="py-24 px-6 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900">
         <div className="max-w-6xl mx-auto space-y-16">
-          
+
           <div className="text-center space-y-4 max-w-2xl mx-auto">
-            <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">
-              Pricing &amp; FAQs
-            </span>
+
             <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
-              Screenshots Gallery &amp; Details
+              Pricing &amp; Availability
             </h2>
             <p className="text-zinc-500 dark:text-zinc-400 text-sm sm:text-base font-medium">
               Flexible setups, related estimating tools, and deployment FAQs tailored to your company scale.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
-            {/* Gallery-style pricing cards */}
-            <div className="lg:col-span-8 space-y-12">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                
-                {/* Plan 1 */}
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-4 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group relative">
-                  <div className="space-y-1">
-                    <span className="text-[9px] text-zinc-400 font-extrabold uppercase tracking-widest block">Standard Tier</span>
-                    <h4 className="font-extrabold text-sm text-zinc-900 dark:text-white">One-Off Setup</h4>
-                  </div>
-                  <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">$3,500</p>
-                  <p className="text-xs text-zinc-500 leading-normal">Includes deployment, customized cost database rate setup, and dedicated training.</p>
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowUpRight className="w-4 h-4 text-zinc-900 dark:text-white" />
-                  </div>
+          {/* Gallery-style pricing cards */}
+          <div className="space-y-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+
+              {/* Plan 1 */}
+              <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-4 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group relative">
+                <div className="space-y-1">
+                  <span className="text-[9px] text-zinc-450 font-extrabold uppercase tracking-widest block">Standard Tier</span>
+                  <h4 className="font-extrabold text-sm text-zinc-900 dark:text-white">One-Off Setup</h4>
                 </div>
-
-                {/* Plan 2 */}
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-4 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group relative">
-                  <div className="space-y-1">
-                    <span className="text-[9px] text-zinc-400 font-extrabold uppercase tracking-widest block">Updates Tier</span>
-                    <h4 className="font-extrabold text-sm text-zinc-900 dark:text-white">Annual Support</h4>
-                  </div>
-                  <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">$300<span className="text-xs font-normal text-zinc-400">/yr</span></p>
-                  <p className="text-xs text-zinc-500 leading-normal">Covers quarterly cost index updates, API maintenance, and standard system support.</p>
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowUpRight className="w-4 h-4 text-zinc-900 dark:text-white" />
-                  </div>
-                </div>
-
-                {/* Plan 3 */}
-                <div className="p-6 bg-zinc-950 border border-zinc-900 rounded-3xl space-y-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group relative text-white">
-                  <div className="space-y-1">
-                    <span className="text-[9px] text-zinc-500 font-extrabold uppercase tracking-widest block">Enterprise Tier</span>
-                    <h4 className="font-extrabold text-sm text-white">Custom Setup</h4>
-                  </div>
-                  <p className="text-3xl font-black tracking-tight text-white">Enterprise</p>
-                  <p className="text-xs text-zinc-400 leading-normal">Custom licensing limits, custom ERP integrations, and custom regional models.</p>
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowUpRight className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Related Products */}
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="h-px flex-1 bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-800" />
-                  <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Related Estimating Modules</span>
-                  <div className="h-px flex-1 bg-gradient-to-l from-zinc-200 to-transparent dark:from-zinc-800" />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[
-                    {
-                      href: "/learnmore/planning-law-chatbot",
-                      title: "Planning Law",
-                      desc: "Instant planning regulations at your fingertips. Parallel stage product.",
-                      tag: "Parallel",
-                    },
-                    {
-                      href: "/learnmore/revit-to-boq",
-                      title: "Revit to BOQ",
-                      desc: "Automated BOQ generation from Revit models with AI rate prediction.",
-                      tag: "Next Stage",
-                    },
-                    {
-                      href: "/learnmore/measureonair",
-                      title: "MeasureonAir",
-                      desc: "Site measurement to payment certificate, fully automated.",
-                      tag: "Construction",
-                    },
-                  ].map((rel, i) => (
-                    <motion.div key={i} whileHover={{ y: -4, scale: 1.01 }} className="h-full">
-                      <Link
-                        href={rel.href}
-                        className="group flex flex-col justify-between p-5 h-full bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
-                      >
-                        <div className="space-y-2">
-                          <span className="px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[8px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                            {rel.tag}
-                          </span>
-                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors pt-1">
-                            {rel.title}
-                          </h4>
-                          <p className="text-xs text-zinc-500 leading-relaxed">{rel.desc}</p>
-                        </div>
-                        <div className="flex items-center gap-1 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <span className="text-[10px] font-semibold text-zinc-900 dark:text-zinc-300">Explore</span>
-                          <ChevronRight className="w-3 h-3 text-zinc-900 dark:text-zinc-300 transition-transform group-hover:translate-x-0.5" />
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))}
+                <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">$3,500</p>
+                <p className="text-xs text-zinc-550 leading-normal">Includes deployment, customized cost database rate setup, and dedicated training.</p>
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowUpRight className="w-4 h-4 text-zinc-900 dark:text-white" />
                 </div>
               </div>
+
+              {/* Plan 2 */}
+              <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-4 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group relative">
+                <div className="space-y-1">
+                  <span className="text-[9px] text-zinc-450 font-extrabold uppercase tracking-widest block">Updates Tier</span>
+                  <h4 className="font-extrabold text-sm text-zinc-900 dark:text-white">Annual Support</h4>
+                </div>
+                <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">$300<span className="text-xs font-normal text-zinc-400">/yr</span></p>
+                <p className="text-xs text-zinc-550 leading-normal">Covers quarterly cost index updates, API maintenance, and standard system support.</p>
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowUpRight className="w-4 h-4 text-zinc-900 dark:text-white" />
+                </div>
+              </div>
+
+              {/* Plan 3 */}
+              <div className="p-6 bg-zinc-950 border border-zinc-900 rounded-3xl space-y-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group relative text-white">
+                <div className="space-y-1">
+                  <span className="text-[9px] text-zinc-500 font-extrabold uppercase tracking-widest block">Enterprise Tier</span>
+                  <h4 className="font-extrabold text-sm text-white">Custom Setup</h4>
+                </div>
+                <p className="text-3xl font-black tracking-tight text-white">Enterprise</p>
+                <p className="text-xs text-zinc-400 leading-normal">Custom licensing limits, custom ERP integrations, and custom regional models.</p>
+                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowUpRight className="w-4 h-4 text-white" />
+                </div>
+              </div>
+
             </div>
+          </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800 text-left">
             {/* Quick Facts Widget */}
-            <div className="lg:col-span-4 sticky top-28 space-y-6">
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2rem] p-8 shadow-sm space-y-6 group hover:border-zinc-350 dark:hover:border-zinc-800 transition-colors">
-                
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2rem] p-8 shadow-sm space-y-6 flex flex-col justify-between">
+              <div>
                 {/* Header Facts */}
                 <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-4">
                   <h3 className="font-extrabold text-base uppercase tracking-tight text-zinc-900 dark:text-white">Quick Facts</h3>
                   <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500">
-                    <Sparkles className="w-4 h-4" />
+
                   </div>
                 </div>
 
-                <div className="space-y-4 text-xs">
+                <div className="space-y-4 text-xs pt-4">
                   {[
                     { label: "Stage", value: "Pre-design" },
                     { label: "Best For", value: "QS Firms, Cost Consultancies, Developers" },
@@ -746,27 +668,66 @@ export default function CostPlanCalculatorPage() {
                     { label: "Pricing Model", value: "$3,500 + $300/yr" },
                   ].map((fact, i) => (
                     <div key={i} className="flex justify-between items-start border-b border-zinc-50 dark:border-zinc-850/50 pb-2.5 gap-4">
-                      <span className="text-zinc-500 font-semibold shrink-0">{fact.label}</span>
+                      <span className="text-zinc-505 font-semibold shrink-0">{fact.label}</span>
                       <span className="font-bold text-zinc-900 dark:text-zinc-200 text-right">{fact.value}</span>
                     </div>
                   ))}
                 </div>
-
-                <Button
-                  asChild
-                  className="w-full rounded-2xl py-6 font-bold shadow-md bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-transform hover:scale-[1.02] cursor-pointer"
-                >
-                  <a
-                    href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Schedule Demo &rarr;
-                  </a>
-                </Button>
               </div>
+
+              <Button
+                asChild
+                className="w-full rounded-2xl py-6 font-bold shadow-md bg-lime text-black hover:bg-lime/90 border-0 mt-8 cursor-pointer"
+              >
+                <a
+                  href="/pricing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Buy Products <ArrowUpRight />
+                </a>
+              </Button>
             </div>
 
+            {/* Related Estimating Modules */}
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2rem] p-8 shadow-sm flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-4 mb-6">
+                  <h3 className="font-extrabold text-base uppercase tracking-tight text-zinc-900 dark:text-white">Related Products</h3>
+                  <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-505">
+
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  {[
+                    { href: "/learnmore/planning-law-chatbot", label: "Planning Law Chatbot", tag: "Parallel" },
+                    { href: "/learnmore/revit-to-boq", label: "Revit to BOQ", tag: "Next Stage" },
+                    { href: "/learnmore/measureonair", label: "MeasureonAir", tag: "Construction" },
+                  ].map((item, i) => (
+                    <Link
+                      key={i}
+                      href={item.href}
+                      className="flex justify-between items-center p-4 rounded-xl bg-[#FAFAF8] dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 hover:border-lime/40 dark:hover:border-lime/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 group"
+                    >
+                      <div className="text-left">
+                        <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-primary transition-colors block">{item.label}</span>
+                      </div>
+                      <span className="text-xs text-zinc-400 font-medium shrink-0">{item.tag}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-zinc-100 dark:border-zinc-800 text-center">
+                <Link
+                  href="/learnmore"
+                  className="text-xs font-bold text-primary hover:underline flex items-center justify-center gap-1"
+                >
+                  View full suite <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -882,7 +843,7 @@ export default function CostPlanCalculatorPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-md border-0 bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-100 cursor-pointer"
+              className="rounded-2xl px-8 py-6 font-bold shadow-md border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"

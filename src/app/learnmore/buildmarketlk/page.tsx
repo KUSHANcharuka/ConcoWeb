@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { Navbar } from "@/components/navigation/navbar";
@@ -386,12 +386,12 @@ export default function BuildmarketlkPage() {
         </div>
       </section>
 
-      {/* Two-Column Core Layout (Main Content + Sticky Sidebar) */}
-      <section className="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-200 dark:border-zinc-900 bg-[#FAFAF8] dark:bg-zinc-950">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+      {/* Full-Page Width Core Layout */}
+      <section className="py-24 px-6 max-w-4xl mx-auto border-t border-zinc-200 dark:border-zinc-900 bg-[#FAFAF8] dark:bg-zinc-950">
+        <div className="space-y-32">
           
-          {/* Left Column - Main Details */}
-          <div className="lg:col-span-8 space-y-32">
+          {/* Main Details */}
+          <div className="space-y-32">
             
             {/* Problem Section */}
             <div id="problem" className="space-y-6">
@@ -735,68 +735,70 @@ export default function BuildmarketlkPage() {
 
           </div>
 
-          {/* Right Column - Sticky Sidebar */}
-          <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-6 text-left">
+          {/* Bottom Grid for Sidebar Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800">
             
             {/* Sidebar Quick Facts Card */}
-            <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-8 space-y-8 shadow-lg relative overflow-hidden">
-              <div className="space-y-1">
-                <span className="text-[10px] font-extrabold uppercase bg-lime/25 border border-lime/30 text-zinc-800 dark:text-zinc-200 px-2.5 py-0.5 rounded-full inline-block tracking-wider">
-                  Product Facts
-                </span>
-                <h3 className="text-xl font-bold text-zinc-950 dark:text-white pt-2">BuildMarketlk.com</h3>
-              </div>
-
-              {/* Facts List */}
-              <div className="space-y-4 border-t border-zinc-200 dark:border-zinc-900 pt-6">
-                <div className="flex gap-4">
-                  <Store className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-xs text-zinc-450 dark:text-zinc-500 font-bold block uppercase tracking-wider">Stage</span>
-                    <span className="text-sm font-semibold text-zinc-900 dark:text-white">Operations / Marketplace</span>
-                  </div>
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-8 space-y-8 shadow-lg relative overflow-hidden flex flex-col justify-between">
+              <div>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-extrabold uppercase bg-lime/25 border border-lime/30 text-zinc-800 dark:text-zinc-200 px-2.5 py-0.5 rounded-full inline-block tracking-wider">
+                    Product Facts
+                  </span>
+                  <h3 className="text-xl font-bold text-zinc-950 dark:text-white pt-2">BuildMarketlk.com</h3>
                 </div>
 
-                <div className="flex gap-4">
-                  <Globe className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-xs text-zinc-455 dark:text-zinc-500 font-bold block uppercase tracking-wider">Regions</span>
-                    <span className="text-sm font-semibold text-zinc-900 dark:text-white">Sri Lanka (primary), replicable to other countries</span>
+                {/* Facts List */}
+                <div className="space-y-4 border-t border-zinc-200 dark:border-zinc-900 pt-6">
+                  <div className="flex gap-4">
+                    <Store className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-xs text-zinc-450 dark:text-zinc-500 font-bold block uppercase tracking-wider">Stage</span>
+                      <span className="text-sm font-semibold text-zinc-900 dark:text-white">Operations / Marketplace</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex gap-4">
-                  <Clock className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-xs text-zinc-455 dark:text-zinc-500 font-bold block uppercase tracking-wider">Time to Onboard</span>
-                    <span className="text-sm font-semibold text-zinc-900 dark:text-white">1–2 weeks onboarding</span>
+                  <div className="flex gap-4">
+                    <Globe className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-xs text-zinc-455 dark:text-zinc-500 font-bold block uppercase tracking-wider">Regions</span>
+                      <span className="text-sm font-semibold text-zinc-900 dark:text-white">Sri Lanka (primary), replicable to other countries</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex gap-4">
-                  <Tag className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-xs text-zinc-455 dark:text-zinc-500 font-bold block uppercase tracking-wider">Pricing model</span>
-                    <span className="text-sm font-semibold text-zinc-900 dark:text-white">USD 14/month for users; Commission-only for suppliers</span>
+                  <div className="flex gap-4">
+                    <Clock className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-xs text-zinc-455 dark:text-zinc-500 font-bold block uppercase tracking-wider">Time to Onboard</span>
+                      <span className="text-sm font-semibold text-zinc-900 dark:text-white">1–2 weeks onboarding</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex gap-4">
-                  <Building2 className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="text-xs text-zinc-455 dark:text-zinc-500 font-bold block uppercase tracking-wider">Best For</span>
-                    <span className="text-sm font-semibold text-zinc-900 dark:text-white leading-tight block">
-                      Contractors, builders, consultancies, developers, material suppliers, subcontractors
-                    </span>
+                  <div className="flex gap-4">
+                    <Tag className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-xs text-zinc-455 dark:text-zinc-500 font-bold block uppercase tracking-wider">Pricing model</span>
+                      <span className="text-sm font-semibold text-zinc-900 dark:text-white">USD 14/month for users; Commission-only for suppliers</span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <Building2 className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-xs text-zinc-455 dark:text-zinc-500 font-bold block uppercase tracking-wider">Best For</span>
+                      <span className="text-sm font-semibold text-zinc-900 dark:text-white leading-tight block">
+                        Contractors, builders, consultancies, developers, material suppliers, subcontractors
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-3 pt-4 border-t border-zinc-200 dark:border-zinc-900">
+              <div className="space-y-3 pt-4 border-t border-zinc-200 dark:border-zinc-900 mt-6">
                 <Button
                   asChild
-                  className="w-full rounded-2xl py-6 font-bold bg-primary text-primary-foreground border-0 shadow-md"
+                  className="w-full rounded-2xl py-6 font-bold bg-lime text-black hover:bg-lime/90 border-0 shadow-md"
                 >
                   <Link href="/pricing" className="flex items-center justify-center gap-1.5">
                     Buy products <ArrowRight className="w-4 h-4" />
@@ -815,47 +817,49 @@ export default function BuildmarketlkPage() {
             </div>
 
             {/* Sidebar Related Products Card */}
-            <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-8 space-y-6 shadow-lg">
-              <h4 className="text-md font-bold text-zinc-950 dark:text-white flex items-center gap-2">
-                <Layers className="w-4 h-4 text-zinc-600 dark:text-zinc-300" /> Related Products
-              </h4>
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-8 space-y-6 shadow-lg flex flex-col justify-between">
+              <div>
+                <h4 className="text-md font-bold text-zinc-950 dark:text-white flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-zinc-600 dark:text-zinc-300" /> Related Products
+                </h4>
 
-              <div className="space-y-3">
-                <Link
-                  href="/learnmore/erp-automations"
-                  className="flex justify-between items-center p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-900 hover:border-lime/40 dark:hover:border-lime/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 group"
-                >
-                  <div className="text-left">
-                    <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-zinc-950 dark:group-hover:text-white transition-colors block">ERP Automations</span>
-                    <span className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 block">Procurement workflow fit</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-950 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </Link>
+                <div className="space-y-3 pt-4">
+                  <Link
+                    href="/learnmore/erp-automations"
+                    className="flex justify-between items-center p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-900 hover:border-lime/40 dark:hover:border-lime/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 group"
+                  >
+                    <div className="text-left">
+                      <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-zinc-955 dark:group-hover:text-white transition-colors block">ERP Automations</span>
+                      <span className="text-[10px] text-zinc-400 dark:text-zinc-550 mt-0.5 block">Procurement workflow fit</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-955 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  </Link>
 
-                <Link
-                  href="/learnmore/cost-plan-calculator"
-                  className="flex justify-between items-center p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-900 hover:border-lime/40 dark:hover:border-lime/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 group"
-                >
-                  <div className="text-left">
-                    <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-zinc-950 dark:group-hover:text-white transition-colors block">Cost Plan Calculator</span>
-                    <span className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 block">Budgeting and feasibility</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-zinc-450 dark:text-zinc-500 group-hover:text-zinc-950 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </Link>
+                  <Link
+                    href="/learnmore/cost-plan-calculator"
+                    className="flex justify-between items-center p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200/40 dark:border-zinc-900 hover:border-lime/40 dark:hover:border-lime/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 group"
+                  >
+                    <div className="text-left">
+                      <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-zinc-955 dark:group-hover:text-white transition-colors block">Cost Plan Calculator</span>
+                      <span className="text-[10px] text-zinc-400 dark:text-zinc-555 mt-0.5 block">Budgeting and feasibility</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-zinc-450 dark:text-zinc-550 group-hover:text-zinc-955 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  </Link>
 
-                <Link
-                  href="/learnmore/tender-evaluations"
-                  className="flex justify-between items-center p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-900 hover:border-lime/40 dark:hover:border-lime/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 group"
-                >
-                  <div className="text-left">
-                    <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-zinc-950 dark:group-hover:text-white transition-colors block">Tender Evaluations</span>
-                    <span className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5 block">Supplier bids comparison</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-zinc-455 dark:text-zinc-500 group-hover:text-zinc-950 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
-                </Link>
+                  <Link
+                    href="/learnmore/tender-evaluations"
+                    className="flex justify-between items-center p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-900 hover:border-lime/40 dark:hover:border-lime/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 group"
+                  >
+                    <div className="text-left">
+                      <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-zinc-955 dark:group-hover:text-white transition-colors block">Tender Evaluations</span>
+                      <span className="text-[10px] text-zinc-400 dark:text-zinc-555 mt-0.5 block">Supplier bids comparison</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-zinc-455 dark:text-zinc-550 group-hover:text-zinc-955 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  </Link>
+                </div>
               </div>
 
-              <div className="pt-2 border-t border-zinc-200 dark:border-zinc-900 text-center">
+              <div className="pt-6 border-t border-zinc-200 dark:border-zinc-900 text-center">
                 <Link
                   href="/learnmore"
                   className="text-xs font-bold text-zinc-400 hover:text-zinc-900 dark:text-zinc-500 dark:hover:text-white transition-colors inline-flex items-center gap-1 group"

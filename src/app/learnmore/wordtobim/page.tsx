@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { Navbar } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer";
@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
-import Carousel from "@/components/learnmore/carousel";
+
 
 const carouselSteps = [
   {
@@ -76,6 +76,289 @@ const carouselSteps = [
     image: "/images/3d_revit_model.png",
   },
 ];
+
+interface Step {
+  id: string;
+  stepNumber: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
+function ParallaxProcessFlow({ steps }: { steps: Step[] }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Parallax offsets for step circles (staggered rates & directions)
+  const y1 = useTransform(scrollYProgress, [0, 1], [-80, 80]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [-40, 40]);
+  const y4 = useTransform(scrollYProgress, [0, 1], [70, -70]);
+  const y5 = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+  const y6 = useTransform(scrollYProgress, [0, 1], [30, -30]);
+
+  // Parallax offsets for background elements
+  const bgY1 = useTransform(scrollYProgress, [0, 1], [-120, 120]);
+  const bgY2 = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const bgY3 = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+
+  const parallaxTransforms = [y1, y2, y3, y4, y5, y6];
+
+  // Precise coordinates for 6 steps winding layout (in relative %)
+  const desktopCoordinates = [
+    { left: "8%", top: "22%" },
+    { left: "36%", top: "10%" },
+    { left: "54%", top: "34%" },
+    { left: "76%", top: "12%" },
+    { left: "74%", top: "54%" },
+    { left: "42%", top: "66%" },
+  ];
+
+  return (
+    <div 
+      ref={containerRef} 
+      className="relative w-full overflow-hidden py-24 bg-[#FAFAF8] dark:bg-zinc-950/20 border-y border-zinc-200 dark:border-zinc-800 select-none"
+    >
+      {/* Blueprint background grid pattern */}
+      <div className="absolute inset-0 opacity-[0.4] dark:opacity-[0.15] bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+
+      {/* ─── DESKTOP PARALLAX CANVAS ─── */}
+      <div className="hidden lg:block relative w-full max-w-6xl mx-auto h-[820px]">
+        
+        {/* Background Floating Decorative Dashed Circle 1 */}
+        <motion.div 
+          style={{ y: bgY1 }}
+          className="absolute top-[5%] left-[20%] w-[380px] h-[380px] rounded-full border border-dashed border-zinc-300/60 dark:border-zinc-800/40 pointer-events-none"
+        />
+
+        {/* Background Floating Decorative Dashed Circle 2 */}
+        <motion.div 
+          style={{ y: bgY2 }}
+          className="absolute bottom-[8%] right-[15%] w-[280px] h-[280px] rounded-full border border-dashed border-zinc-200/80 dark:border-zinc-800/30 pointer-events-none"
+        />
+
+        {/* Floating background decorative details (dots & arrows) */}
+        <motion.div style={{ y: bgY3 }} className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[18%] left-[28%] w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-700" />
+          <div className="absolute bottom-[25%] right-[32%] w-4.5 h-4.5 rounded-full bg-zinc-200 dark:bg-zinc-800" />
+          <div className="absolute top-[55%] left-[12%] w-2 h-2 rounded-full bg-zinc-400 dark:bg-zinc-600" />
+        </motion.div>
+
+        {/* Connected Flow Paths (SVGs) */}
+        <svg 
+          className="absolute inset-0 w-full h-full pointer-events-none stroke-zinc-300 dark:stroke-zinc-800 fill-none" 
+          viewBox="0 0 1152 820" 
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <defs>
+            <marker 
+              id="arrow" 
+              viewBox="0 0 10 10" 
+              refX="5" 
+              refY="5" 
+              markerWidth="6" 
+              markerHeight="6" 
+              orient="auto-start-reverse"
+            >
+              <path 
+                d="M 2 2 L 8 5 L 2 8" 
+                className="stroke-zinc-400 dark:stroke-zinc-600"
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                fill="none" 
+              />
+            </marker>
+          </defs>
+
+          {/* Connection 1 (Step 1 -> 2) */}
+          <motion.path 
+            d="M 207,295 Q 278,247 359,223" 
+            markerEnd="url(#arrow)" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+          <motion.path 
+            d="M 359,223 Q 440,198 530,197" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.2, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+
+          {/* Connection 2 (Step 2 -> 3) */}
+          <motion.path 
+            d="M 530,197 Q 590,223 642,273" 
+            markerEnd="url(#arrow)" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.4, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+          <motion.path 
+            d="M 642,273 Q 693,322 737,394" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.6, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+
+          {/* Connection 3 (Step 3 -> 4) */}
+          <motion.path 
+            d="M 737,394 Q 808,337 872,292" 
+            markerEnd="url(#arrow)" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.8, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+          <motion.path 
+            d="M 872,292 Q 935,246 990,213" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 1.0, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+
+          {/* Connection 4 (Step 4 -> 5) */}
+          <motion.path 
+            d="M 990,213 Q 1005,296 999,383" 
+            markerEnd="url(#arrow)" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 1.2, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+          <motion.path 
+            d="M 999,383 Q 993,469 967,558" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 1.4, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+
+          {/* Connection 5 (Step 5 -> 6) */}
+          <motion.path 
+            d="M 967,558 Q 873,619 781,643" 
+            markerEnd="url(#arrow)" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 1.6, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+          <motion.path 
+            d="M 781,643 Q 689,668 599,656" 
+            strokeWidth="2.5" 
+            strokeDasharray="6 6"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 1.8, ease: "easeInOut" }}
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+
+        {steps.map((step, idx) => {
+          const coords = desktopCoordinates[idx];
+          const yTransform = parallaxTransforms[idx];
+          
+          return (
+            <motion.div
+              key={step.id}
+              style={{ 
+                left: coords.left, 
+                top: coords.top,
+                y: yTransform 
+              }}
+              className="absolute w-[230px] h-[230px] rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-[0_10px_35px_rgba(0,0,0,0.03)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col items-center justify-center p-6 text-center cursor-pointer transition-colors duration-300 hover:border-zinc-900 dark:hover:border-zinc-100 group select-none"
+              whileHover={{ scale: 1.05, rotate: 0.5 }}
+              transition={{ type: "spring", stiffness: 450, damping: 25 }}
+            >
+              {/* Overlapping Step Number Badge (Black & White style) */}
+              <div className="absolute top-2 left-2 -translate-x-4 -translate-y-4 w-12 h-12 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center font-bold text-lg shadow-lg border border-zinc-800 dark:border-zinc-200 group-hover:scale-110 transition-transform duration-300">
+                {step.stepNumber}
+              </div>
+
+              {/* Step Title */}
+              <h4 className="text-sm font-black uppercase tracking-wider text-zinc-900 dark:text-white mb-2 leading-snug">
+                {step.title}
+              </h4>
+
+              {/* Step Description */}
+              <p className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium leading-relaxed max-w-[95%]">
+                {step.description}
+              </p>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* ─── MOBILE RESPONSIVE LAYOUT (Timeline card view) ─── */}
+      <div className="block lg:hidden space-y-6 px-4">
+        {steps.map((step, idx) => {
+          const isEven = idx % 2 === 0;
+          return (
+            <motion.div
+              key={step.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: idx * 0.05 }}
+              className={`flex flex-col sm:flex-row items-center gap-6 p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-md ${isEven ? "" : "sm:flex-row-reverse"}`}
+            >
+              {/* Circular step badge */}
+              <div className="shrink-0 w-16 h-16 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 flex items-center justify-center font-bold text-2xl shadow-md border border-zinc-800 dark:border-zinc-200">
+                {step.stepNumber}
+              </div>
+
+              {/* Text content */}
+              <div className="flex-1 text-center sm:text-left space-y-2">
+                <h4 className="text-lg font-black uppercase tracking-wider text-zinc-900 dark:text-white">
+                  {step.title}
+                </h4>
+                <p className="text-sm text-zinc-550 dark:text-zinc-400 font-medium leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export default function WordToBIMPage() {
   const [activeTab, setActiveTab] = useState<"before" | "after">("after");
@@ -231,7 +514,7 @@ export default function WordToBIMPage() {
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-8 border-b border-zinc-200/50 dark:border-zinc-800/50 pb-6">
                   <h3 className="font-bold text-xl tracking-tight text-zinc-900 dark:text-white flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
+
                     Compare Workflows
                   </h3>
                   <div className="relative flex bg-zinc-100/80 dark:bg-zinc-950/80 backdrop-blur-sm p-1.5 rounded-xl w-52 justify-between border border-zinc-200/50 dark:border-zinc-800/50 shadow-inner">
@@ -331,7 +614,7 @@ export default function WordToBIMPage() {
             <h2 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[0.95] uppercase">
               We <br />
               design <br />
-              <span className="text-zinc-900 dark:text-white">BIM.</span>
+              <span className="text-grey-900 dark:text-white">BIM.</span>
             </h2>
             <div className="h-[2px] bg-zinc-800 w-32 my-2" />
             <p className="text-zinc-400 text-sm tracking-wider uppercase font-semibold">
@@ -552,13 +835,11 @@ export default function WordToBIMPage() {
       {/* ─── Workflow / Integration Section ─── */}
       <section className="bg-white dark:bg-zinc-900 border-y border-zinc-200 dark:border-zinc-800 py-24 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto space-y-16">
-          
+
           {/* Header Layout (Reference Image Style) */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-100 dark:border-zinc-850 pb-10">
             <div className="space-y-4 max-w-2xl">
-              <span className="text-xs font-bold text-zinc-405 dark:text-zinc-500 uppercase tracking-widest block">
-                Workflow Hook
-              </span>
+
               <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-950 dark:text-zinc-50 leading-[1.1] uppercase">
                 Start simple. <br className="hidden sm:inline" />
                 Scale when you're ready
@@ -567,12 +848,12 @@ export default function WordToBIMPage() {
                 From a single text prompt to a complete Revit model workflow, at your own pace.
               </p>
             </div>
-            
+
             <div className="flex md:justify-end items-center shrink-0">
               <Button
                 asChild
                 size="lg"
-                className="rounded-xl px-6 py-5 font-bold shadow-md bg-zinc-950 text-white hover:bg-zinc-850 dark:bg-white dark:text-black dark:hover:bg-zinc-100 border-0 transition-all hover:-translate-y-0.5 cursor-pointer"
+                className="rounded-xl px-6 py-5 font-bold shadow-md bg-lime text-black hover:bg-lime/90 border-0 transition-all hover:-translate-y-0.5 cursor-pointer"
               >
                 <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
                   Book a Demo →
@@ -583,7 +864,7 @@ export default function WordToBIMPage() {
 
           {/* Bento Grid (Reference Image Layout) */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
-            
+
             {/* Left Column Tall Card */}
             <div className="lg:row-span-2 bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-850 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-350 dark:hover:border-zinc-700 transition-all duration-300 shadow-sm">
               <div className="space-y-4">
@@ -593,23 +874,16 @@ export default function WordToBIMPage() {
                   Text prompt, hand-drawn sketch (photo/scan), or 2D drawing reference. No complex setup. Open what you need, generate what you want.
                 </p>
               </div>
-              
+
               {/* Tab Selector & input preview mockup */}
               <div className="mt-10 bg-white dark:bg-zinc-950 border border-zinc-200/60 dark:border-zinc-900 rounded-2xl p-4 shadow-sm space-y-4">
                 <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none text-[9px] font-extrabold uppercase tracking-wider">
-                  <span className="px-2.5 py-1.5 bg-zinc-950 text-white dark:bg-white dark:text-black rounded-lg">ALL</span>
-                  <span className="px-2.5 py-1.5 bg-zinc-100 text-zinc-500 dark:bg-zinc-900 rounded-lg">PROMPT</span>
-                  <span className="px-2.5 py-1.5 bg-zinc-100 text-zinc-500 dark:bg-zinc-900 rounded-lg">SKETCH</span>
                 </div>
-                
+
                 <div className="bg-zinc-50 dark:bg-zinc-900/60 rounded-xl p-3 border border-zinc-100 dark:border-zinc-800/80 space-y-2">
                   <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-lime" />
-                    <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest">Active Workspace</span>
                   </div>
-                  <p className="text-[10px] font-mono text-zinc-650 dark:text-zinc-300 bg-white dark:bg-zinc-950/80 p-2.5 rounded-lg border border-zinc-150 dark:border-zinc-800/80 leading-normal">
-                    "Add a central atrium on Level 2..."
-                  </p>
+
                 </div>
               </div>
             </div>
@@ -624,7 +898,7 @@ export default function WordToBIMPage() {
                     Our core AI translation engine connects directly to your active Revit model, creating clean native elements in real time.
                   </p>
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-lime animate-ping" />
                   <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-650 dark:text-zinc-400">Active Revit Native Bridge</span>
@@ -635,7 +909,7 @@ export default function WordToBIMPage() {
               <div className="flex-1 bg-zinc-900/40 border border-zinc-905 rounded-2xl p-6 min-h-[190px] relative overflow-hidden flex flex-col justify-center shadow-inner">
                 {/* Grid canvas background */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(var(--color-lime-rgb,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(var(--color-lime-rgb,0.02)_1px,transparent_1px)] bg-[size:14px_20px]" />
-                
+
                 {/* Connected flow path SVG */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M 30,120 Q 90,60 160,105 T 280,45" fill="none" stroke="var(--color-lime)" strokeWidth="1.5" strokeDasharray="3 3" className="opacity-30" />
@@ -690,9 +964,7 @@ export default function WordToBIMPage() {
                   Sync models directly into Autodesk Construction Cloud or local Revit files, maintaining firm standards.
                 </p>
               </div>
-              <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors duration-300">→</span>
-              </div>
+
             </div>
 
             {/* Bottom Right Card */}
@@ -704,208 +976,125 @@ export default function WordToBIMPage() {
                   Export structure models directly to estimation dashboards like Revit to BOQ or onsite in MeasureonAir.
                 </p>
               </div>
-              <div className="mt-8 flex justify-end">
-                <span className="text-xl font-bold text-zinc-700 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors duration-300">→</span>
-              </div>
+
             </div>
-            
+
+          </div>
+          {/* Workflow Steps Title & Tagline */}
+          <div className="text-center space-y-3 pt-16">
+            <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-zinc-900 dark:text-white">
+              WordToBIM Steps
+            </h3>
+            <p className="text-zinc-550 dark:text-zinc-400 text-sm sm:text-base font-medium max-w-xl mx-auto">
+              From natural language prompt to coordinated 3D Revit model in six automated stages.
+            </p>
           </div>
 
-          {/* Workflow Steps - Snapping Horizontal Carousel */}
+          {/* Workflow Steps - Custom Parallax Process Flow */}
           <div className="w-full">
-            <Carousel items={carouselSteps} />
+            <ParallaxProcessFlow steps={carouselSteps} />
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-center pt-10 border-t border-zinc-200 dark:border-zinc-800"
-          >
-
-          </motion.div>
         </div>
       </section>
 
       {/* ─── Pricing & Quick Facts Section ─── */}
-      <section className="py-24 px-6 max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-8 space-y-16">
-            <div className="space-y-6">
-              <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block">Deployment</span>
-              <h2 className="text-3xl font-bold text-zinc-950 dark:text-zinc-50">Pricing &amp; Availability</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-xs">
-                  <span className="text-xs text-zinc-450 font-bold uppercase tracking-widest">Company Subscription</span>
-                  <p className="text-3xl font-black tracking-tight">$100<span className="text-sm font-normal text-zinc-450">/month</span></p>
-                  <p className="text-xs text-zinc-500">Unlimited seats across your firm. Includes full plugin access, hand sketch input, compliance checks, 2D detailing prompts, schedule generation, and your firm-specific family library configuration.</p>
-                </div>
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-xs">
-                  <span className="text-xs text-zinc-450 font-bold uppercase tracking-widest">One-Off Licence</span>
-                  <p className="text-3xl font-black tracking-tight">$4,800</p>
-                  <p className="text-xs text-zinc-500">Single purchase covering full deployment, firm-specific Revit family training, planning code integration, and design standard configuration. Ongoing maintenance and updates at $100/month after the first year.</p>
-                </div>
-                <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-xs">
-                  <span className="text-xs text-zinc-450 font-bold uppercase tracking-widest">Multi-Firm / Enterprise</span>
-                  <p className="text-3xl font-black tracking-tight">Custom</p>
-                  <p className="text-xs text-zinc-500">Custom pricing for practices with multiple offices or firms that want to white-label or resell WordToBIM to their clients.</p>
-                </div>
-              </div>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4 text-center italic">
-                Not sure which to choose? Firms with more than five active modellers typically find the one-off licence pays back within the first year.
-              </p>
+      <section className="py-24 px-6 bg-[#FAFAF8] dark:bg-zinc-955/20">
+        <div className="space-y-16 max-w-4xl mx-auto">
+          <div className="space-y-8">
+            <div>
+              <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest block mb-2">Deployment</span>
+              <h2 className="text-3xl font-bold text-zinc-955 dark:text-zinc-50 uppercase">Pricing &amp; Availability</h2>
             </div>
 
-            {/* Related Products */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6 }}
-              className="space-y-6"
-            >
-              <div className="flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-800" />
-                <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Related Products in this suite</span>
-                <div className="h-px flex-1 bg-gradient-to-l from-zinc-200 to-transparent dark:from-zinc-800" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
+              <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-xs">
+                <span className="text-xs text-zinc-455 font-bold uppercase tracking-widest">Company Subscription</span>
+                <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">$100<span className="text-sm font-normal text-zinc-455">/month</span></p>
+                <p className="text-xs text-zinc-500">Unlimited seats across your firm. Includes full plugin access, hand sketch input, compliance checks, 2D detailing prompts, schedule generation, and your firm-specific family library configuration.</p>
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  {
-                    href: "/learnmore/auto-conversion-2d-to-3d",
-                    title: "Auto Conversion 2D to 3D",
-                    desc: "Works with WordToBIM. Auto Conversion handles the bulk 2D to 3D pass, WordToBIM completes the detailing by prompt using your family library.",
-                    tag: "Alternative",
-                  },
-                  {
-                    href: "/learnmore/revit-to-boq",
-                    title: "Revit to BOQ",
-                    desc: "Next step, generate a priced BOQ directly from your Revit model output.",
-                    tag: "Next stage",
-                  },
-                  {
-                    href: "/learnmore/cost-plan-calculator",
-                    title: "Cost Plan Calculator",
-                    desc: "Pre-design, get a construction cost estimate before the model is built.",
-                    tag: "Pre-design",
-                  },
-                ].map((rel, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 0.4, delay: i * 0.1 }}
-                    whileHover={{ y: -4, scale: 1.01 }}
-                  >
-                    <Link
-                      href={rel.href}
-                      className="group block p-5 bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-primary/30 transition-all duration-300"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="space-y-1.5">
-                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-primary transition-colors">
-                            {rel.title}
-                          </h4>
-                          <p className="text-xs text-zinc-500 leading-relaxed">{rel.desc}</p>
-                        </div>
-                        <span className="shrink-0 px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[9px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                          {rel.tag}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="text-[10px] font-semibold text-primary">Learn more</span>
-                        <ChevronRight className="w-3 h-3 text-primary transition-transform group-hover:translate-x-0.5" />
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
+              <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-xs">
+                <span className="text-xs text-zinc-455 font-bold uppercase tracking-widest">One-Off Licence</span>
+                <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">$4,800</p>
+                <p className="text-xs text-zinc-500">Single purchase covering full deployment, firm-specific Revit family training, planning code integration, and design standard configuration. Ongoing maintenance and updates at $100/month after the first year.</p>
               </div>
-
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: 0.3 }}
-                className="text-center"
-              >
-                <Link
-                  href="/learnmore"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary/80 transition-colors group"
-                >
-                  View full product suite
-                  <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </motion.span>
-                </Link>
-              </motion.div>
-            </motion.div>
+              <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl space-y-2 shadow-xs">
+                <span className="text-xs text-zinc-455 font-bold uppercase tracking-widest">Multi-Firm / Enterprise</span>
+                <p className="text-3xl font-black tracking-tight text-zinc-900 dark:text-white">Custom</p>
+                <p className="text-xs text-zinc-500">Custom pricing for practices with multiple offices or firms that want to white-label or resell WordToBIM to their clients.</p>
+              </div>
+            </div>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4 text-center italic">
+              Not sure which to choose? Firms with more than five active modellers typically find the one-off licence pays back within the first year.
+            </p>
           </div>
 
-          {/* Quick Facts Sidebar */}
-          <div className="lg:col-span-4 sticky top-28 space-y-6">
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 shadow-sm space-y-6">
-              <h3 className="font-bold text-lg border-b border-zinc-100 dark:border-zinc-800 pb-3">Quick Facts</h3>
-              <div className="space-y-4">
-                {[
-                  { label: "Stage", value: "Design" },
-                  { label: "Best For", value: "BIM modellers and architects at firms customised with their own Revit family library and design standards" },
-                  { label: "Regions", value: "Universal" },
-                  { label: "Time to Implement", value: "1 week + custom training" },
-                  { label: "Pricing", value: "USD 100/month company subscription, or USD 4,800 one-off plus USD 100/month maintenance" },
-                ].map((fact, i) => (
-                  <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 gap-4">
-                    <span className="text-zinc-500 font-semibold shrink-0">{fact.label}</span>
-                    <span className="font-bold text-zinc-850 dark:text-zinc-200 text-right">{fact.value}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="space-y-3 pt-4 border-t border-zinc-150 dark:border-zinc-800">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Related Products</h4>
-                <ul className="space-y-2.5 text-sm">
-                  <li>
-                    <Link href="/learnmore/auto-conversion-2d-to-3d" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                      <span>Auto Conversion 2D to 3D</span>
-                      <span className="text-xs text-zinc-400 font-medium">Alternative</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/learnmore/revit-to-boq" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                      <span>Revit to BOQ</span>
-                      <span className="text-xs text-zinc-400 font-medium">Next step</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/learnmore/cost-plan-calculator" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                      <span>Cost Plan Calculator</span>
-                      <span className="text-xs text-zinc-400 font-medium">Pre-design</span>
-                    </Link>
-                  </li>
-                </ul>
-                <div className="pt-2 border-t border-zinc-100 dark:border-zinc-850/60">
-                  <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
-                    View full suite <ChevronRight className="w-3.5 h-3.5" />
-                  </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800">
+            {/* Quick Facts Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8 flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
+                <div className="space-y-5 pt-4">
+                  {[
+                    { label: "Stage", value: "Design" },
+                    { label: "Best For", value: "BIM modellers and architects" },
+                    { label: "Regions", value: "Universal" },
+                    { label: "Time to Implement", value: "1 week + custom training" },
+                    { label: "Pricing", value: "USD 100/mo or USD 4,800 one-off" },
+                  ].map((fact, i) => (
+                    <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 gap-4">
+                      <span className="text-zinc-500 font-semibold shrink-0">{fact.label}</span>
+                      <span className="font-bold text-zinc-900 dark:text-zinc-100 text-right">{fact.value}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
+              <Button
+                asChild
+                className="w-full rounded-2xl py-7 font-bold shadow-lg bg-lime text-black hover:bg-lime/90 cursor-pointer border-0 mt-8"
+              >
+                <a href="/pricing">
+                  Buy Products →
+                </a>
+              </Button>
+            </motion.div>
 
-              <div className="pt-2">
-                <Button
-                  asChild
-                  className="w-full rounded-xl py-6 font-bold shadow-md bg-primary text-primary-foreground cursor-pointer border-0"
-                >
-                  <Link href="/pricing">
-                    Buy Products →
-                  </Link>
-                </Button>
+            {/* Related Products Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm flex flex-col justify-between"
+            >
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6">Related Products</h4>
+                <ul className="space-y-4 text-sm">
+                  {[
+                    { href: "/learnmore/auto-conversion-2d-to-3d", label: "Auto Conversion 2D to 3D", tag: "Alternative" },
+                    { href: "/learnmore/revit-to-boq", label: "Revit to BOQ", tag: "Next stage" },
+                    { href: "/learnmore/cost-plan-calculator", label: "Cost Plan Calculator", tag: "Pre-design" },
+                  ].map((item, i) => (
+                    <li key={i}>
+                      <Link href={item.href} className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>{item.label}</span>
+                        <span className="text-xs text-zinc-400 font-medium">{item.tag}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
+              <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800">
+                <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                  View full suite <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -1045,7 +1234,7 @@ export default function WordToBIMPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl bg-lime text-zinc-950 hover:bg-lime/90 cursor-pointer border-0 transition-transform hover:scale-105 animate-pulse"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl bg-lime text-black hover:bg-lime/90 cursor-pointer border-0 transition-transform hover:scale-105 animate-pulse"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"

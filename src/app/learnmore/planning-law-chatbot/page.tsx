@@ -151,26 +151,37 @@ export default function PlanningLawChatbotPage() {
   const videoBlur = useTransform(showcaseScrollProgress, [0, 0.25, 0.32], ["blur(0px)", "blur(0px)", "blur(20px)"]);
   const videoDisplay = useTransform(showcaseScrollProgress, (latest) => latest > 0.32 ? "none" : "block");
 
-  // Steps content and screenshot transforms
-  // Step 1
-  const step1Opacity = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.44, 0.49], [0, 1, 1, 0]);
-  const step1Y = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.44, 0.49], [60, 0, 0, -60]);
-  const step1Scale = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.44, 0.49], [0.95, 1, 1, 1.05]);
+  // --- Text Transitions ---
+  // Step 1 Text
+  const step1Opacity = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.44, 0.50], [0, 1, 1, 0]);
+  const step1Y = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.44, 0.50], [60, 0, 0, -60]);
+  const step1Scale = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.44, 0.50], [0.95, 1, 1, 1.05]);
 
-  // Step 2
-  const step2Opacity = useTransform(showcaseScrollProgress, [0.49, 0.55, 0.61, 0.66], [0, 1, 1, 0]);
-  const step2Y = useTransform(showcaseScrollProgress, [0.49, 0.55, 0.61, 0.66], [60, 0, 0, -60]);
-  const step2Scale = useTransform(showcaseScrollProgress, [0.49, 0.55, 0.61, 0.66], [0.95, 1, 1, 1.05]);
+  // Step 2 Text
+  const step2Opacity = useTransform(showcaseScrollProgress, [0.48, 0.54, 0.60, 0.66], [0, 1, 1, 0]);
+  const step2Y = useTransform(showcaseScrollProgress, [0.48, 0.54, 0.60, 0.66], [60, 0, 0, -60]);
+  const step2Scale = useTransform(showcaseScrollProgress, [0.48, 0.54, 0.60, 0.66], [0.95, 1, 1, 1.05]);
 
-  // Step 3
-  const step3Opacity = useTransform(showcaseScrollProgress, [0.66, 0.72, 0.78, 0.83], [0, 1, 1, 0]);
-  const step3Y = useTransform(showcaseScrollProgress, [0.66, 0.72, 0.78, 0.83], [60, 0, 0, -60]);
-  const step3Scale = useTransform(showcaseScrollProgress, [0.66, 0.72, 0.78, 0.83], [0.95, 1, 1, 1.05]);
+  // Step 3 Text
+  const step3Opacity = useTransform(showcaseScrollProgress, [0.64, 0.70, 0.76, 0.82], [0, 1, 1, 0]);
+  const step3Y = useTransform(showcaseScrollProgress, [0.64, 0.70, 0.76, 0.82], [60, 0, 0, -60]);
+  const step3Scale = useTransform(showcaseScrollProgress, [0.64, 0.70, 0.76, 0.82], [0.95, 1, 1, 1.05]);
 
-  // Step 4
-  const step4Opacity = useTransform(showcaseScrollProgress, [0.83, 0.89, 0.96, 1.0], [0, 1, 1, 1]);
-  const step4Y = useTransform(showcaseScrollProgress, [0.83, 0.89, 0.96, 1.0], [60, 0, 0, 0]);
-  const step4Scale = useTransform(showcaseScrollProgress, [0.83, 0.89, 0.96, 1.0], [0.95, 1, 1, 1]);
+  // Step 4 Text
+  const step4Opacity = useTransform(showcaseScrollProgress, [0.80, 0.86, 0.96, 1.0], [0, 1, 1, 1]);
+  const step4Y = useTransform(showcaseScrollProgress, [0.80, 0.86, 0.96, 1.0], [60, 0, 0, 0]);
+  const step4Scale = useTransform(showcaseScrollProgress, [0.80, 0.86, 0.96, 1.0], [0.95, 1, 1, 1]);
+
+  // --- Screenshot/Mockup Transitions ---
+  // Step 1 Screenshot (visible during Step 1 and Step 2 text)
+  const screenshot1Opacity = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.60, 0.66], [0, 1, 1, 0]);
+  const screenshot1Y = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.60, 0.66], [60, 0, 0, -60]);
+  const screenshot1Scale = useTransform(showcaseScrollProgress, [0.32, 0.38, 0.60, 0.66], [0.95, 1, 1, 1.05]);
+
+  // Step 4 Screenshot (visible during Step 3 and Step 4 text)
+  const screenshot4Opacity = useTransform(showcaseScrollProgress, [0.64, 0.70, 0.96, 1.0], [0, 1, 1, 1]);
+  const screenshot4Y = useTransform(showcaseScrollProgress, [0.64, 0.70, 0.96, 1.0], [60, 0, 0, 0]);
+  const screenshot4Scale = useTransform(showcaseScrollProgress, [0.64, 0.70, 0.96, 1.0], [0.95, 1, 1, 1]);
 
   // Demo video URL placeholder
   const demoVideoUrl = "https://drive.google.com/file/d/11wUzRrAVFkZ9ODdBVGoduafccBcFRRqP/preview";
@@ -685,9 +696,9 @@ export default function PlanningLawChatbotPage() {
               {/* Step 1 Screenshot */}
               <motion.div
                 style={{
-                  opacity: step1Opacity,
-                  y: step1Y,
-                  scale: step1Scale,
+                  opacity: screenshot1Opacity,
+                  y: screenshot1Y,
+                  scale: screenshot1Scale,
                 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
@@ -699,56 +710,8 @@ export default function PlanningLawChatbotPage() {
                     <span className="ml-4 text-[9px] text-zinc-500 font-mono select-none">concolabs.ai/planning-chatbot</span>
                   </div>
                   <img
-                    src="/images/planning-law-chatbot/step-1-input.png"
-                    alt="Step 1 — Input"
-                    className="w-full h-auto rounded-lg object-cover"
-                  />
-                </div>
-              </motion.div>
-
-              {/* Step 2 Screenshot */}
-              <motion.div
-                style={{
-                  opacity: step2Opacity,
-                  y: step2Y,
-                  scale: step2Scale,
-                }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <div className="w-full bg-zinc-900/90 rounded-2xl border border-white/10 p-2 shadow-2xl shadow-zinc-400/20 dark:shadow-black/80 backdrop-blur-md overflow-hidden">
-                  <div className="flex items-center gap-1.5 pb-2 px-2 border-b border-white/5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-lime/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                    <span className="ml-4 text-[9px] text-zinc-500 font-mono select-none">concolabs.ai/planning-chatbot</span>
-                  </div>
-                  <img
-                    src="/images/planning-law-chatbot/step-2-chatbot.png"
-                    alt="Step 2 — Planning Law Chatbot"
-                    className="w-full h-auto rounded-lg object-cover"
-                  />
-                </div>
-              </motion.div>
-
-              {/* Step 3 Screenshot */}
-              <motion.div
-                style={{
-                  opacity: step3Opacity,
-                  y: step3Y,
-                  scale: step3Scale,
-                }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <div className="w-full bg-zinc-900/90 rounded-2xl border border-white/10 p-2 shadow-2xl shadow-zinc-400/20 dark:shadow-black/80 backdrop-blur-md overflow-hidden">
-                  <div className="flex items-center gap-1.5 pb-2 px-2 border-b border-white/5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-lime/80" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                    <span className="ml-4 text-[9px] text-zinc-500 font-mono select-none">concolabs.ai/planning-chatbot</span>
-                  </div>
-                  <img
-                    src="/images/planning-law-chatbot/step-3-constraints.png"
-                    alt="Step 3 — Feasibility Summary"
+                    src="/images/planning-law-chatbot/step-1-ask.png"
+                    alt="Step 1 — Ask Questions"
                     className="w-full h-auto rounded-lg object-cover"
                   />
                 </div>
@@ -757,9 +720,9 @@ export default function PlanningLawChatbotPage() {
               {/* Step 4 Screenshot */}
               <motion.div
                 style={{
-                  opacity: step4Opacity,
-                  y: step4Y,
-                  scale: step4Scale,
+                  opacity: screenshot4Opacity,
+                  y: screenshot4Y,
+                  scale: screenshot4Scale,
                 }}
                 className="absolute inset-0 flex items-center justify-center"
               >
@@ -816,71 +779,71 @@ export default function PlanningLawChatbotPage() {
          PRICING & QUICK FACTS
          ═══════════════════════════════════════════════════════ */}
       <section ref={pricingRef} className="py-32 px-6 bg-[#FAFAF8]">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            <div className="lg:col-span-8 space-y-16">
-              <div className="space-y-8">
-                <motion.div initial={{ opacity: 0, y: 40 }} animate={isPricingInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
-                  <h2 className="text-4xl sm:text-5xl font-bold text-zinc-950">Pricing & Availability</h2>
-                </motion.div>
+        <div className="space-y-16 max-w-4xl mx-auto">
+          <div className="space-y-8">
+            <motion.div initial={{ opacity: 0, y: 40 }} animate={isPricingInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }}>
+              <h2 className="text-4xl sm:text-5xl font-bold text-zinc-955 dark:text-zinc-50 uppercase">Pricing & Availability</h2>
+            </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 30 }} animate={isPricingInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {[
-                    { label: "Per User Subscription", price: "$15", desc: "Per-user subscription for companies.", suffix: "/month" },
-                    { label: "Billing Model", price: "Monthly", desc: "Monthly subscription instead of a one-time implementation fee.", suffix: "" },
-                  ].map((card, i) => (
-                    <motion.div key={i} whileHover={{ y: -8, scale: 1.02 }} className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-all duration-300">
-                      <span className="text-xs text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-widest">{card.label}</span>
-                      <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">{card.price}{card.suffix && <span className="text-base font-normal text-zinc-400 dark:text-zinc-500">{card.suffix}</span>}</p>
-                      <p className="text-sm text-zinc-500 dark:text-zinc-400">{card.desc}</p>
-                    </motion.div>
-                  ))}
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={isPricingInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[
+                { label: "Per User Subscription", price: "$15", desc: "Per-user subscription for companies.", suffix: "/month" },
+                { label: "Billing Model", price: "Monthly", desc: "Monthly subscription instead of a one-time implementation fee.", suffix: "" },
+              ].map((card, i) => (
+                <motion.div key={i} whileHover={{ y: -8, scale: 1.02 }} className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-all duration-300">
+                  <span className="text-xs text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-widest">{card.label}</span>
+                  <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">{card.price}{card.suffix && <span className="text-base font-normal text-zinc-400 dark:text-zinc-500">{card.suffix}</span>}</p>
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400">{card.desc}</p>
                 </motion.div>
+              ))}
+            </motion.div>
+          </div>
 
-                <motion.div initial={{ opacity: 0, y: 30 }} animate={isPricingInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.4 }} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6">Related Products</h4>
-                  <ul className="space-y-4 text-sm">
-                    {[
-                      { href: "/learnmore/wordtobim", label: "WordtoBIM", tag: "Design workflow" },
-                      { href: "/learnmore/revit-to-boq", label: "Boq", tag: "BOQ baseline" },
-                      { href: "/learnmore/cost-plan-calculator", label: "prelim", tag: "Conceptual cost" },
-                    ].map((item, i) => (
-                      <li key={i}>
-                        <Link href={item.href} className="font-bold text-zinc-900 dark:text-white hover:text-primary transition-colors flex items-center justify-between group">
-                          <span>{item.label}</span>
-                          <span className="text-xs text-zinc-400 dark:text-zinc-500 font-medium group-hover:text-primary transition-colors">{item.tag}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="pt-4 mt-4 border-t border-zinc-100">
-                    <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
-                      View full suite <ChevronRight className="w-3.5 h-3.5" />
-                    </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800">
+            {/* Quick Facts Card */}
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={isPricingInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.2 }} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8">
+              <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
+              <div className="space-y-5 flex-1">
+                {[
+                  { label: "Best For", value: "Architecture firms, Developers" },
+                  { label: "Status", value: "Scaling" },
+                ].map((item, i) => (
+                  <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2">
+                    <span className="text-zinc-500 font-semibold">{item.label}</span>
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100 text-right">{item.value}</span>
                   </div>
-                </motion.div>
+                ))}
               </div>
-            </div>
+              <Button asChild className="w-full rounded-2xl py-7 font-bold shadow-lg bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer border-0">
+                <a href="/pricing" target="_blank" rel="noopener noreferrer">
+                  Buy Products →
+                </a>
+              </Button>
+            </motion.div>
 
-            <motion.div initial={{ opacity: 0, x: 60 }} animate={isPricingInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.2 }} className="lg:col-span-4 sticky top-32">
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-lg space-y-8">
-                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
-                <div className="space-y-5">
+            {/* Related Products Card */}
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={isPricingInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.4 }} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6">Related Products</h4>
+                <ul className="space-y-4 text-sm">
                   {[
-                    { label: "Best For", value: "Architecture firms, Developers" },
-                    { label: "Status", value: "Scaling" },
+                    { href: "/learnmore/wordtobim", label: "WordtoBIM", tag: "Design workflow" },
+                    { href: "/learnmore/revit-to-boq", label: "Boq", tag: "BOQ baseline" },
+                    { href: "/learnmore/cost-plan-calculator", label: "prelim", tag: "Conceptual cost" },
                   ].map((item, i) => (
-                    <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2">
-                      <span className="text-zinc-500 font-semibold">{item.label}</span>
-                      <span className="font-bold text-zinc-900 dark:text-zinc-100 text-right">{item.value}</span>
-                    </div>
+                    <li key={i}>
+                      <Link href={item.href} className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>{item.label}</span>
+                        <span className="text-xs text-zinc-400 font-medium">{item.tag}</span>
+                      </Link>
+                    </li>
                   ))}
+                </ul>
+                <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800">
+                  <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                    View full suite <ChevronRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
-                <Button asChild className="w-full rounded-2xl py-7 font-bold shadow-lg bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer">
-                  <a href="/pricing" target="_blank" rel="noopener noreferrer">
-                    Buy Products →
-                  </a>
-                </Button>
               </div>
             </motion.div>
           </div>

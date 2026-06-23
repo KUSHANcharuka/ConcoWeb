@@ -20,7 +20,7 @@ const resources = [
     icon: HelpCircle,
     title: "Help Center",
     description: "FAQs and support articles",
-    href: "/resources/help",
+    href: "/chat",
   },
 ]
 

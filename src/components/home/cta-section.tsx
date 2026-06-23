@@ -57,7 +57,7 @@ export function CTASection() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="min-w-[180px] font-bold rounded-full">
-                <Link href="/learnmore/builderbot">
+                <Link href="/chat">
                   <MessageSquare className="w-5 h-5 mr-2" />
                   Chat with our Agent
                 </Link>

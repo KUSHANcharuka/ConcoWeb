@@ -137,47 +137,28 @@ export default function Carousel({ items }: CarouselProps) {
                 </div>
               </div>
 
-              {/* Main Image Container */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-zinc-950">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  draggable={false}
-                />
-                
-                {/* Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-80" />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent pointer-events-none" />
-
-                {/* Floating Tags */}
-                <div className="absolute top-4 left-4 z-10">
-                  <span 
-                    className={`px-3 py-1 text-[9px] font-bold uppercase tracking-widest rounded-full border shadow-sm backdrop-blur-md ${
-                      isCenter 
-                        ? "bg-lime/10 border-lime/50 text-white" 
-                        : "bg-zinc-800/60 border-zinc-700/50 text-zinc-400"
-                    }`}
-                  >
-                    Workflow
-                  </span>
-                </div>
-
-                <div className="absolute top-4 right-4 z-10">
-                  <span className="px-3 py-1 text-[9px] font-mono font-bold tracking-wider bg-black/60 border border-zinc-850 text-lime rounded-md shadow-sm">
-                    STEP {item.stepNumber}
-                  </span>
-                </div>
-              </div>
-
               {/* Card Content Footer */}
-              <div className="p-6 bg-zinc-950 flex flex-col justify-between min-h-[190px]">
-                <div className="space-y-2">
-                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+              <div className="p-6 bg-zinc-950 flex flex-col justify-between min-h-[220px]">
+                <div className="space-y-2 text-left">
+                  <div className="flex items-center justify-between pb-1">
+                    <span className="text-[10px] font-mono font-bold tracking-wider text-zinc-400">
+                      STEP {item.stepNumber}
+                    </span>
+                    <span 
+                      className={`px-2 py-0.5 text-[8px] font-bold uppercase tracking-widest rounded-full border shadow-sm backdrop-blur-md ${
+                        isCenter 
+                          ? "bg-lime/10 border-lime/50 text-white" 
+                          : "bg-zinc-800/60 border-zinc-700/50 text-zinc-400"
+                      }`}
+                    >
+                      Workflow
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2 pt-1">
                     {isCenter && <Sparkles className="w-4 h-4 text-lime animate-pulse" />}
                     {item.title}
                   </h3>
-                  <p className="text-xs text-zinc-400 leading-relaxed line-clamp-3">
+                  <p className="text-xs text-zinc-400 leading-relaxed min-h-[60px]">
                     {item.description}
                   </p>
                 </div>
@@ -195,9 +176,9 @@ export default function Carousel({ items }: CarouselProps) {
                     <motion.div 
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="flex items-center gap-1 text-[9px] font-bold text-lime uppercase tracking-wider bg-lime/10 px-2.5 py-1 rounded-full border border-lime/30"
+                      className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30"
                     >
-                      <Check className="w-3 h-3 text-lime" />
+                      <Check className="w-3 h-3 text-emerald-400" />
                       Ready
                     </motion.div>
                   )}

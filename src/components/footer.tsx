@@ -22,7 +22,7 @@ const footerLinks = {
     links: [
       { label: "Learn More", href: "/learnmore" },
       { label: "Blog", href: "/resources/blog" },
-      { label: "Help Center", href: "/resources/help" },
+      { label: "Help Center", href: "/chat" },
     ],
   },
   company: {

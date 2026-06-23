@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import {
   FileText,
   PencilRuler,
@@ -268,6 +269,7 @@ interface EcosystemTreeProps {
 
 /* ─── Benefit Tree Layout (Desktop/Mobile responsive SVG) ─── */
 function EcosystemTree({ hoveredIndex, setHoveredIndex, isMobileSize }: EcosystemTreeProps) {
+  const router = useRouter();
   // Base circuit paths to render (keeps existing layout + adds new center/circuit lines)
   const basePaths = [
     // Left side paths (Original)
@@ -425,20 +427,24 @@ function EcosystemTree({ hoveredIndex, setHoveredIndex, isMobileSize }: Ecosyste
               >
                 <div className="w-full h-full flex flex-col items-center justify-center">
                   {isMobileSize ? (
-                    // Mobile view: static circle with product name in black rectangle (no animations, all lines yellow)
-                    <>
-                      <div                      className="w-12 h-12 rounded-full border-2 border-lime bg-white text-zinc-900 flex items-center justify-center shadow-xs flex-shrink-0">
+                    // Mobile view: clickable button wrapping the circle with product name in black rectangle
+                    <button
+                      onClick={() => router.push(`/learnmore/${b.id}`)}
+                      className="w-full h-full flex flex-col items-center justify-center cursor-pointer focus:outline-hidden"
+                    >
+                      <div className="w-12 h-12 rounded-full border-2 border-lime bg-white text-zinc-900 flex items-center justify-center shadow-xs flex-shrink-0">
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="mt-1.5 px-2 py-1.5 rounded-md bg-zinc-950 text-white text-[9px] font-extrabold text-center leading-none tracking-tight shadow-md max-w-[110px] truncate select-none border border-zinc-800">
                         {b.title}
                       </div>
-                    </>
+                    </button>
                   ) : (
-                    // Desktop view: interactive hover button (perfectly sized, matches coordinate centers)
+                    // Desktop view: interactive hover button with click navigation
                     <button
                       onMouseEnter={() => setHoveredIndex(idx)}
                       onMouseLeave={() => setHoveredIndex(null)}
+                      onClick={() => router.push(`/learnmore/${b.id}`)}
                       className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 relative focus:outline-hidden cursor-pointer border-2 bg-white text-zinc-800 ${
                         isHovered
                           ? "border-lime bg-lime text-black scale-110 shadow-[0_0_20px_var(--color-lime)] ring-4 ring-lime/20"

@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
-import Carousel from "@/components/learnmore/carousel";
+import RevitToBoqWorkflow from "@/components/learnmore/revit-to-boq-workflow";
 
 // Apple-style animation variants
 const fadeInUp = {
@@ -76,16 +76,16 @@ function RevitHologramMascot() {
           <path d="M 240,240 L 240,150" />
           <path d="M 180,210 L 180,150" />
           <path d="M 120,150 L 180,120 L 240,150 L 180,180 Z" />
-          
+
           {/* Floor Slab Slices */}
           <path d="M 120,195 L 180,165 L 240,195 L 180,225 Z" className="opacity-60 stroke-emerald-500" />
-          
+
           {/* Right Annex Block */}
           <path d="M 240,240 L 300,210 L 240,180" />
           <path d="M 300,210 L 300,140" />
           <path d="M 240,150 L 300,120 L 240,90 Z" />
           <path d="M 300,120 L 240,150" strokeWidth="0.75" />
-          
+
           {/* Hologram Data Connectors (Glowing Circles) */}
           <circle cx="120" cy="150" r="3.5" fill="#a3e635" className="animate-ping" />
           <circle cx="180" cy="120" r="3" fill="#10b981" />
@@ -94,7 +94,7 @@ function RevitHologramMascot() {
           <circle cx="180" cy="180" r="3" fill="#a3e635" />
           <circle cx="180" cy="270" r="3" fill="#10b981" />
         </g>
-        
+
         {/* Scanning Laser Line */}
         <motion.line
           x1="80"
@@ -131,7 +131,7 @@ function GlowingDigitalGlobe({ className = "w-32 h-32 text-emerald-500" }: { cla
       >
         <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 3" fill="none" className="opacity-30" />
         <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="0.75" fill="none" className="opacity-70" />
-        
+
         <ellipse cx="50" cy="50" rx="38" ry="12" stroke="currentColor" strokeWidth="0.5" fill="none" className="opacity-30" />
         <ellipse cx="50" cy="50" rx="12" ry="38" stroke="currentColor" strokeWidth="0.5" fill="none" className="opacity-30" />
         <line x1="12" y1="50" x2="88" y2="50" stroke="currentColor" strokeWidth="0.5" className="opacity-25" />
@@ -167,7 +167,7 @@ function EstimatorAvatarCard() {
         <div className="text-left">
           <h4 className="font-extrabold text-zinc-900 dark:text-white text-sm">Emily Watson</h4>
           <p className="text-[10px] text-zinc-500 font-bold tracking-wider uppercase">BIM Lead &amp; QS Coordinator</p>
-          <p className="text-[10px] text-lime font-bold">@qs_lead</p>
+          <p className="text-[10px] text-emerald-500 font-bold">@qs_lead</p>
         </div>
       </div>
 
@@ -176,7 +176,7 @@ function EstimatorAvatarCard() {
       <div className="space-y-2.5 font-mono text-[11px] text-left">
         <div className="flex justify-between items-center text-zinc-700 dark:text-zinc-300">
           <span>Active Extraction</span>
-          <span className="text-lime font-bold">100% Sync</span>
+          <span className="text-emerald-500 font-bold">100% Sync</span>
         </div>
         <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-1 overflow-hidden">
           <div className="bg-lime h-1 rounded-full" style={{ width: '100%' }} />
@@ -238,37 +238,6 @@ function AppleAccordion({ items }: { items: { q: string; a: string }[] }) {
   );
 }
 
-// Carousel Steps for How it Works
-const carouselSteps = [
-  {
-    id: "step1",
-    stepNumber: "01",
-    title: "Revit Data Extraction",
-    description: "Launch our lightweight Revit plugin. It natively parses the 3D model, extracting component IDs, materials, and dimensional parameters.",
-    image: "/images/3d_revit_model.png",
-  },
-  {
-    id: "step2",
-    stepNumber: "02",
-    title: "Element Mapping",
-    description: "Our classifier automatically labels elements (slabs, columns, piles, walls) and aligns them with standard rules of measurement (SMM7/POMI).",
-    image: "/images/revit_family_matching_1781792462895.png",
-  },
-  {
-    id: "step3",
-    stepNumber: "03",
-    title: "AI Rate Prediction",
-    description: "The AI pricing model runs against historical project rate cards, suggesting hyper-local market rates for every single line item.",
-    image: "/images/cv_blueprint_analysis.png",
-  },
-  {
-    id: "step4",
-    stepNumber: "04",
-    title: "Priced BOQ Compilation",
-    description: "Export a fully structured, priced Bill of Quantities directly into Excel or XML formats, ready for immediate submittal or internal review.",
-    image: "/images/schedule_validation_1781792655611.png",
-  },
-];
 
 export default function RevitToBOQPage() {
   const [activeTab, setActiveTab] = useState<"before" | "after">("after");
@@ -363,7 +332,7 @@ export default function RevitToBOQPage() {
           <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/15 via-emerald-500/10 to-transparent rounded-full blur-[130px] opacity-75 animate-pulse" style={{ animationDuration: '12s' }} />
           <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-emerald-500/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] opacity-65" />
           <div className="absolute inset-0 bg-white/30 dark:bg-zinc-950/60 backdrop-blur-[1px]" />
-          
+
           {/* Blueprint grid pattern */}
           <div
             className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
@@ -397,20 +366,17 @@ export default function RevitToBOQPage() {
         >
           {/* Hero Header Typography Block */}
           <div className="max-w-4xl mx-auto text-center px-6 space-y-4 pb-8 pt-12">
-            <span className="text-xs font-bold text-zinc-450 dark:text-zinc-555 uppercase tracking-widest block">
-              Revit to BOQ Plugin
-            </span>
+
             <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-zinc-950 dark:text-white leading-[1.05] uppercase">
-              Revit to BOQ
-              <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-550 dark:from-white dark:via-zinc-300 dark:to-zinc-500">
-                Automated Takeoff
-              </span>
+              Revit to BOQ Plugin
             </h1>
+            <p className="text-lg sm:text-xl font-bold uppercase tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-550 dark:from-white dark:via-zinc-300 dark:to-zinc-500 mt-2">
+              Automated Takeoff
+            </p>
             <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto leading-relaxed font-medium pb-2">
               Natively parses 3D models to generate fully priced, SMM7-compliant Bill of Quantities in hours instead of weeks.
             </p>
-            
+
             {/* Added Watch Demo & Book a demo buttons with tag line directly in Hero Section */}
             <div className="flex flex-col items-center justify-center space-y-3 pt-2">
               <div className="flex gap-3">
@@ -427,7 +393,7 @@ export default function RevitToBOQPage() {
                 </Button>
                 <Button
                   asChild
-                  className="rounded-full bg-zinc-900 text-white hover:bg-zinc-850 dark:bg-white dark:text-black dark:hover:bg-zinc-100 font-extrabold text-xs px-5 py-3 cursor-pointer border-0 shadow-md transition-transform hover:scale-105"
+                  className="rounded-full bg-lime text-black hover:bg-lime/90 font-extrabold text-xs px-5 py-3 cursor-pointer border-0 shadow-md transition-transform hover:scale-105"
                 >
                   <a
                     href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
@@ -446,7 +412,7 @@ export default function RevitToBOQPage() {
 
           {/* 3-Column Floating Card Deck */}
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-6 relative z-10 pb-16">
-            
+
             {/* Left Column: Floating Globe Card */}
             <div className="lg:col-span-4 space-y-6">
               <motion.div
@@ -467,13 +433,8 @@ export default function RevitToBOQPage() {
               </motion.div>
             </div>
 
-            {/* Center Column: 3D Holographic Building Mascot */}
-            <div className="lg:col-span-4 flex items-center justify-center">
-              <RevitHologramMascot />
-            </div>
-
             {/* Right Column: Workflow Compare Switcher Card */}
-            <div className="lg:col-span-4 space-y-6">
+            <div className="lg:col-span-8 space-y-6">
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -487,21 +448,19 @@ export default function RevitToBOQPage() {
                   <div className="relative flex bg-zinc-200/60 dark:bg-zinc-950 p-0.5 rounded-xl w-36 justify-between border border-zinc-200/30 dark:border-zinc-800/30">
                     <button
                       onClick={() => handleTabClick("before")}
-                      className={`relative z-10 w-[50%] py-0.5 text-[10px] font-bold rounded-lg transition-colors cursor-pointer ${
-                        activeTab === "before"
-                          ? "text-zinc-900 dark:text-white"
-                          : "text-zinc-500"
-                      }`}
+                      className={`relative z-10 w-[50%] py-0.5 text-[10px] font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "before"
+                        ? "text-zinc-900 dark:text-white"
+                        : "text-zinc-500"
+                        }`}
                     >
                       Before
                     </button>
                     <button
                       onClick={() => handleTabClick("after")}
-                      className={`relative z-10 w-[50%] py-0.5 text-[10px] font-bold rounded-lg transition-colors cursor-pointer ${
-                        activeTab === "after"
-                          ? "text-zinc-900 dark:text-white"
-                          : "text-zinc-500"
-                      }`}
+                      className={`relative z-10 w-[50%] py-0.5 text-[10px] font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "after"
+                        ? "text-zinc-900 dark:text-white"
+                        : "text-zinc-500"
+                        }`}
                     >
                       After
                     </button>
@@ -613,7 +572,7 @@ export default function RevitToBOQPage() {
           {/* Right Column: Portrait Card Mockup with floating badges */}
           <div className="lg:col-span-6 relative flex items-center justify-center py-12">
             <div className="absolute -inset-4 rounded-[40px] bg-gradient-to-tr from-lime/10 to-emerald-500/5 blur-xl opacity-80" />
-            
+
             {/* Central Portrait Card Mockup */}
             <div className="relative z-10 bg-zinc-50 dark:bg-zinc-900/60 p-6 rounded-[2.5rem] border border-zinc-200/50 dark:border-zinc-800/50 shadow-xl max-w-sm w-full">
               {/* Mock photo display using premium vector graphics */}
@@ -653,129 +612,55 @@ export default function RevitToBOQPage() {
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
               className="absolute bottom-8 right-4 sm:right-12 z-20 bg-zinc-950/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-zinc-800 shadow-xl flex items-center gap-2.5 text-white"
             >
-              <div className="w-7 h-7 rounded-lg bg-lime/20 flex items-center justify-center text-lime font-bold text-xs">
+              <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold text-xs">
                 $
               </div>
               <div className="text-left font-mono">
                 <span className="text-[8px] text-zinc-400 block uppercase tracking-wider">Predicted Rate</span>
-                <span className="text-xs font-bold text-lime">$1,250 / m³</span>
+                <span className="text-xs font-bold text-emerald-400">$1,250 / m³</span>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
-      {/* ─── HOW IT WORKS (CAROUSEL) ─── */}
-      <section ref={solutionRef} className="relative py-32 px-6 bg-zinc-50 dark:bg-zinc-950 overflow-hidden">
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-200 dark:border-zinc-900 pb-10">
-            <div className="space-y-4 max-w-2xl text-left">
-              <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest block">
-                How It Works
-              </span>
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
-                The Extraction Steps
-              </h2>
-              <p className="text-zinc-500 dark:text-zinc-400 text-base sm:text-lg font-medium">
-                From native Revit objects to highly detailed, priced estimates.
-              </p>
-            </div>
-          </div>
-
-          <div className="w-full">
-            <Carousel items={carouselSteps} />
-          </div>
-        </div>
+      {/* ─── HOW IT WORKS (INFINITY PATH WORKFLOW) ─── */}
+      <section ref={solutionRef}>
+        <RevitToBoqWorkflow />
       </section>
 
-      {/* ─── PRICING & SIDEBAR ─── */}
       <section ref={pricingRef} className="py-32 px-6 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start text-left">
+        <div className="space-y-16 max-w-4xl mx-auto">
+          <div className="space-y-8 text-left">
+            <div>
+              <span className="text-xs font-bold text-zinc-450 dark:text-zinc-555 uppercase tracking-widest block mb-2">Deployment</span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-zinc-950 dark:text-zinc-50">Pricing &amp; Availability</h2>
+            </div>
             
-            {/* Left Content */}
-            <div className="lg:col-span-8 space-y-16">
-              <div className="space-y-6">
-                <span className="text-xs font-bold text-zinc-450 dark:text-zinc-555 uppercase tracking-widest block">Deployment</span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-zinc-950 dark:text-zinc-50">Pricing &amp; Availability</h2>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                  <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
-                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Monthly Subscription</span>
-                    <p className="text-4xl font-black tracking-tight">USD 1,000<span className="text-sm font-normal text-zinc-450">/mo</span></p>
-                    <p className="text-xs text-zinc-500">Includes core Revit plugin features and rate prediction module with customizations.</p>
-                  </div>
-                  <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
-                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Enterprise Add-on</span>
-                    <p className="text-4xl font-black tracking-tight">Custom Plan</p>
-                    <p className="text-xs text-zinc-505">For multi-office deployment and training on complex proprietary historical rates.</p>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+              <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
+                <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Monthly Subscription</span>
+                <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">USD 1,000<span className="text-sm font-normal text-zinc-455">/mo</span></p>
+                <p className="text-xs text-zinc-500">Includes core Revit plugin features and rate prediction module with customizations.</p>
               </div>
-
-              {/* Related Products */}
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="h-px flex-1 bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-800" />
-                  <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest">Related Products</span>
-                  <div className="h-px flex-1 bg-gradient-to-l from-zinc-200 to-transparent dark:from-zinc-800" />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[
-                    {
-                      href: "/learnmore/acc-to-boq",
-                      title: "ACC to BOQ",
-                      desc: "Autodesk Construction Cloud integration alternative. Best for UK/AUS markets.",
-                      tag: "Cloud Alternative",
-                    },
-                    {
-                      href: "/learnmore/measureonair",
-                      title: "MeasureonAir",
-                      desc: "Site measurement app taking the BOQ to site for digital interim certificates.",
-                      tag: "Construction",
-                    },
-                    {
-                      href: "/learnmore/cost-plan-calculator",
-                      title: "Cost Plan Calculator",
-                      desc: "Estimate budgets dynamically during the initial pre-design feasibility stage.",
-                      tag: "Pre-design",
-                    },
-                  ].map((rel, i) => (
-                    <motion.div
-                      key={i}
-                      whileHover={{ y: -4, scale: 1.01 }}
-                      className="h-full"
-                    >
-                      <Link
-                        href={rel.href}
-                        className="group flex flex-col justify-between p-5 h-full bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
-                      >
-                        <div className="space-y-1.5">
-                          <span className="px-2 py-0.5 rounded-full bg-zinc-150 dark:bg-zinc-800 text-[8px] font-bold text-zinc-550 dark:text-zinc-450 uppercase tracking-wider">
-                            {rel.tag}
-                          </span>
-                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors pt-1">
-                            {rel.title}
-                          </h4>
-                          <p className="text-xs text-zinc-500 leading-relaxed">{rel.desc}</p>
-                        </div>
-                        <div className="flex items-center gap-1 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <span className="text-[10px] font-semibold text-zinc-900 dark:text-zinc-300">Explore</span>
-                          <ChevronRight className="w-3 h-3 text-zinc-900 dark:text-zinc-300 transition-transform group-hover:translate-x-0.5" />
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
+              <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
+                <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Enterprise Add-on</span>
+                <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">Custom Plan</p>
+                <p className="text-xs text-zinc-500">For multi-office deployment and training on complex proprietary historical rates.</p>
               </div>
             </div>
+          </div>
 
-            {/* Quick Facts Sidebar */}
-            <div className="lg:col-span-4 sticky top-28 space-y-6">
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8">
-                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4">Quick Facts</h3>
-                
-                <div className="space-y-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800 text-left">
+            {/* Quick Facts Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8 flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
+                <div className="space-y-5 pt-4">
                   {[
                     { label: "Project Stage", value: "Tendering & Estimation" },
                     { label: "Ideal Target", value: "QS Consultancies" },
@@ -785,25 +670,55 @@ export default function RevitToBOQPage() {
                   ].map((fact, i) => (
                     <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 gap-4">
                       <span className="text-zinc-500 font-semibold shrink-0">{fact.label}</span>
-                      <span className="font-bold text-zinc-900 dark:text-zinc-200 text-right">{fact.value}</span>
+                      <span className="font-bold text-zinc-900 dark:text-zinc-100 text-right">{fact.value}</span>
                     </div>
                   ))}
                 </div>
-
-                <Button
-                  asChild
-                  className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer"
-                >
-                  <a
-                    href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Book a demo →
-                  </a>
-                </Button>
               </div>
-            </div>
+              <Button
+                asChild
+                className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
+              >
+                <a
+                  href="/pricing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Buy Products →
+                </a>
+              </Button>
+            </motion.div>
+
+            {/* Related Products Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm flex flex-col justify-between"
+            >
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6">Related Products</h4>
+                <ul className="space-y-4 text-sm">
+                  {[
+                    { href: "/learnmore/acc-to-boq", label: "ACC to BOQ", tag: "Cloud Alternative" },
+                    { href: "/learnmore/measureonair", label: "MeasureonAir", tag: "Construction" },
+                    { href: "/learnmore/cost-plan-calculator", label: "Cost Plan Calculator", tag: "Pre-design" },
+                  ].map((item, i) => (
+                    <li key={i}>
+                      <Link href={item.href} className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>{item.label}</span>
+                        <span className="text-xs text-zinc-400 font-medium">{item.tag}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800">
+                <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                  View full suite <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -886,7 +801,7 @@ export default function RevitToBOQPage() {
 
       {/* ─── BOTTOM BANNER (GREY WITH DESIGN) ─── */}
       <section className="relative bg-zinc-100 dark:bg-zinc-900/40 text-zinc-900 dark:text-zinc-100 overflow-hidden py-32 border-t border-zinc-200 dark:border-zinc-800">
-        
+
         {/* Design: Subtle Blueprint Grid pattern overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-[0.03] dark:opacity-[0.05]">
           <div
@@ -913,7 +828,7 @@ export default function RevitToBOQPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-zinc-900 hover:bg-zinc-850 text-white dark:bg-zinc-100 dark:hover:bg-zinc-200 dark:text-zinc-900 cursor-pointer transition-transform hover:scale-105"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer transition-transform hover:scale-105"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"

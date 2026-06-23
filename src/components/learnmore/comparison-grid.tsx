@@ -100,6 +100,10 @@ export default function ComparisonGrid({
       lineBg = "bg-zinc-350/40 dark:bg-zinc-700/40";
     }
 
+    if (card.button.text.toLowerCase().includes("book") && card.button.text.toLowerCase().includes("demo")) {
+      buttonStyles = "bg-[#FFEF1A] text-black hover:bg-[#FFEF1A]/90 border-0 transition-colors duration-300";
+    }
+
     return (
       <motion.div
         key={index}

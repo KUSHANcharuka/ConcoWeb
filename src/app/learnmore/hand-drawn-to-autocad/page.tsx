@@ -217,7 +217,7 @@ export default function HandDrawnToAutoCADPage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-black/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-xs cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to Learn More
+            Back
           </Link>
         </div>
 
@@ -243,9 +243,9 @@ export default function HandDrawnToAutoCADPage() {
                 >
                   Hand Drawn
                   <br />
-                  
-                    to AutoCAD
-                  
+
+                  to AutoCAD
+
                 </motion.h1>
 
                 <motion.p
@@ -282,8 +282,8 @@ export default function HandDrawnToAutoCADPage() {
                     <a
                       href="/pricing"
                     >
-                      <ArrowRight className="w-5 h-5 mr-2" />
-                      Buy Products →
+
+                      Buy Products <ArrowRight />
                     </a>
                   </Button>
                 </motion.div>
@@ -596,8 +596,8 @@ export default function HandDrawnToAutoCADPage() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center">
-                    <Boxes className="w-7 h-7 text-purple-600" />
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <Boxes className="w-7 h-7 text-primary" />
                   </div>
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Step 2</span>
                 </div>
@@ -619,8 +619,8 @@ export default function HandDrawnToAutoCADPage() {
                 className="space-y-6"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center">
-                    <Layers className="w-7 h-7 text-emerald-600" />
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <Layers className="w-7 h-7 text-primary" />
                   </div>
                   <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Step 3</span>
                 </div>
@@ -634,262 +634,213 @@ export default function HandDrawnToAutoCADPage() {
             </div>
           </div>
 
-          {/* Learning Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="mt-32 p-12 bg-white rounded-[2rem] shadow-xl shadow-zinc-100"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <h3 className="text-3xl font-bold text-zinc-950">The tool learns</h3>
-                <p className="text-lg text-zinc-600">
-                  Accuracy improves with every drawing, by the 5th project, accuracy approaches 95%.
-                </p>
-                <ul className="space-y-4">
-                  <li className="flex gap-3 items-start">
-                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="text-zinc-700">Your specific line weights and drawing conventions</span>
-                  </li>
-                  <li className="flex gap-3 items-start">
-                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="text-zinc-700">How you draw doors, windows, stairs, and other elements</span>
-                  </li>
-                  <li className="flex gap-3 items-start">
-                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="text-zinc-700">Your annotation style and text placement</span>
-                  </li>
-                  <li className="flex gap-3 items-start">
-                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <Check className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="text-zinc-700">Your preferred layer structure</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-emerald-200/20 rounded-3xl blur-xl" />
-                <img
-                  src="/images/cv_blueprint_analysis.png"
-                  alt="AI learning process"
-                  className="relative rounded-2xl shadow-lg w-full h-80 object-cover"
-                />
-              </div>
-            </div>
-          </motion.div>
+
         </div>
       </section>
 
-      {/* ─── Workflow Section - Apple Style ─── */}
-      <section ref={workflowRef} className="py-32 px-6 bg-zinc-900 text-white overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={isWorkflowInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-20"
-          >
-            <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest block mb-4">
-              Integration
-            </span>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-              Fits into your workflow
-            </h2>
-          </motion.div>
-
-          {/* Input/Output Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={isWorkflowInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="p-8 bg-zinc-800/50 border border-zinc-700/50 rounded-3xl space-y-4 backdrop-blur-sm"
-            >
-              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">What feeds in</span>
-              <h4 className="font-bold text-2xl text-white">DXF and DWG Vector Files</h4>
-              <p className="text-zinc-400">Accepts DXF and DWG vector files from architects or structural engineers. PDF and TIFF are accepted best-effort, with lower geometry confidence.</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={isWorkflowInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="p-8 bg-zinc-800/50 border border-zinc-700/50 rounded-3xl space-y-4 backdrop-blur-sm"
-            >
-              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">What it feeds into</span>
-              <h4 className="font-bold text-2xl text-white">Automated Estimating</h4>
-              <p className="text-zinc-400">The working model opens in Revit, where WordToBIM lets your modeller add or adjust elements by prompt, then it flows on into automated estimating via Revit to BOQ and site measurement via MeasureonAir.</p>
-            </motion.div>
-          </div>
-
-          {/* Static Workflow Steps */}
+      {/* ─── Workflow Section - Premium Card Design ─── */}
+      <section ref={workflowRef} className="py-32 px-6 bg-[#FAFAF8] dark:bg-zinc-955/20 border-t border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-50 overflow-hidden">
+        <div className="max-w-4xl mx-auto space-y-16">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isWorkflowInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-20"
+            transition={{ duration: 0.8 }}
+            className="text-center space-y-4"
           >
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-              {/* Step 1 */}
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
-                </div>
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 1</span>
-                <h4 className="font-bold text-lg text-white">Upload</h4>
-                <p className="text-sm text-zinc-400">Upload your 2D structural drawing (DXF or DWG, PDF best-effort).</p>
+
+            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+              Fits Natively Into Your Workflow
+            </h2>
+            <p className="text-lg text-zinc-500 dark:text-zinc-400 font-medium">
+              Because your BIM conversion shouldn't require changing your design tools
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={isWorkflowInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="bg-white dark:bg-zinc-900 border border-zinc-950 dark:border-zinc-800 rounded-[2.5rem] p-8 sm:p-12 shadow-sm space-y-12"
+          >
+            {/* Row 1: Core Inputs */}
+            <div className="space-y-8">
+              <div className="flex flex-wrap items-center gap-4">
+                <span className="inline-block bg-lime text-black font-extrabold text-[10px] px-5 py-2 rounded-full uppercase tracking-wider">
+                  Core Inputs
+                </span>
+                <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-400">
+                  Fully supported &rarr; optimized for standard vector drawings
+                </span>
               </div>
 
-              {/* Step 2 */}
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Cpu className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                {/* AutoCAD / DWG */}
+                <div className="flex gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 24 24" className="w-8 h-8 text-zinc-900 dark:text-zinc-300" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-extrabold text-base text-zinc-955 dark:text-white">AutoCAD / DWG</h4>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                      Industry standard CAD vectors parsed directly with millimeter precision and instant layer assignment.
+                    </p>
+                  </div>
                 </div>
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 2</span>
-                <h4 className="font-bold text-lg text-white">Computer Vision</h4>
-                <p className="text-sm text-zinc-400">AI scans layout, thickness, dimensions, and annotations</p>
+
+                {/* PDF / Raster */}
+                <div className="flex gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 24 24" className="w-8 h-8 text-zinc-900 dark:text-zinc-300" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <path d="M9 17V7h4.5a2.5 2.5 0 0 1 0 5H9m0 0h4.5a2.5 2.5 0 0 1 0 5H9" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-extrabold text-base text-zinc-955 dark:text-white">PDF / Scan Inputs</h4>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                      Scanned blueprints and hand sketches processed via computer vision to identify structural outlines.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Dashed Separator */}
+            <div className="border-t border-dashed border-zinc-200 dark:border-zinc-800" />
+
+            {/* Row 2: BIM Targets */}
+            <div className="space-y-8">
+              <div className="flex flex-wrap items-center gap-4">
+                <span className="inline-block bg-lime text-black font-extrabold text-[10px] px-5 py-2 rounded-full uppercase tracking-wider">
+                  BIM Targets
+                </span>
+                <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-400">
+                  Direct model generation &rarr; open format or native Revit setup
+                </span>
               </div>
 
-              {/* Step 3 */}
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Box className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                {/* Revit */}
+                <div className="flex gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 24 24" className="w-8 h-8 text-zinc-900 dark:text-zinc-300" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="4" />
+                      <path d="M9 17V7h4.5a2.5 2.5 0 0 1 0 5H9m0 0h4.5a2.5 2.5 0 0 1 0 5H9" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-extrabold text-base text-zinc-955 dark:text-white">Revit Integration</h4>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                      Models load natively into Revit, complete with a WordToBIM plugin for prompt-based adjustments.
+                    </p>
+                  </div>
                 </div>
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 3</span>
-                <h4 className="font-bold text-lg text-white">3D Generation</h4>
-                <p className="text-sm text-zinc-400">3D Revit/IFC model generated to a working level, completed by prompt in WordToBIM.</p>
-              </div>
 
-              {/* Step 4 */}
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <MessageSquare className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
+                {/* ArchiCAD */}
+                <div className="flex gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 24 24" className="w-8 h-8 text-zinc-900 dark:text-zinc-300" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M4 20c0-8.837 7.163-16 16-16m-16 8c0-4.418 3.582-8 8-8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="font-extrabold text-base text-zinc-955 dark:text-white">ArchiCAD &amp; OpenBIM</h4>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                      Export to IFC model standard for instant compatibility with ArchiCAD, Bentley, and Tekla structures.
+                    </p>
+                  </div>
                 </div>
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 4</span>
-                <h4 className="font-bold text-lg text-white">Prompt in WordToBIM</h4>
-                <p className="text-sm text-zinc-400">Revit plugin models custom or detailed elements from text prompts</p>
-              </div>
-
-              {/* Step 5 */}
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <Layers className="w-8 h-8 text-zinc-900 dark:text-zinc-300" />
-                </div>
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Step 5</span>
-                <h4 className="font-bold text-lg text-white">BOQ & Coordination</h4>
-                <p className="text-sm text-zinc-400">modeller prompts WordToBIM for remaining elements, then the model feeds estimating, clash detection, and site workflows.</p>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ─── Pricing & Quick Facts ─── */}
       <section ref={pricingRef} className="py-32 px-6 bg-[#FAFAF8]">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            <motion.div
-              initial={{ opacity: 0, x: -60 }}
-              animate={isPricingInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-8 space-y-16"
-            >
-              <div className="space-y-8">
-                <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest block">Deployment</span>
-                <h2 className="text-4xl sm:text-5xl font-bold text-zinc-950">Pricing & Availability</h2>
-                <div className="grid grid-cols-1 gap-6 max-w-md">
-                  <div className="p-8 bg-white border border-zinc-200 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-shadow duration-300">
-                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Auto Conversion 2D to 3D</span>
-                    <p className="text-4xl font-black tracking-tight">$3,500 to $4,500</p>
-                    <p className="text-sm text-zinc-500 font-medium">Final price depends on drawing complexity and module scope.</p>
-                    <p className="text-xs text-zinc-400">IFC or DWG export and the WordToBIM Revit plugin included.</p>
-                  </div>
-                </div>
+        <div className="space-y-16 max-w-4xl mx-auto">
+          <div className="space-y-8 text-left">
+            <div>
+              <h2 className="text-4xl sm:text-5xl font-bold text-zinc-955 dark:text-zinc-50">Pricing & Availability</h2>
+            </div>
 
-                {/* Related Products - Moved from sidebar */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-sm"
-                >
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-6">Related Products</h4>
-                  <ul className="space-y-4 text-sm">
-                    <li>
-                      <Link href="/learnmore/auto-conversion-2d-to-3d" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                        <span>Auto Conversion 2D to 3D</span>
-                        <span className="text-xs text-zinc-400 font-medium">Next step</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/learnmore/revit-to-boq" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                        <span>Revit to BOQ</span>
-                        <span className="text-xs text-zinc-400 font-medium">Workflow</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/learnmore/planning-law-chatbot" className="font-bold hover:text-primary transition-colors flex items-center justify-between">
-                        <span>Planning Law Chatbot</span>
-                        <span className="text-xs text-zinc-400 font-medium">Pre-design</span>
-                      </Link>
-                    </li>
-                  </ul>
-                  <div className="pt-4 mt-4 border-t border-zinc-100">
-                    <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
-                      View full suite <ChevronRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </motion.div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+              <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-all duration-300">
+                <span className="text-xs text-zinc-400 dark:text-zinc-550 font-bold uppercase tracking-widest">One-Off Setup</span>
+                <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">USD 3,500 to 4,500</p>
+                <p className="text-xs text-zinc-500 leading-normal">Final price depends on drawing complexity and module scope. IFC or DWG export and the WordToBIM Revit plugin are included.</p>
               </div>
+              <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-all duration-300">
+                <span className="text-xs text-zinc-400 dark:text-zinc-550 font-bold uppercase tracking-widest">Enterprise Add-on</span>
+                <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">Custom Plan</p>
+                <p className="text-xs text-zinc-500 leading-normal">Tailored training on proprietary drawing conventions and custom Revit library mappings.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800 text-left">
+            {/* Quick Facts Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8 flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
+                <div className="space-y-5 pt-4">
+                  {[
+                    { label: "Stage", value: "Design" },
+                    { label: "Best For", value: "Architects, Firms" },
+                    { label: "Calibration", value: "1 week" },
+                    { label: "Pricing", value: "USD 3,500 to 4,500" },
+                  ].map((fact, i) => (
+                    <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 gap-4">
+                      <span className="text-zinc-505 font-semibold shrink-0">{fact.label}</span>
+                      <span className="font-bold text-zinc-900 dark:text-zinc-100 text-right">{fact.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <Button
+                asChild
+                className="w-full rounded-2xl py-7 font-bold shadow-lg bg-lime text-black hover:bg-lime/90 cursor-pointer border-0 mt-8"
+              >
+                <a href="/pricing">
+                  Buy Products <ArrowRight />
+                </a>
+              </Button>
             </motion.div>
 
-            {/* Quick Facts Sidebar */}
+            {/* Related Products Card */}
             <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={isPricingInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:col-span-4 sticky top-32"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm flex flex-col justify-between"
             >
-              <div className="bg-white border border-zinc-200 rounded-3xl p-8 shadow-lg space-y-8">
-                <h3 className="font-bold text-xl border-b border-zinc-100 pb-4">Quick Facts</h3>
-                <div className="space-y-5">
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-zinc-500 font-semibold">Stage</span>
-                    <span className="font-bold text-zinc-900">Design</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-zinc-500 font-semibold">Best For</span>
-                    <span className="font-bold text-zinc-900 text-right">Architects, Firms</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-zinc-500 font-semibold">Calibration</span>
-                    <span className="font-bold text-zinc-900">1 week</span>
-                  </div>
-                  <div className="flex justify-between items-center text-sm">
-                    <span className="text-zinc-500 font-semibold">Pricing</span>
-                    <span className="font-bold text-zinc-900">USD 3,500 to 4,500, depending on complexity</span>
-                  </div>
-                </div>
-
-
-
-                <Button
-                  asChild
-                  className="w-full rounded-2xl py-7 font-bold shadow-lg bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer"
-                >
-                  <a
-                    href="/pricing"
-                  >
-                    Buy Products →
-                  </a>
-                </Button>
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6">Related Products</h4>
+                <ul className="space-y-4 text-sm">
+                  {[
+                    { href: "/learnmore/auto-conversion-2d-to-3d", label: "Auto Conversion 2D to 3D", tag: "Next step" },
+                    { href: "/learnmore/revit-to-boq", label: "Revit to BOQ", tag: "Workflow" },
+                    { href: "/learnmore/planning-law-chatbot", label: "Planning Law Chatbot", tag: "Pre-design" },
+                  ].map((item, i) => (
+                    <li key={i}>
+                      <Link href={item.href} className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>{item.label}</span>
+                        <span className="text-xs text-zinc-400 font-medium">{item.tag}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800">
+                <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                  View full suite <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </motion.div>
           </div>
@@ -1036,21 +987,13 @@ export default function HandDrawnToAutoCADPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold border border-zinc-300 dark:border-zinc-700 text-zinc-955 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer transition-all duration-300"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer transition-all duration-300"
             >
               <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
-                Book a Demo →
+                Book a Demo <ArrowRight />
               </a>
             </Button>
-            <Button
-              asChild
-              size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl            bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer transition-all duration-300"
-            >
-              <a href="/pricing">
-                Buy Products →
-              </a>
-            </Button>
+
           </motion.div>
         </div>
       </section>

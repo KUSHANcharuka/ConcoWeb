@@ -506,9 +506,9 @@ function IsometricWorkflow() {
       <div className="relative z-10 flex flex-col items-center text-center max-w-2xl px-6">
 
 
-        <h2 className="text-5xl md:text-7xl font-light text-zinc-900 dark:text-white tracking-tight leading-[1.1] mb-8 font-serif">
-          A <em className="font-serif italic text-zinc-500 dark:text-zinc-400">Smarter</em> Way to<br />
-          Build <em className="font-serif italic text-zinc-500 dark:text-zinc-400">in</em> 3D
+        <h2 className="text-5xl md:text-7xl font-bold text-zinc-900 dark:text-white tracking-tight leading-[1.1] mb-8">
+          A <em className=" text-5xl md:text-7xl font-bold text-zinc-900 dark:text-white tracking-tight leading-[1.1] mb-80">Smarter</em> Way to<br />
+          Build <em className=" text-5xl md:text-7xl font-bold text-zinc-900 dark:text-white tracking-tight leading-[1.1] mb-8">in</em> 3D
         </h2>
 
         <p className="text-base md:text-lg text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mb-10 leading-relaxed font-light">
@@ -519,7 +519,7 @@ function IsometricWorkflow() {
           href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 px-8 py-3.5 rounded-full font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors inline-block"
+          className="bg-lime text-black px-8 py-3.5 rounded-full font-bold hover:bg-lime/90 transition-colors inline-block"
         >
           Try a demo
         </a>
@@ -1437,79 +1437,52 @@ export default function AutoConversion2Dto3DPage() {
          9. PRICING & SIDEBAR SYSTEM
          ═══════════════════════════════════════════════════════ */}
       <section ref={pricingRef} className="py-16 md:py-32 px-6 bg-[#FAFAF8] dark:bg-zinc-950">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-
-            {/* Left pricing features */}
-            <div className="lg:col-span-8 space-y-12">
-              <div className="space-y-4">
-                <span className="text-xs font-mono font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-widest block">Investment</span>
-                <h2 className="text-3xl sm:text-5xl font-black text-zinc-950 dark:text-white">Pricing & Availability</h2>
-              </div>
-
-              {/* pricing details card */}
-              <div className="p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 shadow-xl relative overflow-hidden group">
-                <div className="relative space-y-6">
-                  <div className="flex justify-between items-start">
-                    <div>
-
-                      <h4 className="text-2xl font-bold text-zinc-950 dark:text-white mt-4">
-                        Per-module customisation
-                      </h4>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[10px] text-zinc-400 block uppercase font-mono tracking-wider">Starting at</span>
-                      <span className="text-5xl font-black tracking-tight text-zinc-950 dark:text-white font-mono">
-                        $2,200
-                      </span>
-                      <span className="text-xs text-zinc-400 block font-semibold">/ module</span>
-                    </div>
-                  </div>
-                  <p className="text-zinc-650 dark:text-zinc-400 text-sm leading-relaxed">
-                    Pricing structure is built on a per-module customization model of USD 2,200 per customized module, allowing custom mapping configurations for beams, columns, or ramps. The slab module is currently available standalone.
-                  </p>
-                  <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400 border-t border-zinc-100 dark:border-zinc-850 pt-4">
-                    <Check className="w-4 h-4 text-emerald-500" />
-                    <span>Slab automation module ready for immediate implementation</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Related products */}
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 rounded-3xl p-8 shadow-sm">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6 font-mono">
-                  Related Products
-                </h4>
-                <ul className="space-y-4 text-sm font-semibold">
-                  {[
-                    { href: "/learnmore/hand-drawn-to-autocad", label: "Hand Drawn to AutoCAD", tag: "Design sketch to CAD conversion" },
-                    { href: "/learnmore/revit-to-boq", label: "Revit to BOQ", tag: "Automated structural cost quantities" },
-                    { href: "/learnmore/auto-reinforcement", label: "Auto Reinforcement Plugin", tag: "Rebar schedule detailing plugin" }
-                  ].map((item, idx) => (
-                    <li key={idx}>
-                      <Link
-                        href={item.href}
-                        className="group flex justify-between items-center py-2 border-b border-zinc-100 dark:border-zinc-850 last:border-0"
-                      >
-                        <span className="font-bold text-zinc-900 dark:text-white group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
-                          {item.label}
-                        </span>
-                        <span className="text-xs text-zinc-400 dark:text-zinc-550 font-medium group-hover:translate-x-1.5 transition-transform">
-                          {item.tag} →
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
+        <div className="space-y-16 max-w-4xl mx-auto text-left">
+          <div className="space-y-8">
+            <div>
+              <span className="text-xs font-mono font-bold text-zinc-400 dark:text-zinc-550 uppercase tracking-widest block mb-2">Investment</span>
+              <h2 className="text-3xl sm:text-5xl font-black text-zinc-955 dark:text-white">Pricing &amp; Availability</h2>
             </div>
 
+            {/* pricing details card */}
+            <div className="p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 shadow-xl relative overflow-hidden group">
+              <div className="relative space-y-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div>
+                    <h4 className="text-2xl font-bold text-zinc-955 dark:text-white">
+                      Per-module customisation
+                    </h4>
+                  </div>
+                  <div className="sm:text-right shrink-0">
+                    <span className="text-[10px] text-zinc-400 block uppercase font-mono tracking-wider">Starting at</span>
+                    <span className="text-5xl font-black tracking-tight text-zinc-950 dark:text-white font-mono">
+                      $2,200
+                    </span>
+                    <span className="text-xs text-zinc-400 block font-semibold">/ module</span>
+                  </div>
+                </div>
+                <p className="text-zinc-655 dark:text-zinc-400 text-sm leading-relaxed">
+                  Pricing structure is built on a per-module customization model of USD 2,200 per customized module, allowing custom mapping configurations for beams, columns, or ramps. The slab module is currently available standalone.
+                </p>
+                <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400 border-t border-zinc-100 dark:border-zinc-850 pt-4">
+                  <Check className="w-4 h-4 text-emerald-500" />
+                  <span>Slab automation module ready for immediate implementation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800">
             {/* Desktop Quick Facts Sidebar */}
-            <motion.div initial={{ opacity: 0, x: 60 }} animate={isPricingInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.2 }} className="lg:col-span-4 sticky top-32">
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-lg space-y-8">
-                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
-                <div className="space-y-5">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8 flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white uppercase">Quick Facts</h3>
+                <div className="space-y-5 pt-4">
                   {[
                     { label: "Stage", value: "Design" },
                     { label: "Best For", value: "BIM modellers, structural engineers, architects" },
@@ -1517,20 +1490,65 @@ export default function AutoConversion2Dto3DPage() {
                     { label: "Time to Implement", value: "2–4 weeks per module" },
                     { label: "Pricing", value: "USD 2,200/module" }
                   ].map((item, i) => (
-                    <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 last:border-0">
-                      <span className="text-zinc-500 font-semibold">{item.label}</span>
+                    <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 last:border-0 gap-4">
+                      <span className="text-zinc-500 font-semibold shrink-0">{item.label}</span>
                       <span className="font-bold text-zinc-900 dark:text-zinc-100 text-right">{item.value}</span>
                     </div>
                   ))}
                 </div>
-                <Button asChild className="w-full rounded-2xl py-7 font-bold shadow-lg bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer">
-                  <a href="/pricing" target="_blank" rel="noopener noreferrer">
-                    Buy Products →
-                  </a>
-                </Button>
               </div>
+              <Button
+                asChild
+                className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
+              >
+                <a href="/pricing" target="_blank" rel="noopener noreferrer">
+                  Buy Products <ArrowRight />
+                </a>
+              </Button>
             </motion.div>
 
+            {/* Related products */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-850 rounded-3xl p-8 shadow-sm flex flex-col justify-between"
+            >
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6 font-mono">
+                  Related Products
+                </h4>
+                <ul className="space-y-4 text-sm font-semibold">
+                  {[
+                    { href: "/learnmore/hand-drawn-to-autocad", label: "Hand Drawn to AutoCAD", tag: "Sketch to CAD" },
+                    { href: "/learnmore/revit-to-boq", label: "Revit to BOQ", tag: "BOQ automation" },
+                    { href: "/learnmore/auto-reinforcement", label: "Auto Reinforcement Plugin", tag: "Rebar schedule" }
+                  ].map((item, idx) => (
+                    <li key={idx}>
+                      <Link
+                        href={item.href}
+                        className="group flex justify-between items-center py-2 border-b border-zinc-100 dark:border-zinc-855 last:border-0"
+                      >
+                        <span className="font-bold text-zinc-900 dark:text-white group-hover:text-zinc-650 dark:group-hover:text-zinc-300 transition-colors">
+                          {item.label}
+                        </span>
+                        <span className="text-xs text-zinc-450 dark:text-zinc-550 font-medium group-hover:translate-x-1.5 transition-transform">
+                          {item.tag} →
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="pt-4 mt-4 border-t border-zinc-150 dark:border-zinc-850">
+                <Link
+                  href="/learnmore"
+                  className="text-xs font-bold text-primary hover:underline flex items-center gap-1"
+                >
+                  View full suite <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

@@ -149,6 +149,15 @@
   ::-webkit-scrollbar-thumb:hover {
     background: oklch(0.75 0 0);
   }
+
+  /* Utility to hide scrollbars while maintaining scroll functionality */
+  .scrollbar-none {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 }
 
 /* Smooth scroll behavior */

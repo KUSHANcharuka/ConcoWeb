@@ -25,6 +25,11 @@ import {
   ShieldCheck,
   Calendar,
   Layers,
+  Zap,
+  Video,
+  Gauge,
+  MousePointerClick,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
@@ -174,7 +179,7 @@ export default function TenderEvaluationsPage() {
           <div className="absolute top-[-10%] left-[20%] w-[800px] h-[800px] bg-gradient-to-br from-lime/20 via-lime/10 to-transparent rounded-full blur-[130px] mix-blend-multiply dark:mix-blend-screen opacity-75 animate-pulse" style={{ animationDuration: '10s' }} />
           <div className="absolute bottom-[-10%] right-[10%] w-[700px] h-[700px] bg-gradient-to-tr from-lime/10 via-zinc-400/5 to-transparent rounded-full blur-[140px] mix-blend-multiply dark:mix-blend-screen opacity-65" />
           <div className="absolute inset-0 bg-white/40 dark:bg-zinc-950/60 backdrop-blur-[1px]" />
-          
+
           {/* Blueprint grid pattern */}
           <div
             className="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
@@ -200,7 +205,7 @@ export default function TenderEvaluationsPage() {
           className="relative w-full z-10"
         >
           <div className="px-6 pt-32 pb-20 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
+
             {/* Left Column - Hero Content & Switcher */}
             <div className="lg:col-span-7 space-y-8">
               <motion.div
@@ -243,21 +248,19 @@ export default function TenderEvaluationsPage() {
                     <div className="relative flex bg-zinc-100 dark:bg-zinc-950 p-1 rounded-xl w-48 justify-between border border-zinc-200/50 dark:border-zinc-850/50">
                       <button
                         onClick={() => handleTabClick("before")}
-                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                          activeTab === "before"
-                            ? "text-zinc-900 dark:text-white"
-                            : "text-zinc-400"
-                        }`}
+                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "before"
+                          ? "text-zinc-900 dark:text-white"
+                          : "text-zinc-400"
+                          }`}
                       >
                         Before
                       </button>
                       <button
                         onClick={() => handleTabClick("after")}
-                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                          activeTab === "after"
-                            ? "text-zinc-900 dark:text-white"
-                            : "text-zinc-400"
-                        }`}
+                        className={`relative z-10 w-[50%] py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "after"
+                          ? "text-zinc-900 dark:text-white"
+                          : "text-zinc-400"
+                          }`}
                       >
                         After
                       </button>
@@ -351,7 +354,7 @@ export default function TenderEvaluationsPage() {
                     <Play className="w-4 h-4 mr-2 text-zinc-900 dark:text-zinc-300 fill-zinc-900 dark:fill-zinc-300" />
                     Watch Demo
                   </Button>
-                  
+
                   <Button
                     asChild
                     size="lg"
@@ -386,7 +389,7 @@ export default function TenderEvaluationsPage() {
                     </div>
                     <Mail className="w-5 h-5 text-zinc-900 dark:text-zinc-300" />
                   </div>
-                  
+
                   {/* Parsing flow animation visual */}
                   <div className="bg-zinc-950/80 rounded-2xl p-4 space-y-3 font-mono text-xs">
                     <div className="flex justify-between items-center text-zinc-400">
@@ -464,25 +467,28 @@ export default function TenderEvaluationsPage() {
         </div>
       </section>
 
-      {/* ─── HOW IT WORKS (CAROUSEL) ─── */}
-      <section ref={solutionRef} className="relative py-32 px-6 bg-zinc-50 dark:bg-zinc-950 overflow-hidden">
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-200 dark:border-zinc-900 pb-10">
-            <div className="space-y-4 max-w-2xl">
-              <span className="text-xs font-bold text-zinc-450 dark:text-zinc-550 uppercase tracking-widest block">
-                How It Works
-              </span>
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-950 dark:text-white leading-[1.1] uppercase">
-                The Procurement Flow
-              </h2>
-              <p className="text-zinc-500 dark:text-zinc-400 text-base sm:text-lg font-medium">
-                Watch how standard emails turn into normalized comparison matrices automatically.
-              </p>
-            </div>
+      {/* Modern How It Works Section */}
+      <section ref={solutionRef} className="py-24 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 border-y border-zinc-200 dark:border-zinc-800">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <div className="mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-bold uppercase">Best tender evaluation of the year</h2>
+            <p className="text-zinc-500 max-w-xl mx-auto text-sm">We do this through a culture of constant innovation and focus on transforming complex technology into easy-to-use devices.</p>
           </div>
-
-          <div className="w-full">
-            <Carousel items={carouselSteps} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+            {[
+              { icon: Video, title: "Forward Bids", desc: "Forward supplier quote emails directly to your custom intake address." },
+              { icon: Zap, title: "AI Parsing", desc: "The engine extracts rates, terms, and specs from attachments automatically." },
+              { icon: Gauge, title: "Comparison Grid", desc: "Generate a fully normalized side-by-side matrix for instant analysis." },
+              { icon: MousePointerClick, title: "Intuitive Control", desc: "Automatically rank bids based on compliance constraints." },
+            ].map((item, idx) => (
+              <motion.div key={idx} whileHover={{ y: -5 }} className="flex flex-col items-center gap-4">
+                <div className="w-24 h-24 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-705 flex items-center justify-center">
+                  <item.icon className="w-8 h-8 text-zinc-900 dark:text-zinc-100" />
+                </div>
+                <h3 className="font-bold text-lg">{item.title}</h3>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 px-2">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -490,7 +496,7 @@ export default function TenderEvaluationsPage() {
       {/* ─── BENTO GRID CAPABILITIES ─── */}
       <section ref={workflowRef} className="bg-zinc-950 text-white border-t border-zinc-900 py-32 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto space-y-16">
-          
+
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-900 pb-10">
             <div className="space-y-4 max-w-2xl">
               <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block">
@@ -506,7 +512,7 @@ export default function TenderEvaluationsPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
-            
+
             {/* Bento Card 1: Bidder Comparison Engine */}
             <div className="bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hover:border-zinc-800 transition-all duration-300 shadow-sm">
               <div className="space-y-4">
@@ -574,100 +580,43 @@ export default function TenderEvaluationsPage() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* ─── PRICING & SIDEBAR ─── */}
       <section ref={pricingRef} className="py-32 px-6 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            
-            {/* Left Content */}
-            <div className="lg:col-span-8 space-y-16">
-              <div className="space-y-6">
-                <span className="text-xs font-bold text-zinc-450 dark:text-zinc-550 uppercase tracking-widest block">Deployment</span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-zinc-950 dark:text-zinc-50">Pricing &amp; Availability</h2>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                  <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
-                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Per Tender Pricing</span>
-                    <p className="text-4xl font-black tracking-tight">USD 1,500</p>
-                    <p className="text-xs text-zinc-500">One-off setup and implementation fee for a single large-scale tender package.</p>
-                  </div>
-                  <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
-                    <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Enterprise licensing</span>
-                    <p className="text-4xl font-black tracking-tight">Annual Plan</p>
-                    <p className="text-xs text-zinc-500">Custom volume licensing for developer organizations and commercial main contractors.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Related Products */}
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="h-px flex-1 bg-gradient-to-r from-zinc-200 to-transparent dark:from-zinc-800" />
-                  <span className="text-xs font-bold text-zinc-450 uppercase tracking-widest">Related Products</span>
-                  <div className="h-px flex-1 bg-gradient-to-l from-zinc-200 to-transparent dark:from-zinc-800" />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[
-                    {
-                      href: "/learnmore/revit-to-boq",
-                      title: "Revit to BOQ",
-                      desc: "Automates drawing material quantity takeoff to compile tender baselines.",
-                      tag: "Estimation",
-                    },
-                    {
-                      href: "/learnmore/2d-drawing-to-boq",
-                      title: "2D Drawing to BOQ",
-                      desc: "Generate bills of quantities directly from PDF blueprint drawings.",
-                      tag: "Tendering",
-                    },
-                    {
-                      href: "/learnmore/buildmonitor",
-                      title: "BuildMonitor",
-                      desc: "Track execution progress and compare field schedules on site.",
-                      tag: "Construction",
-                    },
-                  ].map((rel, i) => (
-                    <motion.div
-                      key={i}
-                      whileHover={{ y: -4, scale: 1.01 }}
-                      className="h-full"
-                    >
-                      <Link
-                        href={rel.href}
-                        className="group flex flex-col justify-between p-5 h-full bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl hover:shadow-lg hover:border-lime/30 transition-all duration-300"
-                      >
-                        <div className="space-y-1.5">
-                          <span className="px-2 py-0.5 rounded-full bg-zinc-150 dark:bg-zinc-800 text-[8px] font-bold text-zinc-550 dark:text-zinc-450 uppercase tracking-wider">
-                            {rel.tag}
-                          </span>
-                          <h4 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-955 dark:group-hover:text-white transition-colors pt-1">
-                            {rel.title}
-                          </h4>
-                          <p className="text-xs text-zinc-500 leading-relaxed">{rel.desc}</p>
-                        </div>
-                        <div className="flex items-center gap-1 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <span className="text-[10px] font-semibold text-zinc-900 dark:text-zinc-300">Explore</span>
-                          <ChevronRight className="w-3 h-3 text-zinc-900 dark:text-zinc-300 transition-transform group-hover:translate-x-0.5" />
-                        </div>
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+        <div className="space-y-16 max-w-4xl mx-auto">
+          <div className="space-y-8">
+            <div>
+              <span className="text-xs font-bold text-zinc-450 dark:text-zinc-555 uppercase tracking-widest block mb-2">Deployment</span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-zinc-950 dark:text-zinc-50">Pricing &amp; Availability</h2>
             </div>
 
-            {/* Quick Facts Sidebar */}
-            <div className="lg:col-span-4 sticky top-28 space-y-6">
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8">
-                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4">Quick Facts</h3>
-                
-                <div className="space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+              <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
+                <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Per Tender Pricing</span>
+                <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">USD 1,500</p>
+                <p className="text-xs text-zinc-500">One-off setup and implementation fee for a single large-scale tender package.</p>
+              </div>
+              <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
+                <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Enterprise licensing</span>
+                <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">Annual Plan</p>
+                <p className="text-xs text-zinc-500">Custom volume licensing for developer organizations and commercial main contractors.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-16 border-t border-zinc-200 dark:border-zinc-800">
+            {/* Quick Facts Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm space-y-8 flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
+                <div className="space-y-5 pt-4">
                   {[
                     { label: "Project Stage", value: "Tendering & Sourcing" },
                     { label: "Ideal Target", value: "Contractors, Procurement Teams" },
@@ -677,26 +626,55 @@ export default function TenderEvaluationsPage() {
                   ].map((fact, i) => (
                     <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 gap-4">
                       <span className="text-zinc-500 font-semibold shrink-0">{fact.label}</span>
-                      <span className="font-bold text-zinc-900 dark:text-zinc-200 text-right">{fact.value}</span>
+                      <span className="font-bold text-zinc-900 dark:text-zinc-100 text-right">{fact.value}</span>
                     </div>
                   ))}
                 </div>
-
-                <Button
-                  asChild
-                  className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer"
-                >
-                  <a
-                    href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Book a demo →
-                  </a>
-                </Button>
               </div>
-            </div>
+              <Button
+                asChild
+                className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
+              >
+                <a
+                  href="/pricing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Buy Products <ArrowRight />
+                </a>
+              </Button>
+            </motion.div>
 
+            {/* Related Products Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isPricingInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 shadow-sm flex flex-col justify-between"
+            >
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6">Related Products</h4>
+                <ul className="space-y-4 text-sm">
+                  {[
+                    { href: "/learnmore/revit-to-boq", label: "Revit to BOQ", tag: "Estimation" },
+                    { href: "/learnmore/2d-drawing-to-boq", label: "2D Drawing to BOQ", tag: "Tendering" },
+                    { href: "/learnmore/buildmonitor", label: "BuildMonitor", tag: "Construction" },
+                  ].map((item, i) => (
+                    <li key={i}>
+                      <Link href={item.href} className="font-bold hover:text-primary transition-colors flex items-center justify-between">
+                        <span>{item.label}</span>
+                        <span className="text-xs text-zinc-400 font-medium">{item.tag}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="pt-4 mt-4 border-t border-zinc-100 dark:border-zinc-800">
+                <Link href="/learnmore" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                  View full suite <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -792,7 +770,7 @@ export default function TenderEvaluationsPage() {
             <Button
               asChild
               size="lg"
-              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-zinc-950 hover:bg-lime/90 cursor-pointer"
+              className="rounded-2xl px-8 py-6 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer"
             >
               <a
                 href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"

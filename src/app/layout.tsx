@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { ChatWidget } from "~/components/ui/chat-widget";
 
 export const metadata: Metadata = {
   title: "Concolabs | Construction Software Solutions",
@@ -43,6 +44,7 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-lime/20`}>
       <body className="font-sans antialiased">
         <TRPCReactProvider>{children}</TRPCReactProvider>
+        <ChatWidget />
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
