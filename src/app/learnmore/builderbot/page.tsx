@@ -631,17 +631,13 @@ export default function BuilderbotPage() {
               </div>
 
               <div className="relative w-full aspect-video rounded-[1.5rem] bg-black overflow-hidden border border-zinc-800 flex items-center justify-center group shadow-inner">
-                <div className="relative z-10 text-center space-y-4">
-                  <a
-                    href="https://drive.google.com/drive/folders/1LjhYwDP6qtu6pAY0qc6H226xLNhB7z-L?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-lime text-black px-6 py-4 rounded-full font-bold text-sm hover:scale-105 transition-transform"
-                  >
-                    <Play className="w-4 h-4 fill-black" />
-                    Watch on Google Drive
-                  </a>
-                </div>
+                <iframe
+                  src="https://drive.google.com/file/d/1yJ1Oyo0hs1QDQ39ezYd87Cqyz-OO0awJ/preview"
+                  className="w-full h-full border-0"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  title="BuilderBot.ai Demo Video"
+                ></iframe>
               </div>
             </motion.div>
           </motion.div>

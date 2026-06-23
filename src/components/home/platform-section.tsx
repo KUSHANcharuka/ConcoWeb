@@ -106,7 +106,7 @@ export function PlatformSection() {
                 </div>
 
                 {/* Mockup Area */}
-                <div className="absolute bottom-0 left-0 right-0 px-6 pb-6" style={{ top: "155px" }}>
+                <div className="absolute bottom-0 left-0 right-0 px-6 pb-6 top-[140px] sm:top-[155px]">
                   <div className="relative w-full h-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/50 shadow-sm flex items-center justify-center">
                     <img
                       src={card.image}
@@ -154,7 +154,7 @@ export function PlatformSection() {
                 </div>
 
                 {/* Mockup Area */}
-                <div className="absolute bottom-0 left-0 right-0 px-5 pb-5" style={{ top: "145px" }}>
+                <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 top-[130px] sm:top-[145px]">
                   <div className="relative w-full h-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/50 shadow-sm flex items-center justify-center">
                     <img
                       src={card.image}

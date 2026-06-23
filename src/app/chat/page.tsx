@@ -378,36 +378,38 @@ export default function ChatPage() {
 
         {/* Chat column */}
         <div className="flex flex-col flex-1 overflow-hidden">
-          {/* Messages scroll area */}
-          <div
-            ref={scrollAreaRef}
-            onScroll={handleScroll}
-            className="flex-1 overflow-y-auto px-4 sm:px-8 lg:px-12 py-6"
-            style={{ scrollbarWidth: "thin", scrollbarColor: "#e5e7eb transparent" }}
-          >
-            <div className="max-w-2xl mx-auto">
-              {messages.map((msg) => (
-                <MessageBubble key={msg.id} message={msg} />
-              ))}
-              {isTyping && <TypingIndicator />}
-              <div ref={messagesEndRef} />
+          {/* Messages scroll area + scroll-to-bottom */}
+          <div className="flex-1 overflow-hidden relative">
+            <div
+              ref={scrollAreaRef}
+              onScroll={handleScroll}
+              className="h-full overflow-y-auto px-4 sm:px-8 lg:px-12 py-6"
+              style={{ scrollbarWidth: "thin", scrollbarColor: "#e5e7eb transparent" }}
+            >
+              <div className="max-w-2xl mx-auto">
+                {messages.map((msg) => (
+                  <MessageBubble key={msg.id} message={msg} />
+                ))}
+                {isTyping && <TypingIndicator />}
+                <div ref={messagesEndRef} />
+              </div>
             </div>
-          </div>
 
-          {/* Scroll to bottom button */}
-          <AnimatePresence>
-            {showScrollBtn && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                onClick={() => scrollToBottom()}
-                className="absolute bottom-36 right-8 w-9 h-9 rounded-full bg-white border border-gray-200 shadow-lg flex items-center justify-center hover:scale-110 transition-transform z-10"
-              >
-                <ChevronDown className="w-4 h-4 text-gray-600" />
-              </motion.button>
-            )}
-          </AnimatePresence>
+            {/* Scroll to bottom button */}
+            <AnimatePresence>
+              {showScrollBtn && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  onClick={() => scrollToBottom()}
+                  className="absolute bottom-4 right-6 w-9 h-9 rounded-full bg-white border border-gray-200 shadow-lg flex items-center justify-center hover:scale-110 transition-transform z-10"
+                >
+                  <ChevronDown className="w-4 h-4 text-gray-600" />
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* Mobile suggested prompts (shown only at start) */}
           {messages.length <= 1 && (

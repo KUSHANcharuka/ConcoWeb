@@ -529,8 +529,8 @@ export function WhySwitch() {
         </div>
 
         {/* Scroll Helper for Mobile/Tablet Screens */}
-        <div className="flex lg:hidden items-center justify-center gap-2 mb-6 text-zinc-500 text-xs font-bold bg-zinc-200/50 px-4 py-2 rounded-full w-fit mx-auto select-none">
-          <span className="animate-pulse">← Swipe left/right to explore full circuit →</span>
+        <div className="flex lg:hidden items-center justify-center gap-2 mb-5 text-black text-xs font-bold bg-[#FFEF1A] border border-yellow-300 px-5 py-2.5 rounded-full w-fit mx-auto select-none shadow-sm">
+          <span>← Swipe left/right to explore all 15 tools →</span>
         </div>
 
         {/* Responsive Horizontal Scroll Wrapper for all screens */}

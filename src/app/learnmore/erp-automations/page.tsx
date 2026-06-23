@@ -416,10 +416,10 @@ export default function ERPAutomationsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Mail, num: "01", title: "Email Received", desc: "Manager sends email instructions for ordering materials, starting tasks, or assigning vendors." },
-              { icon: Cpu, num: "02", title: "AI Parsing", desc: "ML model extracts vendor, quantities, cost centers, and job codes from the email automatically." },
-              { icon: Database, num: "03", title: "ERP Job Card Created", desc: "Populated job card is created in SAP, Oracle, NetSuite, or your ERP — zero typing required." },
-              { icon: TrendingUp, num: "04", title: "Finance Updated", desc: "Site mobile data flows directly to finance. Ledger reflects reality in real time." },
+              { icon: Mail, num: "01", title: "Email Received", desc: "Manager sends email instructions for ordering materials, starting tasks, or assigning vendors.", highlight: false },
+              { icon: Cpu, num: "02", title: "AI Parsing", desc: "ML model extracts vendor, quantities, cost centers, and job codes from the email automatically.", highlight: false },
+              { icon: Database, num: "03", title: "ERP Job Card Created", desc: "Populated job card is created in SAP, Oracle, NetSuite, or your ERP — zero typing required.", highlight: false },
+              { icon: TrendingUp, num: "04", title: "Finance Updated", desc: "Site mobile data flows directly to finance. Ledger reflects reality in real time.", highlight: false },
             ].map(({ icon: Icon, num, title, desc, highlight }, i) => (
               <motion.div
                 key={num}
@@ -940,10 +940,11 @@ export default function ERPAutomationsPage() {
                 ) : (
                   <div className="absolute inset-0 w-full h-full flex flex-col">
                     <iframe
-                      src="https://drive.google.com/embeddedfolderview?id=18J2VjOiLVjqKuZjIgUzGHVGSg2eFR1hd#grid"
+                      src="https://drive.google.com/file/d/1vRryMMRW4OSo5xRjYbSr8CcRbDsMjFEr/preview"
                       className="w-full h-full border-0"
                       allow="autoplay; encrypted-media"
                       allowFullScreen
+                      title="ERP Automations Demo Video"
                     />
                     <div className="absolute bottom-4 left-4 right-4 bg-zinc-950/90 backdrop-blur-md px-4 py-3 rounded-xl border border-zinc-800 flex justify-between items-center shadow-lg">
                       <span className="text-[11px] font-medium text-zinc-100 flex items-center gap-1.5">

@@ -221,10 +221,7 @@ export default function TenderEvaluationsPage() {
                   className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.05]"
                 >
                   Tender Evaluations
-                  <br />
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-950 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-300 dark:to-zinc-500">
-                    Direct from Email
-                  </span>
+
                 </motion.h1>
 
                 <motion.p
