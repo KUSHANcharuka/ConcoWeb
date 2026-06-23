@@ -119,7 +119,7 @@ export default function CostPlanCalculatorPage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-black/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-955 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back
+            Back to Learn More
           </Link>
         </div>
 
@@ -131,7 +131,7 @@ export default function CostPlanCalculatorPage() {
             transition={{ duration: 0.8 }}
             className="space-y-4"
           >
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep">
               Cost Plan Calculator
             </h1>
             <p className="text-xl sm:text-2xl text-zinc-650 dark:text-zinc-300 font-medium max-w-2xl mx-auto leading-relaxed">

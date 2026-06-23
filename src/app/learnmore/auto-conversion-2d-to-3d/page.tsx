@@ -810,11 +810,9 @@ export default function AutoConversion2Dto3DPage() {
 
               <motion.h1
                 variants={fadeInUp}
-                className="text-5xl sm:text-6xl xl:text-7.5xl font-black tracking-tight text-zinc-950 dark:text-white leading-[1.03] product-title-sweep"
+                className="text-5xl sm:text-6xl xl:text-7.5xl font-black tracking-tight text-zinc-950 dark:text-white leading-[1.03] uppercase product-title-sweep"
               >
-                Auto Conversion
-                <br />
-                2D to 3D
+                Auto Conversion 2D to 3D
               </motion.h1>
 
               <motion.p

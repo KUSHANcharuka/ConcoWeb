@@ -124,7 +124,7 @@ export default function AccToBoqPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-black/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Back
+              Back to Learn More
             </Link>
           </motion.div>
 
@@ -138,7 +138,7 @@ export default function AccToBoqPage() {
             <div className="lg:col-span-7 space-y-6">
 
 
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.1] uppercase">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.1] uppercase product-title-sweep">
                 ACC to BOQ
               </h1>
 

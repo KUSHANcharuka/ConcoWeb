@@ -196,7 +196,7 @@ export default function TenderEvaluationsPage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200/50 dark:border-zinc-800/50 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back
+            Back to Learn More
           </Link>
         </div>
 
@@ -218,10 +218,9 @@ export default function TenderEvaluationsPage() {
 
                 <motion.h1
                   variants={fadeInUp}
-                  className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.05]"
+                  className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep"
                 >
                   Tender Evaluations
-
                 </motion.h1>
 
                 <motion.p

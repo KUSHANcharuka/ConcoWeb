@@ -353,10 +353,10 @@ export default function RevitToBOQPage() {
         <div className="absolute top-28 left-6 z-30">
           <Link
             href="/learnmore"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200/50 dark:border-zinc-800/50 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200/50 dark:border-zinc-800/50 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-955 dark:text-zinc-405 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back
+            Back to Learn More
           </Link>
         </div>
 
@@ -367,7 +367,7 @@ export default function RevitToBOQPage() {
           {/* Hero Header Typography Block */}
           <div className="max-w-4xl mx-auto text-center px-6 space-y-4 pb-8 pt-12">
 
-            <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-zinc-950 dark:text-white leading-[1.05] uppercase">
+            <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep">
               Revit to BOQ Plugin
             </h1>
             <p className="text-lg sm:text-xl font-bold uppercase tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-550 dark:from-white dark:via-zinc-300 dark:to-zinc-500 mt-2">

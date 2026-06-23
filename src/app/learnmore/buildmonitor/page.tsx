@@ -126,9 +126,9 @@ export default function BuildmonitorPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: appleEase, delay: 0.2 }}
-            className="text-5xl sm:text-7xl lg:text-[7rem] font-semibold tracking-tighter text-zinc-950 dark:text-white leading-[1.05] product-title-sweep"
+            className="text-5xl sm:text-7xl lg:text-[7rem] font-semibold tracking-tighter text-zinc-950 dark:text-white leading-[1.05] uppercase product-title-sweep"
           >
-            BuildMonitor <br className="hidden md:block" /> Mobile App
+            BuildMonitor Mobile App
           </motion.h1>
 
           <motion.p

@@ -514,7 +514,7 @@ export default function Drawing2DToBOQPage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200/50 dark:border-zinc-800/50 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-sm cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back
+            Back to Learn More
           </Link>
         </div>
 
@@ -541,13 +541,9 @@ export default function Drawing2DToBOQPage() {
                     >
                       <motion.h1
                         variants={fadeInUp}
-                        className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.05]"
+                        className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep"
                       >
-                        2D Drawing
-                        <br />
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-950 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-300 dark:to-zinc-500">
-                          to BOQ
-                        </span>
+                        2D Drawing to BOQ
                       </motion.h1>
 
                       <motion.p

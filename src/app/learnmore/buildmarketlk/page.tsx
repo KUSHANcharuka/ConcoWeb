@@ -136,10 +136,9 @@ export default function BuildmarketlkPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: appleEase, delay: 0.15 }}
-            className="text-5xl sm:text-7xl lg:text-[7.5rem] font-bold tracking-tighter text-zinc-950 dark:text-white leading-[0.95] product-title-sweep"
+            className="text-5xl sm:text-7xl lg:text-[7.5rem] font-bold tracking-tighter text-zinc-955 dark:text-white leading-[0.95] uppercase product-title-sweep"
           >
-            BuildMarketlk
-            .com
+            BuildMarketlk.com
           </motion.h1>
 
           {/* Value Prop Subtext */}
