@@ -4,7 +4,8 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Play, Calendar, CheckCircle2, ChevronRight, ShieldCheck, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import type { PersonaData, Product } from "@/lib/persona-data"
+import type { PersonaData } from "@/lib/persona-data"
+import Link from "next/link"
 import { VideoLightbox } from "./video-lightbox"
 
 interface PersonaTimelineProps {
@@ -126,7 +127,13 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
                         <div className="md:col-span-7 space-y-4">
                           <div>
                             <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
-                              {product.title}
+                              <Link 
+                                href={`/learnmore/${product.id}`}
+                                className="hover:text-lime-dark dark:hover:text-lime transition-colors hover:underline inline-flex items-center gap-1.5 group/title cursor-pointer"
+                              >
+                                {product.title}
+                                <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all duration-200 text-lime" />
+                              </Link>
                             </h3>
                             <p className="text-[13px] text-zinc-500 italic mt-0.5 leading-relaxed">
                               {product.painPoint}

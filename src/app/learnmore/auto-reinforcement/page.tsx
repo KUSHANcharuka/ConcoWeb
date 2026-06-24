@@ -137,7 +137,7 @@ const customSteps = [
     stepNumber: "5",
     id: "step5",
     title: "Factory Integration",
-    description: "Direct production formatting pushes cutting schedules straight into fabricator machinery pipelines.",
+    description: "Exports the cutting schedule in formats ready for fabricator cutting and bending machinery.",
     bgClass: "bg-zinc-800 text-white dark:bg-zinc-900 dark:text-zinc-100",
     borderColor: "border-zinc-300 dark:border-zinc-700",
     image: "/images/3d_revit_model.png",
@@ -315,7 +315,7 @@ export default function AutoReinforcementPage() {
                       </motion.p>
 
                       <motion.p variants={fadeInUp} className="text-sm sm:text-base text-zinc-650 dark:text-zinc-400 leading-relaxed max-w-xl font-medium">
-                        Computer vision reads rebar notations, lengths, and spans from structural drawings and produces a complete reinforcement schedule. No manual notation counting, no Excel, no errors.
+                        Computer vision reads rebar notations, lengths, and spans from structural drawings and produces a complete reinforcement schedule. No manual notation counting, no Excel, far fewer errors.
                       </motion.p>
 
                       <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
@@ -386,12 +386,11 @@ export default function AutoReinforcementPage() {
                               </div>
                               <ul className="space-y-4">
                                 {[
-                                  "Open structural drawing",
-                                  "Identify every rebar notation (B25, 4L12)",
-                                  "Measure every span and length",
-                                  "Identify rebar radius and position",
-                                  "Calculate total weight & type in Excel",
-                                  "2–3 weeks, highly error-prone"
+                                  "Estimator reads rebar notations off the drawings by hand",
+                                  "Every span measured and every bar length calculated manually",
+                                  "Position, radius, hooks, and bends worked out one by one",
+                                  "The full schedule compiled and checked in Excel",
+                                  "One large drawing can take a full day, and a project has dozens"
                                 ].map((item, i) => (
                                   <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-350 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
                                     <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
@@ -414,12 +413,12 @@ export default function AutoReinforcementPage() {
                               </div>
                               <ul className="space-y-4">
                                 {[
-                                  "Upload structural drawing set",
-                                  "Vision reads notations, spans, lengths",
-                                  "AI agents generate complete schedule",
-                                  "Schedule produced with bending diagrams",
-                                  "2–3 days, fully automated",
-                                  "Consistent results across projects"
+                                  "Upload the structural drawing set",
+                                  "Vision reads notations, spans, and lengths",
+                                  "AI compiles the complete schedule automatically",
+                                  "Bar bending diagrams produced with the schedule",
+                                  "Minutes per drawing instead of a full day",
+                                  "Consistent results across every project"
                                 ].map((item, i) => (
                                   <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-350 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50 shadow-inner">
                                     <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
@@ -515,7 +514,7 @@ export default function AutoReinforcementPage() {
               How It Works
             </h2>
             <p className="text-zinc-550 dark:text-zinc-400 text-sm sm:text-base font-medium">
-              A high-precision modular flow map extracting automation vectors straight from source prints. Hover steps to preview engineering modules.
+              Auto Reinforcement reads your structural drawings and builds the rebar schedule step by step. Hover any step to see what it does.
             </p>
           </div>
 
@@ -548,10 +547,7 @@ export default function AutoReinforcementPage() {
                       </div>
 
                       <div className="w-14 h-14 rounded-full flex flex-col items-center justify-center p-1.5 text-center shrink-0 shadow-md bg-white dark:bg-zinc-800 border border-zinc-150 dark:border-zinc-750 group-hover:rotate-6 transition-transform">
-                        <IconComponent className="w-4 h-4 text-zinc-800 dark:text-zinc-200 mb-0.5" />
-                        <span className="text-[6px] font-black text-zinc-400 dark:text-zinc-500 leading-tight uppercase tracking-tight">
-                          Process Vector
-                        </span>
+                        <IconComponent className="w-6 h-6 text-zinc-800 dark:text-zinc-200" />
                       </div>
                     </div>
                   </motion.div>
@@ -602,16 +598,11 @@ export default function AutoReinforcementPage() {
                       <div className="absolute -inset-[6px] border-[6px] border-transparent border-r-[#FFEF1A] rounded-full animate-pulse pointer-events-none opacity-40" />
 
                       <h2 className="text-2xl font-black text-zinc-955 dark:text-white tracking-tight uppercase leading-none">
-                        5 Steps
+                        Five steps, start to finish
                       </h2>
-                      <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1.5 mb-2">
-                        Infographic Center
-                      </h4>
-
-                      <div className="w-12 h-0.5 bg-zinc-955 dark:bg-white my-1" />
-
+                      <div className="w-12 h-0.5 bg-zinc-955 dark:bg-white my-2" />
                       <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal font-medium max-w-[190px]">
-                        Hover process vector panels horizontally leftward to drive live sheet previews inside this coordinated core framework.
+                        From a structural drawing to a finished, weighted rebar schedule in five automated steps.
                       </p>
                     </motion.div>
                   )}
@@ -695,7 +686,7 @@ export default function AutoReinforcementPage() {
             <div>
               <h3 className="font-bold border-b border-zinc-100 dark:border-zinc-800 pb-4 mb-6 uppercase text-sm">Quick Facts</h3>
               <div className="space-y-4 text-sm">
-                <div className="flex justify-between"><span className="text-zinc-500">Stage</span> <span className="font-bold">Tendering</span></div>
+                <div className="flex justify-between"><span className="text-zinc-500">Stage</span> <span className="font-bold">Tendering & Estimation</span></div>
                 <div className="flex justify-between"><span className="text-zinc-500">Best for</span> <span className="font-bold text-right">Contractors, QS, Rebar Specialists</span></div>
                 <div className="flex justify-between"><span className="text-zinc-500">Regions</span> <span className="font-bold">UAE, Australia</span></div>
                 <div className="flex justify-between"><span className="text-zinc-500">Implementation</span> <span className="font-bold">1–2 weeks</span></div>
@@ -708,7 +699,7 @@ export default function AutoReinforcementPage() {
                 className="w-full mt-8 rounded-xl py-6 font-black text-zinc-955 hover:opacity-90 cursor-pointer"
                 style={{ backgroundColor: '#FFEF1A' }}
               >
-                <Link href="/pricing">Buy Products</Link>
+                <Link href="/pricing?product=auto_rebar">Buy Products</Link>
               </Button>
             </div>
 
@@ -719,9 +710,9 @@ export default function AutoReinforcementPage() {
                 <Link href="/learnmore#products" className="text-xs font-bold text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 underline">View all products</Link>
               </div>
               <ul className="space-y-3 text-sm font-bold">
-                <li><Link href="#" className="hover:text-[#FFEF1A]">Revit to BOQ</Link></li>
-                <li><Link href="#" className="hover:text-[#FFEF1A]">2D Drawing to BOQ</Link></li>
-                <li><Link href="#" className="hover:text-[#FFEF1A]">Auto Conversion 2D to 3D</Link></li>
+                <li><Link href="/learnmore/revit-to-boq" className="hover:text-[#FFEF1A]">Revit to BOQ</Link></li>
+                <li><Link href="/learnmore/2d-drawing-to-boq" className="hover:text-[#FFEF1A]">2D Drawing to BOQ</Link></li>
+                <li><Link href="/learnmore/auto-conversion-2d-to-3d" className="hover:text-[#FFEF1A]">Auto Conversion 2D to 3D</Link></li>
               </ul>
             </div>
           </div>
@@ -731,42 +722,44 @@ export default function AutoReinforcementPage() {
       {/* ─── Comparison Section ─── */}
       <div ref={comparisonRef}>
         <ComparisonGrid
-          sectionTitle="Why choose 2D Drawing to BOQ"
+          sectionTitle="Why choose Auto Reinforcement"
           card1={{
             title: "Traditional Route",
-            subtitle: "Manual measurement",
+            subtitle: "Manual rebar scheduling",
             features: [
-              "1–2 weeks spent per drawing",
-              "Completely manual, high error rate",
-              "Dimensions easily missed or misread",
-              "No consistency across projects",
+              "A full day per large drawing",
+              "Notations read and bars counted by hand",
+              "Lengths, hooks, and bends calculated manually",
+              "Transcription errors carried into the cutting schedule",
+              "No consistency between estimators",
             ],
-            metric: { value: "1-2", label: "WEEKS" },
-            button: { text: "Traditional Route", href: "/pricing" },
+            metric: { value: "1", label: "DAY" },
+            button: { text: "Traditional Route", href: "#" },
           }}
           card2={{
-            title: "2D Drawing to BOQ",
-            subtitle: "2D Drawing to BOQ Plugin",
+            title: "Auto Reinforcement",
+            subtitle: "Auto Reinforcement Plugin",
             features: [
-              "1–2 hours spent per drawing",
-              "Automated, consistent measurements",
-              "Dimensions extracted, errors visible",
-              "Only tool working without a 3D model",
+              "Minutes per drawing, fully automated",
+              "Vision reads every rebar notation automatically",
+              "Lengths, hooks, bends, and weights computed for you",
+              "Bar bending diagrams generated with the schedule",
+              "Consistent output across every project",
             ],
-            metric: { value: "1-2", label: "HOURS" },
+            metric: { value: "MINUTES", label: "" },
             button: { text: "Book A Demo", href: "https://calendar.app.google/mCq7zBhXrDnEAJvB7" },
           }}
           card3={{
             title: "Other Tools",
-            subtitle: "Other BOQ Tools",
+            subtitle: "Generic OCR tools",
             features: [
-              "Require Revit or full 3D model",
-              "Cannot process 2D drawings at all",
-              "Leave non-BIM projects behind entirely",
-              "Forces designers to model in 3D first",
+              "Generic OCR misreads structural rebar notation",
+              "No bar bending diagrams or weight calculation",
+              "Cannot interpret drawing conventions or bar marks",
+              "Output still needs rebuilding by hand in Excel",
             ],
-            metric: { value: "UNRELIABLE", label: "FAST /" },
-            button: { text: "Other Tools", href: "https://chat.openai.com" },
+            metric: { value: "PARTIAL / MANUAL", label: "" },
+            button: { text: "Other Tools", href: "#" },
           }}
         />
       </div>

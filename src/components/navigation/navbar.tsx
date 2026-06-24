@@ -2,10 +2,12 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown, MessageCircle, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SolutionsMenu } from "./solutions-menu"
+import { CustomersMenu } from "./customers-menu"
 import { PartnersMenu } from "./partners-menu"
 import { ResourcesMenu } from "./resources-menu"
 import { ChatModal } from "@/components/ui/chat-modal"
@@ -20,6 +22,7 @@ const navItems = [
 
 const menuComponents: Record<string, React.FC> = {
   solutions: SolutionsMenu,
+  customers: CustomersMenu,
   partners: PartnersMenu,
   resources: ResourcesMenu,
 }
@@ -51,8 +54,15 @@ export function Navbar() {
   const [viewportHeight, setViewportHeight] = useState(0)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const measureRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    setExpandedMobileItem(null)
+  }, [pathname])
 
   const handleMouseEnter = (itemId: string) => {
     if (timeoutRef.current) {
@@ -248,14 +258,58 @@ export function Navbar() {
             >
               <div className="px-6 py-4 space-y-2">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={item.href || `/${item.id}`}
-                    className="block px-4 py-3 text-foreground hover:bg-secondary/50 rounded-lg transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
+                  <div key={item.id} className="w-full">
+                    {item.hasDropdown ? (
+                      <>
+                        <button
+                          onClick={() =>
+                            setExpandedMobileItem(
+                              expandedMobileItem === item.id ? null : item.id
+                            )
+                          }
+                          className="w-full flex items-center justify-between px-4 py-3 text-foreground hover:bg-secondary/50 rounded-lg transition-colors font-medium text-left"
+                        >
+                          <span>{item.label}</span>
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform duration-200 ${
+                              expandedMobileItem === item.id ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+                        <AnimatePresence initial={false}>
+                          {expandedMobileItem === item.id && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.25, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <div className="px-4 py-3 bg-secondary/10 dark:bg-secondary/5 rounded-lg border border-border/20 my-1 space-y-1">
+                                {item.id === "solutions" && (
+                                  <SolutionsMenu />
+                                )}
+                                {item.id === "partners" && (
+                                  <PartnersMenu />
+                                )}
+                                {item.id === "resources" && (
+                                  <ResourcesMenu />
+                                )}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href || `/${item.id}`}
+                        className="block px-4 py-3 text-foreground hover:bg-secondary/50 rounded-lg transition-colors font-medium"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                  </div>
                 ))}
                 <div className="pt-4 space-y-2">
                   <Button

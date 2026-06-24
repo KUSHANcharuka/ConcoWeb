@@ -321,7 +321,7 @@ const FAQS = [
   },
 ];
 
-export function PricingClient() {
+export function PricingClient({ preselectedProduct }: { preselectedProduct?: string }) {
   const [activeTab, setActiveTab] = useState<
     "all" | "design" | "estimation" | "operations" | "legal"
   >("all");
@@ -330,7 +330,9 @@ export function PricingClient() {
   );
   const [seats, setSeats] = useState<number>(10);
   const [selectedProducts, setSelectedProducts] = useState<string[]>(
-    PRODUCTS.filter((p) => p.priceType !== "custom").map((p) => p.id), // Default selecting standard tools
+    preselectedProduct && PRODUCTS.some((p) => p.id === preselectedProduct)
+      ? [preselectedProduct]
+      : PRODUCTS.filter((p) => p.priceType !== "custom").map((p) => p.id), // Default selecting standard tools
   );
 
   // Checkout Modal State

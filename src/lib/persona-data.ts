@@ -190,38 +190,9 @@ export const personasData: Record<string, PersonaData> = {
             videoUrl: "https://drive.google.com/file/d/1hCtxWtFzPzOcWqu7VBon84aMdadLac35/view?usp=sharing"
           }
         ]
-      },
-      {
-        id: "operations",
-        label: "Operations",
-        headline: "Close the gap between site and finance.",
-        description: "Development projects lose money in the space between what happens on site and what gets recorded in the back office. ERP Automations eliminates that gap.",
-        products: [
-          {
-            id: "erp-automations",
-            title: "ERP Automations",
-            painPoint: "Your ERP is only as accurate as the last person who remembered to update it — and on a development project, that is rarely the same day something happens on site.",
-            features: [
-              "Email instructions are automatically converted into ERP job cards — no manual transcription by admin staff.",
-              "Site app data syncs directly to the ERP, eliminating the lag between field activity and financial records.",
-              "Machine learning customisations built per client — already delivered across China, Bangladesh, Sri Lanka, and the UK."
-            ],
-            targetMarket: "Real estate developers — global",
-            status: "Scaling",
-            pricing: "USD 500–6,000 one-off customised solution.",
-            videoUrl: "https://drive.google.com/drive/folders/18J2VjOiLVjqKuZjIgUzGHVGSg2eFR1hd?usp=sharing"
-          }
-        ]
       }
     ],
-    handoffs: [
-      {
-        fromStage: "pre-design",
-        toStage: "operations",
-        text: "Once a project is underway, the ERP automation layer connects field data and financial records — so your development team always has a live view of where money is being spent.",
-        pillText: "Cost Plan Calculator → ERP Automations"
-      }
-    ],
+    handoffs: [],
     footerTitle: "Better data before the first decision.",
     footerSubtext: "Book a 30-minute walkthrough to see how Concolabs applies to your development pipeline."
   },
@@ -328,20 +299,6 @@ export const personasData: Record<string, PersonaData> = {
         description: "The admin layer that runs underneath every project — connecting site, finance, and management without manual data entry.",
         products: [
           {
-            id: "erp-automations",
-            title: "ERP Automations",
-            painPoint: "Your ERP is updated manually by people who have other jobs to do — and the delay between what happens on site and what gets recorded is where budget overruns hide.",
-            features: [
-              "Email instructions automatically converted to ERP job cards — no admin transcription required.",
-              "Mobile app data syncs directly to the ERP in real time.",
-              "Machine learning customisations built per client — delivered across China, Bangladesh, Sri Lanka, and the UK."
-            ],
-            targetMarket: "Contractors — global",
-            status: "Scaling",
-            pricing: "USD 500–6,000 one-off customised solution.",
-            videoUrl: "https://drive.google.com/drive/folders/18J2VjOiLVjqKuZjIgUzGHVGSg2eFR1hd?usp=sharing"
-          },
-          {
             id: "buildmarketlk",
             title: "BuildMarketlk.com",
             painPoint: "Finding a reliable subcontractor or comparing material prices in Sri Lanka still runs on personal contacts and Google — there is no verified central source.",
@@ -369,7 +326,7 @@ export const personasData: Record<string, PersonaData> = {
         fromStage: "construction",
         toStage: "operations",
         text: "Site progress data and payment records feed into the ERP automatically — closing the loop between what is built and what is recorded in the back office.",
-        pillText: "MeasureonAir → ERP Automations"
+        pillText: "MeasureonAir → ERP Sync"
       }
     ],
     footerTitle: "Less admin. More site time.",
@@ -417,7 +374,7 @@ export const personasData: Record<string, PersonaData> = {
             title: "Revit to BOQ Plugin",
             painPoint: "Your estimators are manually measuring every element in a Revit model, applying standard measurement rules, and typing the bill by hand — the same process, every project.",
             features: [
-              "Identifies all building elements from the Revit model's take-off files and generates a standard BOQ automatically.",
+              "Identifies all elements directly from the Revit model and generates a standard BOQ automatically.",
               "AI predicts rates for each line item — existing non-AI tools stop at measurement. This one goes further.",
               "Targets QS firms in the Middle East and Sri Lanka where Revit is the primary modelling environment."
             ],
@@ -468,6 +425,20 @@ export const personasData: Record<string, PersonaData> = {
             status: "Custom / R&D",
             pricing: "USD 800/month with customisations.",
             videoUrl: "https://drive.google.com/file/d/1XBMGXEbDW-rCS--nutSVrk7YtacQY0KW/view?usp=sharing"
+          },
+          {
+            id: "costx-to-boq",
+            title: "CostX to BOQ",
+            painPoint: "You already measure and estimate in RIB CostX, but the deliverable your client signs off is a formatted, priced BOQ in their template, structured to NRM2. Getting there still means exporting to Excel and rebuilding the bill by hand.",
+            features: [
+              "Reads your dimension groups and workbook data, maps them to NRM2 or your client's template.",
+              "Produces a priced BOQ in minutes.",
+              "Reprices automatically when your CostX estimate changes."
+            ],
+            targetMarket: "QS firms, cost consultancies and contractors already using RIB CostX — Middle East, Sri Lanka, Australia",
+            status: "Available",
+            pricing: "USD 1,200/month per seat.",
+            videoUrl: "https://calendar.app.google/mCq7zBhXrDnEAJvB7"
           }
         ]
       },

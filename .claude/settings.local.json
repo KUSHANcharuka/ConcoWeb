@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit src/app/learnmore/revit-to-boq/page.tsx)",
+      "Bash(node -e \":*)"
+    ]
+  }
+}

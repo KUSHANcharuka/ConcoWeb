@@ -1426,7 +1426,7 @@ export default function AutoConversion2Dto3DPage() {
               "Slab automation is the only complete, production-ready solution on the market.",
             ],
             metric: { value: "UNRELIABLE", label: "FAST /" },
-            button: { text: "Other Tools", href: "https://chat.openai.com" },
+            button: { text: "Other Tools", href: "#" },
           }}
         />
       </div>
@@ -1499,7 +1499,7 @@ export default function AutoConversion2Dto3DPage() {
                 asChild
                 className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
               >
-                <a href="/pricing" target="_blank" rel="noopener noreferrer">
+                <a href="/pricing?product=conversion_2d_3d" target="_blank" rel="noopener noreferrer">
                   Buy Products <ArrowRight />
                 </a>
               </Button>

@@ -2,13 +2,15 @@
 
 import { useRef, useEffect, useState } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { Play } from "lucide-react"
+import { Play, Maximize, Minimize, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function HeroVideo() {
   const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const videoAreaRef = useRef<HTMLDivElement>(null)
   const [isPlaying, setIsPlaying] = useState(true)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -26,6 +28,36 @@ export function HeroVideo() {
       })
     }
   }, [])
+
+  // Listen to fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement !== null)
+    }
+    document.addEventListener("fullscreenchange", handleFullscreenChange)
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange)
+  }, [])
+
+  // Exit fullscreen on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {})
+      }
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      videoAreaRef.current?.requestFullscreen().catch((err) => {
+        console.error("Error going fullscreen:", err)
+      })
+    } else {
+      document.exitFullscreen().catch(() => {})
+    }
+  }
 
   const handlePlayClick = () => {
     const video = videoRef.current
@@ -47,7 +79,11 @@ export function HeroVideo() {
         className="relative max-w-6xl mx-auto"
       >
         {/* Video Container */}
-        <div className="relative aspect-video rounded-2xl overflow-hidden bg-card border border-border shadow-2xl">
+        <div
+          ref={videoAreaRef}
+          onDoubleClick={toggleFullscreen}
+          className="relative aspect-video rounded-2xl overflow-hidden bg-card border border-border shadow-2xl group cursor-pointer select-none"
+        >
           {/* Video Placeholder - using a construction stock video */}
           <video
             ref={videoRef}
@@ -91,6 +127,47 @@ export function HeroVideo() {
                 {isPlaying ? "Pause Video" : "Watch Video"}
               </Button>
             </motion.div>
+          </div>
+
+          {/* Fullscreen Close Button */}
+          {isFullscreen && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleFullscreen()
+              }}
+              className="absolute top-6 right-6 z-50 p-3 bg-zinc-900/80 border border-zinc-700 hover:bg-zinc-800 text-white rounded-full transition-colors cursor-pointer shadow-lg"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
+
+          {/* Hover HUD Controls */}
+          <div
+            className="absolute bottom-4 right-4 z-30 flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => {
+                if (videoRef.current) {
+                  if (videoRef.current.paused) {
+                    videoRef.current.play()
+                  } else {
+                    videoRef.current.pause()
+                  }
+                }
+              }}
+              className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <Play className="w-4 h-4 fill-current" />
+            </button>
+            <div className="h-4 w-[1px] bg-zinc-800" />
+            <button
+              onClick={toggleFullscreen}
+              className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            >
+              {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+            </button>
           </div>
 
           {/* Corner Accents */}

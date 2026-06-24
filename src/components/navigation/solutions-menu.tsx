@@ -224,42 +224,45 @@ export function SolutionsMenu() {
       </div>
 
       {/* Lifecycle Roadmap Serpentine Timeline */}
-      <div className="flex flex-col h-full min-h-[360px]">
+      <div className="hidden lg:flex flex-col h-full min-h-[360px]">
         <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
           Construction Lifecycle
         </h3>
         <div className="relative rounded-xl border border-border/80 bg-zinc-50/50 dark:bg-zinc-950/20 p-4 overflow-hidden h-[320px] w-full">
-          {/* Winding SVG Connector Line */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none text-muted-foreground/25 dark:text-muted/15"
-            viewBox="0 0 320 320"
-            preserveAspectRatio="none"
-            fill="none"
-          >
-            <motion.path
-              d="M 53.3,53.3 L 266.7,53.3 C 315,53.3 315,160 266.7,160 L 53.3,160 C 5,160 5,266.7 53.3,266.7 L 160,266.7"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeDasharray="5 5"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 1.8, ease: "easeInOut" }}
-            />
-          </svg>
-
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="show"
             className="w-full h-full relative"
           >
+            {/* Winding SVG Connector Line */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none text-muted-foreground/25 dark:text-muted/15"
+              viewBox="0 0 320 320"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              <motion.path
+                d="M 53.3,53.3 L 266.7,53.3 C 315,53.3 315,160 266.7,160 L 53.3,160 C 5,160 5,266.7 53.3,266.7 L 160,266.7"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeDasharray="5 5"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.8, ease: "easeInOut" }}
+              />
+            </svg>
+
             {roadmapSteps.map((step) => {
               const Icon = step.icon
+              const isLongStep = step.number === "07" || step.number === "08"
               return (
                 <Link
                   href="/solutions"
                   key={step.number}
-                  className="absolute group flex flex-col items-center text-center w-24 cursor-pointer select-none"
+                  className={`absolute group flex flex-col items-center text-center cursor-pointer select-none ${
+                    isLongStep ? "w-[135px]" : "w-28"
+                  }`}
                   style={{
                     left: `${step.x}%`,
                     top: `${step.y}%`,
@@ -282,7 +285,7 @@ export function SolutionsMenu() {
 
                     {/* Step Title */}
                     <div className="mt-1.5 w-full flex flex-col items-center">
-                      <span className="text-[10px] font-semibold text-foreground/80 group-hover:text-foreground transition-colors line-clamp-2 leading-tight px-1">
+                      <span className="text-[10px] font-semibold text-foreground/80 group-hover:text-foreground transition-colors line-clamp-none leading-tight px-1">
                         {step.title}
                       </span>
                     </div>

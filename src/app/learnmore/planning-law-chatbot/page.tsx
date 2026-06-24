@@ -24,6 +24,8 @@ import {
   MapPin,
   Sparkles,
   Layers,
+  Maximize,
+  Minimize,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
@@ -97,6 +99,38 @@ export default function PlanningLawChatbotPage() {
   const [activeWorkflowStep, setActiveWorkflowStep] = useState(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoAreaRef = useRef<HTMLDivElement>(null);
+
+  // Listen to fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement !== null);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
+  // Exit fullscreen on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => { });
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      videoAreaRef.current?.requestFullscreen().catch((err) => {
+        console.error("Error going fullscreen:", err);
+      });
+    } else {
+      document.exitFullscreen().catch(() => { });
+    }
+  };
 
   // Auto play/pause full screen showcase video to save system resources and allow smooth transitions
   useEffect(() => {
@@ -301,18 +335,65 @@ export default function PlanningLawChatbotPage() {
           className="fixed inset-0 z-50 bg-black overflow-hidden flex items-center justify-center shadow-2xl"
           onClick={exitDemoMode}
         >
-          <video
-            ref={videoRef}
-            src="/videos/beira-lake-zoning-showcase.mp4"
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              exitDemoMode();
-            }}
-          />
+          <div
+            ref={videoAreaRef}
+            onDoubleClick={toggleFullscreen}
+            className="relative w-full h-full cursor-pointer select-none"
+          >
+            <video
+              ref={videoRef}
+              src="/videos/beira-lake-zoning-showcase.mp4"
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+              onClick={(e) => {
+                e.stopPropagation();
+                exitDemoMode();
+              }}
+            />
+
+            {/* Fullscreen Close Button */}
+            {isFullscreen && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFullscreen();
+                }}
+                className="absolute top-6 right-6 z-50 p-3 bg-zinc-900/80 border border-zinc-700 hover:bg-zinc-800 text-white rounded-full transition-colors cursor-pointer shadow-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Hover HUD Controls */}
+            <div
+              className="absolute bottom-4 right-4 z-30 flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => {
+                  if (videoRef.current) {
+                    if (videoRef.current.paused) {
+                      videoRef.current.play();
+                    } else {
+                      videoRef.current.pause();
+                    }
+                  }
+                }}
+                className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              >
+                <Play className="w-4 h-4 fill-current" />
+              </button>
+              <div className="h-4 w-[1px] bg-zinc-800" />
+              <button
+                onClick={toggleFullscreen}
+                className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              >
+                {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div
@@ -325,12 +406,12 @@ export default function PlanningLawChatbotPage() {
           className="absolute top-28 left-6 z-30"
         >
           <Link
-              href="/learnmore"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-black/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-xs cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Back to Learn More
-            </Link>
+            href="/learnmore"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/60 dark:bg-black/60 backdrop-blur-md text-sm font-semibold text-zinc-650 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white transition-all hover:bg-white/80 dark:hover:bg-black/80 hover:scale-105 active:scale-95 group shadow-xs cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to Learn More
+          </Link>
         </motion.div>
 
         <motion.div
@@ -453,23 +534,19 @@ export default function PlanningLawChatbotPage() {
                         <ul className="space-y-4">
                           <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>Architect spends 2–3 days cross-referencing books</span>
+                            <span>Architect spends 2–3 days cross-referencing planning books</span>
                           </li>
                           <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>ChatGPT misreads tabular content and nuances</span>
+                            <span>ChatGPT misreads tabular content and planning nuances</span>
                           </li>
                           <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>No verification or traceability to actual clauses</span>
+                            <span>No verified answers before client presentation</span>
                           </li>
                           <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
                             <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>Client kept waiting for answers before meetings</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
-                            <X className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                            <span>Unpaid research time at the pre-design stage</span>
+                            <span>Feasibility decision delayed by consultant fees and timelines</span>
                           </li>
                         </ul>
                       </motion.div>
@@ -488,23 +565,19 @@ export default function PlanningLawChatbotPage() {
                         <ul className="space-y-4">
                           <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Enter plot location, get answers instantly</span>
+                            <span>Enter plot location</span>
                           </li>
                           <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Accurate extraction of FAR and height limits</span>
+                            <span>Get instant feasibility PDF with all constraints</span>
                           </li>
                           <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Clause-referenced answers for full traceability</span>
+                            <span>Verified answers based on actual planning codes</span>
                           </li>
                           <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
                             <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Outputs formatted feasibility PDF immediately</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-700 dark:text-zinc-300 text-sm">
-                            <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Impress clients at the very first meeting</span>
+                            <span>Present to client on day one</span>
                           </li>
                         </ul>
                       </motion.div>
@@ -532,9 +605,9 @@ export default function PlanningLawChatbotPage() {
               className="lg:col-span-5 space-y-6"
             >
               <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-950 leading-tight">
-                Unpaid research time
+                The planning bottleneck
               </h2>
-              <div className="w-20 h-1.5 bg-gradient-to-r from-amber-400 via-zinc-400 to-zinc-950 rounded-full" />
+              <div className="w-20 h-1.5 bg-[var(--color-lime)] rounded-full" />
             </motion.div>
 
             <motion.div
@@ -543,9 +616,9 @@ export default function PlanningLawChatbotPage() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="lg:col-span-7 space-y-6"
             >
-              <p className="text-xl text-zinc-600 leading-relaxed">You are cross-referencing planning regulations in a book that ChatGPT cannot read accurately — before you have even been paid for the job.</p>
-              <p className="text-lg text-zinc-500 leading-relaxed">General AI tools hallucinate or misread the tabular zoning data, meaning you still have to verify everything manually. It takes days of work to answer a simple client question: &quot;What can I build here?&quot;</p>
-              <p className="text-lg font-semibold text-zinc-900 leading-relaxed">The Planning Law Chatbot eliminates this entirely. You get the answer instantly, correctly, and formatted for the client meeting.</p>
+              <p className="text-xl text-zinc-600 leading-relaxed">Architects and developers spend days manually researching what can be built on a plot before the design process even starts.</p>
+              <p className="text-lg text-zinc-500 leading-relaxed">Planning books are fragmented across regulations from multiple authorities. ChatGPT misreads tables and nuances in construction law. The result is delayed feasibility, uncertain client conversations, and consultant fees that eat into the project budget.</p>
+              <p className="text-lg font-semibold text-zinc-900 leading-relaxed">The Planning Law Chatbot automates this, turning planning research from a multi-day manual task into a one-minute answer.</p>
             </motion.div>
           </div>
         </div>
@@ -620,7 +693,7 @@ export default function PlanningLawChatbotPage() {
                   Input
                 </h3>
                 <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Plot location data, entered as a street address, coordinates, or parcel boundaries. Progress label: Plot Data Entry.
+                  Enter the plot location and the tool returns: maximum allowable height in metres or storeys, floor area ratio (FAR) and density constraints, allowable use classes, sanitary and parking requirements per local code, and any special overlay zones or restrictions.
                 </p>
               </motion.div>
 
@@ -640,7 +713,7 @@ export default function PlanningLawChatbotPage() {
                   Planning Law Chatbot
                 </h3>
                 <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  AI reads the active zoning codes and extracts allowable height, FAR, setbacks, and use classes for that plot. Progress label: AI Processing.
+                  AI reads the active zoning codes and extracts allowable height, FAR, setbacks, and use classes for that plot. FIDIC-grade accuracy trained on 50+ international planning codes including UAE, Sri Lanka, KSA, UK, and Australia regulations.
                 </p>
               </motion.div>
 
@@ -660,7 +733,7 @@ export default function PlanningLawChatbotPage() {
                   Feasibility Summary
                 </h3>
                 <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Constraints are compiled into a buildable envelope, max storeys, FAR, sanitary requirements, parking ratios, and heritage overlays. Progress label: Envelope Summary.
+                  Constraints are compiled into a buildable envelope, max storeys, FAR, sanitary requirements, parking ratios, and heritage overlays. Output formats include interactive chatbot answers (ask follow-up questions) and a formatted feasibility PDF ready to present to clients.
                 </p>
               </motion.div>
 
@@ -680,7 +753,7 @@ export default function PlanningLawChatbotPage() {
                   Feasibility PDF
                 </h3>
                 <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  A formatted summary you can take into client meetings, ready to feed the design brief and cost plan. Progress label: Feasibility Output.
+                  A formatted summary you can take into client meetings, ready to feed the design brief and cost plan. Plot location → Planning Law Chatbot → Feasibility PDF + Height/FAR constraints → Cost Plan Calculator → Design brief with budget and planning envelope locked in.
                 </p>
               </motion.div>
 
@@ -759,13 +832,13 @@ export default function PlanningLawChatbotPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <motion.div initial={{ opacity: 0, x: -50 }} animate={isWorkflowInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="p-8 bg-zinc-800/50 border border-zinc-700/50 rounded-3xl space-y-4 backdrop-blur-sm">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">What feeds in</span>
-              <h4 className="font-bold text-2xl text-white">Plot Location</h4>
-              <p className="text-zinc-400">Basic site details, coordinates, or regional location data from the client.</p>
+              <h4 className="font-bold text-2xl text-white">Plot Location Data</h4>
+              <p className="text-zinc-400">Plot location data (address or coordinates) that feeds into the chatbot for instant feasibility analysis.</p>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 50 }} animate={isWorkflowInView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay: 0.3 }} className="p-8 bg-zinc-800/50 border border-zinc-700/50 rounded-3xl space-y-4 backdrop-blur-sm">
               <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">What it feeds into</span>
-              <h4 className="font-bold text-2xl text-white">Feasibility & Design</h4>
-              <p className="text-zinc-400">The constraints and height limits confirmed here become the boundaries your design works within from the first line drawn.</p>
+              <h4 className="font-bold text-2xl text-white">Cost Plan Calculator</h4>
+              <p className="text-zinc-400">The planning envelope becomes the design constraint for the Cost Plan Calculator, creating a design brief with budget and planning envelope locked in.</p>
             </motion.div>
           </div>
         </div>
@@ -783,8 +856,8 @@ export default function PlanningLawChatbotPage() {
 
             <motion.div initial={{ opacity: 0, y: 30 }} animate={isPricingInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
-                { label: "Per User Subscription", price: "$15", desc: "Per-user subscription for companies.", suffix: "/month" },
-                { label: "Billing Model", price: "Monthly", desc: "Monthly subscription instead of a one-time implementation fee.", suffix: "" },
+
+                { label: "Per User Subscriptions for companies", price: "$15", desc: "Monthly Subscription instead of an one time implementation fee.", suffix: "/month" },
               ].map((card, i) => (
                 <motion.div key={i} whileHover={{ y: -8, scale: 1.02 }} className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm hover:shadow-xl transition-all duration-300">
                   <span className="text-xs text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-widest">{card.label}</span>
@@ -801,8 +874,12 @@ export default function PlanningLawChatbotPage() {
               <h3 className="font-bold text-xl border-b border-zinc-100 dark:border-zinc-800 pb-4 text-zinc-900 dark:text-white">Quick Facts</h3>
               <div className="space-y-5 flex-1">
                 {[
-                  { label: "Best For", value: "Architecture firms, Developers" },
-                  { label: "Status", value: "Scaling" },
+                  { label: "Best For", value: "Architects, real estate developers, consultancies" },
+                  { label: "Status", value: "Scaling with sales" },
+                  { label: "Stage", value: "Pre-design" },
+                  { label: "Regions", value: "UAE, Sri Lanka, KSA, UK, Australia" },
+                  { label: "Time to Implement", value: "1-2 weeks" },
+                  { label: "Pricing", value: "USD 4,500 + USD 400/yr" },
                 ].map((item, i) => (
                   <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2">
                     <span className="text-zinc-500 font-semibold">{item.label}</span>
@@ -811,7 +888,7 @@ export default function PlanningLawChatbotPage() {
                 ))}
               </div>
               <Button asChild className="w-full rounded-2xl py-7 font-bold shadow-lg bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer border-0">
-                <a href="/pricing" target="_blank" rel="noopener noreferrer">
+                <a href="/pricing?product=planning_law" target="_blank" rel="noopener noreferrer">
                   Buy Products →
                 </a>
               </Button>
@@ -823,9 +900,9 @@ export default function PlanningLawChatbotPage() {
                 <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-6">Related Products</h4>
                 <ul className="space-y-4 text-sm">
                   {[
-                    { href: "/learnmore/wordtobim", label: "WordtoBIM", tag: "Design workflow" },
-                    { href: "/learnmore/revit-to-boq", label: "Boq", tag: "BOQ baseline" },
-                    { href: "/learnmore/cost-plan-calculator", label: "prelim", tag: "Conceptual cost" },
+                    { href: "/learnmore/cost-plan-calculator", label: "Cost Plan Calculator", tag: "Next stage" },
+                    { href: "/learnmore/hand-drawn-to-autocad", label: "Hand Drawn to AutoCAD", tag: "Design stage" },
+                    { href: "/learnmore/revit-to-boq", label: "Revit to BOQ", tag: "Tendering stage" },
                   ].map((item, i) => (
                     <li key={i}>
                       <Link href={item.href} className="font-bold hover:text-primary transition-colors flex items-center justify-between">
@@ -851,40 +928,40 @@ export default function PlanningLawChatbotPage() {
         <ComparisonGrid
           sectionTitle="Why choose Planning Law Chatbot"
           card1={{
-            title: "Manual",
-            subtitle: "Traditional Workflow",
+            title: "Manual Method",
+            subtitle: "Manual Planning Research",
             features: [
-              "2-3 days per feasibility check",
-              "Different approach per architect",
-              "No audit trail or verification",
-              "Expensive expert consultant fees",
+              "2-3 days per site",
+              "Consultant fees: USD 500-2,000",
+              "Risk of misinterpretation",
+              "No audit trail",
             ],
             metric: { value: "2-3", label: "DAYS" },
-            button: { text: "Traditional Route", href: "/pricing" },
+            button: { text: "Traditional Route", href: "#" },
           }}
           card2={{
-            title: "Chatbot",
-            subtitle: "Planning Law AI",
+            title: "Planning Law Chatbot",
+            subtitle: "Concolabs",
             features: [
-              "1 minute per feasibility check",
-              "Consistent methodology across firm",
-              "All sources documented with clauses",
-              "Feasibility ready on day one",
+              "1 minute per site",
+              "Fixed fee + annual maintenance",
+              "Verified against planning codes",
+              "Outputs saved for audit",
             ],
             metric: { value: "1", label: "MINUTE" },
             button: { text: "Book A Demo", href: "https://calendar.app.google/mCq7zBhXrDnEAJvB7" },
           }}
           card3={{
-            title: "General AI",
-            subtitle: "ChatGPT & Claude",
+            title: "ChatGPT + PDF",
+            subtitle: "General AI",
             features: [
               "Misreads tabular codes & formatting",
               "Not trained on building codes",
               "No clause verification or source links",
-              "No local planning law updates",
+              "Cannot be used for client presentations",
             ],
             metric: { value: "UNRELIABLE", label: "FAST /" },
-            button: { text: "General Chat", href: "https://chat.openai.com" },
+            button: { text: "General Chat", href: "#" },
           }}
         />
       </div>
@@ -934,10 +1011,10 @@ export default function PlanningLawChatbotPage() {
         </div>
         <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
           <motion.h2 initial={{ opacity: 0, y: 40 }} animate={isCtaInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
-            Know what you can build <br /><span className="text-zinc-500 dark:text-zinc-400">before you design.</span>
+            Start your feasibility with data, not guesswork.
           </motion.h2>
           <motion.p initial={{ opacity: 0, y: 30 }} animate={isCtaInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.2 }} className="text-zinc-600 dark:text-zinc-400 text-xl max-w-2xl mx-auto leading-relaxed">
-            See how the Planning Law Chatbot helps you answer the client&apos;s first question instantly.
+            See how Planning Law Chatbot answers planning questions before your team picks up the phone.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={isCtaInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.4 }} className="pt-6 flex justify-center">
             <Button asChild size="lg" className="rounded-2xl px-10 py-7 font-bold shadow-xl bg-[var(--color-lime)] text-black hover:bg-[var(--color-lime)]/90 cursor-pointer hover:scale-105 transition-all duration-300">

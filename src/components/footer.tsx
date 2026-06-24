@@ -22,7 +22,7 @@ const footerLinks = {
     links: [
       { label: "Learn More", href: "/learnmore" },
       { label: "Blog", href: "/resources/blog" },
-      { label: "Help Center", href: "/chat" },
+      { label: "Help Center", href: "/resources/help" },
     ],
   },
   company: {
@@ -211,30 +211,18 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-zinc-150 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <Link href="/privacy" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
-              Terms of Service
-            </Link>
-            <Link href="/cookies" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
-              Cookie Policy
-            </Link>
-            <div className="flex items-center gap-2 text-sm text-zinc-500">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              All systems operational
-            </div>
-          </div>
-          <p className="text-xs text-zinc-400">
-            &copy; {new Date().getFullYear()} Concolabs, Inc. All rights reserved.
-          </p>
-        </div>
+        {/* Bottom bar divider */}
+        <div className="border-t border-zinc-150" />
 
         {/* Spacer so watermark text has room below the content */}
         <div className="h-28 md:h-40" />
+
+        {/* Copyright notice centered at the bottom middle */}
+        <div className="flex justify-center w-full relative z-10">
+          <p className="text-xs text-zinc-450 dark:text-zinc-500">
+            &copy; {new Date().getFullYear()} Concolabs, Inc. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -73,7 +73,7 @@ export const circuitProducts = [
     title: "Revit to BOQ Plugin",
     icon: Layers,
     tagline: "Automated BOQ from Revit models",
-    description: "Identifies all building elements from Revit take-off files and generates a standard BOQ automatically.",
+    description: "Identifies all elements directly from the Revit model and generates a standard BOQ automatically.",
     connections: ["Auto Conversion 2D to 3D", "Autodesk CC to BOQ", "Cost Plan Calculator"],
     category: "Costing & BOQ",
   },
@@ -132,13 +132,13 @@ export const circuitProducts = [
     category: "Site & Execution",
   },
   {
-    id: "erp-automations",
-    title: "ERP Automations",
-    icon: Cog,
-    tagline: "Bridge site and back office",
-    description: "Email instructions automatically converted into ERP job cards. Site app data syncs directly.",
-    connections: ["BuildMonitor Mobile", "MeasureonAir", "BuildMarketlk.com"],
-    category: "Site & Execution",
+    id: "costx-to-boq",
+    title: "CostX to BOQ",
+    icon: BarChart3,
+    tagline: "Client-ready CostX BOQ",
+    description: "Reads your CostX workbook exports and maps dimension groups directly to NRM2 templates in minutes.",
+    connections: ["Revit to BOQ Plugin", "Autodesk CC to BOQ", "2D Drawing to BOQ"],
+    category: "Costing & BOQ",
   },
   {
     id: "builderbot",
@@ -523,7 +523,10 @@ export function WhySwitch() {
             Why teams switch to Concolabs
           </h2>
           <p className="text-zinc-500 mt-5 text-base sm:text-lg lg:text-[21px] max-w-3xl mx-auto leading-relaxed">
-            A unified ecosystem of 15 specialized products designed to work in synergy. 
+            A unified ecosystem of{" "}
+            <span className="font-extrabold text-zinc-955 dark:text-zinc-50 bg-gradient-to-r from-lime/30 to-lime/30 bg-[length:100%_35%] bg-no-repeat bg-[position:0_85%]">
+              15 specialized products designed to work in synergy.
+            </span>{" "}
             Hover over any node to trace its connections and see how data flows in real-time.
           </p>
         </div>

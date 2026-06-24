@@ -27,6 +27,8 @@ import {
   Sparkles,
   Plus,
   Minus,
+  Maximize,
+  Minimize,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
@@ -365,6 +367,9 @@ export default function WordToBIMPage() {
   const [autoToggleKey, setAutoToggleKey] = useState(0);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoAreaRef = useRef<HTMLDivElement>(null);
   const [chatStep, setChatStep] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
@@ -381,6 +386,36 @@ export default function WordToBIMPage() {
   const handleTabClick = (tab: "before" | "after") => {
     setActiveTab(tab);
     setAutoToggleKey((k) => k + 1);
+  };
+
+  // Listen to fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement !== null);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
+  // Exit fullscreen on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      videoAreaRef.current?.requestFullscreen().catch((err) => {
+        console.error("Error going fullscreen:", err);
+      });
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
   };
 
   const scrollToDemo = useCallback(() => {
@@ -468,8 +503,12 @@ export default function WordToBIMPage() {
               WordToBIM
             </h1>
 
-            <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl mx-auto font-medium">
-              Prompt your way through any stage of the model. From hand drawings to compliance-checked 3D, without leaving Revit.
+            <p className="text-lg sm:text-xl text-zinc-950 dark:text-white font-bold leading-relaxed max-w-2xl mx-auto">
+              Prompt your way through any stage of the model. From hand drawings to compliance-checked 3D.
+            </p>
+
+            <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-3xl mx-auto font-medium">
+              WordToBIM is a Revit plugin that models elements from a text prompt, customised to your firm's own Revit family library and design conventions so every prompt resolves to your actual elements, not generic geometry. It handles hand-drawn sketch input, 2D to 3D conversion detailing, compliance checks against active planning codes, and schedule generation, all without leaving your Revit session. CAD experience recommended.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 pt-6">
@@ -622,12 +661,17 @@ export default function WordToBIMPage() {
 
           {/* Right Column: Premium Mockup Player */}
           <div className="lg:col-span-7 w-full">
-            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border border-zinc-800 bg-zinc-900 group">
+            <div
+              ref={videoAreaRef}
+              onDoubleClick={toggleFullscreen}
+              className="relative rounded-[2rem] overflow-hidden shadow-2xl border border-zinc-800 bg-zinc-900 group cursor-pointer select-none"
+            >
               {/* Decorative yellow glow inside the border on hover */}
               <div className="absolute -inset-1 bg-gradient-to-r from-lime/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2rem]" />
 
               <div className="relative rounded-[2rem] overflow-hidden bg-black aspect-video flex items-center justify-center">
                 <video
+                  ref={videoRef}
                   src="/videos/MVP_Vid_1_202606081311.mp4"
                   autoPlay
                   loop
@@ -636,33 +680,45 @@ export default function WordToBIMPage() {
                   className="w-full h-full object-cover"
                 />
 
-                {/* Custom Video Control Overlay mimicking the screenshot */}
-                <div className="absolute bottom-4 left-4 right-4 bg-zinc-900/90 backdrop-blur-md px-4 py-3 rounded-2xl border border-zinc-800 flex items-center justify-between z-20">
-                  {/* Left Controls: Play button and time */}
-                  <div className="flex items-center gap-3">
-                    <button className="w-6 h-6 rounded-full bg-lime flex items-center justify-center hover:scale-105 transition-transform cursor-pointer">
-                      <Play className="w-3 h-3 text-black fill-black ml-0.5" />
-                    </button>
-                    <span className="text-[11px] font-mono text-zinc-300">01:02</span>
-                  </div>
+                {/* Fullscreen Close Button */}
+                {isFullscreen && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFullscreen();
+                    }}
+                    className="absolute top-6 right-6 z-50 p-3 bg-zinc-900/80 border border-zinc-700 hover:bg-zinc-800 text-white rounded-full transition-colors cursor-pointer shadow-lg"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
 
-                  {/* Center Control: Progress Bar */}
-                  <div className="flex-1 mx-4 relative h-1 bg-zinc-800 rounded-full overflow-hidden">
-                    <div className="absolute top-0 left-0 h-full w-[70%] bg-lime" />
-                  </div>
-
-                  {/* Right Controls: HD Badge, Volume, Fullscreen */}
-                  <div className="flex items-center gap-3">
-                    <span className="px-1.5 py-0.5 text-[9px] font-bold bg-zinc-800 text-zinc-350 rounded border border-zinc-700 font-mono tracking-wider">
-                      HD
-                    </span>
-                    <svg className="w-4 h-4 text-zinc-400 hover:text-white transition-colors cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                    </svg>
-                    <svg className="w-4 h-4 text-zinc-400 hover:text-white transition-colors cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5" />
-                    </svg>
-                  </div>
+                {/* Hover HUD Controls */}
+                <div
+                  className="absolute bottom-4 right-4 z-30 flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    onClick={() => {
+                      if (videoRef.current) {
+                        if (videoRef.current.paused) {
+                          videoRef.current.play();
+                        } else {
+                          videoRef.current.pause();
+                        }
+                      }
+                    }}
+                    className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <Play className="w-4 h-4 fill-current" />
+                  </button>
+                  <div className="h-4 w-[1px] bg-zinc-800" />
+                  <button
+                    onClick={toggleFullscreen}
+                    className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                  </button>
                 </div>
               </div>
             </div>
@@ -1040,10 +1096,10 @@ export default function WordToBIMPage() {
                 <div className="space-y-5 pt-4">
                   {[
                     { label: "Stage", value: "Design" },
-                    { label: "Best For", value: "BIM modellers and architects" },
+                    { label: "Best For", value: "BIM modellers and architects at firms customised with their own Revit family library and design standards" },
                     { label: "Regions", value: "Universal" },
                     { label: "Time to Implement", value: "1 week + custom training" },
-                    { label: "Pricing", value: "USD 100/mo or USD 4,800 one-off" },
+                    { label: "Pricing", value: "USD 100/month company subscription, or USD 4,800 one-off plus USD 100/month maintenance" },
                   ].map((fact, i) => (
                     <div key={i} className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 gap-4">
                       <span className="text-zinc-500 font-semibold shrink-0">{fact.label}</span>
@@ -1056,7 +1112,7 @@ export default function WordToBIMPage() {
                 asChild
                 className="w-full rounded-2xl py-7 font-bold shadow-lg bg-lime text-black hover:bg-lime/90 cursor-pointer border-0 mt-8"
               >
-                <a href="/pricing">
+                <a href="/pricing?product=word_to_bim">
                   Buy Products →
                 </a>
               </Button>
@@ -1116,9 +1172,9 @@ export default function WordToBIMPage() {
           title: "WordToBIM",
           subtitle: "WordToBIM Workflow",
           features: [
-            "No CAD skills needed",
+            "Prompt an element and it is modelled in Revit instantly using your firm's family library.",
             "Fast iteration by prompt, using your firm's own families",
-            "Prompt your firm's element placed in Revit with default parameters",
+            "Prompt > your firm's element placed in Revit with your default parameters",
             "Built for modellers who want to work faster, customised to your practice",
           ],
           metric: { value: "SECONDS", label: "GEN TIME" },
@@ -1130,11 +1186,11 @@ export default function WordToBIMPage() {
           features: [
             "Focus on optimisation, not design intent",
             "Require technical briefing documents",
-            "Output is generic geometry that needs remapping",
-            { text: "No direct native integration", type: "x" },
+            "Output is generic geometry that needs remapping to your family library",
+            { text: "WordToBIM places your elements directly into Revit, other tools give you geometry you still have to remap", type: "x" },
           ],
-          metric: { value: "UNRELIABLE", label: "FAST /" },
-          button: { text: "Other Tools", href: "https://chat.openai.com" },
+          metric: { value: "GENERAL AI" },
+          button: { text: "Other Tools", href: "#" },
         }}
       />
 

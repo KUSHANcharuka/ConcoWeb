@@ -41,10 +41,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-lime/20`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-background`}>
       <body className="font-sans antialiased">
-        <TRPCReactProvider>{children}</TRPCReactProvider>
-        <ChatWidget />
+        <TRPCReactProvider>
+          {children}
+          <ChatWidget />
+        </TRPCReactProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>

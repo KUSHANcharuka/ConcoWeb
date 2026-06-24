@@ -28,6 +28,8 @@ import {
   Layers,
   Play,
   Minimize2,
+  Maximize,
+  Minimize,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
@@ -388,6 +390,9 @@ export default function Drawing2DToBOQPage() {
   const [autoToggleKey, setAutoToggleKey] = useState(0);
   const [activeWorkflowStep, setActiveWorkflowStep] = useState(0);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoAreaRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const startScrollYRef = useRef(0);
 
@@ -431,6 +436,36 @@ export default function Drawing2DToBOQPage() {
   const enterDemoMode = useCallback(() => {
     setIsDemoMode(true);
   }, []);
+
+  // Listen to fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement !== null);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
+  // Exit fullscreen on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      videoAreaRef.current?.requestFullscreen().catch((err) => {
+        console.error("Error going fullscreen:", err);
+      });
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  };
 
   useEffect(() => {
     if (!isDemoMode) return;
@@ -550,30 +585,26 @@ export default function Drawing2DToBOQPage() {
                         variants={fadeInUp}
                         className="text-lg sm:text-xl text-zinc-700 dark:text-zinc-300 font-semibold leading-relaxed max-w-xl"
                       >
-                        Priced BOQ straight from any PDF drawing.
-                        <br />
-                        <span className="text-zinc-950 dark:text-white font-bold">No 3D model required.</span>
+                        Priced BOQ straight from any 2D drawing. No 3D model required.
                       </motion.p>
 
                       <motion.p
                         variants={fadeInUp}
                         className="text-sm sm:text-base text-zinc-655 dark:text-zinc-400 leading-relaxed max-w-xl"
                       >
-                        Not every project starts with a BIM model. When you work from 2D structural plans, you still need precise quantities. Our AI vision engine reads PDF drawings, extracts dimensions, and automatically maps elements to priced BOQ formats.
+                        Not every project starts with a BIM model. When you work from 2D structural plans, you still need precise quantities. Our AI vision engine reads PDF, DWG and TIFF drawings, extracts dimensions, and automatically maps elements to priced BOQ formats.
                       </motion.p>
 
                       <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
                         <Button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setIsDemoMode(true);
-                          }}
+                          asChild
                           variant="outline"
                           size="lg"
                           className="rounded-2xl px-8 py-7 font-bold shadow-sm cursor-pointer border-zinc-200/50 dark:border-zinc-800/50 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md hover:bg-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
                         >
-                          <Play className="w-4 h-4 mr-2 text-zinc-900 dark:text-zinc-300 fill-zinc-900 dark:fill-zinc-300" />
-                          Watch Demo
+                          <a href="https://calendar.app.google/mCq7zBhXrDnEAJvB7" target="_blank" rel="noopener noreferrer">
+                            Request a demo
+                          </a>
                         </Button>
                         <Button
                           asChild
@@ -640,12 +671,13 @@ export default function Drawing2DToBOQPage() {
                               </div>
                               <ul className="space-y-3.5">
                                 {[
-                                  "Open 2D PDF drawing",
-                                  "Manually measure elements by hand",
-                                  "Identify all items in the drawing",
-                                  "Type measurements into Excel",
-                                  "Look up or calculate rates",
-                                  "1–2 weeks per BOQ, high error rate"
+                                  "Read drawing: Measure every element by hand",
+                                  "Identify items: Identify items from line work manually",
+                                  "Measurements: Calculated by hand, easily misread",
+                                  "Rates: Typed into Excel manually",
+                                  "3D model: Not needed, but no automation either",
+                                  "Errors: High error rate, dimensions missed",
+                                  "Time per drawing: 1 to 2 weeks"
                                 ].map((item, i) => (
                                   <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-350 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
                                     <X className="w-5 h-5 text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
@@ -668,12 +700,13 @@ export default function Drawing2DToBOQPage() {
                               </div>
                               <ul className="space-y-3.5">
                                 {[
-                                  "Upload 2D PDF",
-                                  "Computer vision reads the drawing",
-                                  "BOQ with measurements generated",
-                                  "AI predicts rates automatically",
-                                  "1–2 hours including review",
-                                  "Extends automation to non-BIM projects"
+                                  "Read drawing: AI vision reads the drawing and extracts dimensions",
+                                  "Identify items: AI groups slabs, beams, columns and walls automatically",
+                                  "Measurements: Areas, lengths and volumes extracted from the geometry",
+                                  "Rates: Custom rate tables applied automatically",
+                                  "3D model: Works with no 3D model at all",
+                                  "Errors: Errors made visible for review",
+                                  "Time per drawing: 1 to 2 hours"
                                 ].map((item, i) => (
                                   <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-350 text-sm bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
                                     <Check className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
@@ -702,12 +735,59 @@ export default function Drawing2DToBOQPage() {
                     e.stopPropagation();
                   }}
                 >
-                  <video
-                    src="/videos/MVP_Vid_1_202606081311.mp4"
-                    autoPlay
-                    controls
-                    className="w-full h-full object-cover"
-                  />
+                  <div
+                    ref={videoAreaRef}
+                    onDoubleClick={toggleFullscreen}
+                    className="relative w-full h-full cursor-pointer select-none"
+                  >
+                    <video
+                      ref={videoRef}
+                      src="/videos/MVP_Vid_1_202606081311.mp4"
+                      autoPlay
+                      className="w-full h-full object-cover"
+                    />
+
+                    {/* Fullscreen Close Button */}
+                    {isFullscreen && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFullscreen();
+                        }}
+                        className="absolute top-6 right-6 z-50 p-3 bg-zinc-900/80 border border-zinc-700 hover:bg-zinc-800 text-white rounded-full transition-colors cursor-pointer shadow-lg"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    )}
+
+                    {/* Hover HUD Controls */}
+                    <div
+                      className="absolute bottom-4 right-4 z-30 flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <button
+                        onClick={() => {
+                          if (videoRef.current) {
+                            if (videoRef.current.paused) {
+                              videoRef.current.play();
+                            } else {
+                              videoRef.current.pause();
+                            }
+                          }
+                        }}
+                        className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                      >
+                        <Play className="w-4 h-4 fill-current" />
+                      </button>
+                      <div className="h-4 w-[1px] bg-zinc-800" />
+                      <button
+                        onClick={toggleFullscreen}
+                        className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                      >
+                        {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -743,7 +823,7 @@ export default function Drawing2DToBOQPage() {
               Not every project comes with a 3D Revit model. Early-stage projects have 2D structural drawings. Non-BIM firms submit 2D PDFs. Budget-constrained projects use traditional 2D drawings.
             </p>
             <p>
-              But your estimators still need to produce a BOQ from that drawing — which means manually measuring every element by hand, identifying items from line work, and building the estimate in Excel. It is error-prone and takes days.
+              But your estimators still need to produce a BOQ from that drawing — which means manually measuring every element by hand, identifying items from line work, and building the estimate in Excel. It is error-prone and takes 1 to 2 weeks.
             </p>
             <p className="font-bold text-zinc-900 dark:text-zinc-100">
               2D Drawing to BOQ extends the automation benefits of BIM-based BOQ tools to projects that are entirely 2D.
@@ -806,19 +886,19 @@ export default function Drawing2DToBOQPage() {
           </div>
 
           {/* Three-card mockup row */}
-          <div className="flex flex-col xl:flex-row gap-8 items-stretch pt-4 overflow-x-auto pb-4 scrollbar-none">
+          <div className="flex flex-col xl:flex-row gap-4 items-stretch pt-4 overflow-x-auto pb-4 scrollbar-none">
             
             {/* Card 1: Input (Upload 2D Plan) */}
-            <div className="flex-1 min-w-[280px] bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-8 flex flex-col justify-between shadow-sm relative group hover:shadow-md transition-all duration-300">
-              <div className="space-y-4">
-                <span className="text-[10px] font-bold text-amber-600 dark:text-lime uppercase tracking-widest block">01 / SOURCE INTAKE</span>
-                <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">Upload Drawings</h3>
+            <div className="flex-1 min-w-[240px] bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-6 flex flex-col justify-between shadow-sm relative group hover:shadow-md transition-all duration-300">
+              <div className="space-y-3">
+                <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest block">01 / SOURCE INTAKE</span>
+                <h3 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">Upload Drawings</h3>
                 <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">
                   Support for PDF sheets, DWG plans, or blueprints. The AI instantly parses visual layouts.
                 </p>
               </div>
               
-              <div className="mt-8 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 bg-zinc-50/50 dark:bg-zinc-950/40 flex flex-col items-center justify-center text-center py-10">
+              <div className="mt-6 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 bg-zinc-50/50 dark:bg-zinc-950/40 flex flex-col items-center justify-center text-center py-6">
                 <FileText className="w-12 h-12 text-zinc-400 dark:text-zinc-700 mb-2" />
                 <span className="text-xs font-bold text-zinc-700 dark:text-zinc-400">drop_plan_sheets.pdf</span>
                 <span className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1">take-off processing...</span>
@@ -826,48 +906,48 @@ export default function Drawing2DToBOQPage() {
             </div>
 
             {/* Card 2: Wide Interactive Canvas */}
-            <div className="flex-[2] min-w-[320px] lg:min-w-[580px] bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-8 flex flex-col justify-between shadow-md relative group">
-              <div className="space-y-4 mb-6">
+            <div className="flex-[2] min-w-[280px] lg:min-w-[500px] bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-6 flex flex-col justify-between shadow-md relative group">
+              <div className="space-y-3 mb-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-amber-600 dark:text-lime uppercase tracking-widest block">02 / DATA LINKING</span>
+                  <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest block">02 / DATA LINKING</span>
                   <div className="flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[9px] text-emerald-600 dark:text-emerald-400 font-extrabold uppercase tracking-wider">AI Takeoff Engaged</span>
+                    <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 animate-pulse" />
+                    <span className="text-[9px] text-zinc-500 dark:text-zinc-400 font-extrabold uppercase tracking-wider">AI Takeoff Engaged</span>
                   </div>
                 </div>
                 <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">Takeoff Workspace</h3>
                 <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">
-                  Automatically pairs recognized layout lines with cost schedule taking. Select elements to trace them in real-time.
+                  Automatically pairs recognised layout lines with cost schedule items. Select elements to trace them in real-time.
                 </p>
               </div>
 
               {/* Web UI mockup */}
-              <div className="w-full bg-[#FFFBF6] dark:bg-zinc-950 border border-amber-100/60 dark:border-zinc-900 rounded-2xl overflow-hidden shadow-inner flex flex-col min-h-[300px]">
+              <div className="w-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-900 rounded-2xl overflow-hidden shadow-inner flex flex-col min-h-[240px]">
                 {/* Header bar */}
-                <div className="bg-[#FFF4E8] dark:bg-zinc-900/60 px-4 py-3 border-b border-amber-100/50 dark:border-zinc-900/50 flex items-center justify-between">
+                <div className="bg-zinc-100 dark:bg-zinc-900/60 px-3 py-2 border-b border-zinc-200 dark:border-zinc-900/50 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="flex gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-zinc-300" />
                     </div>
-                    <span className="text-[10px] font-bold text-amber-900 dark:text-zinc-300 ml-2">takeoff_sheet_s02.pdf</span>
+                    <span className="text-[10px] font-bold text-zinc-700 dark:text-zinc-300 ml-2">takeoff_sheet_s02.pdf</span>
                   </div>
                   {/* Initials indicators (Bespoke initials instead of photos) */}
                   <div className="flex items-center gap-1">
-                    <div className="w-6 h-6 rounded-full bg-amber-500 border border-white text-white flex items-center justify-center text-[9px] font-black shadow-xs">AI</div>
-                    <div className="w-6 h-6 rounded-full bg-zinc-900 border border-white text-white flex items-center justify-center text-[9px] font-black shadow-xs">QS</div>
-                    <div className="w-6 h-6 rounded-full bg-lime border border-white text-black flex items-center justify-center text-[9px] font-black shadow-xs">ENG</div>
-                    <button className="bg-amber-600 text-white rounded-lg px-2.5 py-1 text-[9px] font-bold ml-2 shadow-xs cursor-pointer hover:bg-amber-700 transition-colors">Share</button>
+                    <div className="w-6 h-6 rounded-full bg-zinc-600 border border-white text-white flex items-center justify-center text-[9px] font-black shadow-xs">AI</div>
+                    <div className="w-6 h-6 rounded-full bg-zinc-800 border border-white text-white flex items-center justify-center text-[9px] font-black shadow-xs">QS</div>
+                    <div className="w-6 h-6 rounded-full bg-zinc-700 border border-white text-white flex items-center justify-center text-[9px] font-black shadow-xs">ENG</div>
+                    <button className="bg-zinc-700 text-white rounded-lg px-2.5 py-1 text-[9px] font-bold ml-2 shadow-xs cursor-pointer hover:bg-zinc-600 transition-colors">Share</button>
                   </div>
                 </div>
 
                 {/* Workspace grid body */}
-                <div className="flex-1 p-4 relative flex flex-col md:flex-row gap-4 items-stretch min-h-[240px] bg-[#FFFDFC] dark:bg-zinc-950/20">
+                <div className="flex-1 p-3 relative flex flex-col md:flex-row gap-3 items-stretch min-h-[200px] bg-white dark:bg-zinc-950/20">
                   {/* Schematic outline view */}
-                  <div className="flex-1 bg-white dark:bg-zinc-900 border border-amber-100/40 dark:border-zinc-800 rounded-xl p-3 relative overflow-hidden flex flex-col justify-center min-h-[160px] shadow-xs">
+                  <div className="flex-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3 relative overflow-hidden flex flex-col justify-center min-h-[130px] shadow-xs">
                     {/* Grid pattern background */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(217,119,6,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(217,119,6,0.02)_1px,transparent_1px)] bg-[size:16px_16px]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(113,113,122,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(113,113,122,0.04)_1px,transparent_1px)] bg-[size:16px_16px]" />
                     
                     {/* Blueprint SVG graphics */}
                     <svg className="absolute inset-0 w-full h-full stroke-zinc-300 dark:stroke-zinc-800 fill-none" viewBox="0 0 300 200">
@@ -880,7 +960,7 @@ export default function Drawing2DToBOQPage() {
 
                       {/* Outline elements */}
                       <rect x="25" y="35" width="30" height="30" className="stroke-zinc-400 dark:stroke-zinc-700 fill-zinc-50 dark:fill-zinc-900/50" strokeWidth="1.5" />
-                      <rect x="125" y="35" width="30" height="30" className="stroke-amber-500 fill-amber-50/20" strokeWidth="2" />
+                      <rect x="125" y="35" width="30" height="30" className="stroke-zinc-500 fill-zinc-100/20" strokeWidth="2" />
                       <rect x="225" y="35" width="30" height="30" className="stroke-zinc-400 dark:stroke-zinc-700 fill-zinc-50 dark:fill-zinc-900/50" strokeWidth="1.5" />
 
                       <rect x="25" y="135" width="30" height="30" className="stroke-zinc-400 dark:stroke-zinc-700 fill-zinc-50 dark:fill-zinc-900/50" strokeWidth="1.5" />
@@ -888,16 +968,16 @@ export default function Drawing2DToBOQPage() {
                       <rect x="225" y="135" width="30" height="30" className="stroke-zinc-400 dark:stroke-zinc-700 fill-zinc-50 dark:fill-zinc-900/50" strokeWidth="1.5" />
 
                       {/* Dimension label */}
-                      <path d="M 55,50 L 125,50" className="stroke-amber-500" strokeWidth="1" />
-                      <path d="M 58,46 L 55,50 L 58,54 M 122,46 L 125,50 L 122,54" className="stroke-amber-500" strokeWidth="1" />
+                      <path d="M 55,50 L 125,50" className="stroke-zinc-400" strokeWidth="1" />
+                      <path d="M 58,46 L 55,50 L 58,54 M 122,46 L 125,50 L 122,54" className="stroke-zinc-400" strokeWidth="1" />
                     </svg>
                     
-                    <div className="absolute top-[32px] left-[70px] bg-amber-500 text-white font-mono text-[8px] px-1 rounded shadow-xs">5.40 m</div>
-                    <div className="absolute top-[72px] left-[132px] bg-amber-100 dark:bg-zinc-850 text-amber-800 dark:text-amber-400 font-bold text-[8px] px-1.5 py-0.5 rounded border border-amber-200/50">C2 Concrete Column</div>
+                    <div className="absolute top-[32px] left-[70px] bg-zinc-700 text-white font-mono text-[8px] px-1 rounded shadow-xs">5.40 m</div>
+                    <div className="absolute top-[72px] left-[132px] bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-400 font-bold text-[8px] px-1.5 py-0.5 rounded border border-zinc-300/50">C2 Concrete Column</div>
                   </div>
 
                   {/* Overlaid Data Table */}
-                  <div className="w-full md:w-[200px] bg-white dark:bg-zinc-900 border border-amber-200/50 dark:border-zinc-800 rounded-xl p-3 shadow-md flex flex-col justify-between shrink-0">
+                  <div className="w-full md:w-[180px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3 shadow-md flex flex-col justify-between shrink-0">
                     <div>
                       <div className="flex items-center justify-between border-b border-zinc-150 dark:border-zinc-850 pb-2 mb-2">
                         <span className="text-[9px] font-bold text-zinc-900 dark:text-white uppercase tracking-wider">Data Takeoff</span>
@@ -905,9 +985,9 @@ export default function Drawing2DToBOQPage() {
                       </div>
                       
                       <div className="space-y-1.5 text-[8.5px] font-semibold text-zinc-650 dark:text-zinc-400">
-                        <div className="flex justify-between items-center bg-amber-50/50 dark:bg-zinc-800/50 p-2 rounded border border-amber-100/50 dark:border-zinc-800">
+                        <div className="flex justify-between items-center bg-zinc-50 dark:bg-zinc-800/50 p-2 rounded border border-zinc-200 dark:border-zinc-800">
                           <span className="text-zinc-900 dark:text-white font-bold">Column C2</span>
-                          <span className="text-amber-600 dark:text-amber-450 font-bold">3.8 m³</span>
+                          <span className="text-zinc-800 dark:text-zinc-300 font-bold">3.8 m³</span>
                         </div>
                         <div className="flex justify-between items-center p-2">
                           <span>Slab S02</span>
@@ -922,7 +1002,7 @@ export default function Drawing2DToBOQPage() {
                     
                     <div className="pt-2.5 border-t border-zinc-150 dark:border-zinc-850 mt-2.5 flex justify-between items-center text-[7.5px] text-zinc-450 dark:text-zinc-500 font-semibold">
                       <span>Takeoff validated</span>
-                      <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 flex items-center justify-center text-white text-[7px] font-bold shadow-xs">✓</div>
+                      <div className="w-3.5 h-3.5 rounded-full bg-zinc-500 flex items-center justify-center text-white text-[7px] font-bold shadow-xs">✓</div>
                     </div>
                   </div>
                 </div>
@@ -930,25 +1010,25 @@ export default function Drawing2DToBOQPage() {
             </div>
 
             {/* Card 3: Output (Excel & ACC Sync) */}
-            <div className="flex-1 min-w-[280px] bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-8 flex flex-col justify-between shadow-sm relative group hover:shadow-md transition-all duration-300">
-              <div className="space-y-4">
-                <span className="text-[10px] font-bold text-amber-600 dark:text-lime uppercase tracking-widest block">03 / EXPORT & SYNC</span>
-                <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">Excel & ERP Sync</h3>
+            <div className="flex-1 min-w-[240px] bg-white dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-900 rounded-[2rem] p-6 flex flex-col justify-between shadow-sm relative group hover:shadow-md transition-all duration-300">
+              <div className="space-y-3">
+                <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest block">03 / EXPORT & SYNC</span>
+                <h3 className="text-lg font-bold tracking-tight text-zinc-900 dark:text-white">Excel & ERP Sync</h3>
                 <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed">
                   Export directly to Excel sheets, ERP solutions, or import into Autodesk Construction Cloud docs.
                 </p>
               </div>
               
-              <div className="mt-8 space-y-2">
+              <div className="mt-6 space-y-2">
                 <div className="flex items-center gap-3 bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-150/50 dark:border-zinc-850 p-3.5 rounded-2xl hover:border-zinc-250 transition-colors duration-300">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-black text-xs">XLS</div>
+                  <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-black text-xs">XLS</div>
                   <div className="text-left leading-tight">
                     <span className="text-[10px] font-bold text-zinc-900 dark:text-white block">Takeoff_BOQ.xlsx</span>
                     <span className="text-[8px] text-zinc-400 dark:text-zinc-500">Download Ready</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-150/50 dark:border-zinc-850 p-3.5 rounded-2xl hover:border-zinc-250 transition-colors duration-300">
-                  <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950 flex items-center justify-center text-amber-600 dark:text-amber-400 font-extrabold text-[8px]">ACC</div>
+                  <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 font-extrabold text-[8px]">ACC</div>
                   <div className="text-left leading-tight">
                     <span className="text-[10px] font-bold text-zinc-900 dark:text-white block">Autodesk Docs</span>
                     <span className="text-[8px] text-zinc-400 dark:text-zinc-500">Synced 1 min ago</span>
@@ -1012,7 +1092,7 @@ export default function Drawing2DToBOQPage() {
                   </div>
                   <div className="flex justify-between items-center text-sm border-b border-zinc-50 dark:border-zinc-850/50 pb-2 gap-4">
                     <span className="text-zinc-500 font-semibold shrink-0">Status</span>
-                    <span className="font-bold text-zinc-900 dark:text-zinc-100">Custom / R&D</span>
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100">Available</span>
                   </div>
                 </div>
               </div>
@@ -1021,7 +1101,7 @@ export default function Drawing2DToBOQPage() {
                 asChild
                 className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
               >
-                <a href="/pricing" target="_blank" rel="noopener noreferrer">
+                <a href="/pricing?product=drawing_boq" target="_blank" rel="noopener noreferrer">
                   Buy Products <ArrowUpRight />
                 </a>
               </Button>
@@ -1081,7 +1161,7 @@ export default function Drawing2DToBOQPage() {
               "No consistency across projects",
             ],
             metric: { value: "1-2", label: "WEEKS" },
-            button: { text: "Traditional Route", href: "/pricing" },
+            button: { text: "Traditional Route", href: "#" },
           }}
           card2={{
             title: "2D Drawing to BOQ",
@@ -1104,8 +1184,8 @@ export default function Drawing2DToBOQPage() {
               "Leave non-BIM projects behind entirely",
               "Forces designers to model in 3D first",
             ],
-            metric: { value: "UNRELIABLE", label: "FAST /" },
-            button: { text: "Other Tools", href: "https://chat.openai.com" },
+            metric: { value: "3D ONLY" },
+            button: { text: "Other Tools", href: "#" },
           }}
         />
       </div>

@@ -608,7 +608,7 @@ export default function BuildmonitorPage() {
                   className="w-full mt-8 rounded-xl py-6 font-bold bg-[#FFEF1A] text-black hover:bg-[#FFEF1A]/90 cursor-pointer shadow-md border-0 transition-colors duration-300"
                 >
                   <a
-                    href="/pricing"
+                    href="/pricing?product=build_monitor"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -630,9 +630,9 @@ export default function BuildmonitorPage() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/learnmore/erp-automations" className="hover:text-[#FFEF1A] dark:hover:text-[#FFEF1A] transition-colors flex items-center justify-between">
-                      <span>ERP Automations</span>
-                      <span className="text-[10px] font-medium text-zinc-400 bg-zinc-50 dark:bg-zinc-950 px-2 py-0.5 rounded border border-zinc-200/50 dark:border-zinc-800">Back-Office Sync</span>
+                    <Link href="/learnmore/tender-evaluations" className="hover:text-[#FFEF1A] dark:hover:text-[#FFEF1A] transition-colors flex items-center justify-between">
+                      <span>Tender Evaluations</span>
+                      <span className="text-[10px] font-medium text-zinc-400 bg-zinc-50 dark:bg-zinc-950 px-2 py-0.5 rounded border border-zinc-200/50 dark:border-zinc-800">Procurement</span>
                     </Link>
                   </li>
                   <li>
@@ -689,7 +689,7 @@ export default function BuildmonitorPage() {
             "Don't sync to ERP automatically",
             "Still require manual DPR writing",
           ],
-          metric: { value: "UNRELIABLE", label: "FAST /" },
+          metric: { value: "PARTIAL / MANUAL", label: "" },
           button: { text: "Other Apps", href: "#" },
         }}
       />

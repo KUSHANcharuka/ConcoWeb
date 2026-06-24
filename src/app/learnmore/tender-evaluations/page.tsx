@@ -632,7 +632,7 @@ export default function TenderEvaluationsPage() {
                 className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
               >
                 <a
-                  href="/pricing"
+                  href="/pricing?product=tender_eval"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -712,7 +712,7 @@ export default function TenderEvaluationsPage() {
             "High friction for small subcontractor trades",
           ],
           metric: { value: "FRICTION", label: "SUPPLIER" },
-          button: { text: "Other Tools", href: "https://chat.openai.com" },
+          button: { text: "Other Tools", href: "#" },
         }}
       />
 
