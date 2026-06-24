@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import Link from "next/link";
-import { Twitter, Linkedin, Github, Youtube } from "lucide-react";
+import { Twitter, Linkedin, Github, Youtube, Facebook, Mail } from "lucide-react";
 
 const footerLinks = {
   solutions: {
@@ -22,7 +22,7 @@ const footerLinks = {
     links: [
       { label: "Learn More", href: "/learnmore" },
       { label: "Blog", href: "/resources/blog" },
-      { label: "Help Center", href: "/resources/help" },
+      { label: "Help Center", href: "/chat" },
     ],
   },
   company: {
@@ -46,10 +46,10 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Twitter, href: "https://twitter.com/concolabs", label: "Twitter" },
-  { icon: Linkedin, href: "https://linkedin.com/company/concolabs", label: "LinkedIn" },
-  { icon: Github, href: "https://github.com/concolabs", label: "GitHub" },
-  { icon: Youtube, href: "https://youtube.com/concolabs", label: "YouTube" },
+  { icon: Mail, href: "mailto:it@concolabs.com", label: "Email" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/concolabs", label: "LinkedIn" },
+  { icon: Github, href: "https://github.com/concolabs-com", label: "GitHub" },
+  { icon: Youtube, href: "https://www.youtube.com/@ConcolabsInc", label: "YouTube" },
 ];
 
 // ── High-performance brand watermark text ──
@@ -137,10 +137,10 @@ export function Footer() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 pb-10">
 
         {/* Top grid */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-x-8 gap-y-10 mb-12">
 
           {/* Brand column */}
-          <div className="col-span-2 md:col-span-2 space-y-4">
+          <div className="col-span-1 sm:col-span-2 md:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center">
                 <span className="text-white font-bold text-lg">C</span>
@@ -214,15 +214,15 @@ export function Footer() {
         {/* Bottom bar divider */}
         <div className="border-t border-zinc-150" />
 
-        {/* Spacer so watermark text has room below the content */}
-        <div className="h-28 md:h-40" />
+        {/* Spacer so the CONCOLABS watermark has room on all screen sizes */}
+        <div className="h-20 md:h-36" />
+      </div>
 
-        {/* Copyright notice centered at the bottom middle */}
-        <div className="flex justify-center w-full relative z-10">
-          <p className="text-xs text-zinc-450 dark:text-zinc-500">
-            &copy; {new Date().getFullYear()} Concolabs, Inc. All rights reserved.
-          </p>
-        </div>
+      {/* Copyright — absolutely pinned to the very bottom of the footer, above watermark */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 flex justify-center pb-5">
+        <p className="text-xs text-zinc-400">
+          &copy; {new Date().getFullYear()} Concolabs, Inc. All rights reserved.
+        </p>
       </div>
     </footer>
   );

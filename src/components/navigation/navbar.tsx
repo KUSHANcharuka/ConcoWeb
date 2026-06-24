@@ -134,7 +134,7 @@ export function Navbar() {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-lg">C</span>
               </div>
-              <span className="text-xl font-semibold text-foreground">Concolabs</span>
+              <span className="text-xl font-semibold text-foreground hidden sm:inline">Concolabs</span>
             </Link>
 
             {/* Desktop Navigation */}

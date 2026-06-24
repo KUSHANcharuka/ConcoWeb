@@ -86,8 +86,8 @@ export function PlatformSection() {
               >
                 {/* Card Header */}
                 <div className="flex items-start justify-between p-7 pb-5">
-                  <div>
-                    <h3 className="text-3xl font-medium text-zinc-900 leading-tight">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-2xl sm:text-3xl font-medium text-zinc-900 leading-tight">
                       {card.title}{" "}
                       <span className="font-normal text-zinc-650">{card.highlight}</span>
                     </h3>
@@ -106,7 +106,7 @@ export function PlatformSection() {
                 </div>
 
                 {/* Mockup Area */}
-                <div className="absolute bottom-0 left-0 right-0 px-6 pb-6 top-[140px] sm:top-[155px]">
+                <div className="absolute bottom-0 left-0 right-0 px-6 pb-6 top-[175px] sm:top-[155px]">
                   <div className="relative w-full h-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/50 shadow-sm flex items-center justify-center">
                     <img
                       src={card.image}
@@ -134,8 +134,8 @@ export function PlatformSection() {
               >
                 {/* Card Header */}
                 <div className="flex items-start justify-between p-6 pb-4">
-                  <div>
-                    <h3 className="text-2xl font-medium text-zinc-900 leading-tight">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-xl sm:text-2xl font-medium text-zinc-900 leading-tight">
                       {card.title}{" "}
                       <span className="font-normal text-zinc-650">{card.highlight}</span>
                     </h3>
@@ -154,7 +154,7 @@ export function PlatformSection() {
                 </div>
 
                 {/* Mockup Area */}
-                <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 top-[130px] sm:top-[145px]">
+                <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 top-[165px] sm:top-[145px]">
                   <div className="relative w-full h-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/50 shadow-sm flex items-center justify-center">
                     <img
                       src={card.image}
