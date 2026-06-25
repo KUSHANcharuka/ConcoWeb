@@ -304,7 +304,7 @@ export default function AutoReinforcementPage() {
                       animate="visible"
                       className="space-y-6"
                     >
-                      <motion.h1 variants={fadeInUp} className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep">
+                      <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep">
                         Auto Reinforcement
                       </motion.h1>
 

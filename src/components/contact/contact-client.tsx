@@ -10,13 +10,15 @@ import {
   Loader2,
   Linkedin,
   Twitter,
-  Github
+  Github,
+  Youtube,
+  Calendar
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function ContactClient() {
   const [formState, setFormState] = useState<"idle" | "submitting" | "success">("idle")
-  
+
   // General form state
   const [genName, setGenName] = useState("")
   const [genEmail, setGenEmail] = useState("")
@@ -37,7 +39,7 @@ export function ContactClient() {
 
   return (
     <div className="relative min-h-screen bg-background pt-32 pb-24 overflow-hidden">
-      
+
       {/* Background radial glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-lime/10 dark:bg-lime/5 rounded-full blur-[140px] opacity-60" />
@@ -46,7 +48,7 @@ export function ContactClient() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
+
           {/* Left Column: Branding, Context and Channels (5/12 width) */}
           <div className="lg:col-span-5 space-y-10">
             <div className="space-y-4">
@@ -69,6 +71,28 @@ export function ContactClient() {
               >
                 Whether you're looking to automate material take-offs, integrate site workflows, or build custom AI modules, our teams are ready to support your operations.
               </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                className="pt-2 text-left"
+              >
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-primary text-black hover:bg-primary/90 font-bold rounded-xl shadow-md hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group"
+                >
+                  <a
+                    href="https://calendar.app.google/mCq7zBhXrDnEAJvB7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Calendar className="w-5 h-5 mr-1" />
+                    Book a Meeting with us
+                    <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </Button>
+              </motion.div>
             </div>
 
             {/* Contact Details & Socials */}
@@ -121,7 +145,7 @@ export function ContactClient() {
                 <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3">Connect With Us</h4>
                 <div className="flex gap-3">
                   <a
-                    href="https://linkedin.com/company/concolabs"
+                    href="https://www.linkedin.com/company/concolabs"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2.5 bg-card border border-border hover:border-foreground rounded-lg text-muted-foreground hover:text-foreground shadow-2xs transition-all duration-200 hover:-translate-y-0.5"
@@ -130,16 +154,16 @@ export function ContactClient() {
                     <Linkedin className="w-4 h-4" />
                   </a>
                   <a
-                    href="https://twitter.com/concolabs"
+                    href="https://www.youtube.com/@ConcolabsInc"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2.5 bg-card border border-border hover:border-foreground rounded-lg text-muted-foreground hover:text-foreground shadow-2xs transition-all duration-200 hover:-translate-y-0.5"
-                    aria-label="Twitter / X"
+                    aria-label="Youtube"
                   >
-                    <Twitter className="w-4 h-4" />
+                    <Youtube className="w-4 h-4" />
                   </a>
                   <a
-                    href="https://github.com/concolabs"
+                    href="https://github.com/concolabs-com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2.5 bg-card border border-border hover:border-foreground rounded-lg text-muted-foreground hover:text-foreground shadow-2xs transition-all duration-200 hover:-translate-y-0.5"

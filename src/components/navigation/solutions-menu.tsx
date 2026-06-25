@@ -17,9 +17,9 @@ import {
   BarChart3,
   Store,
   Hammer,
-  ShieldCheck
+  ShieldCheck,
 } from "lucide-react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 const personas = [
   {
@@ -60,90 +60,54 @@ const personas = [
   },
 ]
 
+// viewBox: 400 × 340
+// Row Y centres: top=56, mid=170, bot=296
+// Col X centres: left=88, mid=200, right=312
 const roadmapSteps = [
-  {
-    number: "01",
-    title: "Concept & Design",
-    icon: PencilRuler,
-    x: 16.67,
-    y: 16.67,
-  },
-  {
-    number: "02",
-    title: "Architectural Modeling (BIM)",
-    icon: Layers,
-    x: 50.00,
-    y: 16.67,
-  },
-  {
-    number: "03",
-    title: "Engineering & Simulation (AI‑Driven)",
-    icon: BrainCircuit,
-    x: 83.33,
-    y: 16.67,
-  },
-  {
-    number: "04",
-    title: "Quantity Surveying & Cost Estimation",
-    icon: BarChart3,
-    x: 83.33,
-    y: 50.00,
-  },
-  {
-    number: "05",
-    title: "Procurement & Resource Optimization",
-    icon: Store,
-    x: 50.00,
-    y: 50.00,
-  },
-  {
-    number: "06",
-    title: "Smart Construction Execution",
-    icon: Hammer,
-    x: 16.67,
-    y: 50.00,
-  },
-  {
-    number: "07",
-    title: "AI‑Powered Quality & Safety Checks",
-    icon: ShieldCheck,
-    x: 16.67,
-    y: 83.33,
-  },
-  {
-    number: "08",
-    title: "Digital Handover & Maintenance Analytics",
-    icon: FileText,
-    x: 50.00,
-    y: 83.33,
-  },
+  { number: "01", title: "Concept & Design",                      icon: PencilRuler,  x: 22, y: 16 },
+  { number: "02", title: "Architectural Modeling (BIM)",          icon: Layers,       x: 50, y: 16 },
+  { number: "03", title: "Engineering & Simulation",              icon: BrainCircuit, x: 78, y: 16 },
+  { number: "04", title: "Quantity Surveying & Cost",             icon: BarChart3,    x: 78, y: 50 },
+  { number: "05", title: "Procurement & Resources",               icon: Store,        x: 50, y: 50 },
+  { number: "06", title: "Smart Construction Execution",          icon: Hammer,       x: 22, y: 50 },
+  { number: "07", title: "AI Quality & Safety Checks",            icon: ShieldCheck,  x: 22, y: 84 },
+  { number: "08", title: "Digital Handover & Maintenance",        icon: FileText,     x: 57, y: 84 },
 ]
 
 const containerVariants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.04,
+      staggerChildren: 0.15,
+      delayChildren: 0.25,
     },
   },
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
+  hidden: { opacity: 0, scale: 0.45, y: 10 },
   show: {
     opacity: 1,
     scale: 1,
+    y: 0,
     transition: {
       type: "spring" as const,
-      stiffness: 120,
-      damping: 15,
+      stiffness: 220,
+      damping: 18,
     },
   },
 }
 
 export function SolutionsMenu() {
   const [targetHref, setTargetHref] = useState("/solutions")
+  const [animationKey, setAnimationKey] = useState(0)
+  const [hoveredStep, setHoveredStep] = useState<string | null>(null)
   const pathname = usePathname()
+
+  useEffect(() => {
+    setAnimationKey((k) => k + 1)
+    setHoveredStep(null)
+  }, [])
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -153,10 +117,9 @@ export function SolutionsMenu() {
         "contractors",
         "construction-consultancies",
         "modellers",
-        "legal-professionals"
+        "legal-professionals",
       ]
 
-      // If we are currently on a persona page, save it
       if (pathname && pathname.startsWith("/solutions/")) {
         const parts = pathname.split("/")
         const slug = parts[2]
@@ -167,7 +130,6 @@ export function SolutionsMenu() {
         }
       }
 
-      // Otherwise, check if we have a stored persona
       const stored = localStorage.getItem("active_persona")
       if (stored) {
         setTargetHref(`/solutions/${stored}`)
@@ -179,7 +141,150 @@ export function SolutionsMenu() {
 
   return (
     <div className="grid lg:grid-cols-3 gap-8">
-      {/* Personas Grid */}
+
+      {/* LEFT — Construction Lifecycle */}
+      <div className="hidden lg:flex flex-col h-full min-h-[360px]">
+        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
+          Construction Lifecycle
+        </h3>
+
+        {/* Card */}
+        <div className="relative rounded-xl border border-border/80 bg-zinc-50/50 dark:bg-zinc-950/20 overflow-hidden flex-1">
+
+          {/* Subtle dot-grid background */}
+          <div
+            className="absolute inset-0 opacity-25 dark:opacity-10 pointer-events-none"
+            style={{
+              backgroundImage: "radial-gradient(circle, #a1a1aa 1px, transparent 1px)",
+              backgroundSize: "22px 22px",
+            }}
+          />
+
+          <motion.div
+            key={animationKey}
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="relative w-full h-full"
+            style={{ minHeight: 300 }}
+          >
+            {/* ── SVG path ── */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              viewBox="0 0 400 340"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              {/* Ghost guide */}
+              <path
+                d="M 88,54 H 312 C 352,54 352,170 312,170 H 88 C 48,170 48,286 88,286 H 228"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray="5 5"
+                className="text-muted-foreground/15 dark:text-muted/10"
+              />
+
+              {/* Animated draw */}
+              <motion.path
+                key={animationKey}
+                d="M 88,54 H 312 C 352,54 352,170 312,170 H 88 C 48,170 48,286 88,286 H 228"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeDasharray="5 5"
+                strokeLinecap="round"
+                className="text-zinc-400 dark:text-zinc-500"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 1.8, ease: "easeInOut", delay: 0.1 }}
+              />
+            </svg>
+
+            {/* ── Nodes ── */}
+            {roadmapSteps.map((step) => {
+              const Icon = step.icon
+              const isHovered = hoveredStep === step.number
+
+              return (
+                <Link
+                  href="/solutions"
+                  key={step.number}
+                  onMouseEnter={() => setHoveredStep(step.number)}
+                  onMouseLeave={() => setHoveredStep(null)}
+                  className="absolute flex flex-col items-center text-center select-none w-[100px]"
+                  style={{
+                    left: `${step.x}%`,
+                    top: `${step.y}%`,
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  <motion.div variants={itemVariants} className="flex flex-col items-center w-full">
+
+                    {/* Node */}
+                    <div className="relative">
+                      {/* Pulsing expand ring */}
+                      <AnimatePresence>
+                        {isHovered && (
+                          <motion.div
+                            key="ring"
+                            initial={{ scale: 1, opacity: 0.45 }}
+                            animate={{ scale: 2.1, opacity: 0 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.65, ease: "easeOut" }}
+                            className="absolute inset-0 rounded-xl bg-zinc-400/30 dark:bg-zinc-500/20 z-0"
+                          />
+                        )}
+                      </AnimatePresence>
+
+                      <motion.div
+                        animate={isHovered ? { scale: 1.12 } : { scale: 1 }}
+                        transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                        className="w-10 h-10 rounded-xl bg-white dark:bg-zinc-900
+                                   border border-zinc-200 dark:border-zinc-800
+                                   shadow-sm flex items-center justify-center shrink-0
+                                   relative z-10 transition-[border-color,box-shadow] duration-200"
+                        style={isHovered ? {
+                          borderColor: "rgb(63 63 70)",
+                          boxShadow: "0 0 0 3px rgba(113,113,122,0.15), 0 4px 14px rgba(0,0,0,0.12)",
+                        } : {}}
+                      >
+                        {/* Badge */}
+                        <motion.span
+                          animate={isHovered ? { scale: 1.18 } : { scale: 1 }}
+                          className="absolute -top-1.5 -right-1.5 text-[8px] font-bold font-mono
+                                     px-1 py-0.5 rounded-full shadow-sm leading-none
+                                     bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950"
+                        >
+                          {step.number}
+                        </motion.span>
+
+                        <Icon
+                          className="w-[18px] h-[18px] transition-colors duration-200"
+                          style={isHovered ? { color: "rgb(39 39 42)" } : { color: "rgb(113 113 122)" }}
+                        />
+                      </motion.div>
+                    </div>
+
+                    {/* Label */}
+                    <div className="mt-1.5 w-full">
+                      <span
+                        className="text-[8.5px] font-semibold leading-tight block px-0.5 transition-colors duration-200"
+                        style={isHovered
+                          ? { color: "var(--foreground)", opacity: 1 }
+                          : { color: "var(--foreground)", opacity: 0.68 }}
+                      >
+                        {step.title}
+                      </span>
+                    </div>
+
+                  </motion.div>
+                </Link>
+              )
+            })}
+          </motion.div>
+        </div>
+      </div>
+
+      {/* RIGHT — Personas Grid */}
       <div className="lg:col-span-2 flex flex-col justify-between h-full">
         <div>
           <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">
@@ -208,13 +313,13 @@ export function SolutionsMenu() {
           </div>
         </div>
 
-        {/* View All Solutions CTA to fill empty space */}
+        {/* View All Solutions CTA */}
         <div className="mt-4 pt-4 border-t border-border/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <p className="text-xs text-muted-foreground">
             Explore our complete platform, industry case studies, and customer stories.
           </p>
           <Link
-            href="/solutions"
+            href="/learnmore#products"
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:underline shrink-0"
           >
             <span>View all solutions</span>
@@ -223,79 +328,6 @@ export function SolutionsMenu() {
         </div>
       </div>
 
-      {/* Lifecycle Roadmap Serpentine Timeline */}
-      <div className="hidden lg:flex flex-col h-full min-h-[360px]">
-        <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
-          Construction Lifecycle
-        </h3>
-        <div className="relative rounded-xl border border-border/80 bg-zinc-50/50 dark:bg-zinc-950/20 p-4 overflow-hidden h-[320px] w-full">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="w-full h-full relative"
-          >
-            {/* Winding SVG Connector Line */}
-            <svg
-              className="absolute inset-0 w-full h-full pointer-events-none text-muted-foreground/25 dark:text-muted/15"
-              viewBox="0 0 320 320"
-              preserveAspectRatio="none"
-              fill="none"
-            >
-              <motion.path
-                d="M 53.3,53.3 L 266.7,53.3 C 315,53.3 315,160 266.7,160 L 53.3,160 C 5,160 5,266.7 53.3,266.7 L 160,266.7"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeDasharray="5 5"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.8, ease: "easeInOut" }}
-              />
-            </svg>
-
-            {roadmapSteps.map((step) => {
-              const Icon = step.icon
-              const isLongStep = step.number === "07" || step.number === "08"
-              return (
-                <Link
-                  href="/solutions"
-                  key={step.number}
-                  className={`absolute group flex flex-col items-center text-center cursor-pointer select-none ${
-                    isLongStep ? "w-[135px]" : "w-28"
-                  }`}
-                  style={{
-                    left: `${step.x}%`,
-                    top: `${step.y}%`,
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <motion.div
-                    variants={itemVariants}
-                    className="flex flex-col items-center w-full"
-                  >
-                    {/* Node Icon Container */}
-                    <div className="w-11 h-11 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center shrink-0 group-hover:border-zinc-900 dark:group-hover:border-zinc-100 group-hover:bg-zinc-50 dark:group-hover:bg-zinc-800 group-hover:scale-105 transition-all duration-300 relative">
-                      {/* Step Number Badge */}
-                      <span className="absolute -top-1.5 -right-1.5 text-[9px] font-bold font-mono px-1.5 py-0.5 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950 shadow-sm transition-transform duration-300 group-hover:scale-110">
-                        {step.number}
-                      </span>
-                      {/* Icon */}
-                      <Icon className="w-5 h-5 text-muted-foreground group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors duration-300" />
-                    </div>
-
-                    {/* Step Title */}
-                    <div className="mt-1.5 w-full flex flex-col items-center">
-                      <span className="text-[10px] font-semibold text-foreground/80 group-hover:text-foreground transition-colors line-clamp-none leading-tight px-1">
-                        {step.title}
-                      </span>
-                    </div>
-                  </motion.div>
-                </Link>
-              )
-            })}
-          </motion.div>
-        </div>
-      </div>
     </div>
   )
 }

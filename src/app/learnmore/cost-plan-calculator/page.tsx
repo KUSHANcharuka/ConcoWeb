@@ -166,7 +166,7 @@ export default function CostPlanCalculatorPage() {
             transition={{ duration: 0.8 }}
             className="space-y-4"
           >
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep">
               Cost Plan Calculator
             </h1>
             <p className="text-xl sm:text-2xl text-zinc-650 dark:text-zinc-300 font-medium max-w-2xl mx-auto leading-relaxed">

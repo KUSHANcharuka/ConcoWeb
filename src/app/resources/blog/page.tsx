@@ -5,6 +5,9 @@ import { BlogGrid } from "@/components/blog/blog-grid"
 import { blogPosts } from "@/lib/blog-data"
 import { type BlogPost } from "@/components/blog/blog-card"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export const metadata = {
   title: "The Concolabs Blog",
   description: "Insights on AI, automation, software engineering, digital transformation, and modern product development from Concolabs.",

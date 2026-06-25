@@ -499,7 +499,7 @@ export default function WordToBIMPage() {
           >
 
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.1] uppercase product-title-sweep">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-zinc-950 dark:text-white leading-[1.1] uppercase product-title-sweep">
               WordToBIM
             </h1>
 
