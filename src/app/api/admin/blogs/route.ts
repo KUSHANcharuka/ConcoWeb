@@ -5,7 +5,7 @@ import path from "path"
 const JSON_PATH = path.join(process.cwd(), "src/lib", "blog-posts.json")
 
 // Secret passcode for basic admin action validation
-const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || "concoadmin123"
+const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE || "adminconco123"
 
 async function readBlogs() {
   try {
