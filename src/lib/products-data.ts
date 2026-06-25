@@ -193,6 +193,18 @@ export const allProducts: Product[] = [
     image: "/images/perk-retirement.png",
   },
   {
+    id: "prelim",
+    title: "Prelim",
+    icon: "ClipboardList",
+    tagline: "Task, attendance & productivity for QS teams",
+    description: "Run your QS team from one platform: create and assign work, track time and attendance, chat with your team where the work lives, and benchmark planned against actual productivity in real time.",
+    industries: ["QS Consultancies", "Cost Management Firms"],
+    regions: ["Sri Lanka", "Middle East", "Australia"],
+    status: "Available",
+    personas: ["construction-consultancies", "contractors"],
+    image: "/images/perk-wellbeing.png",
+  },
+  {
     id: "buildmarketlk",
     title: "BuildMarketlk.com",
     icon: "Store",
