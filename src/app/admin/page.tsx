@@ -1,13 +1,15 @@
 export default function AdminDashboardPage() {
   return (
-    <main className="min-h-screen bg-background p-10">
-      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-        admin
+    <div className="mx-auto max-w-7xl px-10 py-10">
+      <p className="font-mono text-xs uppercase tracking-widest text-[var(--color-ink-subtle)]">
+        Dashboard
       </p>
-      <h1 className="mt-2 text-4xl font-semibold">Dashboard</h1>
-      <p className="mt-4 text-muted-foreground">
-        Placeholder. Real shell + dashboard land in the next pass.
+      <h1 className="mt-2 font-serif text-[var(--text-2xl)] font-normal leading-tight text-[var(--color-ink)]">
+        Welcome back, Mihisara.
+      </h1>
+      <p className="mt-4 text-[var(--color-ink-muted)]">
+        Placeholder. Real content lands in its own pass.
       </p>
-    </main>
+    </div>
   );
 }

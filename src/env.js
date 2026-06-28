@@ -11,8 +11,8 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
 
     CLERK_SECRET_KEY: z.string().min(1),
-    CLERK_WEBHOOK_SIGNING_SECRET: z.string().min(1).optional(),
-    CLERK_CONCOLABS_ORG_ID: z.string().min(1).optional(),
+    CLERK_WEBHOOK_SIGNING_SECRET: z.string().min(1),
+    CLERK_CONCOLABS_ORG_ID: z.string().min(1),
 
     STRIPE_SECRET_KEY: z.string().min(1).optional(),
     STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
@@ -20,6 +20,15 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().min(1).optional(),
 
     OUTBOUND_WEBHOOK_SIGNING_KEY: z.string().min(1).optional(),
+
+    R2_ACCOUNT_ID: z.string().min(1).optional(),
+    R2_ACCESS_KEY_ID: z.string().min(1).optional(),
+    R2_SECRET_ACCESS_KEY: z.string().min(1).optional(),
+    R2_BUCKET: z.string().min(1).optional(),
+    R2_PUBLIC_BASE_URL: z.string().url().optional(),
+    DOCUSEAL_BASE_URL: z.string().url().optional(),
+    DOCUSEAL_API_KEY: z.string().min(1).optional(),
+    DOCUSEAL_WEBHOOK_SECRET: z.string().min(1).optional(),
 
     APP_URL: z.string().url(),
   },
@@ -57,6 +66,15 @@ export const env = createEnv({
     RESEND_API_KEY: process.env.RESEND_API_KEY,
 
     OUTBOUND_WEBHOOK_SIGNING_KEY: process.env.OUTBOUND_WEBHOOK_SIGNING_KEY,
+
+    R2_ACCOUNT_ID: process.env.R2_ACCOUNT_ID,
+    R2_ACCESS_KEY_ID: process.env.R2_ACCESS_KEY_ID,
+    R2_SECRET_ACCESS_KEY: process.env.R2_SECRET_ACCESS_KEY,
+    R2_BUCKET: process.env.R2_BUCKET,
+    R2_PUBLIC_BASE_URL: process.env.R2_PUBLIC_BASE_URL,
+    DOCUSEAL_BASE_URL: process.env.DOCUSEAL_BASE_URL,
+    DOCUSEAL_API_KEY: process.env.DOCUSEAL_API_KEY,
+    DOCUSEAL_WEBHOOK_SECRET: process.env.DOCUSEAL_WEBHOOK_SECRET,
 
     APP_URL: process.env.APP_URL,
   },

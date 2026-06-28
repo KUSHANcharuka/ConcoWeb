@@ -6,9 +6,14 @@ export const userRoleEnum = pgEnum("user_role", ["client", "admin"]);
 export const users = pgTable("users", {
   id: text().primaryKey(), // Clerk user id
   email: text().notNull(),
+  phone: text(),
   name: text(),
+  imageUrl: text(),
   role: userRoleEnum().notNull().default("client"),
   createdAt: timestamp({ withTimezone: true })
+    .notNull()
+    .default(sql`now()`),
+  updatedAt: timestamp({ withTimezone: true })
     .notNull()
     .default(sql`now()`),
 });
