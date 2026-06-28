@@ -60,19 +60,18 @@ const personas = [
   },
 ]
 
-// viewBox: 400 × 340
-// Row Y centres: top=56, mid=170, bot=296
-// Col X centres: left=88, mid=200, right=312
+// viewBox: 400 × 370 (Winding road geometry)
+// Tier Y centres: top=55 (14.86%), mid=175 (47.30%), bot=295 (79.73%)
+// Col X centres: left=110 (27.5%), right=290 (72.5%)
 const roadmapSteps = [
-  { number: "01", title: "Concept & Design",                      icon: PencilRuler,  x: 22, y: 16 },
-  { number: "02", title: "Architectural Modeling (BIM)",          icon: Layers,       x: 50, y: 16 },
-  { number: "03", title: "Engineering & Simulation",              icon: BrainCircuit, x: 78, y: 16 },
-  { number: "04", title: "Quantity Surveying & Cost",             icon: BarChart3,    x: 78, y: 50 },
-  { number: "05", title: "Procurement & Resources",               icon: Store,        x: 50, y: 50 },
-  { number: "06", title: "Smart Construction Execution",          icon: Hammer,       x: 22, y: 50 },
-  { number: "07", title: "AI Quality & Safety Checks",            icon: ShieldCheck,  x: 22, y: 84 },
-  { number: "08", title: "Digital Handover & Maintenance",        icon: FileText,     x: 57, y: 84 },
+  { number: "01", title: "Feasibility",          subtitle: "Viability & site checks",     icon: BarChart3,    x: 27.5, y: 14.86 },
+  { number: "02", title: "Design",               subtitle: "Concept & engineering",       icon: PencilRuler,  x: 72.5, y: 14.86 },
+  { number: "03", title: "Pre-construction",     subtitle: "BOQs & compliance",           icon: Layers,       x: 72.5, y: 47.30 },
+  { number: "04", title: "Procurement",          subtitle: "Sourcing & bidding",          icon: Store,        x: 27.5, y: 47.30 },
+  { number: "05", title: "Construction",         subtitle: "Site management",             icon: Hammer,       x: 27.5, y: 79.73 },
+  { number: "06", title: "Handover & Operation", subtitle: "Asset delivery",              icon: FileText,     x: 72.5, y: 79.73 },
 ]
+
 
 const containerVariants = {
   hidden: {},
@@ -143,7 +142,7 @@ export function SolutionsMenu() {
     <div className="grid lg:grid-cols-3 gap-8">
 
       {/* LEFT — Construction Lifecycle */}
-      <div className="hidden lg:flex flex-col h-full min-h-[360px]">
+      <div className="hidden lg:flex flex-col h-full min-h-[380px]">
         <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-1">
           Construction Lifecycle
         </h3>
@@ -166,32 +165,34 @@ export function SolutionsMenu() {
             initial="hidden"
             animate="show"
             className="relative w-full h-full"
-            style={{ minHeight: 300 }}
+            style={{ minHeight: 350 }}
           >
-            {/* ── SVG path ── */}
+            {/* ── SVG Winding Connecting Line ── */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 400 340"
+              viewBox="0 0 400 370"
               preserveAspectRatio="none"
               fill="none"
             >
-              {/* Ghost guide */}
+              {/* Subtle ghost track */}
               <path
-                d="M 88,54 H 312 C 352,54 352,170 312,170 H 88 C 48,170 48,286 88,286 H 228"
+                d="M 40,55 H 320 A 60 60 0 0 1 320,175 H 80 A 60 60 0 0 0 80,295 H 360"
                 stroke="currentColor"
-                strokeWidth="2"
-                strokeDasharray="5 5"
-                className="text-muted-foreground/15 dark:text-muted/10"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-zinc-200 dark:text-zinc-800"
               />
 
-              {/* Animated draw */}
+              {/* Sleek animated connecting line */}
               <motion.path
                 key={animationKey}
-                d="M 88,54 H 312 C 352,54 352,170 312,170 H 88 C 48,170 48,286 88,286 H 228"
+                d="M 40,55 H 320 A 60 60 0 0 1 320,175 H 80 A 60 60 0 0 0 80,295 H 360"
                 stroke="currentColor"
-                strokeWidth="2.5"
-                strokeDasharray="5 5"
+                strokeWidth="3.5"
+                strokeDasharray="6 6"
                 strokeLinecap="round"
+                strokeLinejoin="round"
                 className="text-zinc-400 dark:text-zinc-500"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={{ pathLength: 1, opacity: 1 }}
@@ -210,7 +211,7 @@ export function SolutionsMenu() {
                   key={step.number}
                   onMouseEnter={() => setHoveredStep(step.number)}
                   onMouseLeave={() => setHoveredStep(null)}
-                  className="absolute flex flex-col items-center text-center select-none w-[100px]"
+                  className="absolute flex flex-col items-center text-center select-none w-[110px]"
                   style={{
                     left: `${step.x}%`,
                     top: `${step.y}%`,
@@ -219,7 +220,7 @@ export function SolutionsMenu() {
                 >
                   <motion.div variants={itemVariants} className="flex flex-col items-center w-full">
 
-                    {/* Node */}
+                    {/* Node Circle Badge */}
                     <div className="relative">
                       {/* Pulsing expand ring */}
                       <AnimatePresence>
@@ -230,49 +231,52 @@ export function SolutionsMenu() {
                             animate={{ scale: 2.1, opacity: 0 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.65, ease: "easeOut" }}
-                            className="absolute inset-0 rounded-xl bg-zinc-400/30 dark:bg-zinc-500/20 z-0"
+                            className="absolute inset-0 rounded-full bg-zinc-400/30 dark:bg-zinc-500/20 z-0"
                           />
                         )}
                       </AnimatePresence>
 
                       <motion.div
-                        animate={isHovered ? { scale: 1.12 } : { scale: 1 }}
+                        animate={isHovered ? { scale: 1.15 } : { scale: 1 }}
                         transition={{ type: "spring", stiffness: 320, damping: 22 }}
-                        className="w-10 h-10 rounded-xl bg-white dark:bg-zinc-900
-                                   border border-zinc-200 dark:border-zinc-800
-                                   shadow-sm flex items-center justify-center shrink-0
+                        className="w-11 h-11 rounded-full bg-white dark:bg-zinc-900
+                                   border-2 border-zinc-200 dark:border-zinc-700
+                                   shadow-md flex items-center justify-center shrink-0
                                    relative z-10 transition-[border-color,box-shadow] duration-200"
                         style={isHovered ? {
-                          borderColor: "rgb(63 63 70)",
-                          boxShadow: "0 0 0 3px rgba(113,113,122,0.15), 0 4px 14px rgba(0,0,0,0.12)",
+                          borderColor: "rgb(39 39 42)",
+                          boxShadow: "0 0 0 3px rgba(113,113,122,0.2), 0 6px 16px rgba(0,0,0,0.15)",
                         } : {}}
                       >
-                        {/* Badge */}
+                        {/* Number Badge */}
                         <motion.span
-                          animate={isHovered ? { scale: 1.18 } : { scale: 1 }}
-                          className="absolute -top-1.5 -right-1.5 text-[8px] font-bold font-mono
-                                     px-1 py-0.5 rounded-full shadow-sm leading-none
+                          animate={isHovered ? { scale: 1.15 } : { scale: 1 }}
+                          className="absolute -top-1 -right-1 text-[8px] font-bold font-mono
+                                     px-1.5 py-0.5 rounded-full shadow-sm leading-none
                                      bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950"
                         >
                           {step.number}
                         </motion.span>
 
                         <Icon
-                          className="w-[18px] h-[18px] transition-colors duration-200"
-                          style={isHovered ? { color: "rgb(39 39 42)" } : { color: "rgb(113 113 122)" }}
+                          className="w-5 h-5 transition-colors duration-200"
+                          style={isHovered ? { color: "rgb(24 24 27)" } : { color: "rgb(82 82 91)" }}
                         />
                       </motion.div>
                     </div>
 
-                    {/* Label */}
+                    {/* Label & Subtitle */}
                     <div className="mt-1.5 w-full">
                       <span
-                        className="text-[8.5px] font-semibold leading-tight block px-0.5 transition-colors duration-200"
+                        className="text-[9.5px] font-bold leading-tight block px-0.5 transition-colors duration-200"
                         style={isHovered
                           ? { color: "var(--foreground)", opacity: 1 }
-                          : { color: "var(--foreground)", opacity: 0.68 }}
+                          : { color: "var(--foreground)", opacity: 0.85 }}
                       >
                         {step.title}
+                      </span>
+                      <span className="text-[8px] text-zinc-500 dark:text-zinc-400 block leading-tight mt-0.5 font-normal">
+                        {step.subtitle}
                       </span>
                     </div>
 
@@ -283,6 +287,7 @@ export function SolutionsMenu() {
           </motion.div>
         </div>
       </div>
+
 
       {/* RIGHT — Personas Grid */}
       <div className="lg:col-span-2 flex flex-col justify-between h-full">

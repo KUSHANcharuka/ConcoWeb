@@ -165,12 +165,13 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
                           <div className="md:col-span-5 flex flex-col gap-3">
                             {/* Video Thumbnail */}
                             {product.requestDemoOnly ? (
-                              <a
-                                href={bookingUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => e.stopPropagation()}
-                                className="relative aspect-video rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden flex items-center justify-center group/video shadow-inner cursor-pointer"
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+                                }}
+                                className="relative aspect-video rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden flex items-center justify-center group/video shadow-inner cursor-pointer w-full"
                               >
                                 <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover/video:scale-[1.02] transition-transform duration-500" />
                                 <div className="relative z-10 flex flex-col items-center gap-1.5 text-center px-4">
@@ -181,7 +182,7 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
                                     Request Demo
                                   </span>
                                 </div>
-                              </a>
+                              </button>
                             ) : (
                               <button
                                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleWatchDemo(product.videoUrl) }}
@@ -210,13 +211,15 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
                               </span>
                             </Button>
                             <Button
-                              asChild
                               variant="outline"
                               className="rounded-xl text-xs font-bold cursor-pointer w-full"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+                              }}
                             >
-                              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                                Book a demo →
-                              </a>
+                              Book a demo →
                             </Button>
                           </div>
                         </div>
