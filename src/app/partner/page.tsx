@@ -133,7 +133,11 @@ export default function PartnerPage() {
                 <Link href="#apply">Become a Partner</Link>
               </Button>
 
-              <a href="#book">
+              <a
+                href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ36g8nHHMaGgbaQdtlNRO-WqiiLSTuA1LgF8dV7cqGCGcrBTIJhXOWRMSUgkkuQL9UFKeGEztHI"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <button
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-300 dark:border-zinc-800 text-sm font-bold text-zinc-800 dark:text-zinc-200 bg-white hover:bg-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
                 >
@@ -404,29 +408,37 @@ export default function PartnerPage() {
                   ))}
                 </ul>
 
-                {/* Slot grid */}
+                {/* Slot grid — opens Google Calendar Appointment Scheduling */}
                 <div className="mb-6">
                   <p className={`text-xs font-semibold uppercase tracking-wider mb-3 flex items-center gap-1.5 ${TEXT_MUTED}`}>
                     <Calendar className="w-3.5 h-3.5" /> Available slots
                   </p>
                   <div className="grid grid-cols-2 gap-2">
                     {["Mon · 09:00", "Tue · 10:30", "Wed · 13:00", "Thu · 15:30"].map((slot) => (
-                      <button
+                      <a
                         key={slot}
-                        className={`py-2.5 px-3 rounded-xl border text-xs font-semibold text-center transition-all bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-850 hover:border-zinc-500 cursor-pointer ${BORDER_COLOR}`}
+                        href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ36g8nHHMaGgbaQdtlNRO-WqiiLSTuA1LgF8dV7cqGCGcrBTIJhXOWRMSUgkkuQL9UFKeGEztHI"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`py-2.5 px-3 rounded-xl border text-xs font-semibold text-center transition-all bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-850 hover:border-zinc-500 cursor-pointer block ${BORDER_COLOR}`}
                       >
                         <Clock className="w-3 h-3 inline mr-1 opacity-40" />
                         {slot}
-                      </button>
+                      </a>
                     ))}
                   </div>
                 </div>
 
-                <Link href="/demo">
+                <a
+                  href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ36g8nHHMaGgbaQdtlNRO-WqiiLSTuA1LgF8dV7cqGCGcrBTIJhXOWRMSUgkkuQL9UFKeGEztHI"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
                   <Button className="w-full h-12 font-bold rounded-xl gap-2 transition-all bg-zinc-950 hover:bg-zinc-900 text-white dark:bg-white dark:hover:bg-zinc-100 dark:text-zinc-950">
                     Book a partnership call <ArrowRight className="w-4 h-4" />
                   </Button>
-                </Link>
+                </a>
                 <p className={`text-xs mt-3 text-center ${TEXT_MUTED}`}>
                   Or email us at{" "}
                   <a href="mailto:info@concolabs.com" className="underline hover:opacity-85" style={{ color: "inherit" }}>
