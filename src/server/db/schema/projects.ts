@@ -1,27 +1,37 @@
 import { sql } from "drizzle-orm";
 import {
-  integer,
-  jsonb,
   pgEnum,
   pgTable,
   text,
+  date,
   timestamp,
   uuid,
 } from "drizzle-orm/pg-core";
 
+import { assets } from "./assets";
 import { clients } from "./clients";
 import { products } from "./products";
 
 export const projectStatusEnum = pgEnum("project_status", [
-  "active",
-  "suspended",
   "pending",
+  "active",
+  "paused",
+  "completed",
   "archived",
 ]);
 
-export const projectOriginEnum = pgEnum("project_origin", [
-  "admin_created",
-  "client_requested",
+export const projectTypeEnum = pgEnum("project_type", [
+  "custom_build",
+  "saas_setup",
+  "website",
+  "mobile_app",
+  "internal_tool",
+  "other",
+]);
+
+export const projectVisibilityEnum = pgEnum("project_visibility", [
+  "visible",
+  "hidden",
 ]);
 
 export const projects = pgTable("projects", {
@@ -30,15 +40,20 @@ export const projects = pgTable("projects", {
     .notNull()
     .references(() => clients.id, { onDelete: "restrict" }),
   productId: uuid().references(() => products.id, { onDelete: "set null" }),
-  label: text().notNull(),
+  name: text().notNull(),
+  description: text().notNull(),
+  projectType: projectTypeEnum().notNull().default("custom_build"),
   status: projectStatusEnum().notNull().default("pending"),
-  origin: projectOriginEnum().notNull().default("admin_created"),
-  sourceRequestId: uuid(),
-  // Reserved for tiers/seats/features — null in v1.
-  planTier: text(),
-  seatCount: integer(),
-  featureFlags: jsonb(),
+  visibility: projectVisibilityEnum().notNull().default("visible"),
+  currency: text().notNull().default("USD"),
+  coverAssetId: uuid().references(() => assets.id, { onDelete: "set null" }),
+  startDate: date(),
+  targetLaunchDate: date(),
+  createdByAdminId: text().notNull(),
   createdAt: timestamp({ withTimezone: true })
+    .notNull()
+    .default(sql`now()`),
+  updatedAt: timestamp({ withTimezone: true })
     .notNull()
     .default(sql`now()`),
 });

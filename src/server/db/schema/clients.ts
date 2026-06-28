@@ -1,14 +1,28 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+
+export const clientStatusEnum = pgEnum("client_status", [
+  "lead",
+  "active",
+  "suspended",
+  "archived",
+]);
 
 export const clients = pgTable("clients", {
   id: uuid().primaryKey().defaultRandom(),
   clerkOrgId: text().notNull().unique(),
   name: text().notNull(),
   primaryContactEmail: text().notNull(),
+  primaryContactPhone: text(),
+  logoAssetId: uuid(),
   country: text(),
   baseCurrency: text().notNull().default("USD"),
+  status: clientStatusEnum().notNull().default("active"),
+  internalNotes: text(),
   createdAt: timestamp({ withTimezone: true })
+    .notNull()
+    .default(sql`now()`),
+  updatedAt: timestamp({ withTimezone: true })
     .notNull()
     .default(sql`now()`),
 });
