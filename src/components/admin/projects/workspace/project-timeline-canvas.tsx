@@ -1,31 +1,22 @@
 "use client";
 
-import "@xyflow/react/dist/style.css";
-
-import { useMemo, useState } from "react";
-import {
-  addEdge,
-  Background,
-  BaseEdge,
-  Controls,
-  getStraightPath,
-  type Edge,
-  type Node,
-  type NodeProps,
-  Position,
-  ReactFlow,
-  ReactFlowProvider,
-  useReactFlow,
-} from "@xyflow/react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   CalendarDaysIcon,
-  GripVerticalIcon,
+  CheckCircle2Icon,
+  CircleDashedIcon,
+  Clock3Icon,
+  FlagIcon,
+  MilestoneIcon,
   PencilIcon,
   PlusIcon,
   Trash2Icon,
+  TriangleAlertIcon,
 } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -60,79 +51,192 @@ type TimelineItem = {
   layoutY: number;
 };
 
+type TimelineFormState = {
+  title: string;
+  description: string;
+  itemType: TimelineItem["itemType"];
+  status: TimelineItem["status"];
+  startsAt: string;
+  dueAt: string;
+  completedAt: string;
+  visibleToClient: boolean;
+  layoutX: number;
+  layoutY: number;
+};
+
 export function ProjectTimelineCanvas({
   projectId,
   mode,
 }: {
   projectId: string;
-  mode: "admin" | "client-preview";
-}) {
-  return (
-    <ReactFlowProvider>
-      <ProjectTimelineCanvasInner mode={mode} projectId={projectId} />
-    </ReactFlowProvider>
-  );
-}
-
-function ProjectTimelineCanvasInner({
-  projectId,
-  mode,
-}: {
-  projectId: string;
-  mode: "admin" | "client-preview";
+  mode: "admin" | "client-preview" | "client";
 }) {
   const utils = api.useUtils();
-  const reactFlow = useReactFlow();
-  const timelineQuery = api.admin.timeline.list.useQuery({ projectId });
+  const timelineQuery = api.admin.timeline.list.useQuery(
+    { projectId },
+    { enabled: mode !== "client" },
+  );
+  const clientTimelineQuery = api.clientPortal.timeline.list.useQuery(
+    { projectId },
+    { enabled: mode === "client" },
+  );
+  const projectContextQuery = api.admin.projectWorkspace.context.useQuery(
+    { projectId },
+    { enabled: mode !== "client" },
+  );
+  const clientProjectContextQuery = api.clientPortal.projectWorkspace.context.useQuery(
+    { projectId },
+    { enabled: mode === "client" },
+  );
   const createMutation = api.admin.timeline.create.useMutation();
   const updateMutation = api.admin.timeline.update.useMutation();
-  const repositionMutation = api.admin.timeline.reposition.useMutation();
   const deleteMutation = api.admin.timeline.delete.useMutation();
 
   const [draft, setDraft] = useState<TimelineFormState | null>(null);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
+  const [railProgress, setRailProgress] = useState<{
+    startOffset: number;
+    todayOffset: number;
+  } | null>(null);
+  const timelineBodyRef = useRef<HTMLDivElement | null>(null);
+  const startMarkerRef = useRef<HTMLDivElement | null>(null);
+  const todayMarkerRef = useRef<HTMLDivElement | null>(null);
 
-  const items = timelineQuery.data ?? [];
+  const items = useMemo(() => {
+    const baseItems =
+      mode === "client" ? clientTimelineQuery.data ?? [] : timelineQuery.data ?? [];
+    return [...baseItems].sort((left, right) => {
+      const leftTimestamp = resolveTimelineTimestamp(left);
+      const rightTimestamp = resolveTimelineTimestamp(right);
+      if (leftTimestamp !== rightTimestamp) {
+        return rightTimestamp - leftTimestamp;
+      }
+      if (left.sortOrder !== right.sortOrder) {
+        return right.sortOrder - left.sortOrder;
+      }
+      return left.title.localeCompare(right.title);
+    });
+  }, [clientTimelineQuery.data, mode, timelineQuery.data]);
 
-  const nodes = useMemo<Node<TimelineNodeData>[]>(() => {
-    return items.map((item) => ({
-      id: item.id,
-      type: "timeline-card",
-      position: { x: item.layoutX, y: item.layoutY },
-      data: {
-        item,
-        canEdit: mode === "admin",
-        onEdit: () => {
-          setEditingItemId(item.id);
-          setDraft(toFormState(item));
-        },
-        onDelete: () => void handleDelete(item.id),
-      },
-      draggable: mode === "admin",
-      sourcePosition: Position.Right,
-      targetPosition: Position.Left,
-    }));
-  }, [items, mode]);
+  const visibleItems =
+    mode === "admin" ? items : items.filter((item) => item.visibleToClient);
+  const currentItem = visibleItems.find((item) => item.status === "current") ?? null;
+  const now = new Date();
+  const projectStartDate = useMemo(() => {
+    const rawStartDate =
+      mode === "client"
+        ? clientProjectContextQuery.data?.startDate
+        : projectContextQuery.data?.startDate;
+    if (rawStartDate) {
+      const parsed = new Date(rawStartDate);
+      if (!Number.isNaN(parsed.getTime())) {
+        return parsed;
+      }
+    }
 
-  const edges = useMemo<Edge[]>(() => {
-    return items
-      .slice()
-      .sort((a, b) => a.sortOrder - b.sortOrder)
-      .slice(1)
-      .map((item, index) => {
-        const previous = items
-          .slice()
-          .sort((a, b) => a.sortOrder - b.sortOrder)[index];
+    const earliestItem = [...visibleItems].reverse().find((item) => resolveTimelineTimestamp(item) !== Number.MAX_SAFE_INTEGER);
+    if (!earliestItem) {
+      return null;
+    }
+
+    const fallback = earliestItem.startsAt ?? earliestItem.dueAt ?? earliestItem.completedAt;
+    if (!fallback) return null;
+    const parsed = fallback instanceof Date ? fallback : new Date(fallback);
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+  }, [
+    clientProjectContextQuery.data?.startDate,
+    mode,
+    projectContextQuery.data?.startDate,
+    visibleItems,
+  ]);
+
+  const todayMarkerIndex = visibleItems.findIndex(
+    (item) => resolveTimelineTimestamp(item) <= now.getTime(),
+  );
+  const startMarkerIndex =
+    projectStartDate === null
+      ? -1
+      : visibleItems.findIndex(
+          (item) => resolveTimelineTimestamp(item) <= projectStartDate.getTime(),
+        );
+
+  const timelineEntries = useMemo(() => {
+    const entries: Array<
+      { type: "item"; item: TimelineItem } | { type: "today" } | { type: "start" }
+    > = [];
+
+    visibleItems.forEach((item, index) => {
+      if (index === todayMarkerIndex) {
+        entries.push({ type: "today" });
+      }
+      if (index === startMarkerIndex) {
+        entries.push({ type: "start" });
+      }
+      entries.push({ type: "item", item });
+    });
+
+    if (visibleItems.length === 0 || todayMarkerIndex === -1) {
+      entries.push({ type: "today" });
+    }
+
+    if (projectStartDate && (visibleItems.length === 0 || startMarkerIndex === -1)) {
+      entries.push({ type: "start" });
+    }
+
+    return entries;
+  }, [projectStartDate, startMarkerIndex, todayMarkerIndex, visibleItems]);
+
+  useEffect(() => {
+    if (!timelineBodyRef.current || !startMarkerRef.current || !todayMarkerRef.current) {
+      setRailProgress(null);
+      return;
+    }
+
+    const updateOffsets = () => {
+      const containerRect = timelineBodyRef.current?.getBoundingClientRect();
+      const startRect = startMarkerRef.current?.getBoundingClientRect();
+      const todayRect = todayMarkerRef.current?.getBoundingClientRect();
+
+      if (!containerRect || !startRect || !todayRect) {
+        setRailProgress(null);
+        return;
+      }
+
+      const nextStartOffset = startRect.top - containerRect.top + startRect.height / 2;
+      const nextTodayOffset = todayRect.top - containerRect.top + todayRect.height / 2;
+
+      setRailProgress((current) => {
+        if (
+          current &&
+          Math.abs(current.startOffset - nextStartOffset) < 0.5 &&
+          Math.abs(current.todayOffset - nextTodayOffset) < 0.5
+        ) {
+          return current;
+        }
+
         return {
-          id: `${previous.id}-${item.id}`,
-          source: previous.id,
-          target: item.id,
-          type: "timeline-edge",
+          startOffset: nextStartOffset,
+          todayOffset: nextTodayOffset,
         };
       });
-  }, [items]);
+    };
+
+    updateOffsets();
+
+    const resizeObserver = new ResizeObserver(updateOffsets);
+    resizeObserver.observe(timelineBodyRef.current);
+    resizeObserver.observe(startMarkerRef.current);
+    resizeObserver.observe(todayMarkerRef.current);
+    window.addEventListener("resize", updateOffsets);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateOffsets);
+    };
+  }, [timelineEntries]);
 
   async function refresh() {
+    if (mode === "client") return;
     await utils.admin.timeline.list.invalidate({ projectId });
     await utils.admin.projectWorkspace.overview.invalidate({ projectId });
   }
@@ -147,8 +251,8 @@ function ProjectTimelineCanvasInner({
 
     const payload = {
       projectId,
-      title: draft.title,
-      description: draft.description || null,
+      title: draft.title.trim(),
+      description: draft.description.trim() || null,
       itemType: draft.itemType,
       status: draft.status,
       startsAt: draft.startsAt || null,
@@ -182,105 +286,224 @@ function ProjectTimelineCanvasInner({
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-wrap items-center gap-2">
-          <button
-            className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-sm text-zinc-600"
+          <Badge className="border-zinc-200 bg-zinc-50 px-3 py-1 text-zinc-700" variant="outline">
+            <CalendarDaysIcon className="size-3.5" />
+            {visibleItems.length} timeline {visibleItems.length === 1 ? "item" : "items"}
+          </Badge>
+          {currentItem ? (
+            <Badge className="border-yellow-300 bg-yellow-100 px-3 py-1 text-zinc-900" variant="outline">
+              Today: {currentItem.title}
+            </Badge>
+          ) : null}
+        </div>
+        {mode === "admin" ? (
+          <Button
             onClick={() => {
-              const focusItem =
-                items.find((item) => item.status === "current") ??
-                items.find((item) => item.status === "planned") ??
-                items[0];
-              if (!focusItem) return;
-              reactFlow.setCenter(focusItem.layoutX + 115, focusItem.layoutY + 60, {
-                zoom: 1,
-                duration: 400,
+              setEditingItemId(null);
+              setDraft({
+                title: "",
+                description: "",
+                itemType: "milestone",
+                status: "planned",
+                startsAt: "",
+                dueAt: "",
+                completedAt: "",
+                visibleToClient: true,
+                layoutX: 0,
+                layoutY: 0,
               });
             }}
             type="button"
           >
-            <CalendarDaysIcon className="size-4" />
-            Jump to today
-          </button>
-        </div>
-        <div className="flex items-center gap-2">
-          {mode === "admin" ? (
-            <Button
-              className="rounded-full"
-              onClick={() => {
-                setEditingItemId(null);
-                setDraft({
-                  title: "",
-                  description: "",
-                  itemType: "milestone",
-                  status: "planned",
-                  startsAt: "",
-                  dueAt: "",
-                  completedAt: "",
-                  visibleToClient: true,
-                  layoutX: 120 + items.length * 220,
-                  layoutY: items.length % 2 === 0 ? 80 : 240,
-                });
-              }}
-              type="button"
-            >
-              <PlusIcon className="size-4" />
-              Add timeline item
-            </Button>
-          ) : null}
-        </div>
+            <PlusIcon className="size-4" />
+            Add timeline item
+          </Button>
+        ) : null}
       </div>
 
-      {timelineQuery.isLoading ? (
-        <div className="rounded-[28px] border border-black/5 bg-white p-8 text-sm text-zinc-500 shadow-sm">
-          Loading timeline canvas…
+      {(mode === "client" ? clientTimelineQuery.isLoading : timelineQuery.isLoading) ? (
+        <div className="border border-black/5 bg-white p-8 text-sm text-zinc-500 shadow-sm">
+          Loading timeline…
         </div>
-      ) : timelineQuery.isError ? (
-        <div className="rounded-[28px] border border-red-200 bg-red-50 p-8 text-sm text-red-700 shadow-sm">
-          {timelineQuery.error.message}
+      ) : (mode === "client" ? clientTimelineQuery.isError : timelineQuery.isError) ? (
+        <div className="border border-red-200 bg-red-50 p-8 text-sm text-red-700 shadow-sm">
+          {(mode === "client" ? clientTimelineQuery.error : timelineQuery.error)?.message}
         </div>
-      ) : items.length === 0 ? (
-        <div className="rounded-[28px] border border-black/5 bg-white p-8 shadow-sm">
+      ) : visibleItems.length === 0 ? (
+        <div className="border border-black/5 bg-white p-8 shadow-sm">
           <div className="max-w-2xl">
             <h2 className="text-xl font-semibold text-zinc-950">No timeline items yet</h2>
             <p className="mt-2 text-sm leading-7 text-zinc-600">
-              Create the first milestone, delivery point, or review checkpoint. The same
-              data will render in the client preview without edit controls.
+              Add the first milestone, payment reminder, proposal handoff, or delivery note.
             </p>
           </div>
         </div>
       ) : (
-        <div className="relative overflow-hidden rounded-[28px] border border-black/5 bg-white shadow-sm">
-          <div className="pointer-events-none absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-[linear-gradient(90deg,rgba(0,0,0,0.05),rgba(0,0,0,0.18),rgba(0,0,0,0.05))]" />
-          <div className="h-[620px]">
-            <ReactFlow
-              defaultEdgeOptions={{ type: "timeline-edge" }}
-              edges={edges}
-              edgeTypes={{ "timeline-edge": TimelineEdge }}
-              fitView
-              fitViewOptions={{ padding: 0.18 }}
-              nodeTypes={{ "timeline-card": TimelineNode }}
-              nodes={nodes}
-              nodesDraggable={mode === "admin"}
-              onConnect={(connection) => addEdge(connection, edges)}
-              onNodeDragStop={(_, node) => {
-                if (mode !== "admin") return;
-                void repositionMutation
-                  .mutateAsync({
-                    projectId,
-                    itemId: node.id,
-                    layoutX: Math.round(node.position.x),
-                    layoutY: Math.round(node.position.y),
-                  })
-                  .then(refresh);
-              }}
-              panOnDrag
-              proOptions={{ hideAttribution: true }}
-            >
-              <Background color="rgba(0,0,0,0.05)" gap={32} />
-              <Controls showInteractive={false} />
-            </ReactFlow>
+        <div className="border border-black/5 bg-[#f5f2ea] p-6 shadow-sm sm:p-8">
+          <div className="relative mx-auto max-w-5xl" ref={timelineBodyRef}>
+            <div className="absolute bottom-0 left-[19px] top-0 w-px bg-zinc-300 sm:left-1/2 sm:-ml-px" />
+            {railProgress ? (
+              <div
+                className="absolute left-[19px] w-px bg-yellow-300 sm:left-1/2 sm:-ml-px"
+                style={{
+                  top: Math.min(railProgress.startOffset, railProgress.todayOffset),
+                  height: Math.abs(railProgress.startOffset - railProgress.todayOffset),
+                }}
+              />
+            ) : null}
+
+            <div className="space-y-10">
+              {timelineEntries.map((entry, index) => {
+                const isTodayEntry = entry.type === "today";
+                const isStartEntry = entry.type === "start";
+                const item = entry.type === "item" ? entry.item : null;
+                const itemIndex = item ? visibleItems.findIndex((candidate) => candidate.id === item.id) : -1;
+                const side = itemIndex >= 0 && itemIndex % 2 !== 0 ? "right" : "left";
+                const markerStyle = item ? getMarkerStyle(item.status) : null;
+                const MarkerIcon = markerStyle?.icon;
+
+                return (
+                  <article
+                    className="relative sm:grid sm:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)] sm:gap-6"
+                    key={
+                      item?.id ??
+                      (isTodayEntry ? `today-marker-${index}` : `start-marker-${index}`)
+                    }
+                  >
+                    {item ? (
+                      <div
+                        className={[
+                          "pl-14 sm:pl-0",
+                          side === "left"
+                            ? "sm:col-start-1 sm:row-start-1 sm:pr-8"
+                            : "sm:col-start-3 sm:row-start-1 sm:pl-8",
+                        ].join(" ")}
+                      >
+                        <div className="border border-black/5 bg-white p-5 shadow-[0_18px_40px_rgba(17,24,39,0.08)]">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="space-y-2">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <Badge
+                                  className={markerStyle!.badgeClassName}
+                                  variant="outline"
+                                >
+                                  {markerStyle!.label}
+                                </Badge>
+                                <Badge className="border-zinc-200 px-2 py-0.5 text-zinc-600" variant="outline">
+                                  {labelize(item.itemType)}
+                                </Badge>
+                                {!item.visibleToClient && mode === "admin" ? (
+                                  <Badge className="border-zinc-300 px-2 py-0.5 text-zinc-500" variant="outline">
+                                    Hidden from client
+                                  </Badge>
+                                ) : null}
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-semibold text-zinc-950">{item.title}</h3>
+                                <p className="mt-1 text-sm leading-6 text-zinc-600">
+                                  {item.description || "No additional note for this timeline item."}
+                                </p>
+                              </div>
+                            </div>
+
+                            {mode === "admin" ? (
+                              <div className="flex items-center gap-1">
+                                <button
+                                  className="p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950"
+                                  onClick={() => {
+                                    setEditingItemId(item.id);
+                                    setDraft(toFormState(item));
+                                  }}
+                                  type="button"
+                                >
+                                  <PencilIcon className="size-4" />
+                                </button>
+                                <button
+                                  className="p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-red-600"
+                                  onClick={() => void handleDelete(item.id)}
+                                  type="button"
+                                >
+                                  <Trash2Icon className="size-4" />
+                                </button>
+                              </div>
+                            ) : null}
+                          </div>
+
+                          <div className="mt-4 grid gap-3 text-sm text-zinc-600 sm:grid-cols-3">
+                            <TimelineMeta label="Date" value={formatTimelineDate(item)} />
+                            <TimelineMeta label="Status" value={labelize(item.status)} />
+                            <TimelineMeta
+                              label="Visibility"
+                              value={item.visibleToClient ? "Client visible" : "Admin only"}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="pl-14 sm:col-span-3 sm:pl-0">
+                        <div className="sm:grid sm:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)] sm:gap-6">
+                          {isTodayEntry ? (
+                            <>
+                              <div className="hidden sm:block" />
+                              <div className="hidden sm:block" />
+                              <div className="sm:col-start-1 sm:row-start-1 sm:justify-self-end sm:pr-8">
+                                <Badge className="border-black bg-zinc-950 px-3 py-1 text-white" variant="outline">
+                                  {formatTodayLabel(now)}
+                                </Badge>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="hidden sm:block" />
+                              <div className="hidden sm:block" />
+                              <div className="sm:col-start-3 sm:row-start-1 sm:justify-self-start sm:pl-8">
+                                <Badge className="border-zinc-300 bg-white px-3 py-1 text-zinc-700" variant="outline">
+                                  Project started {formatTodayLabel(projectStartDate ?? now)}
+                                </Badge>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="absolute bottom-0 left-0 top-0 flex w-10 items-stretch justify-center sm:static sm:col-start-2 sm:row-start-1 sm:w-auto">
+                      <div className="relative flex h-full w-full items-center justify-center">
+                        {item ? (
+                          <div
+                            className={[
+                              "relative z-10 flex h-10 w-10 items-center justify-center border text-zinc-950 shadow-sm",
+                              markerStyle!.markerClassName,
+                            ].join(" ")}
+                          >
+                            {MarkerIcon ? <MarkerIcon className="size-4" /> : null}
+                          </div>
+                        ) : isTodayEntry ? (
+                          <div className="relative z-10 flex items-center justify-center">
+                            <div className="absolute h-8 w-8 rounded-full bg-yellow-300/25 animate-pulse" />
+                            <div
+                              className="h-5 w-5 rounded-full border-4 border-zinc-950 bg-yellow-300 shadow-sm"
+                              ref={todayMarkerRef}
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className="relative z-10 flex h-10 w-10 items-center justify-center border border-zinc-300 bg-white text-zinc-950 shadow-sm"
+                            ref={startMarkerRef}
+                          >
+                            <div className="absolute h-8 w-8 rounded-full bg-zinc-950/5 animate-pulse" />
+                            <FlagIcon className="size-4" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
@@ -292,13 +515,13 @@ function ProjectTimelineCanvasInner({
             setEditingItemId(null);
           }
         }}
-        open={draft !== null}
+        open={mode === "admin" && draft !== null}
       >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>{editingItemId ? "Edit timeline item" : "Add timeline item"}</DialogTitle>
             <DialogDescription>
-              This data drives both the admin canvas and the client preview.
+              This date-driven timeline is shared by the admin view and the client preview.
             </DialogDescription>
           </DialogHeader>
 
@@ -333,7 +556,9 @@ function ProjectTimelineCanvasInner({
                 label="Type"
                 onChange={(value) =>
                   setDraft((current) =>
-                    current ? { ...current, itemType: value as TimelineFormState["itemType"] } : current,
+                    current
+                      ? { ...current, itemType: value as TimelineFormState["itemType"] }
+                      : current,
                   )
                 }
                 options={[
@@ -342,16 +567,19 @@ function ProjectTimelineCanvasInner({
                   ["proposal_sent", "Proposal sent"],
                   ["delivery", "Delivery"],
                   ["review", "Review"],
-                  ["change_request", "Change request"],
+                  ["change_request", "Feature request"],
                   ["custom", "Custom"],
                 ]}
                 value={draft.itemType}
               />
+
               <SimpleSelect
                 label="Status"
                 onChange={(value) =>
                   setDraft((current) =>
-                    current ? { ...current, status: value as TimelineFormState["status"] } : current,
+                    current
+                      ? { ...current, status: value as TimelineFormState["status"] }
+                      : current,
                   )
                 }
                 options={[
@@ -378,7 +606,6 @@ function ProjectTimelineCanvasInner({
                 }
                 value={draft.dueAt}
               />
-
               <SimpleDateField
                 label="Completed at"
                 onChange={(value) =>
@@ -389,17 +616,14 @@ function ProjectTimelineCanvasInner({
                 value={draft.completedAt}
               />
 
-              <label className="flex items-center gap-3 rounded-xl border border-black/10 px-3 py-2 text-sm text-zinc-700">
-                <input
+              <label className="flex items-center gap-3 border border-black/10 px-3 py-3 text-sm text-zinc-700 sm:col-span-2">
+                <Checkbox
                   checked={draft.visibleToClient}
-                  onChange={(event) =>
+                  onCheckedChange={(checked) =>
                     setDraft((current) =>
-                      current
-                        ? { ...current, visibleToClient: event.target.checked }
-                        : current,
+                      current ? { ...current, visibleToClient: checked === true } : current,
                     )
                   }
-                  type="checkbox"
                 />
                 Visible in client preview
               </label>
@@ -435,92 +659,62 @@ function ProjectTimelineCanvasInner({
   );
 }
 
-type TimelineNodeData = {
-  item: TimelineItem;
-  canEdit: boolean;
-  onEdit: () => void;
-  onDelete: () => void;
-};
-
-function TimelineNode({ data }: NodeProps<Node<TimelineNodeData>>) {
+function TimelineMeta({ label, value }: { label: string; value: string }) {
   return (
-    <div className="w-[230px] rounded-[22px] border border-black/5 bg-white p-4 shadow-[0_18px_40px_rgba(17,24,39,0.08)]">
-      <div className="flex items-start justify-between gap-2">
-        <div className="space-y-1">
-          <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-            {labelize(data.item.itemType)}
-          </div>
-          <div className="text-lg font-semibold text-zinc-950">{data.item.title}</div>
-        </div>
-        {data.canEdit ? (
-          <div className="flex items-center gap-1">
-            <button
-              className="rounded-full p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950"
-              onClick={data.onEdit}
-              type="button"
-            >
-              <PencilIcon className="size-4" />
-            </button>
-            <button
-              className="rounded-full p-1.5 text-zinc-500 hover:bg-zinc-100 hover:text-red-600"
-              onClick={data.onDelete}
-              type="button"
-            >
-              <Trash2Icon className="size-4" />
-            </button>
-          </div>
-        ) : null}
-      </div>
-      <div className="mt-3 text-sm leading-6 text-zinc-600">
-        {data.item.description || "No extra note for this milestone yet."}
-      </div>
-      <div className="mt-4 flex items-center justify-between text-sm text-zinc-500">
-        <span>{labelize(data.item.status)}</span>
-        <span>{formatShortDate(data.item.dueAt) ?? "No due date"}</span>
-      </div>
-      {data.canEdit ? (
-        <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-zinc-400">
-          <GripVerticalIcon className="size-4" />
-          Drag to reposition
-        </div>
-      ) : null}
+    <div className="space-y-1">
+      <div className="text-[11px] uppercase tracking-[0.18em] text-zinc-400">{label}</div>
+      <div className="text-sm text-zinc-700">{value}</div>
     </div>
   );
 }
 
-function TimelineEdge({
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-}: {
-  sourceX: number;
-  sourceY: number;
-  targetX: number;
-  targetY: number;
-}) {
-  const [path] = getStraightPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-  });
-
-  return <BaseEdge path={path} style={{ stroke: "rgba(24,24,27,0.16)", strokeWidth: 2 }} />;
+function resolveTimelineTimestamp(item: TimelineItem) {
+  const value = item.startsAt ?? item.dueAt ?? item.completedAt;
+  if (!value) return Number.MAX_SAFE_INTEGER;
+  const date = value instanceof Date ? value : new Date(value);
+  const time = date.getTime();
+  return Number.isNaN(time) ? Number.MAX_SAFE_INTEGER : time;
 }
 
-type TimelineFormState = {
-  title: string;
-  description: string;
-  itemType: TimelineItem["itemType"];
-  status: TimelineItem["status"];
-  startsAt: string;
-  dueAt: string;
-  completedAt: string;
-  visibleToClient: boolean;
-  layoutX: number;
-  layoutY: number;
-};
+function getMarkerStyle(status: TimelineItem["status"]) {
+  switch (status) {
+    case "current":
+      return {
+        badgeClassName: "border-yellow-300 bg-yellow-100 text-zinc-900",
+        markerClassName: "border-yellow-300 bg-yellow-300",
+        label: "Current",
+        icon: Clock3Icon,
+      };
+    case "completed":
+      return {
+        badgeClassName: "border-emerald-300 bg-emerald-100 text-emerald-900",
+        markerClassName: "border-emerald-300 bg-emerald-200",
+        label: "Completed",
+        icon: CheckCircle2Icon,
+      };
+    case "delayed":
+      return {
+        badgeClassName: "border-amber-300 bg-amber-100 text-amber-900",
+        markerClassName: "border-amber-300 bg-amber-200",
+        label: "Delayed",
+        icon: TriangleAlertIcon,
+      };
+    case "cancelled":
+      return {
+        badgeClassName: "border-zinc-300 bg-zinc-100 text-zinc-700",
+        markerClassName: "border-zinc-300 bg-zinc-200",
+        label: "Cancelled",
+        icon: CircleDashedIcon,
+      };
+    default:
+      return {
+        badgeClassName: "border-sky-300 bg-sky-100 text-sky-900",
+        markerClassName: "border-sky-300 bg-white",
+        label: "Planned",
+        icon: MilestoneIcon,
+      };
+  }
+}
 
 function toFormState(item: TimelineItem): TimelineFormState {
   return {
@@ -544,11 +738,29 @@ function toDateInput(value: string | Date | null) {
   return date.toISOString().slice(0, 10);
 }
 
+function formatTimelineDate(item: TimelineItem) {
+  const primary = item.startsAt ?? item.dueAt ?? item.completedAt;
+  const formatted = formatShortDate(primary);
+  return formatted ?? "Undated";
+}
+
+function formatTodayLabel(value: Date) {
+  return value.toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 function formatShortDate(value: string | Date | null) {
   if (!value) return null;
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return null;
-  return date.toLocaleDateString();
+  return date.toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 }
 
 function labelize(value: string) {
@@ -570,7 +782,7 @@ function SimpleSelect({
     <label className="space-y-2">
       <span className="text-sm font-medium text-zinc-800">{label}</span>
       <select
-        className="flex h-10 w-full rounded-md border border-black/10 bg-white px-3 text-sm"
+        className="flex h-10 w-full border border-black/10 bg-white px-3 text-sm"
         onChange={(event) => onChange(event.target.value)}
         value={value}
       >

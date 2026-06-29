@@ -16,7 +16,7 @@ export default async function AdminProjectClientOverviewPage({
       eyebrow="Client Preview"
       title="Overview"
     >
-      <ProjectOverview data={overview} mode="client-preview" />
+      <ProjectOverview data={overview} mode="client-preview" projectId={projectId} />
     </ProjectSectionSurface>
   );
 }

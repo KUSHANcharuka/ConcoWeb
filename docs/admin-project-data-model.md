@@ -538,7 +538,10 @@ Asset access:
 - Every asset query must validate `assets.client_id`.
 - Project assets should also validate `assets.project_id`.
 - R2 object keys should not be treated as public authorization boundaries.
-- Use short-lived signed read URLs for private files.
+- Use short-lived signed read URLs for private files. Do not expose confidential
+  project assets through a direct `cloudflarestorage.com` base URL; reserve
+  public bucket URLs only for intentionally public assets served through
+  `r2.dev` or a custom domain.
 
 ## Implementation order
 

@@ -10,6 +10,8 @@ import {
   DropzoneEmptyState,
 } from "@/components/kibo-ui/dropzone";
 import { Button } from "@/components/ui/button";
+import { uploadWithProgress } from "~/lib/upload-with-progress";
+import { useUploadProgress } from "~/components/upload/upload-progress-provider";
 import { api } from "~/trpc/react";
 
 export function ProjectCoverUploadField({
@@ -22,6 +24,7 @@ export function ProjectCoverUploadField({
   const [files, setFiles] = useState<File[]>();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const uploadMutation = api.admin.assets.createProjectCoverUpload.useMutation();
+  const uploadProgress = useUploadProgress();
 
   useEffect(() => {
     return () => {
@@ -48,6 +51,7 @@ export function ProjectCoverUploadField({
     setPreviewUrl(nextPreviewUrl);
     setFiles([file]);
 
+    const tracker = uploadProgress.startUpload({ label: file.name });
     try {
       const upload = await uploadMutation.mutateAsync({
         clientId,
@@ -56,28 +60,24 @@ export function ProjectCoverUploadField({
         sizeBytes: file.size,
       });
 
-      const response = await fetch(upload.uploadUrl, {
-        method: "PUT",
-        headers: {
-          "Content-Type": file.type || "application/octet-stream",
-        },
-        body: file,
+      await uploadWithProgress({
+        url: upload.uploadUrl,
+        file,
+        contentType: file.type || "application/octet-stream",
+        onProgress: tracker.update,
       });
 
-      if (!response.ok) {
-        throw new Error("Upload failed.");
-      }
-
       onUploaded(upload.assetId);
+      tracker.succeed("Project cover uploaded");
       toast.success("Project cover uploaded.");
     } catch (error) {
       URL.revokeObjectURL(nextPreviewUrl);
       onUploaded(null);
       setFiles(undefined);
       setPreviewUrl(null);
-      toast.error(
-        error instanceof Error ? error.message : "Failed to upload project cover.",
-      );
+      const message = error instanceof Error ? error.message : "Failed to upload project cover.";
+      tracker.fail(message);
+      toast.error(message);
     }
   }
 

@@ -1,18 +1,21 @@
+import { BillingHistoryPageClient } from "~/components/admin/billing/billing-history-page-client";
+
 export default function AdminBillingPage() {
   return (
-    <div className="mx-auto max-w-7xl px-10 py-10">
+    <div className="mx-auto max-w-7xl px-6 py-8 lg:px-10 lg:py-10">
       <p className="font-mono text-xs uppercase tracking-widest text-[var(--color-ink-subtle)]">
         Billing
       </p>
       <h1 className="mt-2 font-serif text-[var(--text-2xl)] font-normal leading-tight text-[var(--color-ink)]">
-        Billing.
+        Billing history.
       </h1>
-      <p className="mt-4 text-[var(--color-ink-muted)]">
-        Placeholder. Real content lands in its own pass.
+      <p className="mt-4 max-w-3xl text-[var(--color-ink-muted)]">
+        Review invoice history across every client project and open any record to inspect payment
+        status, proof uploads, and billing documents in the project workspace.
       </p>
-      <p className="mt-2 text-sm text-[var(--color-ink-subtle)]">
-        Detailed billing surface lands in a dedicated planning pass.
-      </p>
+      <div className="mt-8">
+        <BillingHistoryPageClient mode="admin" />
+      </div>
     </div>
   );
 }

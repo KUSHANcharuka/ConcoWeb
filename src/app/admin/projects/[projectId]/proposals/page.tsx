@@ -1,4 +1,4 @@
-import { ProjectProposalsPanel } from "~/components/admin/projects/workspace/project-proposals-panel";
+import { ProjectProposalsDashboard } from "~/components/admin/projects/workspace/project-proposals-dashboard";
 import { ProjectSectionSurface } from "~/components/admin/projects/workspace/project-workspace-shell";
 import { api } from "~/trpc/server";
 
@@ -11,11 +11,11 @@ export default async function AdminProjectProposalsPage({
   const context = await api.admin.projectWorkspace.context({ projectId });
   return (
     <ProjectSectionSurface
-      description="Proposal records, source uploads, DocuSeal metadata, and side comments are all now modeled for this project scope."
+      description="Proposal drafts, sent documents, signatures, and revisions now live in a dashboard first. Open a proposal to enter the workspace for that record."
       eyebrow="Project Proposals"
       title="Proposals"
     >
-      <ProjectProposalsPanel currency={context.currency} mode="admin" projectId={projectId} />
+      <ProjectProposalsDashboard mode="admin" projectId={projectId} />
     </ProjectSectionSurface>
   );
 }

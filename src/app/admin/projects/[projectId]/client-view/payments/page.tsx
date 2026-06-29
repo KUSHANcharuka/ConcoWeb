@@ -1,16 +1,19 @@
-import { ProjectPlaceholderPanel, ProjectSectionSurface } from "~/components/admin/projects/workspace/project-workspace-shell";
+import { ProjectPaymentsDashboard } from "~/components/admin/billing/project-payments-dashboard";
+import { ProjectSectionSurface } from "~/components/admin/projects/workspace/project-workspace-shell";
 
-export default function AdminProjectClientPaymentsPage() {
+export default async function AdminProjectClientPaymentsPage({
+  params,
+}: {
+  params: Promise<{ projectId: string }>;
+}) {
+  const { projectId } = await params;
   return (
     <ProjectSectionSurface
-      description="Billing is deferred in this change, so the preview route remains informational only."
+      description="This preview route mirrors the client-side invoice list and payment-detail journey."
       eyebrow="Client Preview"
       title="Payments"
     >
-      <ProjectPlaceholderPanel
-        description="Payments will be implemented later. This preview route intentionally exposes no incomplete client actions."
-        title="Payments are deferred for this version"
-      />
+      <ProjectPaymentsDashboard mode="client-preview" projectId={projectId} />
     </ProjectSectionSurface>
   );
 }

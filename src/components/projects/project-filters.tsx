@@ -46,6 +46,7 @@ export function ProjectFilters({
   }) => void;
 }) {
   const deferredSearch = useDeferredValue(filters.search);
+  const showClientFilter = clientOptions.length > 0;
   const hasFilters =
     deferredSearch.length > 0 ||
     filters.clientId.length > 0 ||
@@ -53,8 +54,15 @@ export function ProjectFilters({
     filters.projectType !== "all";
 
   return (
-    <div className="space-y-4 border border-zinc-200 bg-white p-4">
-      <div className="grid gap-3 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_200px_200px]">
+    <div className="space-y-4 rounded-lg border border-zinc-200 bg-white p-4">
+      <div
+        className={[
+          "grid gap-3",
+          showClientFilter
+            ? "lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_200px_200px]"
+            : "lg:grid-cols-[minmax(0,1.4fr)_200px_200px]",
+        ].join(" ")}
+      >
         <div className="relative">
           <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400" />
           <Input
@@ -65,44 +73,49 @@ export function ProjectFilters({
                 onFiltersChange({ ...filters, search: value });
               });
             }}
-            placeholder="Search projects or clients"
+            placeholder={showClientFilter ? "Search projects or clients" : "Search projects"}
             value={filters.search}
           />
         </div>
 
-        <Combobox
-          data={clientOptions.map((client) => ({
-            label: client.name,
-            value: client.id,
-          }))}
-          onValueChange={(value) => onFiltersChange({ ...filters, clientId: value })}
-          type="client"
-          value={filters.clientId}
-        >
-          <ComboboxTrigger className="w-full justify-between">
-            <span className="truncate text-left">
-              {filters.clientId
-                ? clientOptions.find((client) => client.id === filters.clientId)?.name
-                : "All clients"}
-            </span>
-          </ComboboxTrigger>
-          <ComboboxContent>
-            <ComboboxInput />
-            <ComboboxList>
-              <ComboboxEmpty />
-              <ComboboxGroup>
-                <ComboboxItem onSelect={() => onFiltersChange({ ...filters, clientId: "" })} value="__all__">
-                  All clients
-                </ComboboxItem>
-                {clientOptions.map((client) => (
-                  <ComboboxItem key={client.id} value={client.id}>
-                    {client.name}
+        {showClientFilter ? (
+          <Combobox
+            data={clientOptions.map((client) => ({
+              label: client.name,
+              value: client.id,
+            }))}
+            onValueChange={(value) => onFiltersChange({ ...filters, clientId: value })}
+            type="client"
+            value={filters.clientId}
+          >
+            <ComboboxTrigger className="w-full justify-between">
+              <span className="truncate text-left">
+                {filters.clientId
+                  ? clientOptions.find((client) => client.id === filters.clientId)?.name
+                  : "All clients"}
+              </span>
+            </ComboboxTrigger>
+            <ComboboxContent>
+              <ComboboxInput />
+              <ComboboxList>
+                <ComboboxEmpty />
+                <ComboboxGroup>
+                  <ComboboxItem
+                    onSelect={() => onFiltersChange({ ...filters, clientId: "" })}
+                    value="__all__"
+                  >
+                    All clients
                   </ComboboxItem>
-                ))}
-              </ComboboxGroup>
-            </ComboboxList>
-          </ComboboxContent>
-        </Combobox>
+                  {clientOptions.map((client) => (
+                    <ComboboxItem key={client.id} value={client.id}>
+                      {client.name}
+                    </ComboboxItem>
+                  ))}
+                </ComboboxGroup>
+              </ComboboxList>
+            </ComboboxContent>
+          </Combobox>
+        ) : null}
 
         <Select
           onValueChange={(value) =>

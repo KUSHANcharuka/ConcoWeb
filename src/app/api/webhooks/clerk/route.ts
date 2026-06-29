@@ -15,6 +15,7 @@ import {
   syncOrganizationMembership,
   upsertUserRecord,
 } from "~/server/clients/sync";
+import { recordNotificationEvent } from "~/server/notifications/service";
 
 export const runtime = "nodejs";
 
@@ -180,6 +181,20 @@ export async function POST(req: Request) {
       acceptedUserId: event.data.user_id,
       invitedAt: event.data.created_at,
       acceptedAt: event.data.updated_at,
+    });
+
+    await recordNotificationEvent(db, {
+      eventType: "invitation.accepted",
+      actorUserId: event.data.user_id,
+      clientId: matchedClient.id,
+      entityType: "invitation",
+      entityId: event.data.id,
+      payload: {
+        email: event.data.email_address,
+        clientName: matchedClient.name,
+      },
+      audiences: [{ kind: "admin_all" }],
+      href: "/admin/notifications",
     });
 
     return new Response("ok", { status: 200 });

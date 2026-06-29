@@ -16,7 +16,7 @@ export default async function AdminProjectOverviewPage({
       eyebrow="Project Overview"
       title="Overview"
     >
-      <ProjectOverview data={overview} mode="admin" />
+      <ProjectOverview data={overview} mode="admin" projectId={projectId} />
     </ProjectSectionSurface>
   );
 }

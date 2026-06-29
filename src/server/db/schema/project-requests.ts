@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
-import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 
+import { assets } from "./assets";
 import { clients } from "./clients";
 import { products } from "./products";
 import { users } from "./users";
@@ -33,5 +34,29 @@ export const projectRequests = pgTable("project_requests", {
     .default(sql`now()`),
 });
 
+export const projectRequestAttachments = pgTable(
+  "project_request_attachments",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    requestId: uuid()
+      .notNull()
+      .references(() => projectRequests.id, { onDelete: "cascade" }),
+    assetId: uuid()
+      .notNull()
+      .references(() => assets.id, { onDelete: "cascade" }),
+    createdAt: timestamp({ withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (table) => ({
+    requestAssetIdx: uniqueIndex("project_request_attachment_request_asset_idx").on(
+      table.requestId,
+      table.assetId,
+    ),
+  }),
+);
+
 export type ProjectRequest = typeof projectRequests.$inferSelect;
 export type NewProjectRequest = typeof projectRequests.$inferInsert;
+export type ProjectRequestAttachment = typeof projectRequestAttachments.$inferSelect;
+export type NewProjectRequestAttachment = typeof projectRequestAttachments.$inferInsert;

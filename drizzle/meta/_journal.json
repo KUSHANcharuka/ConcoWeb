@@ -36,6 +36,55 @@
       "when": 1782644041621,
       "tag": "0004_safe_psylocke",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1782655200000,
+      "tag": "0005_drop_proposal_metadata",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1782698700000,
+      "tag": "0006_client_branding_assets",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1782777600000,
+      "tag": "0008_resend_email_delivery_pipeline",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1783209600000,
+      "tag": "0009_payments_invoice_documents",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1783296000000,
+      "tag": "0010_remove_billing_line_items",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1783382400000,
+      "tag": "0011_notification_center",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1782820800000,
+      "tag": "0012_product_access_state",
+      "breakpoints": true
     }
   ]
 }

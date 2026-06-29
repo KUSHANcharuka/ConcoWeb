@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { toast } from "sonner";
 import {
-  Building2Icon,
   ChevronRightIcon,
   CreditCardIcon,
   FolderKanbanIcon,
@@ -12,9 +12,12 @@ import {
   UsersIcon,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { ClientBrandMedia } from "~/components/clients/client-brand-media";
 import { ClientStatusBadge } from "~/components/clients/client-status-badge";
 import { cn } from "@/lib/utils";
+import { uploadWithProgress } from "~/lib/upload-with-progress";
+import { useUploadProgress } from "~/components/upload/upload-progress-provider";
+import { api } from "~/trpc/react";
 
 type ClientWorkspaceShellProps = {
   client: {
@@ -27,6 +30,7 @@ type ClientWorkspaceShellProps = {
     projectCount: number;
     activeMemberCount: number;
     pendingInviteCount: number;
+    coverUrl: string | null;
     logoUrl: string | null;
   };
   children: ReactNode;
@@ -41,48 +45,95 @@ const sectionItems = [
 
 export function ClientWorkspaceShell({ client, children }: ClientWorkspaceShellProps) {
   const pathname = usePathname();
+  const [uploadingKind, setUploadingKind] = useState<"cover" | "logo" | null>(null);
+  const utils = api.useUtils();
+  const uploadProgress = useUploadProgress();
+  const clientQuery = api.admin.clients.context.useQuery(
+    { clientId: client.id },
+    { initialData: client },
+  );
+  const createBrandUpload = api.admin.clients.createBrandUpload.useMutation();
+  const completeBrandUpload = api.admin.clients.completeBrandUpload.useMutation();
+  const currentClient = clientQuery.data ?? client;
+
+  async function uploadBrand(kind: "cover" | "logo", file: File) {
+    const tracker = uploadProgress.startUpload({ label: file.name });
+    try {
+      setUploadingKind(kind);
+      const prepared = await createBrandUpload.mutateAsync({
+        clientId: currentClient.id,
+        kind,
+        fileName: file.name,
+        mimeType: file.type || "image/png",
+        sizeBytes: file.size,
+      });
+
+      await uploadWithProgress({
+        url: prepared.uploadUrl,
+        file,
+        contentType: file.type || "application/octet-stream",
+        onProgress: tracker.update,
+      });
+
+      await completeBrandUpload.mutateAsync({
+        clientId: currentClient.id,
+        kind,
+        assetId: prepared.assetId,
+      });
+
+      await Promise.all([
+        utils.admin.clients.context.invalidate({ clientId: currentClient.id }),
+        utils.admin.clients.getById.invalidate({ clientId: currentClient.id }),
+      ]);
+      tracker.succeed(kind === "cover" ? "Cover updated" : "Logo updated");
+      toast.success(kind === "cover" ? "Cover updated." : "Logo updated.");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : `Failed to update client ${kind}.`;
+      tracker.fail(message);
+      toast.error(message);
+    } finally {
+      setUploadingKind(null);
+    }
+  }
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-[#f6f4ef]">
       <div className="grid min-h-[calc(100vh-64px)] grid-cols-1 xl:grid-cols-[300px_minmax(0,1fr)]">
         <aside className="border-r border-black/5 bg-[#f1eee7] p-5">
-          <div className="overflow-hidden border border-black/5 bg-white">
-            <div className="flex min-h-48 items-end justify-between bg-[linear-gradient(135deg,rgba(255,245,157,0.95),rgba(255,255,255,0.95))] p-5">
-              <div className="space-y-2">
-                <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">Client</div>
-                <div className="font-serif text-3xl leading-tight text-zinc-950">{client.name}</div>
-              </div>
-              {client.logoUrl ? (
-                <img alt={`${client.name} logo`} className="h-14 w-14 border border-black/10 object-cover" src={client.logoUrl} />
-              ) : (
-                <div className="flex h-14 w-14 items-center justify-center border border-black/10 bg-white text-sm font-semibold text-zinc-900">
-                  {client.name.slice(0, 2).toUpperCase()}
-                </div>
-              )}
-            </div>
+          <div className="group overflow-hidden border border-black/5 bg-white">
+            <ClientBrandMedia
+              coverUploading={uploadingKind === "cover"}
+              coverUrl={currentClient.coverUrl}
+              logoUploading={uploadingKind === "logo"}
+              logoUrl={currentClient.logoUrl}
+              name={currentClient.name}
+              onCoverSelected={(file) => uploadBrand("cover", file)}
+              onLogoSelected={(file) => uploadBrand("logo", file)}
+            />
             <div className="space-y-4 p-5">
               <div className="grid gap-2 text-sm text-zinc-600">
-                <div>{client.primaryContactEmail}</div>
-                <div>{client.primaryContactPhone ?? "No phone set"}</div>
+                <div>{currentClient.primaryContactEmail}</div>
+                <div>{currentClient.primaryContactPhone ?? "No phone set"}</div>
               </div>
               <div className="flex items-center gap-2">
-                <ClientStatusBadge status={client.status} />
+                <ClientStatusBadge status={currentClient.status} />
                 <span className="border border-black/10 px-2.5 py-1 text-xs text-zinc-500">
-                  {client.baseCurrency}
+                  {currentClient.baseCurrency}
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-2 border border-zinc-200 p-3 text-center text-xs">
                 <div>
                   <div className="text-zinc-400">Members</div>
-                  <div className="mt-1 font-semibold text-zinc-900">{client.activeMemberCount}</div>
+                  <div className="mt-1 font-semibold text-zinc-900">{currentClient.activeMemberCount}</div>
                 </div>
                 <div>
                   <div className="text-zinc-400">Invites</div>
-                  <div className="mt-1 font-semibold text-zinc-900">{client.pendingInviteCount}</div>
+                  <div className="mt-1 font-semibold text-zinc-900">{currentClient.pendingInviteCount}</div>
                 </div>
                 <div>
                   <div className="text-zinc-400">Projects</div>
-                  <div className="mt-1 font-semibold text-zinc-900">{client.projectCount}</div>
+                  <div className="mt-1 font-semibold text-zinc-900">{currentClient.projectCount}</div>
                 </div>
               </div>
             </div>
@@ -90,7 +141,7 @@ export function ClientWorkspaceShell({ client, children }: ClientWorkspaceShellP
 
           <nav className="mt-5 space-y-1">
             {sectionItems.map((item) => {
-              const href = `/admin/clients/${client.id}/${item.key}`;
+              const href = `/admin/clients/${currentClient.id}/${item.key}`;
               const active = pathname === href;
               const Icon = item.icon;
               return (
@@ -119,7 +170,7 @@ export function ClientWorkspaceShell({ client, children }: ClientWorkspaceShellP
               Clients
             </Link>
             <ChevronRightIcon className="size-4" />
-            <span>{client.name}</span>
+            <span>{currentClient.name}</span>
           </div>
 
           {children}

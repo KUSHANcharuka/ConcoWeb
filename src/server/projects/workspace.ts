@@ -41,7 +41,10 @@ export async function getProjectWorkspaceContext(db: Database, projectId: string
   let coverUrl: string | null = null;
   if (project.coverAssetId && project.coverObjectKey) {
     try {
-      coverUrl = await createAssetReadUrl({ objectKey: project.coverObjectKey });
+      coverUrl = await createAssetReadUrl({
+        objectKey: project.coverObjectKey,
+        preferPublic: true,
+      });
     } catch {
       coverUrl = null;
     }
@@ -92,11 +95,11 @@ export async function ensureProposalScope(
   const [proposal] = await db
     .select({
       id: proposals.id,
+      title: proposals.title,
       clientId: proposals.clientId,
       projectId: proposals.projectId,
       status: proposals.status,
       sourceAssetId: proposals.sourceAssetId,
-      renderedAssetId: proposals.renderedAssetId,
       docusealTemplateId: proposals.docusealTemplateId,
       docusealTemplateSlug: proposals.docusealTemplateSlug,
     })

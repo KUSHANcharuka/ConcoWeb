@@ -14,6 +14,7 @@ export const clients = pgTable("clients", {
   name: text().notNull(),
   primaryContactEmail: text().notNull(),
   primaryContactPhone: text(),
+  coverAssetId: uuid(),
   logoAssetId: uuid(),
   country: text(),
   baseCurrency: text().notNull().default("USD"),

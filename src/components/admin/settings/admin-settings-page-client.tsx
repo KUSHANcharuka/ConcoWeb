@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { LoaderCircleIcon, SaveIcon, SettingsIcon } from "lucide-react";
+import { LoaderCircleIcon, SaveIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,15 +11,11 @@ import { api } from "~/trpc/react";
 
 const templateTypes = ["welcome", "proposal", "payment_reminder", "invoice", "general_outreach"] as const;
 
-function safeJson(value: string) {
-  try {
-    return JSON.parse(value) as Record<string, unknown>;
-  } catch {
-    return { blocks: [{ type: "heading", value: "A note from Concolabs" }] };
-  }
-}
-
-export function AdminSettingsPageClient() {
+export function AdminSettingsPageClient({
+  embedded = false,
+}: {
+  embedded?: boolean;
+}) {
   const utils = api.useUtils();
   const settingsQuery = api.admin.emails.settings.get.useQuery();
   const templatesQuery = api.admin.emails.templates.list.useQuery({
@@ -44,23 +41,23 @@ export function AdminSettingsPageClient() {
     footerAddress: "",
     footerContactEmail: "hello@concolabs.com",
     logoUrl: "",
+    requestNotificationEmails: [] as string[],
     cronCadenceHours: 24,
-    starterLayoutJson: "{}",
   });
 
   useEffect(() => {
     const settings = settingsQuery.data?.settings;
     if (!settings) return;
     setForm({
-      fromName: settings.fromName,
-      fromEmail: settings.fromEmail,
-      replyToEmail: settings.replyToEmail,
-      footerCompanyName: settings.footerCompanyName,
+      fromName: settings.fromName ?? "Concolabs",
+      fromEmail: settings.fromEmail ?? "hello@concolabs.com",
+      replyToEmail: settings.replyToEmail ?? "hello@concolabs.com",
+      footerCompanyName: settings.footerCompanyName ?? "Concolabs",
       footerAddress: settings.footerAddress ?? "",
-      footerContactEmail: settings.footerContactEmail,
+      footerContactEmail: settings.footerContactEmail ?? "hello@concolabs.com",
       logoUrl: settings.logoUrl ?? "",
+      requestNotificationEmails: settings.requestNotificationEmails ?? [],
       cronCadenceHours: settings.cronCadenceHours,
-      starterLayoutJson: JSON.stringify(settings.starterLayoutJson, null, 2),
     });
   }, [settingsQuery.data?.settings]);
 
@@ -69,60 +66,118 @@ export function AdminSettingsPageClient() {
       fromName: form.fromName,
       fromEmail: form.fromEmail,
       replyToEmail: form.replyToEmail,
+      requestNotificationEmails: form.requestNotificationEmails,
+      starterLayoutJson:
+        (settingsQuery.data?.settings.starterLayoutJson as Record<string, unknown> | undefined) ??
+        {},
       footerCompanyName: form.footerCompanyName,
       footerAddress: form.footerAddress || null,
       footerContactEmail: form.footerContactEmail,
       logoUrl: form.logoUrl || null,
       cronCadenceHours: form.cronCadenceHours,
-      starterLayoutJson: safeJson(form.starterLayoutJson),
     });
   }
 
+  const readiness = settingsQuery.data?.readiness;
+
   return (
-    <div className="mx-auto max-w-7xl px-8 py-10">
-      <div className="max-w-3xl">
-        <p className="font-mono text-xs uppercase tracking-[0.22em] text-zinc-500">
-          Settings
-        </p>
-        <h1 className="mt-2 font-serif text-4xl leading-tight text-zinc-950">
-          Workspace settings.
-        </h1>
-        <p className="mt-3 text-base leading-7 text-zinc-600">
-          Configure outbound email identity, starter layout, template defaults, and scheduled suggestion status.
-        </p>
-      </div>
+    <div className={embedded ? "space-y-8" : "mx-auto max-w-7xl px-8 py-10"}>
+      {!embedded ? (
+        <div className="max-w-3xl">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-zinc-500">
+            Settings
+          </p>
+          <h1 className="mt-2 font-serif text-4xl leading-tight text-zinc-950">
+            Email defaults.
+          </h1>
+          <p className="mt-3 text-base leading-7 text-zinc-600">
+            Keep template defaults and suggestion scheduling clean. Template authoring now lives in the Emails workspace.
+          </p>
+        </div>
+      ) : null}
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_420px]">
         <div className="space-y-6">
           <section className="border border-zinc-200 bg-white p-5">
-            <div className="mb-5 flex items-center gap-2">
-              <SettingsIcon className="size-5 text-zinc-500" />
-              <h2 className="text-lg font-semibold text-zinc-950">Email identity</h2>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <Input value={form.fromName} onChange={(event) => setForm({ ...form, fromName: event.target.value })} placeholder="From name" />
-              <Input value={form.fromEmail} onChange={(event) => setForm({ ...form, fromEmail: event.target.value })} placeholder="From email" />
-              <Input value={form.replyToEmail} onChange={(event) => setForm({ ...form, replyToEmail: event.target.value })} placeholder="Reply-to email" />
-              <Input value={form.logoUrl} onChange={(event) => setForm({ ...form, logoUrl: event.target.value })} placeholder="Logo URL" />
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-lg font-semibold text-zinc-950">Template authoring</h2>
+                <p className="mt-1 text-sm leading-6 text-zinc-600">
+                  The starter layout and all reusable email templates are now edited from the Emails workspace with the preview/editor UI.
+                </p>
+              </div>
+              <Button asChild type="button" variant="outline">
+                <Link href="/admin/emails">Open Emails</Link>
+              </Button>
             </div>
           </section>
 
           <section className="border border-zinc-200 bg-white p-5">
-            <h2 className="text-lg font-semibold text-zinc-950">Starter layout and footer</h2>
-            <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <Input value={form.footerCompanyName} onChange={(event) => setForm({ ...form, footerCompanyName: event.target.value })} placeholder="Footer company" />
-              <Input value={form.footerContactEmail} onChange={(event) => setForm({ ...form, footerContactEmail: event.target.value })} placeholder="Footer email" />
+            <h2 className="text-lg font-semibold text-zinc-950">Sender identity</h2>
+            <div className="mt-4 grid gap-4">
+              <div>
+                <label className="text-sm font-medium text-zinc-700">From name</label>
+                <Input
+                  className="mt-1"
+                  onChange={(event) => setForm((current) => ({ ...current, fromName: event.target.value }))}
+                  value={form.fromName}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-zinc-700">From email</label>
+                <Input
+                  className="mt-1"
+                  onChange={(event) => setForm((current) => ({ ...current, fromEmail: event.target.value }))}
+                  value={form.fromEmail}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-zinc-700">Reply-to email</label>
+                <Input
+                  className="mt-1"
+                  onChange={(event) => setForm((current) => ({ ...current, replyToEmail: event.target.value }))}
+                  value={form.replyToEmail}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-zinc-700">Footer company name</label>
+                <Input
+                  className="mt-1"
+                  onChange={(event) => setForm((current) => ({ ...current, footerCompanyName: event.target.value }))}
+                  value={form.footerCompanyName}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-zinc-700">Footer address</label>
+                <Textarea
+                  className="mt-1 min-h-[90px]"
+                  onChange={(event) => setForm((current) => ({ ...current, footerAddress: event.target.value }))}
+                  value={form.footerAddress}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-zinc-700">Footer contact email</label>
+                <Input
+                  className="mt-1"
+                  onChange={(event) => setForm((current) => ({ ...current, footerContactEmail: event.target.value }))}
+                  value={form.footerContactEmail}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-zinc-700">Logo URL</label>
+                <Input
+                  className="mt-1"
+                  onChange={(event) => setForm((current) => ({ ...current, logoUrl: event.target.value }))}
+                  placeholder="https://assets.example.com/logo.png"
+                  value={form.logoUrl}
+                />
+              </div>
+              <p className="text-xs leading-6 text-zinc-500">
+                The sender email must match the verified sender policy configured in the server environment.
+              </p>
             </div>
-            <Textarea className="mt-4" value={form.footerAddress} onChange={(event) => setForm({ ...form, footerAddress: event.target.value })} placeholder="Footer address" />
-            <Textarea className="mt-4 min-h-[260px] font-mono text-xs" value={form.starterLayoutJson} onChange={(event) => setForm({ ...form, starterLayoutJson: event.target.value })} />
-            <Button className="mt-4" disabled={updateSettings.isPending} onClick={handleSave} type="button">
-              {updateSettings.isPending ? <LoaderCircleIcon className="size-4 animate-spin" /> : <SaveIcon className="size-4" />}
-              Save Email Settings
-            </Button>
           </section>
-        </div>
 
-        <aside className="space-y-6">
           <section className="border border-zinc-200 bg-white p-5">
             <h2 className="text-lg font-semibold text-zinc-950">Template defaults</h2>
             <div className="mt-4 space-y-4">
@@ -157,6 +212,33 @@ export function AdminSettingsPageClient() {
               })}
             </div>
           </section>
+        </div>
+
+        <aside className="space-y-6">
+          <section className="border border-zinc-200 bg-white p-5">
+            <h2 className="text-lg font-semibold text-zinc-950">Resend readiness</h2>
+            <div className="mt-4 space-y-3 text-sm text-zinc-600">
+              <div>Provider secret: {readiness?.providerSecretPresent ? "configured" : "missing"}</div>
+              <div>Webhook secret: {readiness?.webhookSecretPresent ? "configured" : "missing"}</div>
+              <div>Sender policy: {readiness?.senderPolicyConfigured ? "configured" : "missing"}</div>
+              <div>Sender valid: {readiness?.senderPolicyValid ? "yes" : "no"}</div>
+              <div>Webhook endpoint: {readiness?.webhookEndpointConfigured ? "ready" : "missing secret"}</div>
+              <div>Can send: {readiness?.canSend ? "yes" : "no"}</div>
+              <div>Last successful send: {readiness?.lastSuccessfulSendAt ? new Date(readiness.lastSuccessfulSendAt).toLocaleString() : "never"}</div>
+              <div>Last webhook receipt: {readiness?.lastWebhookReceivedAt ? new Date(readiness.lastWebhookReceivedAt).toLocaleString() : "never"}</div>
+              {readiness?.allowedFromDomains?.length ? (
+                <div>Allowed domains: {readiness.allowedFromDomains.join(", ")}</div>
+              ) : null}
+              {readiness?.allowedFromEmails?.length ? (
+                <div>Allowed emails: {readiness.allowedFromEmails.join(", ")}</div>
+              ) : null}
+              {readiness?.errors?.length ? (
+                <div className="rounded border border-red-200 bg-red-50 p-3 text-red-700">
+                  {readiness.errors.join(" ")}
+                </div>
+              ) : null}
+            </div>
+          </section>
 
           <section className="border border-zinc-200 bg-white p-5">
             <h2 className="text-lg font-semibold text-zinc-950">Suggestion cron</h2>
@@ -178,6 +260,27 @@ export function AdminSettingsPageClient() {
                   <div className="text-red-600">{settingsQuery.data.lastRun.errorMessage}</div>
                 ) : null}
               </div>
+              <Textarea
+                className="min-h-[120px]"
+                onChange={(event) =>
+                  setForm({
+                    ...form,
+                    requestNotificationEmails: event.target.value
+                      .split("\n")
+                      .map((value) => value.trim())
+                      .filter(Boolean),
+                  })
+                }
+                placeholder={"ops@concolabs.com\nowners@concolabs.com"}
+                value={form.requestNotificationEmails.join("\n")}
+              />
+              <p className="text-xs leading-6 text-zinc-500">
+                One email per line. These recipients receive new project request and feature request notifications.
+              </p>
+              <Button className="w-full" disabled={updateSettings.isPending} onClick={handleSave} type="button">
+                {updateSettings.isPending ? <LoaderCircleIcon className="size-4 animate-spin" /> : <SaveIcon className="size-4" />}
+                Save Email Defaults
+              </Button>
             </div>
           </section>
         </aside>

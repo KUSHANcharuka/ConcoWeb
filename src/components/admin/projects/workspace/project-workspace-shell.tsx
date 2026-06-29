@@ -4,13 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import {
+  BoxesIcon,
   ChevronRightIcon,
   EyeIcon,
   FileTextIcon,
   FolderIcon,
   GitCommitHorizontalIcon,
   LayoutDashboardIcon,
-  MessageSquareIcon,
   SearchIcon,
   SparklesIcon,
   WalletIcon,
@@ -33,29 +33,68 @@ type ProjectWorkspaceShellProps = {
       name: string;
     };
   };
-  mode: "admin" | "client-preview";
+  mode: "admin" | "client-preview" | "client";
   children: ReactNode;
 };
 
-const sectionItems = [
+const adminSectionItems = [
   { key: "overview", label: "Overview", icon: LayoutDashboardIcon },
   { key: "timeline", label: "Timeline", icon: GitCommitHorizontalIcon },
   { key: "proposals", label: "Proposals", icon: FileTextIcon },
   { key: "files", label: "Files", icon: FolderIcon },
   { key: "payments", label: "Payments", icon: WalletIcon },
-  { key: "messages", label: "Messages", icon: MessageSquareIcon },
+  { key: "product-access", label: "Product Access", icon: BoxesIcon },
+  { key: "request-change", label: "New Feature Request", icon: SparklesIcon },
 ] as const;
+
+const previewSectionItems = adminSectionItems.filter(
+  (item) => item.key !== "request-change" && item.key !== "product-access",
+);
+
+const clientSectionItems = adminSectionItems.filter(
+  (item) => item.key !== "product-access",
+);
 
 function buildSectionHref(
   projectId: string,
-  section: (typeof sectionItems)[number]["key"],
-  mode: "admin" | "client-preview",
+  section: (typeof adminSectionItems)[number]["key"],
+  mode: "admin" | "client-preview" | "client",
 ) {
+  if (mode === "client") {
+    return `/client-portal/projects/${projectId}/${section}`;
+  }
+
   if (mode === "client-preview") {
     return `/admin/projects/${projectId}/client-view/${section}`;
   }
 
   return `/admin/projects/${projectId}/${section}`;
+}
+
+function buildModeToggleHref(
+  pathname: string,
+  projectId: string,
+  mode: "admin" | "client-preview",
+) {
+  const adminBase = `/admin/projects/${projectId}`;
+  const clientBase = `${adminBase}/client-view`;
+
+  if (mode === "admin") {
+    if (pathname.startsWith(clientBase)) {
+      return pathname.replace(clientBase, adminBase);
+    }
+    return pathname;
+  }
+
+  if (pathname.startsWith(clientBase)) {
+    return pathname;
+  }
+
+  if (pathname.startsWith(adminBase)) {
+    return pathname.replace(adminBase, clientBase);
+  }
+
+  return `${clientBase}/overview`;
 }
 
 export function ProjectWorkspaceShell({
@@ -64,49 +103,58 @@ export function ProjectWorkspaceShell({
   children,
 }: ProjectWorkspaceShellProps) {
   const pathname = usePathname();
+  const sectionItems =
+    mode === "client"
+      ? clientSectionItems
+      : mode === "client-preview"
+        ? previewSectionItems
+        : adminSectionItems;
+  const clientRouteBase = `/client-portal/projects/${project.id}`;
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-[#f6f4ef]">
-      <div className="border-b border-black/5 bg-white/70 px-6 py-4 backdrop-blur">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="inline-flex rounded-full border border-black/10 bg-white p-1">
-            <Link
-              className={cn(
-                "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                mode === "admin"
-                  ? "bg-zinc-950 text-white"
-                  : "text-zinc-600 hover:text-zinc-950",
-              )}
-              href={buildSectionHref(project.id, currentSection(pathname), "admin")}
-            >
-              Admin View
-            </Link>
-            <Link
-              className={cn(
-                "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                mode === "client-preview"
-                  ? "bg-zinc-950 text-white"
-                  : "text-zinc-600 hover:text-zinc-950",
-              )}
-              href={buildSectionHref(project.id, currentSection(pathname), "client-preview")}
-            >
-              Client View
-            </Link>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm text-zinc-500">
-              <SearchIcon className="size-4" />
-              Search this workspace
+      {mode !== "client" ? (
+        <div className="border-b border-black/5 bg-white/70 px-6 py-4 backdrop-blur">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <div className="inline-flex rounded-full border border-black/10 bg-white p-1">
+              <Link
+                className={cn(
+                  "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                  mode === "admin"
+                    ? "bg-zinc-950 text-white"
+                    : "text-zinc-600 hover:text-zinc-950",
+                )}
+                href={buildModeToggleHref(pathname, project.id, "admin")}
+              >
+                Admin View
+              </Link>
+              <Link
+                className={cn(
+                  "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                  mode === "client-preview"
+                    ? "bg-zinc-950 text-white"
+                    : "text-zinc-600 hover:text-zinc-950",
+                )}
+                href={buildModeToggleHref(pathname, project.id, "client-preview")}
+              >
+                Client View
+              </Link>
             </div>
-            {mode === "client-preview" && (
-              <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
-                <EyeIcon className="size-4" />
-                Preview mode
+            <div className="flex items-center gap-2">
+              <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-2 text-sm text-zinc-500">
+                <SearchIcon className="size-4" />
+                Search this workspace
               </div>
-            )}
+              {mode === "client-preview" && (
+                <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
+                  <EyeIcon className="size-4" />
+                  Preview mode
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
 
       <div className="grid min-h-[calc(100vh-128px)] grid-cols-1 xl:grid-cols-[300px_minmax(0,1fr)]">
         <aside className="border-r border-black/5 bg-[#f1eee7] p-5">
@@ -129,10 +177,10 @@ export function ProjectWorkspaceShell({
                 <p className="text-sm leading-6 text-zinc-600">{project.description}</p>
               </div>
               <div className="flex items-center gap-2">
-                <ProjectStatusBadge status={project.status} />
-                <span className="rounded-full border border-black/10 px-2.5 py-1 text-xs text-zinc-500">
-                  {project.currency}
-                </span>
+              <ProjectStatusBadge status={project.status} />
+              <span className="rounded-full border border-black/10 px-2.5 py-1 text-xs text-zinc-500">
+                {project.currency}
+              </span>
               </div>
             </div>
           </div>
@@ -140,7 +188,7 @@ export function ProjectWorkspaceShell({
           <nav className="mt-5 space-y-1">
             {sectionItems.map((item) => {
               const href = buildSectionHref(project.id, item.key, mode);
-              const active = pathname === href;
+              const active = pathname === href || pathname.startsWith(`${href}/`);
               const Icon = item.icon;
               return (
                 <Link
@@ -171,11 +219,31 @@ export function ProjectWorkspaceShell({
           )}
 
           <div className="mb-6 flex items-center gap-2 text-sm text-zinc-500">
-            <Link className="hover:text-zinc-900" href="/admin/projects">
+            <Link
+              className="hover:text-zinc-900"
+              href={mode === "client" ? "/client-portal/projects" : "/admin/projects"}
+            >
               Projects
             </Link>
             <ChevronRightIcon className="size-4" />
-            <span>{project.name}</span>
+            {mode === "client" ? (
+              <>
+                <Link className="hover:text-zinc-900" href={clientRouteBase}>
+                  {project.name}
+                </Link>
+                {pathname !== `${clientRouteBase}/overview` && pathname !== clientRouteBase ? (
+                  <>
+                    <ChevronRightIcon className="size-4" />
+                    <span>
+                      {sectionItems.find((item) => pathname === buildSectionHref(project.id, item.key, mode) || pathname.startsWith(`${buildSectionHref(project.id, item.key, mode)}/`))?.label ??
+                        project.name}
+                    </span>
+                  </>
+                ) : null}
+              </>
+            ) : (
+              <span>{project.name}</span>
+            )}
           </div>
 
           {children}
@@ -183,11 +251,6 @@ export function ProjectWorkspaceShell({
       </div>
     </div>
   );
-}
-
-function currentSection(pathname: string) {
-  const match = sectionItems.find((item) => pathname.endsWith(`/${item.key}`));
-  return match?.key ?? "overview";
 }
 
 export function ProjectSectionSurface({

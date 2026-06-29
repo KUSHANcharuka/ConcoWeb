@@ -28,7 +28,9 @@ export const assetVisibilityEnum = pgEnum("asset_visibility", [
 
 export const assetScopeTypeEnum = pgEnum("asset_scope_type", [
   "project",
+  "project_request",
   "proposal",
+  "billing_artifact",
   "payment_proof",
   "change_request",
   "message",

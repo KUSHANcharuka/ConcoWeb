@@ -1,16 +1,11 @@
-import { ProjectPlaceholderPanel, ProjectSectionSurface } from "~/components/admin/projects/workspace/project-workspace-shell";
+import { ProjectBillingPageClient } from "~/components/admin/billing/project-billing-page-client";
 
-export default function AdminProjectPaymentsPage() {
-  return (
-    <ProjectSectionSurface
-      description="Billing and payment workflows are intentionally deferred in this change."
-      eyebrow="Deferred"
-      title="Payments"
-    >
-      <ProjectPlaceholderPanel
-        description="Payments will become the centralized billing surface in a follow-up change. This version keeps the route visible without exposing incomplete workflow controls."
-        title="Payments are deferred for this version"
-      />
-    </ProjectSectionSurface>
-  );
+export default async function AdminProjectPaymentsPage({
+  params,
+}: {
+  params: Promise<{ projectId: string }>;
+}) {
+  const { projectId } = await params;
+
+  return <ProjectBillingPageClient projectId={projectId} />;
 }

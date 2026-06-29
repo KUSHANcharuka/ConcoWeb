@@ -9,7 +9,7 @@ export default async function AdminProjectClientTimelinePage({
   const { projectId } = await params;
   return (
     <ProjectSectionSurface
-      description="This preview route will render the same timeline without edit or drag controls."
+      description="Preview the same project timeline the client sees, without admin-only editing controls."
       eyebrow="Client Preview"
       title="Timeline"
     >

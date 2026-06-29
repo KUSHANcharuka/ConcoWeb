@@ -1,3 +1,5 @@
+import { randomUUID } from "crypto";
+
 import { and, asc, desc, eq, ilike, inArray, or } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -5,6 +7,7 @@ import { z } from "zod";
 import { env } from "~/env";
 import { adminProcedure, createTRPCRouter } from "~/server/api/trpc";
 import { getClerkAdminClient, toClerkClientRole } from "~/server/clients/clerk";
+import { resolveAssetUrlsById } from "~/server/clients/branding";
 import {
   markMembershipRemoved,
   syncOrganizationInvitation,
@@ -15,14 +18,19 @@ import {
   clientInvitations,
   clientMemberships,
   clients,
-  proposals,
   projects,
   users,
 } from "~/server/db/schema";
-import { createAssetReadUrl } from "~/server/r2";
+import {
+  assertR2ObjectExists,
+  buildClientCoverObjectKey,
+  buildClientLogoObjectKey,
+  createPresignedUploadUrl,
+} from "~/server/r2";
 
 const clientStatusValues = ["lead", "active", "suspended", "archived"] as const;
 const roleValues = ["admin", "member"] as const;
+const clientBrandKinds = ["cover", "logo"] as const;
 
 const listClientsSchema = z.object({
   search: z.string().trim().max(120).default(""),
@@ -77,6 +85,18 @@ const resendInviteSchema = clientScopeSchema.extend({
   invitationId: z.string().uuid(),
 });
 
+const createClientBrandUploadSchema = clientScopeSchema.extend({
+  kind: z.enum(clientBrandKinds),
+  fileName: z.string().trim().min(1).max(240),
+  mimeType: z.string().trim().min(1).max(120),
+  sizeBytes: z.number().int().positive().max(10 * 1024 * 1024),
+});
+
+const completeClientBrandUploadSchema = clientScopeSchema.extend({
+  kind: z.enum(clientBrandKinds),
+  assetId: z.string().uuid(),
+});
+
 function formatMoney(cents: number | null, currency: string) {
   if (cents == null) return null;
   return new Intl.NumberFormat("en-US", {
@@ -84,21 +104,6 @@ function formatMoney(cents: number | null, currency: string) {
     currency,
     maximumFractionDigits: 2,
   }).format(cents / 100);
-}
-
-async function resolveClientLogoUrl(input: {
-  logoAssetId: string | null;
-  logoObjectKey: string | null;
-}) {
-  if (!input.logoAssetId || !input.logoObjectKey) {
-    return null;
-  }
-
-  try {
-    return await createAssetReadUrl({ objectKey: input.logoObjectKey });
-  } catch {
-    return null;
-  }
 }
 
 async function ensureClientDetails(
@@ -116,13 +121,12 @@ async function ensureClientDetails(
       baseCurrency: clients.baseCurrency,
       status: clients.status,
       internalNotes: clients.internalNotes,
+      coverAssetId: clients.coverAssetId,
       logoAssetId: clients.logoAssetId,
-      logoObjectKey: assets.objectKey,
       createdAt: clients.createdAt,
       updatedAt: clients.updatedAt,
     })
     .from(clients)
-    .leftJoin(assets, eq(clients.logoAssetId, assets.id))
     .where(eq(clients.id, clientId))
     .limit(1);
 
@@ -131,6 +135,31 @@ async function ensureClientDetails(
   }
 
   return client;
+}
+
+async function assertClientAssetBelongsToClient(input: {
+  db: Database;
+  clientId: string;
+  assetId: string;
+}) {
+  const [asset] = await input.db
+    .select({
+      id: assets.id,
+      clientId: assets.clientId,
+      objectKey: assets.objectKey,
+    })
+    .from(assets)
+    .where(eq(assets.id, input.assetId))
+    .limit(1);
+
+  if (!asset || asset.clientId !== input.clientId) {
+    throw new TRPCError({
+      code: "NOT_FOUND",
+      message: "Client asset not found.",
+    });
+  }
+
+  return asset;
 }
 
 async function assertInviteAllowed(input: {
@@ -222,32 +251,16 @@ async function buildBillingSummary(
   clientId: string,
   currency: string,
 ) {
-  const proposalRows = await db
-    .select({
-      totalAmountCents: proposals.totalAmountCents,
-      status: proposals.status,
-    })
-    .from(proposals)
-    .where(eq(proposals.clientId, clientId));
-
-  const bookedValueCents = proposalRows.reduce((sum, row) => {
-    if (row.totalAmountCents == null) return sum;
-    if (row.status === "accepted" || row.status === "signed") {
-      return sum + row.totalAmountCents;
-    }
-    return sum;
-  }, 0);
-
   return {
     currency,
     totalRevenueCents: 0,
     remainingDueCents: 0,
     overdueCount: 0,
     completedCount: 0,
-    bookedValueCents,
+    bookedValueCents: 0,
     totalRevenueLabel: formatMoney(0, currency),
     remainingDueLabel: formatMoney(0, currency),
-    bookedValueLabel: formatMoney(bookedValueCents, currency),
+    bookedValueLabel: formatMoney(0, currency),
     deferred: true,
   };
 }
@@ -291,6 +304,10 @@ export const adminClientsRouter = createTRPCRouter({
           ),
         ),
     ]);
+    const assetUrls = await resolveAssetUrlsById(
+      ctx.db,
+      [client.coverAssetId, client.logoAssetId].filter((value): value is string => Boolean(value)),
+    );
 
     return {
       id: client.id,
@@ -302,7 +319,8 @@ export const adminClientsRouter = createTRPCRouter({
       projectCount: projectCountRow.length,
       activeMemberCount: memberCountRow.length,
       pendingInviteCount: inviteCountRow.length,
-      logoUrl: await resolveClientLogoUrl(client),
+      coverUrl: client.coverAssetId ? assetUrls.get(client.coverAssetId) ?? null : null,
+      logoUrl: client.logoAssetId ? assetUrls.get(client.logoAssetId) ?? null : null,
     };
   }),
 
@@ -332,14 +350,18 @@ export const adminClientsRouter = createTRPCRouter({
         status: clients.status,
         country: clients.country,
         clerkOrgId: clients.clerkOrgId,
+        coverAssetId: clients.coverAssetId,
         logoAssetId: clients.logoAssetId,
-        logoObjectKey: assets.objectKey,
         createdAt: clients.createdAt,
       })
       .from(clients)
-      .leftJoin(assets, eq(clients.logoAssetId, assets.id))
       .where(filters.length > 0 ? and(...filters) : undefined)
       .orderBy(desc(clients.createdAt));
+
+    const assetUrls = await resolveAssetUrlsById(
+      ctx.db,
+      rows.flatMap((row) => [row.coverAssetId, row.logoAssetId]).filter((value): value is string => Boolean(value)),
+    );
 
     const clientIds = rows.map((row) => row.id);
     const [membershipRows, invitationRows, projectRows] = clientIds.length
@@ -409,7 +431,8 @@ export const adminClientsRouter = createTRPCRouter({
           overdueCount: 0,
           deferred: true,
         },
-        logoUrl: await resolveClientLogoUrl(row),
+        coverUrl: row.coverAssetId ? assetUrls.get(row.coverAssetId) ?? null : null,
+        logoUrl: row.logoAssetId ? assetUrls.get(row.logoAssetId) ?? null : null,
       })),
     );
   }),
@@ -523,22 +546,19 @@ export const adminClientsRouter = createTRPCRouter({
       buildBillingSummary(ctx.db, input.clientId, client.baseCurrency),
     ]);
 
-    const coverUrls = new Map<string, string>();
-    await Promise.all(
-      projectRows.map(async (project) => {
-        if (!project.coverAssetId || !project.coverObjectKey) return;
-        const url = await resolveClientLogoUrl({
-          logoAssetId: project.coverAssetId,
-          logoObjectKey: project.coverObjectKey,
-        });
-        if (url) {
-          coverUrls.set(project.coverAssetId, url);
-        }
-      }),
+    const coverUrls = await resolveAssetUrlsById(
+      ctx.db,
+      projectRows
+        .map((project) => project.coverAssetId)
+        .filter((value): value is string => Boolean(value)),
     );
 
     const activeMembers = membershipRows.filter((row) => row.status === "active");
     const pendingInvites = invitationRows.filter((row) => row.status === "pending");
+    const assetUrls = await resolveAssetUrlsById(
+      ctx.db,
+      [client.coverAssetId, client.logoAssetId].filter((value): value is string => Boolean(value)),
+    );
 
     return {
       id: client.id,
@@ -549,7 +569,8 @@ export const adminClientsRouter = createTRPCRouter({
       baseCurrency: client.baseCurrency,
       status: client.status,
       internalNotes: client.internalNotes,
-      logoUrl: await resolveClientLogoUrl(client),
+      coverUrl: client.coverAssetId ? assetUrls.get(client.coverAssetId) ?? null : null,
+      logoUrl: client.logoAssetId ? assetUrls.get(client.logoAssetId) ?? null : null,
       counts: {
         activeMembers: activeMembers.length,
         pendingInvites: pendingInvites.length,
@@ -607,6 +628,80 @@ export const adminClientsRouter = createTRPCRouter({
           status: input.status,
           updatedAt: new Date(),
         })
+        .where(eq(clients.id, input.clientId));
+
+      return { success: true };
+    }),
+
+  createBrandUpload: adminProcedure
+    .input(createClientBrandUploadSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ensureClientDetails(ctx.db, input.clientId);
+
+      if (!input.mimeType.startsWith("image/")) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Client branding assets must be images.",
+        });
+      }
+
+      const assetId = randomUUID();
+      const objectKey = input.kind === "cover"
+        ? buildClientCoverObjectKey(assetId, input.clientId, input.fileName)
+        : buildClientLogoObjectKey(assetId, input.clientId, input.fileName);
+      const { bucket, uploadUrl } = await createPresignedUploadUrl({
+        objectKey,
+        contentType: input.mimeType,
+      });
+
+      await ctx.db.insert(assets).values({
+        id: assetId,
+        clientId: input.clientId,
+        uploadedByUserId: ctx.session.userId,
+        bucket,
+        objectKey,
+        fileName: input.fileName,
+        displayName: input.fileName,
+        mimeType: input.mimeType,
+        sizeBytes: input.sizeBytes,
+        assetType: "image",
+        visibility: "client_visible",
+        scopeType: "client",
+        scopeId: input.clientId,
+      });
+
+      return {
+        assetId,
+        uploadUrl,
+        bucket,
+        objectKey,
+      };
+    }),
+
+  completeBrandUpload: adminProcedure
+    .input(completeClientBrandUploadSchema)
+    .mutation(async ({ ctx, input }) => {
+      await ensureClientDetails(ctx.db, input.clientId);
+      const asset = await assertClientAssetBelongsToClient({
+        db: ctx.db,
+        clientId: input.clientId,
+        assetId: input.assetId,
+      });
+      await assertR2ObjectExists({ objectKey: asset.objectKey });
+
+      await ctx.db
+        .update(clients)
+        .set(
+          input.kind === "cover"
+            ? {
+                coverAssetId: input.assetId,
+                updatedAt: new Date(),
+              }
+            : {
+                logoAssetId: input.assetId,
+                updatedAt: new Date(),
+              },
+        )
         .where(eq(clients.id, input.clientId));
 
       return { success: true };

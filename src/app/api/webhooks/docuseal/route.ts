@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
+import { billingArtifactDocuments, projectBillingArtifacts } from "~/server/db/schema/billing";
 import { proposals } from "~/server/db/schema/project-proposals";
 
 type DocusealWebhookPayload = {
@@ -47,7 +48,9 @@ export async function POST(request: Request) {
     !eventType ||
     (eventType !== "form.completed" &&
       eventType !== "form.declined" &&
-      eventType !== "submission.completed")
+      eventType !== "submission.completed" &&
+      eventType !== "form.viewed" &&
+      eventType !== "form.started")
   ) {
     return NextResponse.json({ ok: true });
   }
@@ -59,6 +62,7 @@ export async function POST(request: Request) {
   const [proposal] = await db
     .select({
       id: proposals.id,
+      status: proposals.status,
       lastWebhookEventId: proposals.lastWebhookEventId,
     })
     .from(proposals)
@@ -71,10 +75,6 @@ export async function POST(request: Request) {
     )
     .limit(1);
 
-  if (!proposal) {
-    return NextResponse.json({ ok: true });
-  }
-
   const derivedEventId = [
     eventType,
     payload.timestamp ?? "",
@@ -82,35 +82,82 @@ export async function POST(request: Request) {
     submissionId ?? "",
   ].join(":");
 
-  if (proposal.lastWebhookEventId === derivedEventId) {
-    return NextResponse.json({ ok: true, deduped: true });
+  if (proposal) {
+    if (proposal.lastWebhookEventId === derivedEventId) {
+      return NextResponse.json({ ok: true, deduped: true });
+    }
+
+    const submissionStatus = payload.data?.submission?.status ?? payload.data?.status;
+    const nextStatus =
+      eventType === "form.declined"
+        ? "declined"
+        : eventType === "submission.completed" ||
+            (eventType === "form.completed" && submissionStatus === "completed")
+          ? "signed"
+          : proposal.status;
+
+    await db
+      .update(proposals)
+      .set({
+        status: nextStatus,
+        docusealSubmissionId: submissionId ?? undefined,
+        docusealSubmissionStatus: payload.data?.submission?.status ?? payload.data?.status,
+        docusealSubmitterId: submitterId ?? undefined,
+        signedAt:
+          nextStatus === "signed" && payload.data?.completed_at
+            ? new Date(payload.data.completed_at)
+            : undefined,
+        declinedAt:
+          nextStatus === "declined" && payload.data?.declined_at
+            ? new Date(payload.data.declined_at)
+            : undefined,
+        lastWebhookEventId: derivedEventId,
+        lastWebhookReceivedAt: new Date(payload.timestamp ?? Date.now()),
+        updatedAt: new Date(),
+      })
+      .where(eq(proposals.id, proposal.id));
+
+    return NextResponse.json({ ok: true, entity: "proposal" });
   }
 
-  const nextStatus =
-    eventType === "form.declined" ? "declined" : eventType === "form.completed" || eventType === "submission.completed" ? "signed" : undefined;
+  const [billingDocument] = await db
+    .select({
+      id: billingArtifactDocuments.id,
+      artifactId: billingArtifactDocuments.artifactId,
+    })
+    .from(billingArtifactDocuments)
+    .where(
+      or(
+        ...(submitterId ? [eq(billingArtifactDocuments.docusealSubmitterId, submitterId)] : []),
+        ...(submissionId ? [eq(billingArtifactDocuments.docusealSubmissionId, submissionId)] : []),
+        ...(externalId ? [eq(billingArtifactDocuments.id, externalId)] : []),
+      ),
+    )
+    .limit(1);
+
+  if (!billingDocument) {
+    return NextResponse.json({ ok: true });
+  }
 
   await db
-    .update(proposals)
+    .update(billingArtifactDocuments)
     .set({
-      status: nextStatus,
       docusealSubmissionId: submissionId ?? undefined,
       docusealSubmissionStatus: payload.data?.submission?.status ?? payload.data?.status,
       docusealSubmitterId: submitterId ?? undefined,
-      signedAt:
-        nextStatus === "signed" && payload.data?.completed_at
-          ? new Date(payload.data.completed_at)
-          : undefined,
-      declinedAt:
-        nextStatus === "declined" && payload.data?.declined_at
-          ? new Date(payload.data.declined_at)
-          : undefined,
-      lastWebhookEventId: derivedEventId,
-      lastWebhookEventType: eventType,
-      lastWebhookPayload: payload,
-      lastWebhookReceivedAt: new Date(payload.timestamp ?? Date.now()),
       updatedAt: new Date(),
     })
-    .where(eq(proposals.id, proposal.id));
+    .where(eq(billingArtifactDocuments.id, billingDocument.id));
 
-  return NextResponse.json({ ok: true });
+  if (eventType === "form.completed" || eventType === "submission.completed") {
+    await db
+      .update(projectBillingArtifacts)
+      .set({
+        status: "pending_payment",
+        updatedAt: new Date(),
+      })
+      .where(eq(projectBillingArtifacts.id, billingDocument.artifactId));
+  }
+
+  return NextResponse.json({ ok: true, entity: "billing_document" });
 }

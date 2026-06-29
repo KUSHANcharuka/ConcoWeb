@@ -9,7 +9,7 @@ export default async function AdminProjectTimelinePage({
   const { projectId } = await params;
   return (
     <ProjectSectionSurface
-      description="The timeline canvas will use React Flow for draggable milestones, checkpoint cards, and client-safe preview rendering."
+      description="Shape the client-facing delivery story with dated milestones, review notes, payment reminders, and delivery checkpoints."
       eyebrow="Project Timeline"
       title="Timeline"
     >

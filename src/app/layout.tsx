@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import { Toaster } from "@/components/ui/sonner";
+import { UploadProgressProvider } from "~/components/upload/upload-progress-provider";
 import { TRPCReactProvider } from "~/trpc/react";
 
 export const metadata: Metadata = {
@@ -52,8 +53,10 @@ export default function RootLayout({
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} bg-background`}>
         <body className="font-sans antialiased">
           <TRPCReactProvider>
-            {children}
-            <Toaster richColors />
+            <UploadProgressProvider>
+              {children}
+              <Toaster richColors />
+            </UploadProgressProvider>
           </TRPCReactProvider>
           {process.env.NODE_ENV === "production" && <Analytics />}
         </body>

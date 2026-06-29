@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 
+import { resolveAssetUrlsById } from "~/server/clients/branding";
 import { db } from "~/server/db";
 import { clients } from "~/server/db/schema";
 
@@ -26,6 +27,8 @@ export async function requireClientPortalAccess() {
       status: clients.status,
       primaryContactEmail: clients.primaryContactEmail,
       primaryContactPhone: clients.primaryContactPhone,
+      coverAssetId: clients.coverAssetId,
+      logoAssetId: clients.logoAssetId,
     })
     .from(clients)
     .where(eq(clients.clerkOrgId, session.orgId))
@@ -35,9 +38,18 @@ export async function requireClientPortalAccess() {
     redirect("/client-portal/no-access");
   }
 
+  const assetUrls = await resolveAssetUrlsById(
+    db,
+    [client.coverAssetId, client.logoAssetId].filter((value): value is string => Boolean(value)),
+  );
+
   return {
     userId: session.userId,
     orgId: session.orgId,
-    client,
+    client: {
+      ...client,
+      coverUrl: client.coverAssetId ? assetUrls.get(client.coverAssetId) ?? null : null,
+      logoUrl: client.logoAssetId ? assetUrls.get(client.logoAssetId) ?? null : null,
+    },
   };
 }

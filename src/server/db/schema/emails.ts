@@ -51,19 +51,26 @@ export const emailRecipientModeEnum = pgEnum("email_recipient_mode", [
 ]);
 
 export const sentEmailStatusEnum = pgEnum("sent_email_status", [
-  "pending",
-  "sent",
-  "failed",
-]);
-
-export const emailDeliveryEventTypeEnum = pgEnum("email_delivery_event_type", [
   "queued",
-  "sent",
+  "accepted",
   "delivered",
   "opened",
   "clicked",
   "bounced",
   "complained",
+  "suppressed",
+  "failed",
+]);
+
+export const emailDeliveryEventTypeEnum = pgEnum("email_delivery_event_type", [
+  "queued",
+  "accepted",
+  "delivered",
+  "opened",
+  "clicked",
+  "bounced",
+  "complained",
+  "suppressed",
   "failed",
 ]);
 
@@ -79,6 +86,7 @@ export const emailSettings = pgTable("email_settings", {
   fromName: text().notNull().default("Concolabs"),
   fromEmail: text().notNull().default("hello@concolabs.com"),
   replyToEmail: text().notNull().default("hello@concolabs.com"),
+  requestNotificationEmails: jsonb().$type<string[]>().notNull().default(sql`'[]'::jsonb`),
   starterLayoutJson: jsonb().notNull(),
   footerCompanyName: text().notNull().default("Concolabs"),
   footerAddress: text(),
@@ -192,32 +200,41 @@ export const emailDraftRecipients = pgTable("email_draft_recipients", {
     .default(sql`now()`),
 });
 
-export const sentEmails = pgTable("sent_emails", {
-  id: uuid().primaryKey().defaultRandom(),
-  draftId: uuid().references(() => emailDrafts.id, { onDelete: "set null" }),
-  templateId: uuid().references(() => emailTemplates.id, { onDelete: "set null" }),
-  templateType: emailTemplateTypeEnum().notNull(),
-  clientId: uuid().references(() => clients.id, { onDelete: "set null" }),
-  projectId: uuid().references(() => projects.id, { onDelete: "set null" }),
-  subject: text().notNull(),
-  renderedHtml: text().notNull(),
-  renderedText: text().notNull(),
-  fromName: text().notNull(),
-  fromEmail: text().notNull(),
-  replyToEmail: text(),
-  status: sentEmailStatusEnum().notNull().default("pending"),
-  provider: text().notNull().default("resend"),
-  providerMessageId: text(),
-  errorMessage: text(),
-  sentByAdminId: text().references(() => users.id, { onDelete: "set null" }),
-  sentAt: timestamp({ withTimezone: true }),
-  createdAt: timestamp({ withTimezone: true })
-    .notNull()
-    .default(sql`now()`),
-  updatedAt: timestamp({ withTimezone: true })
-    .notNull()
-    .default(sql`now()`),
-});
+export const sentEmails = pgTable(
+  "sent_emails",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    draftId: uuid().references(() => emailDrafts.id, { onDelete: "set null" }),
+    templateId: uuid().references(() => emailTemplates.id, { onDelete: "set null" }),
+    templateType: emailTemplateTypeEnum().notNull(),
+    clientId: uuid().references(() => clients.id, { onDelete: "set null" }),
+    projectId: uuid().references(() => projects.id, { onDelete: "set null" }),
+    subject: text().notNull(),
+    renderedHtml: text().notNull(),
+    renderedText: text().notNull(),
+    fromName: text().notNull(),
+    fromEmail: text().notNull(),
+    replyToEmail: text(),
+    status: sentEmailStatusEnum().notNull().default("queued"),
+    provider: text().notNull().default("resend"),
+    providerMessageId: text(),
+    providerIdempotencyKey: text().notNull(),
+    errorMessage: text(),
+    sentByAdminId: text().references(() => users.id, { onDelete: "set null" }),
+    sentAt: timestamp({ withTimezone: true }),
+    createdAt: timestamp({ withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (table) => ({
+    providerIdempotencyIdx: uniqueIndex("sent_emails_provider_idempotency_key_idx").on(
+      table.providerIdempotencyKey,
+    ),
+  }),
+);
 
 export const sentEmailRecipients = pgTable("sent_email_recipients", {
   id: uuid().primaryKey().defaultRandom(),
@@ -230,7 +247,7 @@ export const sentEmailRecipients = pgTable("sent_email_recipients", {
   }),
   email: text().notNull(),
   name: text(),
-  status: sentEmailStatusEnum().notNull().default("pending"),
+  status: sentEmailStatusEnum().notNull().default("queued"),
   providerRecipientId: text(),
   errorMessage: text(),
   createdAt: timestamp({ withTimezone: true })

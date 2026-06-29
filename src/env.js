@@ -18,8 +18,15 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
 
     RESEND_API_KEY: z.string().min(1).optional(),
+    RESEND_WEBHOOK_SECRET: z.string().min(1).optional(),
+    RESEND_ALLOWED_FROM_DOMAINS: z.string().min(1).optional(),
+    RESEND_ALLOWED_FROM_EMAILS: z.string().min(1).optional(),
 
     OUTBOUND_WEBHOOK_SIGNING_KEY: z.string().min(1).optional(),
+    PUSHER_APP_ID: z.string().min(1).optional(),
+    PUSHER_KEY: z.string().min(1).optional(),
+    PUSHER_SECRET: z.string().min(1).optional(),
+    PUSHER_CLUSTER: z.string().min(1).optional(),
 
     R2_ACCOUNT_ID: z.string().min(1).optional(),
     R2_ACCESS_KEY_ID: z.string().min(1).optional(),
@@ -27,8 +34,11 @@ export const env = createEnv({
     R2_BUCKET: z.string().min(1).optional(),
     R2_PUBLIC_BASE_URL: z.string().url().optional(),
     DOCUSEAL_BASE_URL: z.string().url().optional(),
+    DOCUSEAL_API_BASE_URL: z.string().url().optional(),
+    DOCUSEAL_APP_BASE_URL: z.string().url().optional(),
     DOCUSEAL_API_KEY: z.string().min(1).optional(),
     DOCUSEAL_WEBHOOK_SECRET: z.string().min(1).optional(),
+    DOCUSEAL_TEST_USER_EMAIL: z.string().email().optional(),
 
     APP_URL: z.string().url(),
   },
@@ -42,6 +52,8 @@ export const env = createEnv({
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().default("/sign-in"),
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().default("/sign-up"),
+    NEXT_PUBLIC_PUSHER_KEY: z.string().min(1).optional(),
+    NEXT_PUBLIC_PUSHER_CLUSTER: z.string().min(1).optional(),
   },
 
   /**
@@ -59,13 +71,22 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
+    NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
+    NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
 
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
 
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    RESEND_WEBHOOK_SECRET: process.env.RESEND_WEBHOOK_SECRET,
+    RESEND_ALLOWED_FROM_DOMAINS: process.env.RESEND_ALLOWED_FROM_DOMAINS,
+    RESEND_ALLOWED_FROM_EMAILS: process.env.RESEND_ALLOWED_FROM_EMAILS,
 
     OUTBOUND_WEBHOOK_SIGNING_KEY: process.env.OUTBOUND_WEBHOOK_SIGNING_KEY,
+    PUSHER_APP_ID: process.env.PUSHER_APP_ID,
+    PUSHER_KEY: process.env.PUSHER_KEY,
+    PUSHER_SECRET: process.env.PUSHER_SECRET,
+    PUSHER_CLUSTER: process.env.PUSHER_CLUSTER,
 
     R2_ACCOUNT_ID: process.env.R2_ACCOUNT_ID,
     R2_ACCESS_KEY_ID: process.env.R2_ACCESS_KEY_ID,
@@ -73,8 +94,11 @@ export const env = createEnv({
     R2_BUCKET: process.env.R2_BUCKET,
     R2_PUBLIC_BASE_URL: process.env.R2_PUBLIC_BASE_URL,
     DOCUSEAL_BASE_URL: process.env.DOCUSEAL_BASE_URL,
+    DOCUSEAL_API_BASE_URL: process.env.DOCUSEAL_API_BASE_URL,
+    DOCUSEAL_APP_BASE_URL: process.env.DOCUSEAL_APP_BASE_URL,
     DOCUSEAL_API_KEY: process.env.DOCUSEAL_API_KEY,
     DOCUSEAL_WEBHOOK_SECRET: process.env.DOCUSEAL_WEBHOOK_SECRET,
+    DOCUSEAL_TEST_USER_EMAIL: process.env.DOCUSEAL_TEST_USER_EMAIL,
 
     APP_URL: process.env.APP_URL,
   },

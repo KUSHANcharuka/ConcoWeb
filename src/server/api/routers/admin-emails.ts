@@ -22,12 +22,19 @@ import {
 import {
   createDraftSourceFromSettings,
   emailTemplateTypes,
+  getEmailSettingsReadiness,
   getOrCreateEmailSettings,
   renderAndNormalizeEmail,
   resolveTemplateForContext,
   sendDraftEmail,
+  validateEmailSettingsForProviderPolicy,
 } from "~/server/emails/service";
 import { cloneBuilderSource } from "~/server/emails/starter-layout";
+import {
+  emailSourceToReactSource,
+  normalizeEmailSource,
+  reactSourceToEmailSource,
+} from "~/server/emails/source-codec";
 
 const templateTypeValues = emailTemplateTypeEnum.enumValues;
 const templateStatusValues = emailTemplateStatusEnum.enumValues;
@@ -86,12 +93,26 @@ const settingsUpdateSchema = z.object({
   fromName: z.string().trim().min(1).max(120),
   fromEmail: z.string().trim().email(),
   replyToEmail: z.string().trim().email(),
+  requestNotificationEmails: z.array(z.string().trim().email()).max(20),
   starterLayoutJson: jsonRecord,
   footerCompanyName: z.string().trim().min(1).max(160),
   footerAddress: z.string().trim().max(300).nullable().optional(),
   footerContactEmail: z.string().trim().email(),
   logoUrl: z.string().trim().url().nullable().optional(),
   cronCadenceHours: z.number().int().min(12).max(24),
+});
+
+const reactSourceSchema = z.object({
+  reactSource: z.string().trim().min(1),
+});
+
+const templateCodeSaveSchema = z.object({
+  id: z.string().uuid().optional(),
+  templateType: z.enum(templateTypeValues),
+  status: z.enum(templateStatusValues).default("draft"),
+  name: z.string().trim().min(1).max(160),
+  subject: z.string().trim().min(1).max(240),
+  reactSource: z.string().trim().min(1),
 });
 
 function assertTemplateType(value: string): asserts value is (typeof emailTemplateTypes)[number] {
@@ -111,7 +132,7 @@ async function loadDraftOrThrow(db: Database, draftId: string) {
 export const adminEmailsRouter = createTRPCRouter({
   settings: createTRPCRouter({
     get: adminProcedure.query(async ({ ctx }) => {
-      const settings = await getOrCreateEmailSettings(ctx.db);
+      const { settings, readiness } = await getEmailSettingsReadiness(ctx.db);
       const [lastRun] = await ctx.db
         .select()
         .from(emailGenerationRuns)
@@ -132,10 +153,48 @@ export const adminEmailsRouter = createTRPCRouter({
         .where(isNull(emailTemplateAssignments.projectId))
         .orderBy(asc(emailTemplateAssignments.templateType));
 
-      return { settings, lastRun: lastRun ?? null, assignments };
+      return { settings, readiness, lastRun: lastRun ?? null, assignments };
+    }),
+
+    getStarterLayoutEditor: adminProcedure.query(async ({ ctx }) => {
+      const settings = await getOrCreateEmailSettings(ctx.db);
+      const source = normalizeEmailSource({
+        ...cloneBuilderSource(settings.starterLayoutJson),
+        brand: {
+          ...normalizeEmailSource(settings.starterLayoutJson).brand,
+          logoUrl:
+            normalizeEmailSource(settings.starterLayoutJson).brand?.logoUrl ??
+            settings.logoUrl,
+          brandLabel:
+            normalizeEmailSource(settings.starterLayoutJson).brand?.brandLabel ??
+            settings.fromName,
+          footerCompanyName:
+            normalizeEmailSource(settings.starterLayoutJson).brand?.footerCompanyName ??
+            settings.footerCompanyName,
+          footerAddress:
+            normalizeEmailSource(settings.starterLayoutJson).brand?.footerAddress ??
+            settings.footerAddress,
+          footerContactEmail:
+            normalizeEmailSource(settings.starterLayoutJson).brand?.footerContactEmail ??
+            settings.footerContactEmail,
+        },
+      });
+      return {
+        subject: source.subject ?? "Starter Layout",
+        reactSource: emailSourceToReactSource(source),
+        rendered: await renderAndNormalizeEmail(source),
+      };
     }),
 
     update: adminProcedure.input(settingsUpdateSchema).mutation(async ({ ctx, input }) => {
+      const providerPolicy = validateEmailSettingsForProviderPolicy(input);
+      if (!providerPolicy.senderPolicyValid || !providerPolicy.replyToValid) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: providerPolicy.errors[0] ?? "Sender settings do not satisfy the Resend policy.",
+        });
+      }
+
       const settings = await getOrCreateEmailSettings(ctx.db);
       const [updated] = await ctx.db
         .update(emailSettings)
@@ -143,12 +202,33 @@ export const adminEmailsRouter = createTRPCRouter({
           fromName: input.fromName,
           fromEmail: input.fromEmail,
           replyToEmail: input.replyToEmail,
+          requestNotificationEmails: input.requestNotificationEmails,
           starterLayoutJson: input.starterLayoutJson,
           footerCompanyName: input.footerCompanyName,
           footerAddress: input.footerAddress ?? null,
           footerContactEmail: input.footerContactEmail,
           logoUrl: input.logoUrl ?? null,
           cronCadenceHours: input.cronCadenceHours,
+          updatedAt: new Date(),
+        })
+        .where(eq(emailSettings.id, settings.id))
+        .returning();
+      return updated;
+    }),
+
+    updateStarterLayout: adminProcedure.input(reactSourceSchema).mutation(async ({ ctx, input }) => {
+      const settings = await getOrCreateEmailSettings(ctx.db);
+      const nextSource = reactSourceToEmailSource(input.reactSource);
+      const [updated] = await ctx.db
+        .update(emailSettings)
+        .set({
+          starterLayoutJson: nextSource,
+          logoUrl: nextSource.brand?.logoUrl ?? settings.logoUrl,
+          footerCompanyName:
+            nextSource.brand?.footerCompanyName ?? settings.footerCompanyName,
+          footerAddress: nextSource.brand?.footerAddress ?? settings.footerAddress,
+          footerContactEmail:
+            nextSource.brand?.footerContactEmail ?? settings.footerContactEmail,
           updatedAt: new Date(),
         })
         .where(eq(emailSettings.id, settings.id))
@@ -192,6 +272,33 @@ export const adminEmailsRouter = createTRPCRouter({
       return template;
     }),
 
+    getEditor: adminProcedure.input(z.object({ templateId: z.string().uuid() })).query(async ({ ctx, input }) => {
+      const [template] = await ctx.db
+        .select()
+        .from(emailTemplates)
+        .where(eq(emailTemplates.id, input.templateId))
+        .limit(1);
+      if (!template) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Email template not found." });
+      }
+      const source = normalizeEmailSource(template.builderSourceJson);
+      return {
+        template,
+        reactSource: emailSourceToReactSource(source),
+        rendered: await renderAndNormalizeEmail(source),
+      };
+    }),
+
+    previewSource: adminProcedure.input(reactSourceSchema).mutation(async ({ input }) => {
+      const source = reactSourceToEmailSource(input.reactSource);
+      const rendered = await renderAndNormalizeEmail(source);
+      return {
+        builderSourceJson: source,
+        renderedHtml: rendered.html,
+        renderedText: rendered.text,
+      };
+    }),
+
     save: adminProcedure.input(templateUpsertSchema).mutation(async ({ ctx, input }) => {
       const source =
         input.builderSourceJson ??
@@ -199,6 +306,47 @@ export const adminEmailsRouter = createTRPCRouter({
           heading: input.name,
           body: "Write your email body here.",
         }));
+      const rendered = await renderAndNormalizeEmail(source);
+
+      if (input.id) {
+        const [updated] = await ctx.db
+          .update(emailTemplates)
+          .set({
+            templateType: input.templateType,
+            status: input.status,
+            name: input.name,
+            subject: input.subject,
+            builderSourceJson: source,
+            renderedHtml: rendered.html,
+            renderedText: rendered.text,
+            updatedByAdminId: ctx.session.userId,
+            updatedAt: new Date(),
+          })
+          .where(eq(emailTemplates.id, input.id))
+          .returning();
+        return updated;
+      }
+
+      const [created] = await ctx.db
+        .insert(emailTemplates)
+        .values({
+          templateType: input.templateType,
+          status: input.status,
+          name: input.name,
+          subject: input.subject,
+          builderSourceJson: source,
+          renderedHtml: rendered.html,
+          renderedText: rendered.text,
+          createdByAdminId: ctx.session.userId,
+          updatedByAdminId: ctx.session.userId,
+        })
+        .returning();
+      return created;
+    }),
+
+    saveFromReactSource: adminProcedure.input(templateCodeSaveSchema).mutation(async ({ ctx, input }) => {
+      const source = reactSourceToEmailSource(input.reactSource);
+      source.subject = input.subject;
       const rendered = await renderAndNormalizeEmail(source);
 
       if (input.id) {

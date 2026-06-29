@@ -7,17 +7,17 @@ import {
   CreditCardIcon,
   FolderKanbanIcon,
   LayoutDashboardIcon,
+  SearchIcon,
   SettingsIcon,
-  SquarePenIcon,
 } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
+import { NotificationBell } from "~/components/notifications/notification-bell";
 
 const navItems = [
-  { href: "/client-portal", label: "Overview", icon: LayoutDashboardIcon, exact: true },
+  { href: "/client-portal", label: "Dashboard", icon: LayoutDashboardIcon, exact: true },
   { href: "/client-portal/projects", label: "Projects", icon: FolderKanbanIcon, exact: false },
-  { href: "/client-portal/requests", label: "Requests", icon: SquarePenIcon, exact: false },
   { href: "/client-portal/billing", label: "Billing", icon: CreditCardIcon, exact: false },
   { href: "/client-portal/settings", label: "Settings", icon: SettingsIcon, exact: false },
 ] as const;
@@ -33,75 +33,91 @@ export function ClientPortalShell({
     status: "lead" | "active" | "suspended" | "archived";
     primaryContactEmail: string;
     primaryContactPhone: string | null;
+    coverUrl: string | null;
+    logoUrl: string | null;
   };
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const isProjectWorkspaceRoute =
+    pathname.startsWith("/client-portal/projects/") && pathname !== "/client-portal/projects";
+  const isSettingsWorkspaceRoute = pathname.startsWith("/client-portal/settings");
+  const useFullWidthShell = isProjectWorkspaceRoute || isSettingsWorkspaceRoute;
 
   return (
     <div className="min-h-screen bg-[#f6f4ef] text-zinc-950">
-      <div className="grid min-h-screen grid-cols-1 xl:grid-cols-[280px_minmax(0,1fr)]">
-        <aside className="border-r border-black/5 bg-[#f1eee7] p-5">
-          <div className="border border-black/5 bg-white">
-            <div className="border-b border-black/5 px-5 py-5">
-              <div className="text-xs uppercase tracking-[0.2em] text-zinc-500">Client Portal</div>
-              <div className="mt-2 font-serif text-3xl leading-tight text-zinc-950">
-                {client.name}
-              </div>
-              <div className="mt-2 text-sm text-zinc-600">{client.primaryContactEmail}</div>
-            </div>
-            <div className="grid grid-cols-2 gap-px bg-zinc-200">
-              <div className="bg-white px-4 py-3">
-                <div className="text-[11px] uppercase tracking-[0.16em] text-zinc-400">Status</div>
-                <div className="mt-1 text-sm font-medium text-zinc-900">{client.status}</div>
-              </div>
-              <div className="bg-white px-4 py-3">
-                <div className="text-[11px] uppercase tracking-[0.16em] text-zinc-400">Currency</div>
-                <div className="mt-1 text-sm font-medium text-zinc-900">{client.baseCurrency}</div>
-              </div>
-            </div>
+      <header
+        className="sticky top-0 z-50 isolate border-b border-[var(--color-border)] bg-white/95 shadow-[0_1px_0_rgba(15,23,42,0.04)] backdrop-blur supports-[backdrop-filter]:bg-white/85"
+        style={{ height: "64px" }}
+      >
+        <div className="mx-auto flex h-16 max-w-[1600px] items-center gap-4 px-5">
+          <div className="flex shrink-0 items-center gap-2">
+            <Link
+              className="font-serif text-[var(--text-lg)] leading-none text-[var(--color-ink)]"
+              href="/client-portal"
+            >
+              Concolabs
+            </Link>
           </div>
 
-          <nav className="mt-5 space-y-1">
+          <div className="h-5 w-px shrink-0 bg-[var(--color-border)]" />
+
+          <nav className="hidden flex-1 items-center gap-0.5 overflow-x-auto lg:flex">
             {navItems.map((item) => {
               const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
               const Icon = item.icon;
               return (
                 <Link
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 text-sm transition-colors",
+                    "flex items-center gap-1.5 rounded-[var(--radius-sm)] px-3 py-1.5 text-[var(--text-sm)] font-medium transition-colors",
                     active
-                      ? "bg-white text-zinc-950 shadow-sm"
-                      : "text-zinc-600 hover:bg-white/70 hover:text-zinc-950",
+                      ? "bg-[var(--color-bg-sidebar)] text-[var(--color-ink)]"
+                      : "text-[var(--color-ink-muted)] hover:bg-[var(--color-bg-sidebar)] hover:text-[var(--color-ink)]",
                   )}
                   href={item.href}
                   key={item.href}
                 >
-                  <Icon className="size-4" />
-                  <span>{item.label}</span>
+                  <Icon size={14} strokeWidth={1.75} />
+                  {item.label}
                 </Link>
               );
             })}
           </nav>
-        </aside>
 
-        <main className="min-w-0">
-          <header className="flex h-16 items-center justify-between border-b border-black/5 bg-white/80 px-6 backdrop-blur">
-            <div>
-              <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">Portal</div>
-              <div className="text-sm text-zinc-700">Authenticated against your active client organization.</div>
-            </div>
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            <button
+              className="hidden min-w-[220px] items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-bg-app)] px-3 py-1.5 text-[var(--color-ink-subtle)] transition-colors hover:border-[var(--color-primary-soft)] hover:text-[var(--color-ink-muted)] md:flex"
+              type="button"
+            >
+              <SearchIcon size={13} strokeWidth={1.75} />
+              <span className="font-mono text-[var(--text-xs)]">Search</span>
+            </button>
+            <NotificationBell
+              archiveHref="/client-portal/notifications"
+              clientId={client.id}
+              portal="client"
+            />
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "h-8 w-8",
+                  avatarBox: "h-7 w-7",
                 },
               }}
             />
-          </header>
-          <div className="p-6">{children}</div>
-        </main>
-      </div>
+          </div>
+        </div>
+      </header>
+
+      <main
+        className={
+          useFullWidthShell
+            ? "min-w-0"
+            : "mx-auto max-w-7xl px-6 py-8 lg:px-10 lg:py-10"
+        }
+      >
+        <div className="min-w-0">{children}</div>
+      </main>
+      <div className="h-10" />
     </div>
   );
 }

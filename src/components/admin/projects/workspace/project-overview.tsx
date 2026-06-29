@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CalendarDaysIcon, FileIcon, FileTextIcon, MapPinnedIcon } from "lucide-react";
 
 import { ProjectStatusBadge } from "~/components/projects/project-status-badge";
@@ -19,6 +20,7 @@ type OverviewData = {
     dueAt: string | Date | null;
   } | null;
   latestProposal: {
+    id: string;
     title: string;
     status: string;
     updatedAt: string | Date;
@@ -28,10 +30,24 @@ type OverviewData = {
 export function ProjectOverview({
   data,
   mode,
+  projectId,
 }: {
   data: OverviewData;
-  mode: "admin" | "client-preview";
+  mode: "admin" | "client-preview" | "client";
+  projectId: string;
 }) {
+  const proposalHref = data.latestProposal
+    ? mode === "admin"
+      ? `/admin/projects/${projectId}/proposals/${data.latestProposal.id}`
+      : mode === "client-preview"
+        ? `/admin/projects/${projectId}/client-view/proposals/${data.latestProposal.id}`
+        : `/client-portal/projects/${projectId}/proposals/${data.latestProposal.id}`
+    : mode === "admin"
+      ? `/admin/projects/${projectId}/proposals`
+      : mode === "client-preview"
+        ? `/admin/projects/${projectId}/client-view/proposals`
+        : `/client-portal/projects/${projectId}/proposals`;
+
   return (
     <div className="space-y-5">
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -39,7 +55,11 @@ export function ProjectOverview({
           icon={<ProjectStatusBadge status={data.project.status} />}
           label="Project status"
           value={capitalize(data.project.status)}
-          meta={mode === "admin" ? "Editable from admin surfaces" : "Client-visible status"}
+          meta={
+            mode === "admin"
+              ? "Editable from admin surfaces"
+              : "Client-visible status"
+          }
         />
         <OverviewCard
           icon={<CalendarDaysIcon className="size-4 text-zinc-500" />}
@@ -84,11 +104,11 @@ export function ProjectOverview({
               <div className="mt-2 text-sm text-zinc-600">
                 {data.currentTimelineItem
                   ? `Status: ${capitalize(data.currentTimelineItem.status)}`
-                  : "Use the timeline canvas to add the first milestone, review checkpoint, or delivery marker."}
+                  : "Use the timeline tab to add the first milestone, review checkpoint, or delivery marker."}
               </div>
             </div>
 
-            <div className="rounded-2xl border border-black/5 p-5">
+            <Link className="block rounded-2xl border border-black/5 p-5 transition-colors hover:bg-[#faf8f4]" href={proposalHref}>
               <div className="flex items-center gap-2 text-sm text-zinc-500">
                 <FileTextIcon className="size-4" />
                 Latest proposal
@@ -101,7 +121,7 @@ export function ProjectOverview({
                   ? `${capitalize(data.latestProposal.status)} • updated ${formatDate(data.latestProposal.updatedAt)}`
                   : "Proposal builder and signing live in the Proposals tab."}
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 

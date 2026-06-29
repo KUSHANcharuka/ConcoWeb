@@ -1,6 +1,5 @@
 import { sql } from "drizzle-orm";
 import {
-  bigint,
   integer,
   jsonb,
   pgEnum,
@@ -41,11 +40,8 @@ export const proposals = pgTable("proposals", {
   title: text().notNull(),
   version: text().notNull().default("v1"),
   status: proposalStatusEnum().notNull().default("draft"),
-  currency: text().notNull().default("USD"),
-  totalAmountCents: bigint({ mode: "number" }),
   contentJson: jsonb(),
   sourceAssetId: uuid().references(() => assets.id, { onDelete: "set null" }),
-  renderedAssetId: uuid().references(() => assets.id, { onDelete: "set null" }),
   docusealTemplateId: text(),
   docusealTemplateSlug: text(),
   docusealSubmissionId: text(),
@@ -54,8 +50,6 @@ export const proposals = pgTable("proposals", {
   docusealSubmitterSlug: text(),
   docusealSubmitterEmbedUrl: text(),
   lastWebhookEventId: text(),
-  lastWebhookEventType: text(),
-  lastWebhookPayload: jsonb(),
   lastWebhookReceivedAt: timestamp({ withTimezone: true }),
   sentAt: timestamp({ withTimezone: true }),
   signedAt: timestamp({ withTimezone: true }),

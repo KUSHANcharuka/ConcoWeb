@@ -1,4 +1,4 @@
-import { ProjectProposalsPanel } from "~/components/admin/projects/workspace/project-proposals-panel";
+import { ProjectProposalsDashboard } from "~/components/admin/projects/workspace/project-proposals-dashboard";
 import { ProjectSectionSurface } from "~/components/admin/projects/workspace/project-workspace-shell";
 import { api } from "~/trpc/server";
 
@@ -11,15 +11,11 @@ export default async function AdminProjectClientProposalsPage({
   const context = await api.admin.projectWorkspace.context({ projectId });
   return (
     <ProjectSectionSurface
-      description="This preview route will render the client-facing proposal signing surface and side comments."
+      description="This preview route mirrors the client-side proposal dashboard before drilling into a specific proposal signing workspace."
       eyebrow="Client Preview"
       title="Proposals"
     >
-      <ProjectProposalsPanel
-        currency={context.currency}
-        mode="client-preview"
-        projectId={projectId}
-      />
+      <ProjectProposalsDashboard mode="client-preview" projectId={projectId} />
     </ProjectSectionSurface>
   );
 }

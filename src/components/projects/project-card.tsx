@@ -31,52 +31,58 @@ export type ProjectCardData = {
   targetLaunchDate: string | null;
 };
 
-export function ProjectCard({ project }: { project: ProjectCardData }) {
+export function ProjectCard({
+  project,
+  href,
+}: {
+  project: ProjectCardData;
+  href?: string;
+}) {
   return (
-    <Link href={`/admin/projects/${project.id}`}>
+    <Link href={href ?? `/admin/projects/${project.id}/overview`}>
       <Card className="gap-0 overflow-hidden rounded-lg border-zinc-200 bg-white py-0 shadow-none transition-shadow hover:shadow-lg hover:shadow-black/5">
-      <AspectRatio ratio={4 / 3}>
-        <ProjectCover
-          clientName={project.client.name}
-          coverUrl={project.coverUrl}
-          projectName={project.name}
-        />
-      </AspectRatio>
-      <CardHeader className="gap-3 px-5 pt-5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0 space-y-1">
-            <div className="truncate text-sm font-medium text-zinc-500">
-              {project.client.name}
+        <AspectRatio ratio={4 / 3}>
+          <ProjectCover
+            clientName={project.client.name}
+            coverUrl={project.coverUrl}
+            projectName={project.name}
+          />
+        </AspectRatio>
+        <CardHeader className="gap-3 px-5 pt-5">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 space-y-1">
+              <div className="truncate text-sm font-medium text-zinc-500">
+                {project.client.name}
+              </div>
+              <CardTitle className="line-clamp-2 text-xl font-semibold leading-tight text-zinc-900">
+                {project.name}
+              </CardTitle>
             </div>
-            <CardTitle className="line-clamp-2 text-xl font-semibold leading-tight text-zinc-900">
-              {project.name}
-            </CardTitle>
+            <ProjectStatusBadge status={project.status} />
           </div>
-          <ProjectStatusBadge status={project.status} />
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4 px-5 pb-4 pt-3">
-        <p className="line-clamp-3 min-h-[60px] text-sm leading-5 text-zinc-600">
-          {project.description}
-        </p>
-        <div className="grid gap-2 text-sm text-zinc-600">
-          <div className="flex items-center gap-2">
-            <FolderKanban className="size-4 text-zinc-400" />
-            <span>{getProjectTypeLabel(project.projectType)}</span>
+        </CardHeader>
+        <CardContent className="space-y-4 px-5 pb-4 pt-3">
+          <p className="line-clamp-3 min-h-[60px] text-sm leading-5 text-zinc-600">
+            {project.description}
+          </p>
+          <div className="grid gap-2 text-sm text-zinc-600">
+            <div className="flex items-center gap-2">
+              <FolderKanban className="size-4 text-zinc-400" />
+              <span>{getProjectTypeLabel(project.projectType)}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Wallet className="size-4 text-zinc-400" />
+              <span>{project.currency}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CalendarClock className="size-4 text-zinc-400" />
+              <span>{project.targetLaunchDate ?? "Target date not set"}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Wallet className="size-4 text-zinc-400" />
-            <span>{project.currency}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CalendarClock className="size-4 text-zinc-400" />
-            <span>{project.targetLaunchDate ?? "Target date not set"}</span>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter className="border-t border-zinc-100 px-5 py-3 text-xs text-zinc-500">
-        Visible in client portal
-      </CardFooter>
+        </CardContent>
+        <CardFooter className="border-t border-zinc-100 px-5 py-3 text-xs text-zinc-500">
+          Visible in client portal
+        </CardFooter>
       </Card>
     </Link>
   );

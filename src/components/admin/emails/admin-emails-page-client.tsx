@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { toast } from "sonner";
 import {
   ArchiveIcon,
   EyeIcon,
@@ -9,33 +11,16 @@ import {
   MailIcon,
   PlusIcon,
   SendIcon,
+  SparklesIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { api } from "~/trpc/react";
 
 const sections = ["templates", "compose", "suggested", "sent"] as const;
-const templateTypes = ["welcome", "proposal", "payment_reminder", "invoice", "general_outreach"] as const;
-const templateStatuses = ["draft", "active", "archived"] as const;
 
 type Section = (typeof sections)[number];
-
-const defaultSource = {
-  blocks: [
-    { type: "heading", value: "A note from Concolabs" },
-    { type: "text", value: "Write the email body here." },
-  ],
-};
-
-function safeJson(value: string) {
-  try {
-    return JSON.parse(value) as Record<string, unknown>;
-  } catch {
-    return defaultSource;
-  }
-}
 
 function SectionButton({
   active,
@@ -108,132 +93,94 @@ export function AdminEmailsPageClient() {
 
 function TemplatesSection() {
   const utils = api.useUtils();
+  const settingsQuery = api.admin.emails.settings.get.useQuery();
   const templatesQuery = api.admin.emails.templates.list.useQuery({
     search: "",
     includeArchived: true,
-  });
-  const saveTemplate = api.admin.emails.templates.save.useMutation({
-    onSuccess: async () => {
-      await utils.admin.emails.templates.list.invalidate();
-    },
   });
   const setStatus = api.admin.emails.templates.setStatus.useMutation({
     onSuccess: async () => {
       await utils.admin.emails.templates.list.invalidate();
     },
   });
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [form, setForm] = useState({
-    name: "New template",
-    templateType: "general_outreach",
-    status: "draft",
-    subject: "A note from Concolabs",
-    source: JSON.stringify(defaultSource, null, 2),
-  });
-
-  const editingTemplate = templatesQuery.data?.find((template) => template.id === editingId);
-
-  useEffect(() => {
-    if (!editingTemplate) return;
-    setForm((current) => ({
-      ...current,
-      name: editingTemplate.name,
-      templateType: editingTemplate.templateType,
-      status: editingTemplate.status,
-      subject: editingTemplate.subject,
-    }));
-  }, [editingTemplate]);
-
-  async function handleSave() {
-    await saveTemplate.mutateAsync({
-      id: editingId ?? undefined,
-      name: form.name,
-      templateType: form.templateType as (typeof templateTypes)[number],
-      status: form.status as (typeof templateStatuses)[number],
-      subject: form.subject,
-      builderSourceJson: safeJson(form.source),
-    });
-    setEditingId(null);
-  }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_420px]">
-      <div className="border border-zinc-200 bg-white">
-        <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-4">
-          <div>
-            <h2 className="text-lg font-semibold text-zinc-950">Templates</h2>
-            <p className="text-sm text-zinc-600">Typed templates with draft, active, and archived states.</p>
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              setEditingId(null);
-              setForm({
-                name: "New template",
-                templateType: "general_outreach",
-                status: "draft",
-                subject: "A note from Concolabs",
-                source: JSON.stringify(defaultSource, null, 2),
-              });
-            }}
-          >
-            <PlusIcon className="size-4" />
-            New
-          </Button>
+    <div className="border border-zinc-200 bg-white">
+      <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-4">
+        <div>
+          <h2 className="text-lg font-semibold text-zinc-950">Templates</h2>
+          <p className="text-sm text-zinc-600">
+            Build reusable email documents with a React-style editor and a live preview surface.
+          </p>
         </div>
-        <div className="divide-y divide-zinc-100">
-          {templatesQuery.isLoading ? (
-            <EmptyState icon={LoaderCircleIcon} title="Loading templates" />
-          ) : (templatesQuery.data?.length ?? 0) === 0 ? (
-            <EmptyState icon={FileTextIcon} title="No templates yet" />
-          ) : (
-            templatesQuery.data?.map((template) => (
-              <div className="flex flex-col gap-3 px-5 py-4 md:flex-row md:items-center md:justify-between" key={template.id}>
-                <button className="text-left" onClick={() => setEditingId(template.id)} type="button">
-                  <div className="font-medium text-zinc-950">{template.name}</div>
-                  <div className="mt-1 text-sm text-zinc-600">
-                    {template.templateType} · {template.status} · {template.subject}
-                  </div>
-                </button>
-                <div className="flex gap-2">
-                  <Button size="sm" type="button" variant="outline" onClick={() => setEditingId(template.id)}>
-                    <EyeIcon className="size-4" />
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    type="button"
-                    variant="outline"
-                    onClick={() => setStatus.mutate({ templateId: template.id, status: template.status === "active" ? "archived" : "active" })}
-                  >
-                    <ArchiveIcon className="size-4" />
-                    {template.status === "active" ? "Archive" : "Activate"}
-                  </Button>
-                </div>
-              </div>
-            ))
-          )}
+        <div className="flex items-center gap-2">
+          <Button asChild type="button" variant="outline">
+            <Link href="/admin/emails/templates/starter-layout">
+              <SparklesIcon className="size-4" />
+              Starter Layout
+            </Link>
+          </Button>
+          <Button asChild type="button">
+            <Link href="/admin/emails/templates/new">
+              <PlusIcon className="size-4" />
+              New Template
+            </Link>
+          </Button>
         </div>
       </div>
 
-      <div className="border border-zinc-200 bg-white p-5">
-        <h3 className="text-base font-semibold text-zinc-950">{editingId ? "Edit template" : "Create template"}</h3>
-        <div className="mt-4 space-y-4">
-          <Input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
-          <Input value={form.subject} onChange={(event) => setForm({ ...form, subject: event.target.value })} />
-          <select className="h-10 w-full border border-zinc-200 bg-white px-3 text-sm" value={form.templateType} onChange={(event) => setForm({ ...form, templateType: event.target.value })}>
-            {templateTypes.map((type) => <option key={type} value={type}>{type}</option>)}
-          </select>
-          <select className="h-10 w-full border border-zinc-200 bg-white px-3 text-sm" value={form.status} onChange={(event) => setForm({ ...form, status: event.target.value })}>
-            {templateStatuses.map((status) => <option key={status} value={status}>{status}</option>)}
-          </select>
-          <Textarea className="min-h-[260px] font-mono text-xs" value={form.source} onChange={(event) => setForm({ ...form, source: event.target.value })} />
-          <Button className="w-full" disabled={saveTemplate.isPending} onClick={handleSave} type="button">
-            {saveTemplate.isPending ? <LoaderCircleIcon className="size-4 animate-spin" /> : <FileTextIcon className="size-4" />}
-            Save Template
-          </Button>
-        </div>
+      <div className="divide-y divide-zinc-100">
+        <Link
+          className="flex flex-col gap-3 px-5 py-4 transition hover:bg-zinc-50 md:flex-row md:items-center md:justify-between"
+          href="/admin/emails/templates/starter-layout"
+        >
+          <div>
+            <div className="font-medium text-zinc-950">Starter Layout</div>
+            <div className="mt-1 text-sm text-zinc-600">
+              Shared system wrapper for new templates · sender {settingsQuery.data?.settings.fromName ?? "Concolabs"}
+            </div>
+          </div>
+          <div className="text-xs uppercase tracking-[0.18em] text-zinc-400">System</div>
+        </Link>
+
+        {templatesQuery.isLoading ? (
+          <EmptyState icon={LoaderCircleIcon} title="Loading templates" />
+        ) : (templatesQuery.data?.length ?? 0) === 0 ? (
+          <EmptyState icon={FileTextIcon} title="No templates yet" />
+        ) : (
+          templatesQuery.data?.map((template) => (
+            <div className="flex flex-col gap-3 px-5 py-4 md:flex-row md:items-center md:justify-between" key={template.id}>
+              <Link className="block text-left" href={`/admin/emails/templates/${template.id}`}>
+                <div className="font-medium text-zinc-950">{template.name}</div>
+                <div className="mt-1 text-sm text-zinc-600">
+                  {template.templateType} · {template.status} · {template.subject}
+                </div>
+              </Link>
+              <div className="flex gap-2">
+                <Button asChild size="sm" type="button" variant="outline">
+                  <Link href={`/admin/emails/templates/${template.id}`}>
+                    <EyeIcon className="size-4" />
+                    Open
+                  </Link>
+                </Button>
+                <Button
+                  size="sm"
+                  type="button"
+                  variant="outline"
+                  onClick={() =>
+                    setStatus.mutate({
+                      templateId: template.id,
+                      status: template.status === "active" ? "archived" : "active",
+                    })
+                  }
+                >
+                  <ArchiveIcon className="size-4" />
+                  {template.status === "active" ? "Archive" : "Activate"}
+                </Button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
@@ -243,7 +190,6 @@ function ComposeSection() {
   const utils = api.useUtils();
   const templatesQuery = api.admin.emails.templates.list.useQuery({
     search: "",
-    status: "active",
     includeArchived: false,
   });
   const clientsQuery = api.admin.emails.recipients.clients.useQuery();
@@ -294,8 +240,21 @@ function ComposeSection() {
   }
 
   async function handleSend() {
-    await handleRecipients();
-    if (draftId) await sendDraft.mutateAsync({ draftId });
+    try {
+      await handleRecipients();
+      if (!draftId) {
+        toast.error("Create a draft before sending.");
+        return;
+      }
+      const result = await sendDraft.mutateAsync({ draftId });
+      if (result?.status === "failed") {
+        toast.error(result.errorMessage ?? "Resend rejected the email.");
+      } else {
+        toast.success("Email sent. Delivery status will update from Resend webhooks.");
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to send email.");
+    }
   }
 
   return (
@@ -303,8 +262,12 @@ function ComposeSection() {
       <div className="space-y-4 border border-zinc-200 bg-white p-5">
         <h2 className="text-lg font-semibold text-zinc-950">Compose</h2>
         <select className="h-10 w-full border border-zinc-200 bg-white px-3 text-sm" value={templateId} onChange={(event) => setTemplateId(event.target.value)}>
-          <option value="">Start from global layout</option>
-          {templatesQuery.data?.map((template) => <option key={template.id} value={template.id}>{template.name}</option>)}
+          <option value="">Blank email (no template)</option>
+          {templatesQuery.data?.map((template) => (
+            <option key={template.id} value={template.id}>
+              {template.name} · {template.status}
+            </option>
+          ))}
         </select>
         <Input value={subject} onChange={(event) => setSubject(event.target.value)} />
         <select className="h-10 w-full border border-zinc-200 bg-white px-3 text-sm" value={clientId} onChange={(event) => setClientId(event.target.value)}>
