@@ -18,8 +18,21 @@ import {
   Store,
   Hammer,
   ShieldCheck,
+  MessageSquare,
+  FileSearch,
+  Wrench,
+  Scale,
+  Ruler,
+  ClipboardList,
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { allProducts } from "~/lib/products-data"
+
+const productIconMap: Record<string, React.ElementType> = {
+  FileText, PencilRuler, Box, MessageSquare, Calculator, Layers,
+  BarChart3, FileSearch, Wrench, Scale, Store, Hammer, Ruler,
+  BrainCircuit, ClipboardList, ShieldCheck
+}
 
 const personas = [
   {
@@ -64,12 +77,12 @@ const personas = [
 // Tier Y centres: top=55 (14.86%), mid=175 (47.30%), bot=295 (79.73%)
 // Col X centres: left=110 (27.5%), right=290 (72.5%)
 const roadmapSteps = [
-  { number: "01", title: "Feasibility",          subtitle: "Viability & site checks",     icon: BarChart3,    x: 27.5, y: 14.86 },
-  { number: "02", title: "Design",               subtitle: "Concept & engineering",       icon: PencilRuler,  x: 72.5, y: 14.86 },
-  { number: "03", title: "Pre-construction",     subtitle: "BOQs & compliance",           icon: Layers,       x: 72.5, y: 47.30 },
-  { number: "04", title: "Procurement",          subtitle: "Sourcing & bidding",          icon: Store,        x: 27.5, y: 47.30 },
-  { number: "05", title: "Construction",         subtitle: "Site management",             icon: Hammer,       x: 27.5, y: 79.73 },
-  { number: "06", title: "Handover & Operation", subtitle: "Asset delivery",              icon: FileText,     x: 72.5, y: 79.73 },
+  { number: "01", title: "Feasibility",          subtitle: "Viability & site checks",     icon: BarChart3,    x: 27.5, y: 14.86, id: "Feasibility" },
+  { number: "02", title: "Architecture & Modelling", subtitle: "Concept & engineering",       icon: PencilRuler,  x: 72.5, y: 14.86, id: "Architecture & Modelling" },
+  { number: "03", title: "BOQ Preparation",     subtitle: "Quantities & compliance",           icon: Layers,       x: 72.5, y: 47.30, id: "BOQ Preparation" },
+  { number: "04", title: "Tendering",          subtitle: "Sourcing & bidding",          icon: Store,        x: 27.5, y: 47.30, id: "Tendering" },
+  { number: "05", title: "Construction Stage",         subtitle: "Site management",             icon: Hammer,       x: 27.5, y: 79.73, id: "Construction Stage" },
+  { number: "06", title: "Claims & Legal Disputes", subtitle: "Asset delivery",              icon: ShieldCheck,     x: 72.5, y: 79.73, id: "Claims & Legal Disputes" },
 ]
 
 
@@ -101,6 +114,7 @@ export function SolutionsMenu() {
   const [targetHref, setTargetHref] = useState("/solutions")
   const [animationKey, setAnimationKey] = useState(0)
   const [hoveredStep, setHoveredStep] = useState<string | null>(null)
+  const [selectedStage, setSelectedStage] = useState<string | null>(null)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -206,11 +220,12 @@ export function SolutionsMenu() {
               const isHovered = hoveredStep === step.number
 
               return (
-                <Link
-                  href="/solutions"
+                <button
+                  type="button"
                   key={step.number}
                   onMouseEnter={() => setHoveredStep(step.number)}
                   onMouseLeave={() => setHoveredStep(null)}
+                  onClick={() => setSelectedStage(step.id === selectedStage ? null : step.id)}
                   className="absolute flex flex-col items-center text-center select-none w-[110px]"
                   style={{
                     left: `${step.x}%`,
@@ -224,7 +239,7 @@ export function SolutionsMenu() {
                     <div className="relative">
                       {/* Pulsing expand ring */}
                       <AnimatePresence>
-                        {isHovered && (
+                        {(isHovered || selectedStage === step.id) && (
                           <motion.div
                             key="ring"
                             initial={{ scale: 1, opacity: 0.45 }}
@@ -237,30 +252,35 @@ export function SolutionsMenu() {
                       </AnimatePresence>
 
                       <motion.div
-                        animate={isHovered ? { scale: 1.15 } : { scale: 1 }}
+                        animate={(isHovered || selectedStage === step.id) ? { scale: 1.15 } : { scale: 1 }}
                         transition={{ type: "spring", stiffness: 320, damping: 22 }}
-                        className="w-11 h-11 rounded-full bg-white dark:bg-zinc-900
-                                   border-2 border-zinc-200 dark:border-zinc-700
-                                   shadow-md flex items-center justify-center shrink-0
-                                   relative z-10 transition-[border-color,box-shadow] duration-200"
-                        style={isHovered ? {
-                          borderColor: "rgb(39 39 42)",
+                        className={`w-11 h-11 rounded-full border-2 shadow-md flex items-center justify-center shrink-0 relative z-10 transition-[border-color,box-shadow,background-color] duration-200 ${
+                          selectedStage === step.id 
+                            ? "bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100" 
+                            : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700"
+                        }`}
+                        style={(isHovered || selectedStage === step.id) ? {
+                          borderColor: selectedStage === step.id ? "inherit" : "rgb(39 39 42)",
                           boxShadow: "0 0 0 3px rgba(113,113,122,0.2), 0 6px 16px rgba(0,0,0,0.15)",
                         } : {}}
                       >
                         {/* Number Badge */}
                         <motion.span
-                          animate={isHovered ? { scale: 1.15 } : { scale: 1 }}
-                          className="absolute -top-1 -right-1 text-[8px] font-bold font-mono
-                                     px-1.5 py-0.5 rounded-full shadow-sm leading-none
-                                     bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950"
+                          animate={(isHovered || selectedStage === step.id) ? { scale: 1.15 } : { scale: 1 }}
+                          className={`absolute -top-1 -right-1 text-[8px] font-bold font-mono px-1.5 py-0.5 rounded-full shadow-sm leading-none ${
+                            selectedStage === step.id 
+                              ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100" 
+                              : "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950"
+                          }`}
                         >
                           {step.number}
                         </motion.span>
 
                         <Icon
                           className="w-5 h-5 transition-colors duration-200"
-                          style={isHovered ? { color: "rgb(24 24 27)" } : { color: "rgb(82 82 91)" }}
+                          style={selectedStage === step.id 
+                            ? { color: "var(--background)" }
+                            : isHovered ? { color: "rgb(24 24 27)" } : { color: "rgb(82 82 91)" }}
                         />
                       </motion.div>
                     </div>
@@ -269,7 +289,7 @@ export function SolutionsMenu() {
                     <div className="mt-1.5 w-full">
                       <span
                         className="text-[9.5px] font-bold leading-tight block px-0.5 transition-colors duration-200"
-                        style={isHovered
+                        style={(isHovered || selectedStage === step.id)
                           ? { color: "var(--foreground)", opacity: 1 }
                           : { color: "var(--foreground)", opacity: 0.85 }}
                       >
@@ -281,7 +301,7 @@ export function SolutionsMenu() {
                     </div>
 
                   </motion.div>
-                </Link>
+                </button>
               )
             })}
           </motion.div>
@@ -293,29 +313,56 @@ export function SolutionsMenu() {
       <div className="lg:col-span-2 flex flex-col justify-between h-full">
         <div>
           <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">
-            Solutions by Role
+            {selectedStage ? `Products for ${selectedStage}` : "Solutions by Role"}
           </h3>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {personas.map((persona) => (
-              <Link
-                key={persona.title}
-                href={persona.href}
-                className="group flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors"
-              >
-                <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                  <persona.icon className="w-5 h-5 text-foreground" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors">
-                    {persona.title}
-                  </h4>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {persona.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          {selectedStage ? (
+            <div className="grid sm:grid-cols-2 gap-2">
+              {allProducts.filter(p => p.lifecycleStage === selectedStage).map((product) => {
+                const PIcon = productIconMap[product.icon] || FileText;
+                return (
+                  <Link
+                    key={product.id}
+                    href={`/learnmore/${product.id}`}
+                    className="group flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <PIcon className="w-5 h-5 text-foreground" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors">
+                        {product.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                        {product.tagline}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 gap-2">
+              {personas.map((persona) => (
+                <Link
+                  key={persona.title}
+                  href={persona.href}
+                  className="group flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                    <persona.icon className="w-5 h-5 text-foreground" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-foreground group-hover:text-foreground transition-colors">
+                      {persona.title}
+                    </h4>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {persona.description}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* View All Solutions CTA */}

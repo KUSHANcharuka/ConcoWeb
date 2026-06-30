@@ -2,13 +2,6 @@
 
 import { Navbar } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer";
-import { Playfair_Display } from "next/font/google";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  style: ["italic"],
-  weight: ["400"],
-});
 import {
   useInView,
   motion,
