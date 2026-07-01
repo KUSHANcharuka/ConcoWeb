@@ -48,37 +48,37 @@ export default function CookiesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-lime/20">
+    <main className="min-h-screen bg-background">
       <Navbar />
 
       {/* Header Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden border-lime/30 border-lime/30">
+      <section className="relative pt-32 pb-20 overflow-hidden border-b border-border/40">
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-lime/10 dark:bg-lime/20 rounded-full blur-[140px] opacity-60" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] bg-lime/10 dark:bg-lime/5 rounded-full blur-[140px] opacity-60" />
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 relative z-10 text-zinc-600">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-zinc-600 font-semibold bg-zinc-100 dark:bg-zinc-900 border border-lime/30 text-zinc-600 mb-4">
+        <div className="max-w-6xl mx-auto px-6 relative z-10 text-left">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-900 border border-border/80 text-foreground mb-4">
             <Eye className="w-3.5 h-3.5" />
             Last Updated: June 5, 2026
           </span>
-          <h1 className="text-zinc-600 sm:text-zinc-600 lg:text-zinc-600 font-bold tracking-tight text-zinc-600 leading-[1.1]">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
             Cookie Policy
           </h1>
-          <p className="text-zinc-600 sm:text-zinc-600 text-zinc-600 mt-4 max-w-2xl leading-relaxed">
+          <p className="text-base sm:text-lg text-muted-foreground mt-4 max-w-2xl leading-relaxed">
             This policy explains how Concolabs uses cookies and tracking technologies to optimize drawing tools and verify your sign-in status.
           </p>
         </div>
       </section>
 
       {/* Content Section */}
-      <section className="py-16 px-6 bg-lime/20">
+      <section className="py-16 px-6 bg-background">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Column: Sticky Table of Contents (4/12) */}
           <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6 hidden lg:block">
-            <div className="p-6 bg-lime/20 border border-lime/30 rounded-2xl shadow-2xs">
-              <h3 className="text-zinc-600 font-bold text-zinc-600 uppercase tracking-wider mb-4">
+            <div className="p-6 bg-card border border-border rounded-2xl shadow-2xs">
+              <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">
                 Table of Contents
               </h3>
               <ul className="space-y-3">
@@ -101,25 +101,25 @@ export default function CookiesPage() {
           </div>
 
           {/* Right Column: Detailed Text (8/12) */}
-          <div className="lg:col-span-8 space-y-12 text-zinc-600 prose prose-sm dark:prose-invert max-w-none text-zinc-800 dark:text-zinc-300">
+          <div className="lg:col-span-8 space-y-12 text-left prose prose-sm dark:prose-invert max-w-none text-zinc-800 dark:text-zinc-300">
             
             {/* Section 1 */}
             <div id="what" className="space-y-4 pt-4 first:pt-0">
-              <h2 className="text-zinc-600 font-bold text-zinc-600">1. What Are Cookies</h2>
-              <div className="w-12 h-1 bg-lime/20 rounded-full mb-6" />
-              <p className="text-zinc-600 leading-relaxed">
+              <h2 className="text-2xl font-bold text-foreground">1. What Are Cookies</h2>
+              <div className="w-12 h-1 bg-lime rounded-full mb-6" />
+              <p className="text-sm leading-relaxed">
                 Cookies are small text fragments sent to your web browser when visiting web instances. They enable site databases to recognize your browser, save regional settings (such as currency displays), and verify active user sessions.
               </p>
             </div>
 
             {/* Section 2 */}
             <div id="how" className="space-y-4">
-              <h2 className="text-zinc-600 font-bold text-zinc-600">2. How We Use Cookies</h2>
-              <div className="w-12 h-1 bg-lime/20 rounded-full mb-6" />
-              <p className="text-zinc-600 leading-relaxed">
+              <h2 className="text-2xl font-bold text-foreground">2. How We Use Cookies</h2>
+              <div className="w-12 h-1 bg-lime rounded-full mb-6" />
+              <p className="text-sm leading-relaxed">
                 We use cookies and local storage tokens to:
               </p>
-              <ul className="list-disc pl-5 space-y-2 text-zinc-600">
+              <ul className="list-disc pl-5 space-y-2 text-xs">
                 <li>Verify your session ID and prevent forgery risks (CSRF).</li>
                 <li>Store your light or dark mode theme selection.</li>
                 <li>Remember your active workspace parameter views and drawing scales.</li>
@@ -129,12 +129,12 @@ export default function CookiesPage() {
 
             {/* Section 3 */}
             <div id="types" className="space-y-4">
-              <h2 className="text-zinc-600 font-bold text-zinc-600">3. Types of Cookies We Use</h2>
-              <div className="w-12 h-1 bg-lime/20 rounded-full mb-6" />
-              <p className="text-zinc-600 leading-relaxed">
+              <h2 className="text-2xl font-bold text-foreground">3. Types of Cookies We Use</h2>
+              <div className="w-12 h-1 bg-lime rounded-full mb-6" />
+              <p className="text-sm leading-relaxed">
                 Our site uses both first-party and third-party cookies:
               </p>
-              <ul className="list-disc pl-5 space-y-2 text-zinc-600">
+              <ul className="list-disc pl-5 space-y-2 text-xs">
                 <li><strong>Essential Session Cookies:</strong> Required to access active account segments, workspaces, and checkout gates. Disabling these will prevent sign-in behaviors.</li>
                 <li><strong>Preference Cookies:</strong> Used to maintain UI settings across reloads, such as your workspace dashboard configurations.</li>
                 <li><strong>Performance Analytics:</strong> Handled by SOC-2 compliant analytical subprocessors to help us understand crash patterns and fix lag.</li>
@@ -143,18 +143,18 @@ export default function CookiesPage() {
 
             {/* Section 4 */}
             <div id="control" className="space-y-4">
-              <h2 className="text-zinc-600 font-bold text-zinc-600">4. Controlling Preferences</h2>
-              <div className="w-12 h-1 bg-lime/20 rounded-full mb-6" />
-              <p className="text-zinc-600 leading-relaxed">
+              <h2 className="text-2xl font-bold text-foreground">4. Controlling Preferences</h2>
+              <div className="w-12 h-1 bg-lime rounded-full mb-6" />
+              <p className="text-sm leading-relaxed">
                 You hold direct authority over how cookies are utilized:
               </p>
-              <ul className="list-disc pl-5 space-y-2 text-zinc-600">
+              <ul className="list-disc pl-5 space-y-2 text-xs">
                 <li><strong>Browser Settings:</strong> You can edit browser parameters to clear all cookies or warn you before they are saved. Refer to your browser&apos;s Help page for details.</li>
                 <li><strong>Workspace Preferences:</strong> You can configure tracking preferences directly from your account security panel.</li>
               </ul>
-              <div className="pt-6 mt-6 border-lime/30 border-lime/30">
-                <p className="text-zinc-600 text-zinc-600">
-                  If you have queries regarding our cookie preferences, please contact our support desk: <a href="mailto:support@concolabs.com" className="text-zinc-600 hover:underline font-semibold">support@concolabs.com</a>
+              <div className="pt-6 mt-6 border-t border-border/60">
+                <p className="text-xs text-muted-foreground">
+                  If you have queries regarding our cookie preferences, please contact our support desk: <a href="mailto:support@concolabs.com" className="text-foreground hover:underline font-semibold">support@concolabs.com</a>
                 </p>
               </div>
             </div>
@@ -167,4 +167,3 @@ export default function CookiesPage() {
       <Footer />
     </main>
   )
-}

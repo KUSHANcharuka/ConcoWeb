@@ -26,9 +26,9 @@ import {
   ClipboardList,
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { allProducts } from "~/lib/products-data"
+import { allProducts } from "@/lib/products-data"
 
-const productIconMap: Record<string, React.ElementType> = {
+const productIconMap: Record<string, React.ComponentType<any>> = {
   FileText, PencilRuler, Box, MessageSquare, Calculator, Layers,
   BarChart3, FileSearch, Wrench, Scale, Store, Hammer, Ruler,
   BrainCircuit, ClipboardList, ShieldCheck

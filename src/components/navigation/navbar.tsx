@@ -153,8 +153,8 @@ export function Navbar() {
                       onMouseEnter={() => handleMouseEnter(item.id)}
                       onMouseLeave={handleMouseLeave}
                       className={`inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-lg ${activeMenu === item.id
-                          ? "text-foreground bg-secondary/50"
-                          : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                        ? "text-foreground bg-secondary/50"
+                        : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
                         }`}
                     >
                       {item.label}
@@ -325,9 +325,7 @@ export function Navbar() {
                   <Button asChild className="w-full">
                     <Link href="/demo">Request a Demo</Link>
                   </Button>
-                  <Button asChild variant="outline" className="w-full border-black text-black hover:bg-black hover:text-white">
-                    <Link href="/sign-in">Client Portal</Link>
-                  </Button>
+
                 </div>
               </div>
             </motion.div>
