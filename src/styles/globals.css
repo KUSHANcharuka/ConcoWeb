@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'lazy-tree-view/styles.css';
+@import '@react-pdf-viewer/core/lib/styles/index.css';
+@import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+@import '@react-pdf-viewer/highlight/lib/styles/index.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -227,4 +231,18 @@ html {
   .group:hover .platform-card-link .platform-card-arrow {
     animation: none;
   }
+}
+
+.project-file-tree {
+  --border-radius: 0;
+  --border-radius-sm: 0;
+  --color-primary: oklch(0.93 0.2 105);
+  --color-hover-bg: transparent;
+  --color-focus-bg: oklch(0.97 0 0);
+  --padding-item: 0;
+  --gap: 0.5rem;
+}
+
+.project-file-tree li {
+  padding: 2px 0;
 }
