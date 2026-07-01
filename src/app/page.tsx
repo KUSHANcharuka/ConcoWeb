@@ -6,7 +6,6 @@ import { PlatformSection } from "@/components/home/platform-section";
 import { SystemsIntegration } from "@/components/home/systems-integration";
 import { CTASection } from "@/components/home/cta-section";
 import { Testimonials } from "@/components/home/testimonials";
-import { GlobalPresence } from "@/components/home/global-presence";
 import { WhatsNew } from "@/components/home/whats-new";
 import { Productivity } from "@/components/home/productivity";
 import { AwardsSection } from "@/components/home/awards-section";

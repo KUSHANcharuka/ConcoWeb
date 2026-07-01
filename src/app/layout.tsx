@@ -5,6 +5,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ClerkProvider } from "@clerk/nextjs";
 
+import { ChatWidget } from "@/components/ui/chat-widget";
 import { Toaster } from "@/components/ui/sonner";
 import { UploadProgressProvider } from "~/components/upload/upload-progress-provider";
 import { TRPCReactProvider } from "~/trpc/react";
@@ -39,20 +40,16 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
-<<<<<<< HEAD
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-instrument-serif",
 });
 
-=======
->>>>>>> featrue/partner
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-<<<<<<< HEAD
     <ClerkProvider>
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} bg-background`}>
         <body className="font-sans antialiased">
@@ -60,20 +57,12 @@ export default function RootLayout({
             <UploadProgressProvider>
               {children}
               <Toaster richColors />
+              <ChatWidget />
             </UploadProgressProvider>
           </TRPCReactProvider>
           {process.env.NODE_ENV === "production" && <Analytics />}
         </body>
       </html>
     </ClerkProvider>
-=======
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-lime/20`}>
-      <body className="font-sans antialiased">
-        <TRPCReactProvider>{children}</TRPCReactProvider>
-        <ChatWidget />
-        {process.env.NODE_ENV === "production" && <Analytics />}
-      </body>
-    </html>
->>>>>>> featrue/partner
   );
 }
