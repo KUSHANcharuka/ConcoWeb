@@ -6,14 +6,13 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown, MessageCircle, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SolutionsMenu } from "./solutions-menu"
-import { CustomersMenu } from "./customers-menu"
 import { PartnersMenu } from "./partners-menu"
 import { ResourcesMenu } from "./resources-menu"
 import { ChatModal } from "@/components/ui/chat-modal"
 
 const navItems = [
   { id: "solutions", label: "Solutions", hasDropdown: true },
-  { id: "customers", label: "Customers", hasDropdown: true, href: "/customers" },
+  { id: "customers", label: "Customers", hasDropdown: false, href: "/customers" },
   { id: "partners", label: "Partners", hasDropdown: true },
   { id: "resources", label: "Resources", hasDropdown: true },
   { id: "pricing", label: "Pricing", hasDropdown: false, href: "/pricing" },
@@ -21,7 +20,6 @@ const navItems = [
 
 const menuComponents: Record<string, React.FC> = {
   solutions: SolutionsMenu,
-  customers: CustomersMenu,
   partners: PartnersMenu,
   resources: ResourcesMenu,
 }
@@ -124,7 +122,7 @@ export function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-black font-bold text-lg">C</span>
+                <span className="text-primary-foreground font-bold text-lg">C</span>
               </div>
               <span className="text-xl font-semibold text-foreground">Concolabs</span>
             </Link>
@@ -136,7 +134,7 @@ export function Navbar() {
                   {item.href && !item.hasDropdown ? (
                     <Link
                       href={item.href}
-                      className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary/50"
+                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary/50"
                     >
                       {item.label}
                     </Link>
@@ -144,7 +142,7 @@ export function Navbar() {
                     <button
                       onMouseEnter={() => handleMouseEnter(item.id)}
                       onMouseLeave={handleMouseLeave}
-                      className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center gap-1 ${
+                      className={`inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
                         activeMenu === item.id
                           ? "text-foreground bg-secondary/50"
                           : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
@@ -169,11 +167,13 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setIsChatOpen(true)}
+                asChild
                 className="text-muted-foreground hover:text-foreground"
               >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Inquiries
+                <Link href="/contact">
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Contact
+                </Link>
               </Button>
               <Button asChild>
                 <Link href="/demo">Request a Demo</Link>
@@ -261,13 +261,12 @@ export function Navbar() {
                   <Button
                     variant="outline"
                     className="w-full justify-start"
-                    onClick={() => {
-                      setIsChatOpen(true)
-                      setIsMobileMenuOpen(false)
-                    }}
+                    asChild
                   >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Inquiries
+                    <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Contact
+                    </Link>
                   </Button>
                   <Button asChild className="w-full">
                     <Link href="/demo">Request a Demo</Link>

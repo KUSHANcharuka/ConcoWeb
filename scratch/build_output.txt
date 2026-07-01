@@ -1,0 +1,41 @@
+=== STDOUT ===
+
+=== STDERR ===
+node:fs:2744
+    const out = binding.lstat(base, false, undefined, true /* throwIfNoEntry */);
+                        ^
+
+Error: EPERM: operation not permitted, lstat 'C:\'
+    at Object.realpathSync (node:fs:2744:25)
+    at toRealPath (node:internal/modules/helpers:61:13)
+    at Function._findPath (node:internal/modules/cjs/loader:746:22)
+    at resolveMainPath (node:internal/modules/run_main:39:23)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:163:20)
+    at node:internal/main/run_main_module:36:49 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'lstat',
+  path: 'C:\\'
+}
+
+Node.js v22.19.0
+node:fs:2744
+    const out = binding.lstat(base, false, undefined, true /* throwIfNoEntry */);
+                        ^
+
+Error: EPERM: operation not permitted, lstat 'C:\'
+    at Object.realpathSync (node:fs:2744:25)
+    at toRealPath (node:internal/modules/helpers:61:13)
+    at Function._findPath (node:internal/modules/cjs/loader:746:22)
+    at resolveMainPath (node:internal/modules/run_main:39:23)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:163:20)
+    at node:internal/main/run_main_module:36:49 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'lstat',
+  path: 'C:\\'
+}
+
+Node.js v22.19.0
+
+=== RETURN CODE: 1 ===

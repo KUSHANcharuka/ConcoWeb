@@ -109,10 +109,10 @@ export function HeroVideo() {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8"
         >
           {[
-            { value: "500+", label: "Companies" },
-            { value: "50K+", label: "Projects Managed" },
-            { value: "120+", label: "Countries" },
-            { value: "99.9%", label: "Uptime" },
+            { value: "97", label: "Companies served" },
+            { value: "500+", label: "Projects Managed" },
+            { value: "12K+", label: "Lifetime users" },
+            { value: "16+", label: "Countries" },
           ].map((stat, index) => (
             <div
               key={stat.label}

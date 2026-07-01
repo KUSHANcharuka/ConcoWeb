@@ -19,8 +19,8 @@ export function HeroTagline() {
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-zinc-800 leading-tight tracking-tight text-balance"
         >
-          The operating system for{" "}
-          <span className="text-zinc-500">modern construction</span>
+          Every workflow your construction firm runs,{" "}
+          <span className="text-zinc-500">made smarter by AI</span>
         </motion.h1>
 
         {/* Subheadline */}
@@ -30,8 +30,8 @@ export function HeroTagline() {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="mt-6 text-lg sm:text-xl text-zinc-500 max-w-2xl mx-auto text-pretty"
         >
-          Concolabs unifies project management, cost control, and team collaboration 
-          into one powerful platform built for construction professionals.
+          Concolabs unifies design, project management, cost control, and contract
+          administration into an interconnected AI-powered suite for the business of building.
         </motion.p>
       </motion.div>
     </section>

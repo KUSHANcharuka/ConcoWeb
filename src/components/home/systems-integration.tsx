@@ -2,45 +2,38 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
+import Link from "next/link"
 import {
-  FileSpreadsheet,
-  Receipt,
-  ClipboardList,
-  Building2,
-  HardHat,
-  Truck,
   RefreshCw,
   LayoutGrid,
   Sparkles,
+  Users,
 } from "lucide-react"
-
-const integrationApps = [
-  { icon: FileSpreadsheet, label: "Excel" },
-  { icon: Building2, label: "BIM" },
-  { icon: Receipt, label: "Accounting" },
-  { icon: HardHat, label: "Safety" },
-  { icon: ClipboardList, label: "Tracking" },
-  { icon: Truck, label: "Supply Chain" },
-]
 
 const features = [
   {
-    icon: RefreshCw,
-    title: "Save money by eliminating duplicate systems",
+    icon: Users,
+    title: "We study how your firm works, then build the system around it",
     description:
-      "One platform replaces overlapping tools and admin effort, cutting software spend and saving you time.",
+      "No generic software. We study how your firm works, configure the suite to match, and deploy it ready to run from day one.",
+  },
+  {
+    icon: RefreshCw,
+    title: "From tool clutter to one integrated suite",
+    description:
+      "One integrated suite replaces the clutter, cuts software spend, and eliminates the admin overhead that comes with it.",
   },
   {
     icon: LayoutGrid,
-    title: "Automate end-to-end workflows, not just tasks",
+    title: "Automate entire workflows, not just steps",
     description:
-      "Connect project management, budgeting, and compliance in a single automated pipeline — no switching required.",
+      "Project management, cost control, and contract admin connected in one pipeline. No switching, no gaps.",
   },
   {
     icon: Sparkles,
-    title: "Start with the right data, get AI that actually works",
+    title: "AI that knows construction, deeply",
     description:
-      "Unified, structured data gives AI full context so it can answer real questions and take real action, not just generate text.",
+      "Trained on construction datasets since 2023, our AI has the context to answer real questions, take real action, and understand your projects the way your best QS does.",
   },
 ]
 
@@ -95,101 +88,42 @@ export function SystemsIntegration() {
             </div>
           </motion.div>
 
-          {/* Right — hub diagram */}
+          {/* Right — Globe Card */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="relative flex items-center justify-center"
+            className="w-full flex items-center justify-center"
           >
-            <div className="relative w-full max-w-[480px] aspect-square mx-auto select-none">
+            <div className="flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-300 bg-[#ECEBEA] p-6 min-h-[420px] h-full w-full max-w-[480px] mx-auto">
+              {/* Globe Video Container linked to customers page */}
+              <Link href="/customers" className="relative w-full h-[280px] overflow-hidden rounded-lg bg-white border border-zinc-200 shadow-xs flex items-center justify-center cursor-pointer group/globe">
+                <video
+                  src="/videos/loop_video_for_globe_show_belo.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover/globe:scale-[1.03]"
+                />
+              </Link>
 
-              {/* SVG connection lines */}
-              <svg
-                className="absolute inset-0 w-full h-full"
-                viewBox="0 0 480 480"
-                fill="none"
-              >
-                {/* horizontal line through center */}
-                <line x1="60"  y1="240" x2="420" y2="240" stroke="#D4A800" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.5" />
-                {/* top row verticals to center row */}
-                <line x1="100" y1="120" x2="100" y2="200" stroke="#D4A800" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.5" />
-                <line x1="380" y1="120" x2="380" y2="200" stroke="#D4A800" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.5" />
-                {/* bottom row verticals from center row */}
-                <line x1="100" y1="280" x2="100" y2="360" stroke="#D4A800" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.5" />
-                <line x1="380" y1="280" x2="380" y2="360" stroke="#D4A800" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.5" />
-                {/* left connector to hub */}
-                <path d="M145 240 Q200 240 200 240" stroke="#D4A800" strokeWidth="1.5" opacity="0.5" />
-                {/* right connector to hub */}
-                <path d="M335 240 Q280 240 280 240" stroke="#D4A800" strokeWidth="1.5" opacity="0.5" />
-              </svg>
-
-              {/* 6 App cards — 2 cols × 3 rows, hub in dead center */}
-              {/* Top-left */}
-              <AppCard icon={integrationApps[0].icon} label={integrationApps[0].label} style={{ top: "6%", left: "6%" }} delay={0.3} isInView={isInView} />
-              {/* Top-right */}
-              <AppCard icon={integrationApps[1].icon} label={integrationApps[1].label} style={{ top: "6%", right: "6%" }} delay={0.35} isInView={isInView} />
-              {/* Middle-left */}
-              <AppCard icon={integrationApps[2].icon} label={integrationApps[2].label} style={{ top: "50%", left: "6%", transform: "translateY(-50%)" }} delay={0.4} isInView={isInView} />
-              {/* Middle-right */}
-              <AppCard icon={integrationApps[3].icon} label={integrationApps[3].label} style={{ top: "50%", right: "6%", transform: "translateY(-50%)" }} delay={0.45} isInView={isInView} />
-              {/* Bottom-left */}
-              <AppCard icon={integrationApps[4].icon} label={integrationApps[4].label} style={{ bottom: "6%", left: "6%" }} delay={0.5} isInView={isInView} />
-              {/* Bottom-right */}
-              <AppCard icon={integrationApps[5].icon} label={integrationApps[5].label} style={{ bottom: "6%", right: "6%" }} delay={0.55} isInView={isInView} />
-
-              {/* Central Hub */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.7 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.5, delay: 0.6, type: "spring", stiffness: 200 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
-              >
-                <div
-                  className="w-24 h-24 rounded-2xl flex flex-col items-center justify-center shadow-xl"
-                  style={{ background: "linear-gradient(135deg, #C49000 0%, #F5C400 100%)" }}
-                >
-                  <span className="text-black font-black text-2xl tracking-tight">C</span>
-                  <span className="text-black/70 text-[9px] font-semibold tracking-widest uppercase mt-0.5">Concolabs</span>
+              {/* Description Text under the globe */}
+              <div className="mt-6 flex flex-col justify-between flex-grow text-left">
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 leading-tight">
+                    One platform for all your global spend.
+                  </h3>
+                  <p className="mt-3 text-sm text-zinc-500 leading-relaxed">
+                    Issue cards in 30+ currencies and reimburse employees in local currencies, including pounds, euros, yen, and pesos.
+                  </p>
                 </div>
-              </motion.div>
-
+              </div>
             </div>
           </motion.div>
 
         </div>
       </div>
     </section>
-  )
-}
-
-/* ---------- App Card ---------- */
-function AppCard({
-  icon: Icon,
-  label,
-  style,
-  delay,
-  isInView,
-}: {
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>
-  label: string
-  style: React.CSSProperties
-  delay: number
-  isInView: boolean
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.75 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.45, delay, type: "spring", stiffness: 180 }}
-      className="absolute w-20 h-20 rounded-2xl flex flex-col items-center justify-center gap-1 shadow-lg"
-      style={{
-        ...style,
-        background: "linear-gradient(145deg, #7A5C00 0%, #C49000 100%)",
-      }}
-    >
-      <Icon className="w-7 h-7 text-yellow-100" strokeWidth={1.5} />
-      <span className="text-[9px] font-semibold text-yellow-200 tracking-wide">{label}</span>
-    </motion.div>
   )
 }

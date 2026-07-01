@@ -16,12 +16,16 @@ type Location = {
 type GeoPoint = [number, number]
 
 const locations: Location[] = [
-  { country: "USA", city: "New York", lat: 40.7128, lng: -74.006 },
-  { country: "Australia", city: "Sydney", lat: -33.8688, lng: 151.2093 },
-  { country: "UAE", city: "Dubai", lat: 25.2048, lng: 55.2708 },
   { country: "Sri Lanka", city: "Colombo", lat: 6.9271, lng: 79.8612 },
-  { country: "India", city: "Mumbai", lat: 19.076, lng: 72.8777 },
+  { country: "India", city: "Mumbai", lat: 19.0760, lng: 72.8777 },
   { country: "Singapore", city: "Singapore", lat: 1.3521, lng: 103.8198 },
+  { country: "Australia", city: "Sydney", lat: -33.8688, lng: 151.2093 },
+  { country: "New Zealand", city: "Auckland", lat: -36.8485, lng: 174.7633 },
+  { country: "UK", city: "London", lat: 51.5074, lng: -0.1278 },
+  { country: "UAE", city: "Dubai", lat: 25.2048, lng: 55.2708 },
+  { country: "Bahrain", city: "Manama", lat: 26.2285, lng: 50.5860 },
+  { country: "Qatar", city: "Doha", lat: 25.2854, lng: 51.5310 },
+  { country: "Nigeria", city: "Lagos", lat: 6.5244, lng: 3.3792 },
 ]
 
 // Coarse land polygons (lng, lat) used to build a dotted world silhouette without external assets.
@@ -115,7 +119,7 @@ function GlobeLocationMarker({ location }: { location: Location }) {
   )
 }
 
-function RotatingDotGlobe() {
+export function RotatingDotGlobe() {
   const globeRef = useRef<THREE.Group>(null)
 
   const dotPositions = useMemo(() => {
@@ -176,93 +180,5 @@ function RotatingDotGlobe() {
         <GlobeLocationMarker key={location.country} location={location} />
       ))}
     </group>
-  )
-}
-
-function WorkflowCard() {
-  return (
-    <div className="relative h-full overflow-hidden rounded-xl border border-zinc-300 bg-[#ECEBEA] p-6">
-      <div className="absolute inset-0 opacity-35" style={{ backgroundImage: "radial-gradient(#bfbfbf 1px, transparent 1px)", backgroundSize: "16px 16px" }} />
-
-      <div className="relative z-10 space-y-5">
-        <div className="inline-flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-sm">
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-blue-500 text-xs font-bold text-white">✉</span>
-          <span className="text-sm text-zinc-800">When a bill is created</span>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 text-sm text-zinc-700">
-          <span>If the</span>
-          <span className="rounded-lg bg-white px-3 py-2">Amount</span>
-          <span>is greater than or equal to</span>
-          <span className="rounded-lg bg-white px-3 py-2">$5,000.00</span>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 text-sm">
-          <span className="text-zinc-700">Require</span>
-          <span className="rounded-lg bg-white px-3 py-2 text-zinc-800">Department Owner</span>
-          <span className="rounded-lg bg-[#DDE7D8] px-2 py-1 text-xs font-semibold text-zinc-700">DO</span>
-          <span className="rounded-lg bg-[#DDE4F0] px-2 py-1 text-xs font-semibold text-zinc-700">IT</span>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 text-sm">
-          <span className="text-zinc-700">Notify</span>
-          <span className="rounded-lg bg-white px-3 py-2 text-zinc-800">Vendor Owner Manager</span>
-          <span className="rounded-lg bg-[#DDE4F0] px-2 py-1 text-xs font-semibold text-zinc-700">VO</span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export function GlobalPresence() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" })
-
-  return (
-    <section ref={containerRef} className="bg-[#F4F2F0] px-6 py-24">
-      <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
-        >
-          <h2 className="text-4xl font-medium leading-tight text-zinc-900 sm:text-5xl">
-            Scale the team.
-            <br />
-            <span className="text-zinc-500">Shrink the paperwork.</span>
-          </h2>
-          <p className="mt-4 text-zinc-500">You had a bureaucracy. Now you have a business again.</p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="min-h-[420px]"
-          >
-            <WorkflowCard />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative min-h-[420px] overflow-hidden rounded-xl border border-zinc-300 bg-[#ECEBEA]"
-          >
-            <div className="absolute inset-0">
-              <Canvas camera={{ position: [0, 0, 2.6], fov: 44 }}>
-                <Suspense fallback={null}>
-                  <ambientLight intensity={1} />
-                  <pointLight position={[4, 3, 5]} intensity={0.55} />
-                  <RotatingDotGlobe />
-                </Suspense>
-              </Canvas>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </section>
   )
 }

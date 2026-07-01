@@ -1,0 +1,76 @@
+<USER_REQUEST>
+lets create /learnmore page exaplation about products and services down there need  view one by one all of products and animations and images acordingly mage active page. use below document thigns as reference. dont use whole thing beacuse next have create page for all pages one by one .
+
+--->"CONCOLABS — ALL 15 PRODUCT PAGES (COMPLETE WITH ALL SECTIONS)
+Full specification for all 15 standalone product pages
+Every product with: Problem | Solution | Integration | Pricing | Comparison | FAQ | Sidebar | Footer | Dev Notes
+════════════════════════════════════════════════════════════════════
+
+
+════════════════════════════════════════════════════════════════════
+PRODUCT PAGE 1 — PLANNING LAW CHATBOT
+════════════════════════════════════════════════════════════════════
+
+URL: concolabs.com/products/planning-law-chatbot
+DEMO: https://drive.google.com/drive/folders/1WbhlgnVj0X2F73J6R_TlOxBr1JHJmkDI?usp=sharing
+
+HERO SECTION
+────────────────────────────────────────────────────────────────────
+Product name: Planning Law Chatbot
+Value prop: Know what you can build. Instantly.
+Stage badge: Pre-design
+Subtext: Enter a plot location. Get the allowable uses, height limits, floor area ratio, and sanitary requirements in seconds — before you spend on design.
+
+Before/after toggle:
+  BEFORE: Manual planning research
+    · Architect spends 2–3 days cross-referencing planning books
+    · ChatGPT misreads tabular content and planning nuances
+    · No veri
+<truncated 45215 bytes>
+ors, construction estimators, cost consultancies
+
+
+COMPARISON SECTION
+────────────────────────────────────────────────────────────────────
+Headline: Why choose Revit to BOQ
+
+Manual measurement + Excel:
+  · 2–3 weeks per BOQ
+  · Errors in manual data entry
+  · No consistency across projects
+  · Rates not validated
+
+Non-AI BOQ plugins:
+  · Measure the model (good)
+  · Do not predict rates (still manual lookup)
+  · Still requires typing/entry work
+  · Time saved is 40–50%
+
+Revit to BOQ (Concolabs):
+  · Measures the model
+  · AI predicts rates (80–90% accuracy historically)
+  · Fully automated output
+  · Time saved is 85–90%
+  · Only tool combining measurement + rate prediction
+
+
+FAQ SECTION
+────────────────────────────────────────────────────────────────────
+
+Q: What version of Revit does it work with?
+A: Revit 2022 and later. Custom integrations available for Revit 2020–2021.
+
+Q: Can we customize the measurement rules?
+A: Yes. You define how each element type is measured (surface area, linear metres, count, volume). We configure the plugin to match your firm's standards.
+
+Q: How accurate are the AI rate predictions?
+A: Historical accuracy is 80–90% based on your firm's previous project data. The tool improves as more of your projects are included in the training data.
+
+Q: Does it handle MEP (mechanical, electrical, plumbing)?
+A: Yes, if the MEP is modelled in Revit with proper element types. Custom measurement rules for MEP available.
+
+Q: What if our project has unusual element types?
+A: You can define custom element types an
+<truncated 92666 bytes>
+
+NOTE: The output was truncated because it was too long. Use a more targeted query or a smaller range to get the information you need.
