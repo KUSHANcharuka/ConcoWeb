@@ -5,6 +5,34 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/demo",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/partners",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/tour",
+        destination: "/",
+        permanent: false,
+      },
+    ];
+  },
+};
 
 export default config;

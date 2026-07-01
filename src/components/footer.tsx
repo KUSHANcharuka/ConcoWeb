@@ -1,34 +1,28 @@
-import Link from "next/link"
-import { Twitter, Linkedin, Github, Youtube } from "lucide-react"
+"use client";
+
+import { useRef, useEffect } from "react";
+import Link from "next/link";
+import { Twitter, Linkedin, Github, Youtube } from "lucide-react";
 
 const footerLinks = {
   solutions: {
     title: "Solutions",
     links: [
-      { label: "Project Management", href: "/solutions/project-management" },
-      { label: "Budget Control", href: "/solutions/budget-control" },
-      { label: "Document Management", href: "/solutions/documents" },
-      { label: "Team Collaboration", href: "/solutions/collaboration" },
-      { label: "Analytics", href: "/solutions/analytics" },
-    ],
-  },
-  industries: {
-    title: "Industries",
-    links: [
-      { label: "Commercial Construction", href: "/solutions/commercial" },
-      { label: "Residential Projects", href: "/solutions/residential" },
-      { label: "Infrastructure", href: "/solutions/infrastructure" },
-      { label: "Renovation", href: "/solutions/renovation" },
+      { label: "Architects", href: "/solutions/architects" },
+      { label: "Real Estate Developers", href: "/solutions/real-estate-developers" },
+      { label: "Contractors & Builders", href: "/solutions/contractors" },
+      { label: "Consultancies & QS", href: "/solutions/construction-consultancies" },
+      { label: "3D Modellers", href: "/solutions/modellers" },
+      { label: "Legal & Contracts", href: "/solutions/legal-professionals" },
+      { label: "View all solutions →", href: "/solutions" },
     ],
   },
   resources: {
     title: "Resources",
     links: [
-      { label: "Documentation", href: "/resources/docs" },
+      { label: "Learn More", href: "/learnmore" },
       { label: "Blog", href: "/resources/blog" },
-      { label: "Webinars", href: "/resources/webinars" },
-      { label: "Help Center", href: "/resources/help" },
-      { label: "API Reference", href: "/resources/api" },
+      { label: "Help Center", href: "/chat" },
     ],
   },
   company: {
@@ -36,7 +30,6 @@ const footerLinks = {
     links: [
       { label: "About Us", href: "/about" },
       { label: "Careers", href: "/careers" },
-      { label: "Press", href: "/press" },
       { label: "Contact", href: "/contact" },
       { label: "Partners", href: "/partners" },
     ],
@@ -50,42 +43,125 @@ const footerLinks = {
       { label: "Security", href: "/security" },
     ],
   },
-}
+};
 
 const socialLinks = [
   { icon: Twitter, href: "https://twitter.com/concolabs", label: "Twitter" },
   { icon: Linkedin, href: "https://linkedin.com/company/concolabs", label: "LinkedIn" },
   { icon: Github, href: "https://github.com/concolabs", label: "GitHub" },
   { icon: Youtube, href: "https://youtube.com/concolabs", label: "YouTube" },
-]
+];
+
+// ── High-performance brand watermark text ──
+function BrandWatermark() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const spanRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const span = spanRef.current;
+    if (!container || !span) return;
+
+    let rafId: number;
+
+    const update = () => {
+      const rect = container.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // progress: 0 when footer-top is at viewport bottom, 1 when footer-top is at viewport top
+      const raw = (vh - rect.top) / rect.height;
+      const progress = Math.min(1, Math.max(0, raw));
+
+      // Animate only GPU-composited properties — no layout repaints
+      const scale = 0.4 + progress * 0.65;          // 0.4 → 1.05
+      const opacity = progress * 0.13;               // 0 → 0.13 (clearly visible)
+      const ty = (1 - progress) * 80;               // 80px → 0px rise
+
+      span.style.transform = `translateY(${ty}px) scale(${scale})`;
+      span.style.opacity = String(opacity);
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // Trigger immediately in case footer is already partially visible
+    update();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      aria-hidden="true"
+      className="absolute inset-x-0 bottom-0 flex items-end justify-center pointer-events-none select-none"
+      style={{ zIndex: 0, height: "100%", overflow: "hidden", paddingBottom: "1rem" }}
+    >
+      <span
+        ref={spanRef}
+        style={{
+          fontSize: "clamp(4.5rem, 17vw, 19rem)",
+          fontFamily: "'Inter', system-ui, sans-serif",
+          fontWeight: 900,
+          letterSpacing: "-0.04em",
+          lineHeight: 0.9,
+          color: "#111111",
+          whiteSpace: "nowrap",
+          transformOrigin: "center bottom",
+          willChange: "transform, opacity",
+          // Start invisible; JS sets the real values after mount
+          opacity: 0,
+          transform: "translateY(80px) scale(0.4)",
+        }}
+      >
+        CONCOLABS
+      </span>
+    </div>
+  );
+}
+
 
 export function Footer() {
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-12">
-          {/* Logo & Description */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-black font-bold text-lg">C</span>
+    <footer className="relative w-full bg-white border-t border-zinc-150 overflow-hidden">
+      {/* ── Giant brand watermark behind content ── */}
+      <BrandWatermark />
+
+      {/* ── All footer content sits above watermark ── */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 pb-10">
+
+        {/* Top grid */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+
+          {/* Brand column */}
+          <div className="col-span-2 md:col-span-2 space-y-4">
+            <Link href="/" className="inline-flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center">
+                <span className="text-white font-bold text-lg">C</span>
               </div>
-              <span className="text-xl font-semibold text-foreground">Concolabs</span>
+              <span className="text-xl font-semibold text-zinc-900">Concolabs</span>
             </Link>
-            <p className="text-sm text-muted-foreground mb-6 max-w-xs">
+
+            <p className="text-sm text-zinc-500 max-w-xs leading-relaxed">
               The operating system for modern construction. Unify your projects, teams, and data.
             </p>
-            {/* Social Links */}
-            <div className="flex items-center gap-3">
+
+            {/* Social row */}
+            <div className="flex items-center gap-2.5 pt-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-colors"
                   aria-label={social.label}
+                  className="w-9 h-9 rounded-lg bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center text-zinc-500 hover:text-zinc-900 transition-colors duration-200"
                 >
                   <social.icon className="w-4 h-4" />
                 </a>
@@ -93,10 +169,10 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Link Columns */}
-          {Object.values(footerLinks).map((section) => (
-            <div key={section.title}>
-              <h3 className="text-sm font-semibold text-foreground mb-4">
+          {/* Link columns */}
+          {Object.entries(footerLinks).map(([key, section]) => (
+            <div key={key} className="space-y-4">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
                 {section.title}
               </h3>
               <ul className="space-y-3">
@@ -104,7 +180,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -116,51 +192,50 @@ export function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="py-8 border-t border-border mb-8">
+        <div className="border-t border-zinc-150 py-8 mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h3 className="text-sm font-semibold text-foreground mb-1">
-                Stay updated
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Get the latest news and updates from Concolabs.
-              </p>
+              <h3 className="text-sm font-semibold text-zinc-900 mb-1">Stay updated</h3>
+              <p className="text-sm text-zinc-500">Get the latest news and updates from Concolabs.</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="px-4 py-2 rounded-lg bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 w-64"
+                className="px-4 py-2 rounded-lg bg-zinc-50 border border-zinc-200 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/20 w-full sm:w-64"
               />
-              <button className="px-4 py-2 rounded-lg bg-primary text-black text-sm font-medium hover:bg-primary/90 transition-colors">
+              <button className="px-4 py-2 rounded-lg bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 transition-colors duration-200 w-full sm:w-auto cursor-pointer">
                 Subscribe
               </button>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Concolabs, Inc. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Privacy
+        {/* Bottom bar */}
+        <div className="border-t border-zinc-150 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            <Link href="/privacy" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
+              Privacy Policy
             </Link>
-            <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms
+            <Link href="/terms" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
+              Terms of Service
             </Link>
-            <Link href="/cookies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Cookies
+            <Link href="/cookies" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
+              Cookie Policy
             </Link>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <div className="flex items-center gap-2 text-sm text-zinc-500">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               All systems operational
             </div>
           </div>
+          <p className="text-xs text-zinc-400">
+            &copy; {new Date().getFullYear()} Concolabs, Inc. All rights reserved.
+          </p>
         </div>
+
+        {/* Spacer so watermark text has room below the content */}
+        <div className="h-28 md:h-40" />
       </div>
     </footer>
-  )
+  );
 }

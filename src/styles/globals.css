@@ -15,8 +15,8 @@
   --card-foreground: oklch(0.15 0 0);
   --popover: oklch(0.99 0 0);
   --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.93 0.2 105);
-  --primary-foreground: oklch(0.15 0 0);
+  --primary: oklch(0.15 0 0);
+  --primary-foreground: oklch(0.99 0 0);
   --secondary: oklch(0.93 0 0);
   --secondary-foreground: oklch(0.15 0 0);
   --muted: oklch(0.88 0 0);
@@ -133,6 +133,11 @@
     @apply bg-background text-foreground;
   }
   
+  /* Translucent indigo/blue text selection */
+  ::selection {
+    background-color: oklch(0.6 0.12 240 / 0.3);
+  }
+  
   /* Custom scrollbar for light theme */
   ::-webkit-scrollbar {
     width: 8px;
@@ -147,6 +152,15 @@
   }
   ::-webkit-scrollbar-thumb:hover {
     background: oklch(0.75 0 0);
+  }
+
+  /* Utility to hide scrollbars while maintaining scroll functionality */
+  .scrollbar-none {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
 }
 
@@ -246,3 +260,110 @@ html {
 .project-file-tree li {
   padding: 2px 0;
 }
+/* Button primary override to maintain yellow only for standard buttons */
+button:not([role="switch"]):not([role="checkbox"]):not([role="menuitem"]),
+[data-slot="button"],
+.bg-primary:is(button, a, [role="button"], [data-slot="button"]) {
+  --primary: oklch(0.93 0.2 105) !important;
+  --primary-foreground: oklch(0.15 0 0) !important;
+  --ring: oklch(0.93 0.2 105) !important;
+  --color-primary: oklch(0.93 0.2 105) !important;
+  --color-primary-foreground: oklch(0.15 0 0) !important;
+}
+
+/* Infinite Marquee - Left to Right */
+@keyframes marquee-left-to-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-ltr {
+  display: flex;
+  width: max-content;
+  animation: marquee-left-to-right 28s linear infinite;
+}
+
+.animate-marquee-ltr:hover {
+  animation-play-state: paused;
+}
+
+/* Pricing Page Custom Button Hover Styles */
+.pricing-page-root button:not([role="switch"]):not([role="checkbox"]):not([role="menuitem"]),
+.pricing-page-root [data-slot="button"] {
+  --primary: oklch(0.15 0 0) !important;
+  --primary-foreground: oklch(0.99 0 0) !important;
+  --ring: oklch(0.93 0.2 105 / 0.5) !important;
+  --color-primary: oklch(0.15 0 0) !important;
+  --color-primary-foreground: oklch(0.99 0 0) !important;
+}
+
+.pricing-btn-primary {
+  background-color: oklch(0.15 0 0) !important;
+  color: oklch(0.99 0 0) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.pricing-btn-primary:hover {
+  background-color: oklch(0.25 0 0) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 10px 25px -5px oklch(0.93 0.2 105 / 0.35) !important;
+}
+
+.pricing-btn-primary:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.pricing-btn-outline {
+  --primary: transparent !important;
+  background-color: transparent !important;
+  border: 1px solid oklch(0.85 0 0) !important;
+  color: oklch(0.15 0 0) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.pricing-btn-outline:hover {
+  background-color: oklch(0.93 0.2 105 / 0.08) !important;
+  border-color: oklch(0.93 0.2 105 / 0.5) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 8px 20px -6px oklch(0.93 0.2 105 / 0.2) !important;
+}
+
+.pricing-btn-outline:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* Product page title gradient sweep animation */
+.product-title-sweep {
+  background: linear-gradient(
+    to right,
+    currentColor 0%,
+    currentColor 25%,
+    var(--color-lime) 40%,
+    #ffffff 50%,
+    #a1a1aa 60%,
+    #27272a 75%,
+    currentColor 85%,
+    currentColor 100%
+  );
+  background-size: 300% 100%;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: text-gradient-sweep 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes text-gradient-sweep {
+  0% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+
+

@@ -39,16 +39,20 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+<<<<<<< HEAD
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-instrument-serif",
 });
 
+=======
+>>>>>>> featrue/partner
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
+<<<<<<< HEAD
     <ClerkProvider>
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} bg-background`}>
         <body className="font-sans antialiased">
@@ -62,5 +66,14 @@ export default function RootLayout({
         </body>
       </html>
     </ClerkProvider>
+=======
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} bg-lime/20`}>
+      <body className="font-sans antialiased">
+        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <ChatWidget />
+        {process.env.NODE_ENV === "production" && <Analytics />}
+      </body>
+    </html>
+>>>>>>> featrue/partner
   );
 }

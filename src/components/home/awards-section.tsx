@@ -2,56 +2,81 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import Image from "next/image"
 
-const awards = [
+function StarIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+    </svg>
+  )
+}
+
+const G2Logo = () => (
+  <div className="flex items-center gap-1.5 select-none">
+    <div className="w-6 h-6 rounded-full bg-[#ff492c] flex items-center justify-center text-white font-black text-xs">
+      G
+    </div>
+    <span className="font-extrabold text-foreground text-sm tracking-tight">G2 Crowd</span>
+  </div>
+)
+
+const CapterraLogo = () => (
+  <div className="flex items-center gap-1.5 select-none">
+    <svg viewBox="0 0 100 100" className="w-5 h-5 text-[#006dfa] fill-current">
+      <path d="M50 10 L85 45 L50 80 L15 45 Z" />
+      <path d="M50 25 L70 45 L50 65 L30 45 Z" className="text-[#f6f5f2] fill-current" />
+    </svg>
+    <span className="font-extrabold text-foreground text-sm tracking-tight">Capterra</span>
+  </div>
+)
+
+const SoftwareAdviceLogo = () => (
+  <div className="flex items-center gap-1.5 select-none">
+    <div className="flex gap-0.5">
+      <div className="w-2.5 h-2.5 rounded-full bg-[#004e8d]" />
+      <div className="w-2.5 h-2.5 rounded-full bg-[#ffc300]" />
+    </div>
+    <span className="font-extrabold text-foreground text-sm tracking-tight">Software Advice</span>
+  </div>
+)
+
+const GetAppLogo = () => (
+  <div className="flex items-center gap-1.5 select-none">
+    <div className="w-5 h-5 rounded-md bg-[#5b32a2] flex items-center justify-center text-white font-extrabold text-[10px]">
+      GA
+    </div>
+    <span className="font-extrabold text-foreground text-sm tracking-tight">GetApp</span>
+  </div>
+)
+
+const BADGES = [
   {
-    name: "G2 High Performer",
-    badge: "Winter 2025",
-    color: "from-orange-500/20 to-orange-500/5",
-    borderColor: "border-orange-500/30",
+    logo: <G2Logo />,
+    title: "Winter 2026",
+    award: "G2 Leader",
+    rating: "4.8",
   },
   {
-    name: "G2 High Performer",
-    badge: "Small Business",
-    color: "from-orange-500/20 to-orange-500/5",
-    borderColor: "border-orange-500/30",
+    logo: <CapterraLogo />,
+    title: "Best Value",
+    award: "Best Ease of Use",
+    rating: "4.8",
   },
   {
-    name: "G2 High Performer",
-    badge: "Australia",
-    color: "from-orange-500/20 to-orange-500/5",
-    borderColor: "border-orange-500/30",
+    logo: <SoftwareAdviceLogo />,
+    title: "Most Recommended",
+    award: "Front Runners",
+    rating: "4.8",
   },
   {
-    name: "Capterra",
-    badge: "Best Ease of Use 2024",
-    color: "from-blue-500/20 to-blue-500/5",
-    borderColor: "border-blue-500/30",
-  },
-  {
-    name: "Capterra",
-    badge: "Best Value 2024",
-    color: "from-blue-500/20 to-blue-500/5",
-    borderColor: "border-blue-500/30",
-  },
-  {
-    name: "Software Advice",
-    badge: "Most Recommended",
-    color: "from-emerald-500/20 to-emerald-500/5",
-    borderColor: "border-emerald-500/30",
-  },
-  {
-    name: "Software Advice",
-    badge: "Best Customer Support",
-    color: "from-emerald-500/20 to-emerald-500/5",
-    borderColor: "border-emerald-500/30",
-  },
-  {
-    name: "GetApp",
-    badge: "Best Functionality",
-    color: "from-purple-500/20 to-purple-500/5",
-    borderColor: "border-purple-500/30",
+    logo: <GetAppLogo />,
+    title: "Category Leader",
+    award: "Best Functionality",
+    rating: "4.8",
   },
 ]
 
@@ -60,82 +85,83 @@ export function AwardsSection() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
 
   return (
-    <section ref={containerRef} className="py-24 px-6">
+    <section ref={containerRef} className="py-24 px-6 bg-card/30 border-y border-border/40">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Award-Winning Software<br />
-            <span className="text-gradient">Trusted by Users</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Recognized by leading software review platforms
-          </p>
-        </motion.div>
-
-        {/* Awards Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4"
-        >
-          {awards.map((award, index) => (
-            <motion.div
-              key={`${award.name}-${award.badge}`}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: 0.3 + index * 0.05 }}
-              whileHover={{ y: -4, scale: 1.02 }}
-              className={`relative p-6 rounded-2xl bg-gradient-to-br ${award.color} border ${award.borderColor} min-w-[140px]`}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Column: Heading and summary info */}
+          <div className="lg:col-span-5 text-left">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground mb-6"
             >
-              {/* Badge shape */}
-              <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 mb-3 relative">
-                  {/* Shield/Badge icon */}
-                  <svg viewBox="0 0 64 64" className="w-full h-full">
-                    <path
-                      d="M32 4L8 14v20c0 16 24 26 24 26s24-10 24-26V14L32 4z"
-                      fill="currentColor"
-                      className="text-card"
-                    />
-                    <path
-                      d="M32 4L8 14v20c0 16 24 26 24 26s24-10 24-26V14L32 4z"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      className="text-primary/50"
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-xs font-bold text-primary">
-                      {award.name.split(" ")[0][0]}
-                    </span>
-                  </div>
+              Award-Winning Software<br />
+              <span className="text-foreground">Trusted by Users</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-lg text-muted-foreground mb-8 leading-relaxed"
+            >
+              Concolabs is consistently recognized by leading software review platforms for our ease of use, customer support, and value. See how we rank.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-[#f6f5f2] dark:bg-muted/10 border border-border/40 w-fit"
+            >
+              <div className="text-4xl font-extrabold text-foreground">4.8</div>
+              <div className="flex flex-col">
+                <div className="flex gap-0.5 text-lime">
+                  {[...Array(5)].map((_, i) => (
+                    <StarIcon key={i} className="w-5 h-5 fill-current" />
+                  ))}
                 </div>
-                <p className="text-xs font-semibold text-foreground">{award.name}</p>
-                <p className="text-[10px] text-muted-foreground mt-1">{award.badge}</p>
+                <div className="text-xs text-muted-foreground mt-1">Average user rating across 5,000+ reviews</div>
               </div>
             </motion.div>
-          ))}
-        </motion.div>
+          </div>
 
-        {/* User provided award image reference */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 text-center"
-        >
-          <p className="text-sm text-muted-foreground">
-            Rated <span className="text-primary font-semibold">4.8/5</span> across all platforms
-          </p>
-        </motion.div>
+          {/* Right Column: Badges Grid */}
+          <div className="lg:col-span-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {BADGES.map((badge, index) => (
+                <motion.div
+                  key={badge.award}
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.08 }}
+                  whileHover={{ y: -6 }}
+                  className="flex flex-col items-center text-center p-8 rounded-3xl bg-[#f6f5f2] dark:bg-muted/10 border border-border/40 hover:border-foreground/15 hover:shadow-xs transition-all duration-300"
+                >
+                  {/* Badge Brand Header */}
+                  <div className="mb-4">
+                    {badge.logo}
+                  </div>
+                  {/* Badge Certificate Title */}
+                  <h3 className="text-lg font-bold text-foreground mb-1 leading-snug">
+                    {badge.award}
+                  </h3>
+                  <p className="text-sm font-semibold text-muted-foreground mb-4">
+                    {badge.title}
+                  </p>
+                  {/* Stars */}
+                  <div className="flex gap-0.5 text-lime mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className="w-4 h-4 fill-current" />
+                    ))}
+                  </div>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Rating {badge.rating} / 5
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
