@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow crawling of private portals, admin pages, and APIs
+Disallow: /api/
+Disallow: /admin/
+Disallow: /client/
+
+Sitemap: https://www.concolabs.com/sitemap.xml
