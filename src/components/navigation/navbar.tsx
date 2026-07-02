@@ -164,14 +164,10 @@ export function Navbar() {
 
             {/* Actions */}
             <div className="hidden lg:flex items-center gap-3">
-              <Button
-                variant="outline"
-                size="sm"
-                asChild
-              >
+              <Button variant="outline" size="sm" asChild>
                 <Link href="/client-portal/access">Client Portal</Link>
               </Button>
-              <Button asChild>
+              <Button size="sm" asChild>
                 <Link href="/demo">Request a Demo</Link>
               </Button>
             </div>
@@ -254,11 +250,7 @@ export function Navbar() {
                   </Link>
                 ))}
                 <div className="pt-4 space-y-2">
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    asChild
-                  >
+                  <Button variant="outline" className="w-full" asChild>
                     <Link href="/client-portal/access" onClick={() => setIsMobileMenuOpen(false)}>
                       Client Portal
                     </Link>
