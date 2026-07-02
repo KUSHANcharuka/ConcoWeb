@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, MessageCircle, X } from "lucide-react"
+import { ChevronDown, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SolutionsMenu } from "./solutions-menu"
 import { PartnersMenu } from "./partners-menu"
@@ -164,18 +164,10 @@ export function Navbar() {
 
             {/* Actions */}
             <div className="hidden lg:flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                asChild
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <Link href="/contact">
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Contact
-                </Link>
+              <Button variant="outline" size="sm" asChild>
+                <Link href="/client-portal/access">Client Portal</Link>
               </Button>
-              <Button asChild>
+              <Button size="sm" asChild>
                 <Link href="/demo">Request a Demo</Link>
               </Button>
             </div>
@@ -258,18 +250,13 @@ export function Navbar() {
                   </Link>
                 ))}
                 <div className="pt-4 space-y-2">
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    asChild
-                  >
-                    <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      Contact
+                  <Button variant="outline" className="w-full" asChild>
+                    <Link href="/client-portal/access" onClick={() => setIsMobileMenuOpen(false)}>
+                      Client Portal
                     </Link>
                   </Button>
                   <Button asChild className="w-full">
-                    <Link href="/demo">Request a Demo</Link>
+                    <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>Request a Demo</Link>
                   </Button>
                 </div>
               </div>

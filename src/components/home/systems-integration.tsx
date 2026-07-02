@@ -9,6 +9,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react"
+import { GlobalSpendGlobe } from "@/components/home/global-spend-globe"
 
 const features = [
   {
@@ -44,6 +45,20 @@ export function SystemsIntegration() {
   return (
     <section ref={ref} className="py-24 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mx-auto mb-16 max-w-4xl text-center"
+        >
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance leading-tight">
+            When everything runs on one system, work moves faster
+          </h2>
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            Replace dozens of tools, handoffs, and manual work with one unified platform.
+          </p>
+        </motion.div>
+
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
           {/* Left — heading + feature list */}
@@ -52,13 +67,6 @@ export function SystemsIntegration() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance leading-tight">
-              When everything runs on one system, work moves faster
-            </h2>
-            <p className="text-muted-foreground text-lg mb-12">
-              Replace dozens of tools, handoffs, and manual work with one unified platform.
-            </p>
-
             <div className="flex flex-col">
               {features.map((feature, index) => (
                 <motion.div
@@ -95,27 +103,20 @@ export function SystemsIntegration() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="w-full flex items-center justify-center"
           >
-            <div className="flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-300 bg-[#ECEBEA] p-6 min-h-[420px] h-full w-full max-w-[480px] mx-auto">
-              {/* Globe Video Container linked to customers page */}
-              <Link href="/customers" className="relative w-full h-[280px] overflow-hidden rounded-lg bg-white border border-zinc-200 shadow-xs flex items-center justify-center cursor-pointer group/globe">
-                <video
-                  src="/videos/loop_video_for_globe_show_belo.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover/globe:scale-[1.03]"
-                />
+            <div className="mx-auto flex h-full w-full max-w-[480px] flex-col justify-between overflow-hidden rounded-2xl border border-zinc-300 bg-[#ECEBEA] p-6 min-h-[470px]">
+              {/* Globe Animation Container linked to customers page */}
+              <Link href="/customers" className="relative flex h-[340px] w-full items-center justify-center overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-xs sm:h-[360px]">
+                <GlobalSpendGlobe />
               </Link>
 
               {/* Description Text under the globe */}
               <div className="mt-6 flex flex-col justify-between flex-grow text-left">
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 leading-tight">
-                    One platform for all your global spend.
+                    One platform supporting customers running worldwide.
                   </h3>
                   <p className="mt-3 text-sm text-zinc-500 leading-relaxed">
-                    Issue cards in 30+ currencies and reimburse employees in local currencies, including pounds, euros, yen, and pesos.
+                    Our portfolio runs across firms in Sri Lanka, India, Singapore, Australia, New Zealand, the UK, the Gulf, and Africa, with Concolabs systems live wherever their teams operate.
                   </p>
                 </div>
               </div>

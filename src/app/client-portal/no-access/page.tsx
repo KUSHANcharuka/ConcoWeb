@@ -12,6 +12,9 @@ export default function ClientPortalNoAccessPage() {
           Sign in with an invited client account and make sure your active Clerk organization is the client company you want to view.
         </p>
         <div className="flex justify-center gap-3 pt-2">
+          <Link className="border border-zinc-200 px-4 py-2 text-sm hover:bg-zinc-50" href="/client-portal/access?mode=guest">
+            Continue as guest
+          </Link>
           <Link className="border border-zinc-200 px-4 py-2 text-sm hover:bg-zinc-50" href="/">
             Back to site
           </Link>

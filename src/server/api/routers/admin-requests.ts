@@ -6,6 +6,9 @@ import { adminProcedure, createTRPCRouter } from "~/server/api/trpc";
 import {
   assets,
   clients,
+  guestPortalIntakeAttachments,
+  guestPortalIntakes,
+  guestPortalIntakeStatusEnum,
   projectChangeRequestAttachments,
   projectChangeRequests,
   projectRequestAttachments,
@@ -18,6 +21,7 @@ import { recordNotificationEvent } from "~/server/notifications/service";
 import { createAssetReadUrl } from "~/server/r2";
 
 const requestStatusValues = projectRequestStatusEnum.enumValues;
+const guestIntakeStatusValues = guestPortalIntakeStatusEnum.enumValues;
 
 const listRequestsSchema = z.object({
   search: z.string().trim().max(120).default(""),
@@ -25,12 +29,18 @@ const listRequestsSchema = z.object({
   projectId: z.string().uuid().nullable().optional(),
 });
 
+const listGuestIntakesSchema = z.object({
+  search: z.string().trim().max(120).default(""),
+  statuses: z.array(z.enum(guestIntakeStatusValues)).default([]),
+});
+
 const requestReviewStatusSchema = z.enum(["approved", "rejected"]);
 
 const requestAttachmentReadUrlSchema = z.object({
-  requestKind: z.enum(["project", "change"]),
+  requestKind: z.enum(["project", "change", "guest"]),
   requestId: z.string().uuid(),
-  assetId: z.string().uuid(),
+  assetId: z.string().uuid().optional(),
+  attachmentId: z.string().uuid().optional(),
 });
 
 async function ensureProjectRequest(requestId: string, db: typeof import("~/server/db").db) {
@@ -56,6 +66,20 @@ async function ensureChangeRequest(requestId: string, db: typeof import("~/serve
 
   if (!request) {
     throw new TRPCError({ code: "NOT_FOUND", message: "Change request not found." });
+  }
+
+  return request;
+}
+
+async function ensureGuestPortalIntake(requestId: string, db: typeof import("~/server/db").db) {
+  const [request] = await db
+    .select()
+    .from(guestPortalIntakes)
+    .where(eq(guestPortalIntakes.id, requestId))
+    .limit(1);
+
+  if (!request) {
+    throw new TRPCError({ code: "NOT_FOUND", message: "Guest portal intake not found." });
   }
 
   return request;
@@ -159,7 +183,8 @@ export const adminRequestsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const request = await ensureProjectRequest(input.requestId, ctx.db);
+      await ensureProjectRequest(input.requestId, ctx.db);
+
       const [updated] = await ctx.db
         .update(projectRequests)
         .set({
@@ -293,7 +318,8 @@ export const adminRequestsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const request = await ensureChangeRequest(input.requestId, ctx.db);
+      await ensureChangeRequest(input.requestId, ctx.db);
+
       const [updated] = await ctx.db
         .update(projectChangeRequests)
         .set({
@@ -324,9 +350,153 @@ export const adminRequestsRouter = createTRPCRouter({
       return updated;
     }),
 
+  listGuestPortalIntakes: adminProcedure
+    .input(listGuestIntakesSchema)
+    .query(async ({ ctx, input }) => {
+      const filters = [];
+      if (input.search) {
+        filters.push(
+          or(
+            ilike(guestPortalIntakes.name, `%${input.search}%`),
+            ilike(guestPortalIntakes.email, `%${input.search}%`),
+            ilike(guestPortalIntakes.company, `%${input.search}%`),
+            ilike(guestPortalIntakes.summary, `%${input.search}%`),
+          )!,
+        );
+      }
+      if (input.statuses.length > 0) {
+        filters.push(inArray(guestPortalIntakes.status, input.statuses));
+      }
+
+      return ctx.db
+        .select({
+          id: guestPortalIntakes.id,
+          clientName: guestPortalIntakes.company,
+          label: guestPortalIntakes.company,
+          summary: guestPortalIntakes.summary,
+          status: guestPortalIntakes.status,
+          requestedByName: guestPortalIntakes.name,
+          requestedByEmail: guestPortalIntakes.email,
+          reviewedAt: guestPortalIntakes.reviewedAt,
+          createdAt: guestPortalIntakes.createdAt,
+        })
+        .from(guestPortalIntakes)
+        .where(filters.length > 0 ? and(...filters) : undefined)
+        .orderBy(desc(guestPortalIntakes.createdAt));
+    }),
+
+  getGuestPortalIntake: adminProcedure
+    .input(z.object({ requestId: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      await ensureGuestPortalIntake(input.requestId, ctx.db);
+
+      const [detail] = await ctx.db
+        .select({
+          id: guestPortalIntakes.id,
+          clientName: guestPortalIntakes.company,
+          label: guestPortalIntakes.company,
+          summary: guestPortalIntakes.summary,
+          status: guestPortalIntakes.status,
+          requestedByName: guestPortalIntakes.name,
+          requestedByEmail: guestPortalIntakes.email,
+          reviewedByAdminId: guestPortalIntakes.reviewedByAdminId,
+          reviewedAt: guestPortalIntakes.reviewedAt,
+          createdAt: guestPortalIntakes.createdAt,
+        })
+        .from(guestPortalIntakes)
+        .where(eq(guestPortalIntakes.id, input.requestId))
+        .limit(1);
+
+      const attachments = await ctx.db
+        .select({
+          id: guestPortalIntakeAttachments.id,
+          fileName: guestPortalIntakeAttachments.fileName,
+          displayName: guestPortalIntakeAttachments.displayName,
+          mimeType: guestPortalIntakeAttachments.mimeType,
+          sizeBytes: guestPortalIntakeAttachments.sizeBytes,
+          createdAt: guestPortalIntakeAttachments.createdAt,
+        })
+        .from(guestPortalIntakeAttachments)
+        .where(eq(guestPortalIntakeAttachments.intakeId, input.requestId))
+        .orderBy(desc(guestPortalIntakeAttachments.createdAt));
+
+      return { request: detail, attachments };
+    }),
+
+  reviewGuestPortalIntake: adminProcedure
+    .input(
+      z.object({
+        requestId: z.string().uuid(),
+        status: requestReviewStatusSchema,
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ensureGuestPortalIntake(input.requestId, ctx.db);
+
+      const [updated] = await ctx.db
+        .update(guestPortalIntakes)
+        .set({
+          status: input.status,
+          reviewedByAdminId: ctx.session.userId,
+          reviewedAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .where(eq(guestPortalIntakes.id, input.requestId))
+        .returning();
+
+      if (updated) {
+        await recordNotificationEvent(ctx.db, {
+          eventType: "guest_portal_intake.reviewed",
+          actorUserId: ctx.session.userId,
+          entityType: "guest_portal_intake",
+          entityId: updated.id,
+          payload: {
+            company: updated.company,
+            email: updated.email,
+            name: updated.name,
+            status: input.status,
+          },
+          audiences: [{ kind: "admin_all" }],
+          href: "/admin/requests",
+        });
+      }
+
+      return updated;
+    }),
+
   getAttachmentReadUrl: adminProcedure
     .input(requestAttachmentReadUrlSchema)
     .mutation(async ({ ctx, input }) => {
+      if (input.requestKind === "guest") {
+        if (!input.attachmentId) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Attachment id is required." });
+        }
+
+        await ensureGuestPortalIntake(input.requestId, ctx.db);
+        const [attachment] = await ctx.db
+          .select({
+            objectKey: guestPortalIntakeAttachments.objectKey,
+          })
+          .from(guestPortalIntakeAttachments)
+          .where(
+            and(
+              eq(guestPortalIntakeAttachments.id, input.attachmentId),
+              eq(guestPortalIntakeAttachments.intakeId, input.requestId),
+            ),
+          )
+          .limit(1);
+
+        if (!attachment) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Attachment not found." });
+        }
+
+        return { url: await createAssetReadUrl({ objectKey: attachment.objectKey }) };
+      }
+
+      if (!input.assetId) {
+        throw new TRPCError({ code: "BAD_REQUEST", message: "Asset id is required." });
+      }
+
       if (input.requestKind === "project") {
         await ensureProjectRequest(input.requestId, ctx.db);
         const [attachment] = await ctx.db

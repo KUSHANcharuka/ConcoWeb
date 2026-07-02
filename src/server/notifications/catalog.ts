@@ -20,6 +20,8 @@ export const notificationEventTypes = [
   "project_request.reviewed",
   "change_request.submitted",
   "change_request.reviewed",
+  "guest_portal_intake.submitted",
+  "guest_portal_intake.reviewed",
   "payment.proof_submitted",
   "invitation.accepted",
   "payment.reminder",
