@@ -41,7 +41,7 @@ export function HeroVideo() {
   }
 
   return (
-    <section ref={containerRef} className="relative px-6 py-16">
+    <section ref={containerRef} className="relative px-6 pt-6 pb-16 sm:pt-10">
       <motion.div
         style={{ opacity, scale }}
         className="relative max-w-6xl mx-auto"
@@ -69,17 +69,17 @@ export function HeroVideo() {
           {/* <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" /> */}
 
           {/* Content Overlay */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 sm:p-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 drop-shadow-lg text-balance">
+              <h2 className="mb-4 text-2xl font-bold text-white drop-shadow-lg text-balance sm:text-3xl lg:text-4xl">
                 Building the future of construction
               </h2>
-              <p className="text-white/80 text-sm sm:text-base max-w-xl mx-auto mb-6 drop-shadow-md">
+              <p className="mx-auto mb-6 hidden max-w-xl text-sm text-white/80 drop-shadow-md sm:block sm:text-base">
                 See how Concolabs transforms the way construction teams work
               </p>
               <Button

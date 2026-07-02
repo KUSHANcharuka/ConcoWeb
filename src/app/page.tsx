@@ -1,3 +1,4 @@
+import localFont from "next/font/local";
 import { Navbar } from "@/components/navigation/navbar";
 import { Footer } from "@/components/footer";
 import { HeroSection } from "@/components/home/hero-section";
@@ -12,9 +13,14 @@ import { AwardsSection } from "@/components/home/awards-section";
 import { FinalCTA } from "@/components/home/final-cta";
 import { WhySwitch } from "@/components/home/why-switch";
 
+const neueHaasRoman = localFont({
+  src: "../../public/font/neuehaasgrottext-55roman-trial.otf",
+  variable: "--font-homepage-neue-haas-roman",
+});
+
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className={`${neueHaasRoman.className} min-h-screen bg-background`}>
       <Navbar />
       <HeroSection />
       <CustomerLogos />

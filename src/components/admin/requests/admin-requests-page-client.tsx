@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import {
   CheckCircle2Icon,
   DownloadIcon,
-  FileTextIcon,
   LoaderCircleIcon,
   SearchIcon,
   XCircleIcon,
@@ -25,6 +24,7 @@ import { api } from "~/trpc/react";
 const requestKinds = [
   { key: "project", label: "Project Requests" },
   { key: "change", label: "Feature Requests" },
+  { key: "guest", label: "Guest Intake" },
 ] as const;
 
 type RequestKind = (typeof requestKinds)[number]["key"];
@@ -36,6 +36,39 @@ type AdminRequestsPageClientProps = {
   projectId?: string;
   hideHeader?: boolean;
   hideKindSwitcher?: boolean;
+};
+
+type ListItem = {
+  id: string;
+  clientName: string;
+  label: string;
+  summary: string | null;
+  status: "pending" | "approved" | "rejected";
+  requestedByName: string | null;
+  requestedByEmail: string | null;
+  reviewedAt: Date | null;
+  createdAt: Date;
+  projectId?: string | null;
+  projectName?: string | null;
+};
+
+type AssetAttachment = {
+  id: string;
+  assetId: string;
+  fileName: string;
+  displayName: string;
+  mimeType: string;
+  sizeBytes: number;
+  createdAt: Date;
+};
+
+type GuestAttachment = {
+  id: string;
+  fileName: string;
+  displayName: string;
+  mimeType: string;
+  sizeBytes: number;
+  createdAt: Date;
 };
 
 export function AdminRequestsPageClient({
@@ -52,6 +85,7 @@ export function AdminRequestsPageClient({
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null);
 
   const statuses = status === "all" ? [] : [status];
+
   const projectRequestsQuery = api.admin.requests.listProjectRequests.useQuery(
     { search, statuses, projectId },
     { enabled: kind === "project" },
@@ -59,6 +93,10 @@ export function AdminRequestsPageClient({
   const changeRequestsQuery = api.admin.requests.listChangeRequests.useQuery(
     { search, statuses, projectId },
     { enabled: kind === "change" },
+  );
+  const guestRequestsQuery = api.admin.requests.listGuestPortalIntakes.useQuery(
+    { search, statuses },
+    { enabled: kind === "guest" },
   );
 
   const projectDetailQuery = api.admin.requests.getProjectRequest.useQuery(
@@ -68,6 +106,10 @@ export function AdminRequestsPageClient({
   const changeDetailQuery = api.admin.requests.getChangeRequest.useQuery(
     { requestId: selectedRequestId ?? "" },
     { enabled: kind === "change" && !!selectedRequestId },
+  );
+  const guestDetailQuery = api.admin.requests.getGuestPortalIntake.useQuery(
+    { requestId: selectedRequestId ?? "" },
+    { enabled: kind === "guest" && !!selectedRequestId },
   );
 
   const reviewProjectRequest = api.admin.requests.reviewProjectRequest.useMutation({
@@ -90,16 +132,40 @@ export function AdminRequestsPageClient({
       ]);
     },
   });
+  const reviewGuestIntake = api.admin.requests.reviewGuestPortalIntake.useMutation({
+    onSuccess: async () => {
+      await Promise.all([
+        utils.admin.requests.listGuestPortalIntakes.invalidate(),
+        selectedRequestId
+          ? utils.admin.requests.getGuestPortalIntake.invalidate({ requestId: selectedRequestId })
+          : Promise.resolve(),
+      ]);
+    },
+  });
   const getAttachmentReadUrl = api.admin.requests.getAttachmentReadUrl.useMutation();
 
-  const list = useMemo(
-    () => (kind === "project" ? projectRequestsQuery.data ?? [] : changeRequestsQuery.data ?? []),
-    [changeRequestsQuery.data, kind, projectRequestsQuery.data],
-  );
-  const activeListQuery = kind === "project" ? projectRequestsQuery : changeRequestsQuery;
-  const detail = kind === "project" ? projectDetailQuery.data : changeDetailQuery.data;
-  const activeRequest = detail?.request ?? null;
-  const attachments = detail?.attachments ?? [];
+  const list = useMemo<ListItem[]>(() => {
+    if (kind === "project") return (projectRequestsQuery.data ?? []) as ListItem[];
+    if (kind === "change") return (changeRequestsQuery.data ?? []) as ListItem[];
+    return (guestRequestsQuery.data ?? []) as ListItem[];
+  }, [changeRequestsQuery.data, guestRequestsQuery.data, kind, projectRequestsQuery.data]);
+
+  const activeListQuery =
+    kind === "project"
+      ? projectRequestsQuery
+      : kind === "change"
+        ? changeRequestsQuery
+        : guestRequestsQuery;
+
+  const activeDetail =
+    kind === "project"
+      ? projectDetailQuery.data
+      : kind === "change"
+        ? changeDetailQuery.data
+        : guestDetailQuery.data;
+
+  const activeRequest = (activeDetail?.request ?? null) as ListItem | null;
+  const attachments = (activeDetail?.attachments ?? []) as Array<AssetAttachment | GuestAttachment>;
 
   useEffect(() => {
     if (!lockedKind) return;
@@ -127,16 +193,28 @@ export function AdminRequestsPageClient({
       await reviewProjectRequest.mutateAsync({ requestId: selectedRequestId, status: nextStatus });
       return;
     }
-    await reviewChangeRequest.mutateAsync({ requestId: selectedRequestId, status: nextStatus });
+    if (kind === "change") {
+      await reviewChangeRequest.mutateAsync({ requestId: selectedRequestId, status: nextStatus });
+      return;
+    }
+    await reviewGuestIntake.mutateAsync({ requestId: selectedRequestId, status: nextStatus });
   }
 
-  async function handleOpenAttachment(assetId: string) {
+  async function handleOpenAttachment(attachment: AssetAttachment | GuestAttachment) {
     if (!selectedRequestId) return;
-    const result = await getAttachmentReadUrl.mutateAsync({
-      requestKind: kind,
-      requestId: selectedRequestId,
-      assetId,
-    });
+    const result = await getAttachmentReadUrl.mutateAsync(
+      kind === "guest"
+        ? {
+            requestKind: "guest",
+            requestId: selectedRequestId,
+            attachmentId: attachment.id,
+          }
+        : {
+            requestKind: kind,
+            requestId: selectedRequestId,
+            assetId: (attachment as AssetAttachment).assetId,
+          },
+    );
     window.open(result.url, "_blank", "noopener,noreferrer");
   }
 
@@ -150,7 +228,7 @@ export function AdminRequestsPageClient({
               Client intake and feature review.
             </h1>
             <p className="mt-3 text-base leading-7 text-zinc-600">
-              Review new client project requests and scoped feature requests in one admin queue.
+              Review existing client requests and new guest onboarding submissions in one admin queue.
             </p>
           </div>
         </div>
@@ -181,7 +259,7 @@ export function AdminRequestsPageClient({
                 <Input
                   className="pl-9"
                   onChange={(event) => setSearch(event.target.value)}
-                  placeholder="Search requests or clients"
+                  placeholder="Search requests, guests, or clients"
                   value={search}
                 />
               </div>
@@ -228,9 +306,7 @@ export function AdminRequestsPageClient({
                         </div>
                         <div className="mt-1 text-xs uppercase tracking-[0.16em] text-zinc-400">
                           {request.clientName}
-                          {" projectName" in request && request.projectName
-                            ? ` • ${request.projectName}`
-                            : ""}
+                          {request.projectName ? ` • ${request.projectName}` : ""}
                         </div>
                       </div>
                       <span className="rounded-full border border-zinc-200 px-2.5 py-1 text-[11px] uppercase tracking-[0.12em] text-zinc-600">
@@ -252,12 +328,9 @@ export function AdminRequestsPageClient({
             <div className="flex min-h-[320px] items-center justify-center text-sm text-zinc-500">
               Select a request to review the detail surface.
             </div>
-          ) : kind === "project" && projectDetailQuery.isLoading ? (
-            <div className="flex min-h-[320px] items-center justify-center text-sm text-zinc-500">
-              <LoaderCircleIcon className="mr-2 size-4 animate-spin" />
-              Loading request detail…
-            </div>
-          ) : kind === "change" && changeDetailQuery.isLoading ? (
+          ) : (kind === "project" && projectDetailQuery.isLoading) ||
+            (kind === "change" && changeDetailQuery.isLoading) ||
+            (kind === "guest" && guestDetailQuery.isLoading) ? (
             <div className="flex min-h-[320px] items-center justify-center text-sm text-zinc-500">
               <LoaderCircleIcon className="mr-2 size-4 animate-spin" />
               Loading request detail…
@@ -274,7 +347,8 @@ export function AdminRequestsPageClient({
                   </div>
                   <h2 className="mt-2 text-2xl font-semibold text-zinc-950">{activeRequest.label}</h2>
                   <div className="mt-2 text-sm text-zinc-500">
-                    Submitted by {activeRequest.requestedByName ?? activeRequest.requestedByEmail ?? "Unknown member"}
+                    Submitted by {activeRequest.requestedByName ?? activeRequest.requestedByEmail ?? "Unknown contact"}
+                    {activeRequest.requestedByEmail ? ` • ${activeRequest.requestedByEmail}` : ""}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -315,7 +389,7 @@ export function AdminRequestsPageClient({
                           </div>
                         </div>
                         <Button
-                          onClick={() => void handleOpenAttachment(attachment.assetId)}
+                          onClick={() => void handleOpenAttachment(attachment)}
                           size="sm"
                           type="button"
                           variant="outline"
@@ -334,7 +408,8 @@ export function AdminRequestsPageClient({
                   disabled={
                     activeRequest.status !== "pending" ||
                     reviewProjectRequest.isPending ||
-                    reviewChangeRequest.isPending
+                    reviewChangeRequest.isPending ||
+                    reviewGuestIntake.isPending
                   }
                   onClick={() => void handleReview("approved")}
                   type="button"
@@ -346,7 +421,8 @@ export function AdminRequestsPageClient({
                   disabled={
                     activeRequest.status !== "pending" ||
                     reviewProjectRequest.isPending ||
-                    reviewChangeRequest.isPending
+                    reviewChangeRequest.isPending ||
+                    reviewGuestIntake.isPending
                   }
                   onClick={() => void handleReview("rejected")}
                   type="button"

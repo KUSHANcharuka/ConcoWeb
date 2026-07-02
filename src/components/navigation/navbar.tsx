@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, MessageCircle, X } from "lucide-react"
+import { ChevronDown, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SolutionsMenu } from "./solutions-menu"
 import { PartnersMenu } from "./partners-menu"
@@ -165,15 +165,11 @@ export function Navbar() {
             {/* Actions */}
             <div className="hidden lg:flex items-center gap-3">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 asChild
-                className="text-muted-foreground hover:text-foreground"
               >
-                <Link href="/contact">
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Contact
-                </Link>
+                <Link href="/client-portal/access">Client Portal</Link>
               </Button>
               <Button asChild>
                 <Link href="/demo">Request a Demo</Link>
@@ -260,16 +256,15 @@ export function Navbar() {
                 <div className="pt-4 space-y-2">
                   <Button
                     variant="outline"
-                    className="w-full justify-start"
+                    className="w-full"
                     asChild
                   >
-                    <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      Contact
+                    <Link href="/client-portal/access" onClick={() => setIsMobileMenuOpen(false)}>
+                      Client Portal
                     </Link>
                   </Button>
                   <Button asChild className="w-full">
-                    <Link href="/demo">Request a Demo</Link>
+                    <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>Request a Demo</Link>
                   </Button>
                 </div>
               </div>

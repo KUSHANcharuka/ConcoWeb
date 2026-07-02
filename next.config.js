@@ -33,6 +33,14 @@ const config = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/client-portal/access",
+        destination: "/portal-access",
+      },
+    ];
+  },
 };
 
 export default config;

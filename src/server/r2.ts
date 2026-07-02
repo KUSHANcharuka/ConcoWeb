@@ -118,6 +118,13 @@ export function buildPaymentMethodImageObjectKey(assetId: string, fileName: stri
   return `settings/payment-methods/${assetId}-${sanitizeFileName(fileName)}`;
 }
 
+export function buildGuestPortalIntakeAttachmentObjectKey(input: {
+  attachmentId: string;
+  fileName: string;
+}) {
+  return `guest-portal/intake/${input.attachmentId}-${sanitizeFileName(input.fileName)}`;
+}
+
 export function buildBillingTemplateObjectKey(templateId: string, fileName: string) {
   return `settings/payment-templates/${templateId}/${sanitizeFileName(fileName)}`;
 }

@@ -3,6 +3,7 @@ export * from "./client-invitations";
 export * from "./client-memberships";
 export * from "./clients";
 export * from "./emails";
+export * from "./guest-portal-intakes";
 export * from "./users";
 export * from "./products";
 export * from "./projects";

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 const isClientPortalRoute = createRouteMatcher(["/client-portal(.*)"]);
+const isClientPortalPublicRoute = createRouteMatcher(["/client-portal/access(.*)"]);
 const isClientPortalNoAccessRoute = createRouteMatcher(["/client-portal/no-access"]);
 const isAuthRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
 const isPublicApiRoute = createRouteMatcher(["/api/webhooks/(.*)", "/api/cron/(.*)"]);
@@ -24,6 +25,7 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   if (isClientPortalRoute(req)) {
+    if (isClientPortalPublicRoute(req)) return;
     const { userId, orgId, redirectToSignIn } = await auth();
     if (!userId) return redirectToSignIn({ returnBackUrl: req.url });
     if (!isClientPortalNoAccessRoute(req) && !orgId) {

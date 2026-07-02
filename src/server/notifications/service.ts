@@ -123,6 +123,16 @@ function defaultNotificationCopy(input: {
         title: "Change request updated",
         body: `${requestLabel} was ${status}.`,
       };
+    case "guest_portal_intake.submitted":
+      return {
+        title: "New guest onboarding request",
+        body: `${String(input.payload.company ?? "A company")} submitted a guest onboarding request.`,
+      };
+    case "guest_portal_intake.reviewed":
+      return {
+        title: "Guest onboarding updated",
+        body: `${String(input.payload.company ?? "Guest onboarding")} was ${status}.`,
+      };
     case "payment.proof_submitted":
       return {
         title: "Payment proof submitted",

@@ -1312,3 +1312,51 @@ export async function sendRequestNotificationEmail(
     errorMessage: "errorMessage" in result ? result.errorMessage : undefined,
   };
 }
+
+export async function sendGuestPortalIntakeNotificationEmail(
+  db: Database,
+  input: {
+    intakeId: string;
+    name: string;
+    email: string;
+    company: string;
+    summary: string;
+  },
+) {
+  const recipient = "info@concolabs.com";
+  const subject = `New client portal guest onboarding: ${input.company}`;
+  const heading = "New client portal guest onboarding";
+  const body = [
+    `${input.name} from ${input.company} submitted a guest onboarding request via the client portal access page.`,
+    `Email: ${input.email}`,
+    "",
+    input.summary,
+    "",
+    "Review it in the admin requests workspace.",
+  ].join("\n");
+
+  const source = await createDraftSourceFromSettings(db, { heading, body });
+  source.subject = subject;
+  const rendered = await renderEmailSource(source);
+
+  const result = await deliverEmail(db, {
+    templateType: "general_outreach",
+    subject,
+    renderedHtml: rendered.html,
+    renderedText: rendered.text,
+    recipients: [
+      {
+        recipientMode: "external",
+        email: recipient,
+        name: recipient,
+      },
+    ],
+  });
+
+  return {
+    intakeId: input.intakeId,
+    sentEmailId: result.sentEmailId,
+    status: result.status,
+    errorMessage: "errorMessage" in result ? result.errorMessage : undefined,
+  };
+}
