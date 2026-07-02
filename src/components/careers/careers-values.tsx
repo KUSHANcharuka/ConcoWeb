@@ -60,7 +60,7 @@ export function CareersValues() {
                   >
                     <img
                       src={v.image}
-                      alt={v.title}
+                      alt={`Illustration representing the Concolabs construction software team value: ${v.title}`}
                       className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] object-contain dark:invert dark:mix-blend-screen transition-all select-none pointer-events-none"
                     />
                   </div>

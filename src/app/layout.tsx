@@ -1,14 +1,11 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ClerkProvider } from "@clerk/nextjs";
 
-import { ChatWidget } from "@/components/ui/chat-widget";
-import { Toaster } from "@/components/ui/sonner";
-import { UploadProgressProvider } from "~/components/upload/upload-progress-provider";
 import { TRPCReactProvider } from "~/trpc/react";
+import { ChatWidget } from "~/components/ui/chat-widget";
 
 export const metadata: Metadata = {
   title: "Concolabs | Construction Software Solutions",
@@ -30,35 +27,16 @@ export const metadata: Metadata = {
   },
 };
 
-const geistSans = Geist({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-instrument-serif",
-});
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} bg-background`}>
-        <body className="font-sans antialiased">
+      <html lang="en" suppressHydrationWarning className="bg-background">
+        <body suppressHydrationWarning className="font-sans antialiased">
           <TRPCReactProvider>
-            <UploadProgressProvider>
-              {children}
-              <Toaster richColors />
-              <ChatWidget />
-            </UploadProgressProvider>
+            {children}
+            <ChatWidget />
           </TRPCReactProvider>
           {process.env.NODE_ENV === "production" && <Analytics />}
         </body>

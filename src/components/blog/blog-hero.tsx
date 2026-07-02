@@ -94,7 +94,7 @@ export function BlogHero({ featuredPosts }: BlogHeroProps) {
                 <div className="flex items-center gap-3 pt-6 border-t border-zinc-100 dark:border-zinc-900">
                   <img
                     src={activePost.avatar}
-                    alt={activePost.author}
+                    alt={`${activePost.author}, author of Concolabs construction technology insights`}
                     className="w-10 h-10 rounded-full object-cover border border-zinc-200 dark:border-zinc-800"
                   />
                   <div className="flex flex-col sm:flex-row sm:items-center sm:gap-x-2 text-sm font-sans">
@@ -111,7 +111,7 @@ export function BlogHero({ featuredPosts }: BlogHeroProps) {
                 <Link href={`/resources/blog/${activePost.slug}`} className="block relative aspect-[2/1] overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900 group">
                   <img
                     src={activePost.image}
-                    alt={activePost.title}
+                    alt={`Concolabs construction software featured article cover: ${activePost.title}`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </Link>

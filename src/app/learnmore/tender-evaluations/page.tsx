@@ -218,7 +218,7 @@ export default function TenderEvaluationsPage() {
 
                 <motion.h1
                   variants={fadeInUp}
-                  className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep"
+                  className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep"
                 >
                   Tender Evaluations
                 </motion.h1>
@@ -423,7 +423,7 @@ export default function TenderEvaluationsPage() {
       <VideoLightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        videoUrl="https://www.youtube.com/watch?v=1u8_royKFEE"
+        videoUrl="/videos/Tender%20Evaluations/Concolabs%20Tender%20Evaluation%20Explainer-h264.mp4"
       />
 
       {/* ─── PROBLEM SECTION ─── */}
@@ -632,9 +632,7 @@ export default function TenderEvaluationsPage() {
                 className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
               >
                 <a
-                  href="/pricing"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/#"
                 >
                   Buy Products <ArrowRight />
                 </a>
@@ -712,7 +710,7 @@ export default function TenderEvaluationsPage() {
             "High friction for small subcontractor trades",
           ],
           metric: { value: "FRICTION", label: "SUPPLIER" },
-          button: { text: "Other Tools", href: "https://chat.openai.com" },
+          button: { text: "Other Tools", href: "#" },
         }}
       />
 

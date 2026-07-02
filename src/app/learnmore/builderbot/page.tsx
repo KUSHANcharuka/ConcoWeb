@@ -217,7 +217,7 @@ export default function BuilderbotPage() {
                     "Ask contract question in natural language",
                     "Upload 3D model + contract together",
                     "Get clause-referenced answer in seconds",
-                    "Answer validated against UNSW research (accuracy above ChatGPT)",
+                    "Answer validated against UNSW research (90%+ accuracy)",
                     "Question resolved in minutes, not days",
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-4 bg-zinc-50/40 dark:bg-zinc-900/40 p-4 rounded-2xl border border-zinc-200/50 dark:border-zinc-800/50">
@@ -369,7 +369,7 @@ export default function BuilderbotPage() {
             "No integration with 3D models",
           ],
           metric: { value: "DAYS", label: "TIME" },
-          button: { text: "Traditional Route", href: "/pricing" },
+          button: { text: "Traditional Route", href: "#" },
         }}
         card2={{
           title: "BuilderBot",
@@ -393,7 +393,7 @@ export default function BuilderbotPage() {
             "No verification or legal validation",
           ],
           metric: { value: "UNRELIABLE", label: "FAST /" },
-          button: { text: "Other Tools", href: "https://chat.openai.com" },
+          button: { text: "Other Tools", href: "#" },
         }}
       />
 
@@ -425,7 +425,7 @@ export default function BuilderbotPage() {
               <div className="text-4xl font-bold text-zinc-900 dark:text-white mb-2">$20<span className="text-lg text-zinc-550 font-medium">/month</span></div>
               <p className="text-sm text-zinc-500 mb-6 flex-1">Single user (includes 10 projects). Enterprise plan available at $250/month for unlimited projects and users.</p>
               <Button asChild className="w-full rounded-2xl py-6 font-bold shadow-lg bg-lime text-black hover:bg-lime/90 cursor-pointer mt-auto border-0">
-                <a href="/pricing">
+                <a href="/#">
                   Buy Products →
                 </a>
               </Button>
@@ -502,27 +502,27 @@ export default function BuilderbotPage() {
             {[
               {
                 q: "Is BuilderBot.ai a replacement for lawyers?",
-                a: "No. It is a research tool that speeds up contract analysis. Lawyers still make final decisions. The tool answers questions quickly so lawyers can focus on strategy rather than research."
+                a: "No. BuilderBot.ai accelerates the research: it finds the relevant clauses, cross-references the model and the project record, and drafts a referenced answer in seconds. Final legal judgment stays with your team. It removes the days of manual searching, not the lawyer."
               },
               {
                 q: "What contracts does it support?",
-                a: "Trained on FIDIC, NEC, JCT, and common regional variants. Can be trained on custom contracts (requires sample contracts and case history)."
+                a: "BuilderBot.ai is trained on FIDIC and also reads NEC, JCT, and bespoke contracts you upload. Load the contract PDFs into a project workspace and the engine references clauses from whichever contract governs that project."
               },
               {
                 q: "How accurate is it?",
-                a: "UNSW research shows accuracy of 90%+ on FIDIC clauses when compared to expert interpretation. Always review final answers before relying on them for disputes."
+                a: "In validation by UNSW against human expert interpretation, BuilderBot.ai returned correct, clause-referenced answers in over 90% of test cases, outperforming general-purpose AI on tabular FIDIC content. Every answer carries the exact clause reference so your team can verify it in one click."
               },
               {
                 q: "Can it handle multiple jurisdictions?",
-                a: "Yes. If your contract has jurisdiction-specific clauses (e.g., UAE labour law, Australian site safety), the tool references applicable law."
+                a: "Yes. Because answers are grounded in the specific contract and standard form you upload, BuilderBot.ai works across jurisdictions. For region-specific statutory questions, it flags where local law should be confirmed by a qualified professional."
               },
               {
                 q: "Is document confidentiality maintained?",
-                a: "Yes. All documents are encrypted. No data is shared or used to train models on other projects. You own all project data."
+                a: "Yes. Each project sits in its own secure workspace, documents are encrypted in transit and at rest, and your contract data is never used to train shared models. A full audit trail records every query and document access."
               },
               {
                 q: "Can it predict dispute outcomes?",
-                a: "No. It answers questions about what the contract says. Outcomes depend on arbitrator judgment, not the contract text alone."
+                a: "No. BuilderBot.ai tells you what the contract says and what your project record shows, with references. It does not predict how an arbitrator or court will rule. It gives your team a faster, evidenced foundation to build that judgment on."
               }
             ].map((faq, idx) => (
               <div
@@ -631,13 +631,12 @@ export default function BuilderbotPage() {
               </div>
 
               <div className="relative w-full aspect-video rounded-[1.5rem] bg-black overflow-hidden border border-zinc-800 flex items-center justify-center group shadow-inner">
-                <iframe
-                  src="https://drive.google.com/file/d/1yJ1Oyo0hs1QDQ39ezYd87Cqyz-OO0awJ/preview"
-                  className="w-full h-full border-0"
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                  title="BuilderBot.ai Demo Video"
-                ></iframe>
+                <video
+                  src="/videos/BuilderBot.ai/Builderbot%20whatsapp%20integration%20(Kushan%20can%20you%20add%20this%20to%20the%20builderbot%20video)-h264.mp4"
+                  autoPlay
+                  controls
+                  className="w-full h-full"
+                />
               </div>
             </motion.div>
           </motion.div>

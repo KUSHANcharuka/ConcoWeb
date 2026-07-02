@@ -153,22 +153,24 @@ export default function ComparisonGrid({
         <div className="flex flex-col items-center">
           {renderMetric(card.metric)}
           
-          {card.button.href.startsWith("http") ? (
-            <a
-              href={card.button.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`w-full max-w-[200px] py-3 text-center font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 rounded-sm ${buttonStyles}`}
-            >
-              {card.button.text}
-            </a>
-          ) : (
-            <Link
-              href={card.button.href}
-              className={`w-full max-w-[200px] py-3 text-center font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 rounded-sm ${buttonStyles}`}
-            >
-              {card.button.text}
-            </Link>
+          {isRecommended && (
+            card.button.href.startsWith("http") ? (
+              <a
+                href={card.button.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-full max-w-[200px] py-3 text-center font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 rounded-sm ${buttonStyles}`}
+              >
+                {card.button.text}
+              </a>
+            ) : (
+              <Link
+                href={card.button.href}
+                className={`w-full max-w-[200px] py-3 text-center font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 rounded-sm ${buttonStyles}`}
+              >
+                {card.button.text}
+              </Link>
+            )
           )}
         </div>
       </motion.div>

@@ -155,13 +155,11 @@ export default function MeasureonairPage() {
   };
 
   const beforeBullets = [
-    "Take printed plans to site",
-    "Annotate measurements by hand",
-    "Back in office, type into Excel manually",
-    "Calculate the certified quantity",
-    "Produce payment application manually",
-    "Cross-reference drawings (multiple windows)",
-    "2–3 days per valuation, high error rate",
+    "Engineer walks the site carrying rolled paper drawings",
+    "Dimensions and quantities marked by hand in pen on the plans",
+    "Two days spent back in the office re-typing records into Excel",
+    "Certified quantities cannot be traced back to a spot on the drawing",
+    "Tolerance and holdback checks done manually, so errors slip through",
   ];
 
   const afterBullets = [
@@ -413,7 +411,7 @@ export default function MeasureonairPage() {
       <VideoLightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        videoUrl="https://www.youtube.com/watch?v=1u8_royKFEE"
+        videoUrl="/videos/BuildMonitor%20Mobile%20App/BuildMonitor%20Mobile%20App.mp4"
       />
 
       {/* ─── PROBLEM SECTION ─── */}
@@ -475,7 +473,7 @@ export default function MeasureonairPage() {
               <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
                 <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Pricing Model</span>
                 <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">USD 200<span className="text-sm font-normal text-zinc-455">/month</span></p>
-                <p className="text-xs text-zinc-505">Billed monthly per enterprise, covering unlimited active projects and users.</p>
+                <p className="text-xs text-zinc-505">USD 200/month per company, covering unlimited active projects and users on one company-wide licence.</p>
               </div>
               <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
                 <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Enterprise Add-on</span>
@@ -515,9 +513,7 @@ export default function MeasureonairPage() {
                 className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-[#FFEF1A] text-black hover:bg-[#FFEF1A]/90 cursor-pointer mt-8"
               >
                 <a
-                  href="/pricing"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/#"
                 >
                   Buy Products <ArrowRight />
                 </a>
@@ -571,7 +567,7 @@ export default function MeasureonairPage() {
             "Contract maximum boundaries checked by hand",
           ],
           metric: { value: "DAYS", label: "TIMELINE" },
-          button: { text: "Traditional Route", href: "https://calendar.app.google/mCq7zBhXrDnEAJvB7" },
+          button: { text: "Traditional Route", href: "#" },
         }}
         card2={{
           title: "MeasureonAir",
@@ -595,7 +591,7 @@ export default function MeasureonairPage() {
             "Excel format exports only",
           ],
           metric: { value: "PARTIAL", label: "AUTOMATION" },
-          button: { text: "Other Tools", href: "https://chat.openai.com" },
+          button: { text: "Other Tools", href: "#" },
         }}
       />
 
@@ -1222,7 +1218,7 @@ function VideoMockupPlayer({ onPlayClick }: { onPlayClick: () => void }) {
               autoPlay
               loop
               preload="metadata"
-              src="/videos/hand-drawn-to-autocad/hero-bg.mp4"
+              src="/videos/MeasureonAir/Measureonair-h264.mp4"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-16 h-16 rounded-full bg-black/60 border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">

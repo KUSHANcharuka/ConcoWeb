@@ -32,7 +32,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
       <Link href={`/resources/blog/${post.slug}`} className="block w-full sm:w-[220px] md:w-[260px] aspect-[16/10] rounded-lg overflow-hidden flex-shrink-0 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/40 dark:border-zinc-800/40">
         <img
           src={post.image}
-          alt={post.title}
+          alt={`Concolabs construction software insight article cover: ${post.title}`}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 select-none pointer-events-none"
         />
       </Link>

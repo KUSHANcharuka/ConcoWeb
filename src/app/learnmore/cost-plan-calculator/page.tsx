@@ -30,7 +30,9 @@ import {
   Minus,
   Layers,
   Sparkles,
-  HelpCircle
+  HelpCircle,
+  Maximize,
+  Minimize,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
@@ -40,6 +42,39 @@ export default function CostPlanCalculatorPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const videoSectionRef = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoAreaRef = useRef<HTMLDivElement>(null);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      videoAreaRef.current?.requestFullscreen().catch((err) => {
+        console.error("Error going fullscreen:", err);
+      });
+    } else {
+      document.exitFullscreen().catch(() => { });
+    }
+  };
+
+  // Listen to fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement !== null);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
+  // Exit fullscreen on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => { });
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToVideo = useCallback(() => {
     videoSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -131,7 +166,7 @@ export default function CostPlanCalculatorPage() {
             transition={{ duration: 0.8 }}
             className="space-y-4"
           >
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.05] uppercase product-title-sweep">
               Cost Plan Calculator
             </h1>
             <p className="text-xl sm:text-2xl text-zinc-650 dark:text-zinc-300 font-medium max-w-2xl mx-auto leading-relaxed">
@@ -283,7 +318,7 @@ export default function CostPlanCalculatorPage() {
               The Friction
             </span>
             <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-955 dark:text-white leading-[1.1] uppercase">
-              Realize Your Ideas
+              The cost planning bottleneck
             </h2>
             <div className="w-16 h-1 bg-lime rounded-full" />
             <div className="text-zinc-650 dark:text-zinc-400 text-sm sm:text-base leading-relaxed space-y-4">
@@ -512,15 +547,7 @@ export default function CostPlanCalculatorPage() {
             </div>
 
             <div className="space-y-6 pt-2">
-              <a
-                href="https://drive.google.com/drive/folders/1C8KTwemod1FyxAuZr7jefJLqbs1LCn2L?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-white hover:text-white/80 font-bold uppercase tracking-wider text-sm group transition-colors cursor-pointer"
-              >
-                Open Demo Walkthrough in Google Drive
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
+
 
               {/* Autoplay Active Indicator */}
               <div className="flex items-center gap-2 bg-zinc-900/60 border border-zinc-800 rounded-full py-1.5 px-3 w-fit text-[11px] text-zinc-450">
@@ -541,13 +568,18 @@ export default function CostPlanCalculatorPage() {
 
           {/* Right Column: Premium Glass-Bordered Mockup Player */}
           <div className="lg:col-span-7 w-full">
-            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border border-zinc-800 bg-zinc-900 group">
+            <div
+              ref={videoAreaRef}
+              onDoubleClick={toggleFullscreen}
+              className="relative rounded-[2rem] overflow-hidden shadow-2xl border border-zinc-800 bg-zinc-900 group cursor-pointer select-none"
+            >
               {/* Decorative green glow inside the border on hover */}
               <div className="absolute -inset-1 bg-gradient-to-r from-lime/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2rem]" />
 
               <div className="relative rounded-[2rem] overflow-hidden bg-black aspect-video flex items-center justify-center">
                 <video
-                  src="/videos/check_video_exact_interface_an.mp4"
+                  ref={videoRef}
+                  src="/videos/Cost%20Plan%20Calculator%20%2B%20Financial%20Management/CostsPrediction.mp4"
                   autoPlay
                   loop
                   muted
@@ -555,30 +587,45 @@ export default function CostPlanCalculatorPage() {
                   className="w-full h-full object-cover"
                 />
 
-                {/* Custom Video Control Overlay */}
-                <div className="absolute bottom-4 left-4 right-4 bg-zinc-950/80 backdrop-blur-md px-4 py-3 rounded-2xl border border-zinc-850/80 flex items-center justify-between z-20 opacity-90 hover:opacity-100 transition-opacity">
-                  {/* Left Controls */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-lime flex items-center justify-center">
-                      <Play className="w-3 h-3 text-black fill-black ml-0.5" />
-                    </div>
-                    <span className="text-[11px] font-mono text-zinc-300">00:00 / 00:54</span>
-                  </div>
+                {/* Fullscreen Close Button */}
+                {isFullscreen && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFullscreen();
+                    }}
+                    className="absolute top-6 right-6 z-50 p-3 bg-zinc-900/80 border border-zinc-700 hover:bg-zinc-800 text-white rounded-full transition-colors cursor-pointer shadow-lg"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
 
-                  {/* Center Control: Progress Bar */}
-                  <div className="flex-1 mx-4 relative h-1 bg-zinc-850 rounded-full overflow-hidden">
-                    <div className="absolute top-0 left-0 h-full w-[45%] bg-lime animate-pulse" />
-                  </div>
-
-                  {/* Right Controls */}
-                  <div className="flex items-center gap-3">
-                    <span className="px-1.5 py-0.5 text-[9px] font-bold bg-zinc-800 text-zinc-350 rounded border border-zinc-700 font-mono tracking-wider">
-                      HD
-                    </span>
-                    <svg className="w-4 h-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                    </svg>
-                  </div>
+                {/* Hover HUD Controls */}
+                <div
+                  className="absolute bottom-4 right-4 z-30 flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    onClick={() => {
+                      if (videoRef.current) {
+                        if (videoRef.current.paused) {
+                          videoRef.current.play();
+                        } else {
+                          videoRef.current.pause();
+                        }
+                      }
+                    }}
+                    className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <Play className="w-4 h-4 fill-current" />
+                  </button>
+                  <div className="h-4 w-[1px] bg-zinc-800" />
+                  <button
+                    onClick={toggleFullscreen}
+                    className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                  </button>
                 </div>
               </div>
             </div>
@@ -680,9 +727,7 @@ export default function CostPlanCalculatorPage() {
                 className="w-full rounded-2xl py-6 font-bold shadow-md bg-lime text-black hover:bg-lime/90 border-0 mt-8 cursor-pointer"
               >
                 <a
-                  href="/pricing"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/#"
                 >
                   Buy Products <ArrowUpRight />
                 </a>
@@ -745,7 +790,7 @@ export default function CostPlanCalculatorPage() {
             "Not integrated with project tracking",
           ],
           metric: { value: "1-2", label: "DAYS" },
-          button: { text: "Traditional Route", href: "/pricing" },
+          button: { text: "Traditional Route", href: "/#" },
         }}
         card2={{
           title: "Cost Plan",
@@ -769,7 +814,7 @@ export default function CostPlanCalculatorPage() {
             "Time spent building vs. delivering",
           ],
           metric: { value: "UNRELIABLE", label: "FAST /" },
-          button: { text: "Other Tools", href: "https://chat.openai.com" },
+          button: { text: "Other Tools", href: "#" },
         }}
       />
 

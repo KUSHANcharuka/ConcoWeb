@@ -82,9 +82,16 @@ export function VideoLightbox({ isOpen, onClose, videoUrl }: VideoLightboxProps)
               <X className="w-5 h-5" />
             </button>
 
-            {/* Video Iframe container */}
+            {/* Video container */}
             <div className="w-full h-full">
-              {embedUrl ? (
+              {videoUrl.endsWith(".mp4") ? (
+                <video
+                  src={videoUrl}
+                  controls
+                  autoPlay
+                  className="w-full h-full"
+                />
+              ) : embedUrl ? (
                 <iframe
                   src={embedUrl}
                   title="Concolabs Demo Video"

@@ -15,11 +15,18 @@ export const metadata: Metadata = {
   ],
 }
 
-export default function PricingPage() {
+export default async function PricingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const params = await searchParams
+  const product = typeof params.product === "string" ? params.product : undefined
+
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      <PricingClient />
+      <PricingClient preselectedProduct={product} />
       <Footer />
     </main>
   )

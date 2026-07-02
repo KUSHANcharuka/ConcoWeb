@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import concoLogoSign from "@/Images/Conco Logo Sign.png";
 import {
   FileText,
   PencilRuler,
@@ -179,74 +181,7 @@ export const circleCoords = [
   { cx: 720, cy: 180 },  // BuildMarketlk.com
 ];
 
-// Center Concolabs logo
-function ConcolabsLogoIcon({ className = "w-8 h-8" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 100 100"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="4.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {/* Left Tower */}
-      <path
-        d="M 25 80 L 25 35 L 43 35 L 43 80"
-        className="text-lime stroke-current"
-      />
-      {/* Middle Tower */}
-      <path
-        d="M 49 80 L 49 20 L 67 20 L 67 80"
-        className="text-lime stroke-current"
-      />
-      {/* Right Tower */}
-      <path
-        d="M 73 80 L 73 10 L 91 10 L 91 80"
-        className="text-lime stroke-current"
-      />
-
-      {/* Slanted foundation circuit lines at the bottom */}
-      <path
-        d="M 15 85 L 50 60"
-        className="text-lime stroke-current"
-        strokeWidth="3.2"
-      />
-      <circle
-        cx="15"
-        cy="85"
-        r="3"
-        className="fill-lime text-lime"
-      />
-      <circle
-        cx="50"
-        cy="60"
-        r="3"
-        className="fill-lime text-lime"
-      />
-
-      <path
-        d="M 30 95 L 75 62"
-        className="text-lime stroke-current"
-        strokeWidth="3.2"
-      />
-      <circle
-        cx="30"
-        cy="95"
-        r="3"
-        className="fill-lime text-lime"
-      />
-      <circle
-        cx="75"
-        cy="62"
-        r="3"
-        className="fill-lime text-lime"
-      />
-    </svg>
-  );
-}
-
+// Center Concolabs sign
 function ConcolabsCenterLogo({
   className = "w-14 h-14",
 }: {
@@ -254,9 +189,18 @@ function ConcolabsCenterLogo({
 }) {
   return (
     <div
-      className={`rounded-[28px] bg-zinc-950 flex items-center justify-center p-5 shadow-2xl border border-zinc-800 ring-4 ring-zinc-900/50 ${className}`}
+      className={`rounded-[28px] bg-zinc-950 flex items-center justify-center p-3 shadow-2xl border border-zinc-800 ring-4 ring-zinc-900/50 ${className}`}
     >
-      <ConcolabsLogoIcon className="w-8 h-8" />
+      <div className="relative w-full h-full">
+        <Image
+          src={concoLogoSign}
+          alt="Concolabs Sign"
+          fill
+          sizes="(max-width: 768px) 56px, 64px"
+          className="object-contain scale-[1.85] translate-y-[4.5%]"
+          priority
+        />
+      </div>
     </div>
   );
 }

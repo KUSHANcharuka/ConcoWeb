@@ -113,7 +113,7 @@ export function LeaderProfileModal({ isOpen, onClose, leader }: LeaderProfileMod
               <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full border-4 border-white/30 dark:border-zinc-700/50 bg-zinc-200/20 overflow-hidden shrink-0 shadow-lg relative">
                 <img
                   src={leader.image}
-                  alt={leader.name}
+                  alt={`${leader.name}, Concolabs leadership team member`}
                   className="w-full h-full object-cover"
                 />
               </div>

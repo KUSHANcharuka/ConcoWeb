@@ -26,6 +26,8 @@ import {
   Calendar,
   FileSpreadsheet,
   ArrowUpRight,
+  Maximize,
+  Minimize,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
@@ -243,10 +245,41 @@ export default function RevitToBOQPage() {
   const [activeTab, setActiveTab] = useState<"before" | "after">("after");
   const [autoToggleKey, setAutoToggleKey] = useState(0);
   const [heroVideoActive, setHeroVideoActive] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoAreaRef = useRef<HTMLDivElement>(null);
 
   const stopHeroVideo = useCallback(() => {
     setHeroVideoActive(false);
   }, []);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement !== null);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      videoAreaRef.current?.requestFullscreen().catch((err) => {
+        console.error("Error going fullscreen:", err);
+      });
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  };
 
   useEffect(() => {
     if (heroVideoActive) {
@@ -312,17 +345,66 @@ export default function RevitToBOQPage() {
               transition={{ duration: 0.5, ease: "easeInOut" }}
               className="absolute inset-0 z-40 bg-zinc-950 flex items-center justify-center"
             >
-              <video
-                src="/videos/word2bim_video_3.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/10 pointer-events-none" />
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900/90 backdrop-blur-md border border-zinc-800 text-[10px] text-zinc-400 font-extrabold tracking-widest px-4 py-2.5 rounded-full pointer-events-none select-none z-50 uppercase">
-                Click or scroll anywhere to exit demo
+              <div
+                ref={videoAreaRef}
+                onDoubleClick={toggleFullscreen}
+                className="absolute inset-0 z-50 cursor-pointer select-none"
+              >
+                <video
+                  ref={videoRef}
+                  src="/videos/Quanto%20for%20Revit/Quanto_%20Revit%20to%20BOQ%20Automation_1080p%20(1)-h264.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+
+                {/* Fullscreen Close Button */}
+                {isFullscreen && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFullscreen();
+                    }}
+                    className="absolute top-6 right-6 z-50 p-3 bg-zinc-900/80 border border-zinc-700 hover:bg-zinc-800 text-white rounded-full transition-colors cursor-pointer shadow-lg"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                )}
+
+                {/* Hover HUD Controls */}
+                <div
+                  className="absolute bottom-4 right-4 z-30 flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    onClick={() => {
+                      if (videoRef.current) {
+                        if (videoRef.current.paused) {
+                          videoRef.current.play();
+                        } else {
+                          videoRef.current.pause();
+                        }
+                      }
+                    }}
+                    className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <Play className="w-4 h-4 fill-current" />
+                  </button>
+                  <div className="h-4 w-[1px] bg-zinc-800" />
+                  <button
+                    onClick={toggleFullscreen}
+                    className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                  </button>
+                </div>
+
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900/90 backdrop-blur-md border border-zinc-800 text-[10px] text-zinc-400 font-extrabold tracking-widest px-4 py-2.5 rounded-full pointer-events-none select-none z-40 uppercase">
+                  Scroll anywhere to exit
+                </div>
               </div>
             </motion.div>
           )}
@@ -408,134 +490,124 @@ export default function RevitToBOQPage() {
                 FAST EXTRACT, FASTER ESTIMATION
               </h4>
             </div>
-          </div>
-
-          {/* 3-Column Floating Card Deck */}
-          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-6 relative z-10 pb-16">
-
-            {/* Left Column: Floating Globe Card */}
-            <div className="lg:col-span-4 space-y-6">
+            {/* Centered Full-Width Card for Automatic Quantity Takeoff */}
+            <div className="max-w-2xl mx-auto w-full px-6 relative z-10 pb-16">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="bg-white/50 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 p-6 rounded-[2.5rem] shadow-xl space-y-5"
+                className="bg-white/50 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 p-8 rounded-[2.5rem] shadow-xl space-y-6 flex flex-col items-center text-center hover:scale-[1.01] transition-transform duration-300"
               >
-                <GlowingDigitalGlobe className="w-28 h-28 text-emerald-500" />
-                <div className="space-y-2 text-left">
-                  <h3 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tight">
+                <div className="space-y-3 w-full">
+                  <h3 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">
                     Automatic Quantity Takeoff
                   </h3>
-                  <p className="text-xs text-zinc-650 dark:text-zinc-450 leading-relaxed font-medium">
+                  <p className="text-sm text-zinc-650 dark:text-zinc-450 leading-relaxed font-medium max-w-md mx-auto">
                     Concolabs extracts dimensions directly from RVT model schedules. Fast, secure, and completely error-free.
                   </p>
                 </div>
-              </motion.div>
-            </div>
 
-            {/* Right Column: Workflow Compare Switcher Card */}
-            <div className="lg:col-span-8 space-y-6">
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="relative bg-white/50 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/50 dark:border-zinc-800/50 rounded-[2.5rem] p-6 shadow-xl"
-              >
-                <div className="flex items-center justify-between mb-4 border-b border-zinc-200/60 dark:border-zinc-800/60 pb-3">
-                  <h3 className="font-extrabold text-xs tracking-wider uppercase text-zinc-900 dark:text-white">
-                    Compare Workflows
-                  </h3>
-                  <div className="relative flex bg-zinc-200/60 dark:bg-zinc-950 p-0.5 rounded-xl w-36 justify-between border border-zinc-200/30 dark:border-zinc-800/30">
-                    <button
-                      onClick={() => handleTabClick("before")}
-                      className={`relative z-10 w-[50%] py-0.5 text-[10px] font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "before"
-                        ? "text-zinc-900 dark:text-white"
-                        : "text-zinc-500"
+                <div className="w-full border-t border-zinc-200/50 dark:border-zinc-800/50 pt-6">
+                  <div className="flex items-center justify-between mb-6 pb-2">
+                    <h4 className="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-550 uppercase">
+                      Compare Workflows
+                    </h4>
+                    <div className="relative flex bg-zinc-150/80 dark:bg-zinc-950/80 p-1 rounded-xl w-48 justify-between border border-zinc-200/50 dark:border-zinc-850/50">
+                      <button
+                        onClick={() => handleTabClick("before")}
+                        className={`relative z-10 w-24 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
+                          activeTab === "before" ? "text-zinc-900 dark:text-white" : "text-zinc-400"
                         }`}
-                    >
-                      Before
-                    </button>
-                    <button
-                      onClick={() => handleTabClick("after")}
-                      className={`relative z-10 w-[50%] py-0.5 text-[10px] font-bold rounded-lg transition-colors cursor-pointer ${activeTab === "after"
-                        ? "text-zinc-900 dark:text-white"
-                        : "text-zinc-500"
+                      >
+                        Before
+                      </button>
+                      <button
+                        onClick={() => handleTabClick("after")}
+                        className={`relative z-10 w-24 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
+                          activeTab === "after" ? "text-zinc-900 dark:text-white" : "text-zinc-400"
                         }`}
-                    >
-                      After
-                    </button>
+                      >
+                        After
+                      </button>
+                      <motion.div
+                        layoutId="revit-toggle-pill"
+                        className="absolute top-1 bottom-1 bg-white dark:bg-zinc-850 shadow-sm border border-zinc-200 dark:border-zinc-700 rounded-lg"
+                        animate={{ left: activeTab === "before" ? 4 : 92, width: 92 }}
+                        transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                      />
+                    </div>
+                  </div>
 
-                    <motion.div
-                      layout
-                      className="absolute top-0.5 bottom-0.5 bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-850 rounded-lg"
-                      style={{ width: "calc(50% - 2px)" }}
-                      animate={{
-                        left:
-                          activeTab === "before" ? 2 : "calc(100% / 2 + 2px)",
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 380,
-                        damping: 26,
-                      }}
-                    />
+                  <div className="min-h-[220px] flex flex-col justify-center text-left w-full">
+                    <AnimatePresence mode="wait">
+                      {activeTab === "before" ? (
+                        <motion.div
+                          key="before"
+                          initial={{ opacity: 0, x: -15 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 15 }}
+                          transition={{ duration: 0.2 }}
+                          className="space-y-4"
+                        >
+                          <div className="text-xs font-bold text-red-500 uppercase tracking-wider">
+                            Manual Revit Isolates & Excel
+                          </div>
+                          <ul className="space-y-3">
+                            <li className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
+                              <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                              <span>Manually classify Revit model objects</span>
+                            </li>
+                            <li className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
+                              <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                              <span>Export dimensions manually to Excel sheets</span>
+                            </li>
+                            <li className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
+                              <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                              <span>Look up price rate cards by hand in Excel files</span>
+                            </li>
+                            <li className="flex gap-3 text-zinc-900 dark:text-zinc-100 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50 font-bold">
+                              <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                              <span>Takes 2–3 weeks to build priced BOQ</span>
+                            </li>
+                          </ul>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="after"
+                          initial={{ opacity: 0, x: 15 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -15 }}
+                          transition={{ duration: 0.2 }}
+                          className="space-y-4"
+                        >
+                          <div className="text-xs font-bold text-emerald-500 uppercase tracking-wider">
+                            Revit to BOQ AI Plugin
+                          </div>
+                          <ul className="space-y-3">
+                            <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
+                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                              <span>Automated component identification to SMM7/POMI</span>
+                            </li>
+                            <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
+                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                              <span>Deep learning model predicts local rate cards</span>
+                            </li>
+                            <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
+                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                              <span>Native Revit schedule extraction in real-time</span>
+                            </li>
+                            <li className="flex gap-3 text-zinc-900 dark:text-zinc-100 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50 font-bold">
+                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                              <span>Completed in hours instead of weeks</span>
+                            </li>
+                          </ul>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
-
-                <div className="min-h-[110px] flex flex-col justify-center text-left">
-                  <AnimatePresence mode="wait">
-                    {activeTab === "before" ? (
-                      <motion.div
-                        key="before"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 10 }}
-                        transition={{ duration: 0.15 }}
-                        className="space-y-2"
-                      >
-                        <div className="text-[9px] font-bold text-red-500 uppercase tracking-wider">
-                          Manual Measuring
-                        </div>
-                        <ul className="space-y-1">
-                          <li className="flex gap-2 text-zinc-500 dark:text-zinc-400 text-[11px] font-medium">
-                            <X className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
-                            <span>QS isolates elements visually in the Revit model.</span>
-                          </li>
-                          <li className="flex gap-2 text-zinc-500 dark:text-zinc-400 text-[11px] font-medium">
-                            <X className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
-                            <span>Rules applied manually line by line.</span>
-                          </li>
-                        </ul>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="after"
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
-                        transition={{ duration: 0.15 }}
-                        className="space-y-2"
-                      >
-                        <div className="text-[9px] font-bold text-emerald-500 uppercase tracking-wider">
-                          Revit to BOQ Plugin
-                        </div>
-                        <ul className="space-y-1">
-                          <li className="flex gap-2 text-zinc-650 dark:text-zinc-350 text-[11px] font-medium">
-                            <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Identifies all elements directly from Revit files.</span>
-                          </li>
-                          <li className="flex gap-2 text-zinc-650 dark:text-zinc-350 text-[11px] font-medium">
-                            <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>AI predicts and applies rates automatically.</span>
-                          </li>
-                        </ul>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
               </motion.div>
-            </div>
-          </div>
+            </div>        </div>
         </motion.div>
       </section>
 
@@ -557,16 +629,7 @@ export default function RevitToBOQPage() {
             <p className="text-zinc-650 dark:text-zinc-400 text-sm sm:text-base leading-relaxed">
               Concolabs Revit to BOQ Plugin helps QS teams automate element matching across 150+ element families quickly, securely, and without manual takeoff errors. By mapping concrete volumes, steel weights, and wall areas directly to standard rules of measurement (POMI/SMM7), you deliver reliable baseline schedules on day one.
             </p>
-            <div className="pt-2">
-              <Button
-                asChild
-                className="rounded-2xl px-6 py-5 font-bold shadow-md cursor-pointer border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800 transition-transform hover:scale-105"
-              >
-                <Link href="/learnmore/cost-plan-calculator">
-                  Explore Feasibility Feeds →
-                </Link>
-              </Button>
-            </div>
+
           </div>
 
           {/* Right Column: Portrait Card Mockup with floating badges */}
@@ -606,20 +669,7 @@ export default function RevitToBOQPage() {
               </div>
             </motion.div>
 
-            {/* Floating Badge 2: Bottom Right */}
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-8 right-4 sm:right-12 z-20 bg-zinc-950/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-zinc-800 shadow-xl flex items-center gap-2.5 text-white"
-            >
-              <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold text-xs">
-                $
-              </div>
-              <div className="text-left font-mono">
-                <span className="text-[8px] text-zinc-400 block uppercase tracking-wider">Predicted Rate</span>
-                <span className="text-xs font-bold text-emerald-400">$1,250 / m³</span>
-              </div>
-            </motion.div>
+
           </div>
         </div>
       </section>
@@ -635,12 +685,12 @@ export default function RevitToBOQPage() {
               <span className="text-xs font-bold text-zinc-450 dark:text-zinc-555 uppercase tracking-widest block mb-2">Deployment</span>
               <h2 className="text-3xl sm:text-4xl font-bold text-zinc-950 dark:text-zinc-50">Pricing &amp; Availability</h2>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
               <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
                 <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Monthly Subscription</span>
                 <p className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white">USD 1,000<span className="text-sm font-normal text-zinc-455">/mo</span></p>
-                <p className="text-xs text-zinc-500">Includes core Revit plugin features and rate prediction module with customizations.</p>
+                <p className="text-xs text-zinc-500">Includes core plugin features and the rate prediction module. Customisations are quoted separately.</p>
               </div>
               <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl space-y-3 shadow-sm">
                 <span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Enterprise Add-on</span>
@@ -680,9 +730,7 @@ export default function RevitToBOQPage() {
                 className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
               >
                 <a
-                  href="/pricing"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/#"
                 >
                   Buy Products →
                 </a>
@@ -733,7 +781,7 @@ export default function RevitToBOQPage() {
             "2–3 weeks to build priced BOQ",
             "Manually classifying Revit model objects",
             "Prone to missing complex structural joints",
-            "Price rate cards looked up by hand in Excel files",
+            "Rates looked up and applied manually",
           ],
           metric: { value: "WEEKS", label: "TIMELINE" },
           button: { text: "Traditional Route", href: "https://calendar.app.google/mCq7zBhXrDnEAJvB7" },
@@ -760,7 +808,7 @@ export default function RevitToBOQPage() {
             "Only partial process automation",
           ],
           metric: { value: "PARTIAL", label: "AUTOMATION" },
-          button: { text: "Other Tools", href: "https://chat.openai.com" },
+          button: { text: "Other Tools", href: "#" },
         }}
       />
 

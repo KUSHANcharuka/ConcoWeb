@@ -2,7 +2,10 @@
 
 import { useRef, useEffect } from "react";
 import Link from "next/link";
-import { Twitter, Linkedin, Github, Youtube } from "lucide-react";
+import Image from "next/image";
+import { Twitter, Linkedin, Github, Youtube, Facebook, Mail } from "lucide-react";
+import concoLogo from "@/Images/Conco Logo.png";
+import nameConcolabs from "@/Images/Name_Concolabs.png";
 
 const footerLinks = {
   solutions: {
@@ -31,7 +34,7 @@ const footerLinks = {
       { label: "About Us", href: "/about" },
       { label: "Careers", href: "/careers" },
       { label: "Contact", href: "/contact" },
-      { label: "Partners", href: "/partners" },
+      { label: "Partners", href: "/partner" },
     ],
   },
   legal: {
@@ -46,16 +49,16 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Twitter, href: "https://twitter.com/concolabs", label: "Twitter" },
-  { icon: Linkedin, href: "https://linkedin.com/company/concolabs", label: "LinkedIn" },
-  { icon: Github, href: "https://github.com/concolabs", label: "GitHub" },
-  { icon: Youtube, href: "https://youtube.com/concolabs", label: "YouTube" },
+  { icon: Mail, href: "mailto:it@concolabs.com", label: "Email" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/concolabs", label: "LinkedIn" },
+  { icon: Github, href: "https://github.com/concolabs-com", label: "GitHub" },
+  { icon: Youtube, href: "https://www.youtube.com/@ConcolabsInc", label: "YouTube" },
 ];
 
 // ── High-performance brand watermark text ──
 function BrandWatermark() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const spanRef = useRef<HTMLSpanElement>(null);
+  const spanRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -100,28 +103,24 @@ function BrandWatermark() {
     <div
       ref={containerRef}
       aria-hidden="true"
-      className="absolute inset-x-0 bottom-0 flex items-end justify-center pointer-events-none select-none"
-      style={{ zIndex: 0, height: "100%", overflow: "hidden", paddingBottom: "1rem" }}
+      className="absolute inset-x-0 bottom-0 pointer-events-none select-none"
+      style={{ zIndex: 0, height: "100%", overflow: "hidden" }}
     >
-      <span
-        ref={spanRef}
-        style={{
-          fontSize: "clamp(4.5rem, 17vw, 19rem)",
-          fontFamily: "'Inter', system-ui, sans-serif",
-          fontWeight: 900,
-          letterSpacing: "-0.04em",
-          lineHeight: 0.9,
-          color: "#111111",
-          whiteSpace: "nowrap",
-          transformOrigin: "center bottom",
-          willChange: "transform, opacity",
-          // Start invisible; JS sets the real values after mount
-          opacity: 0,
-          transform: "translateY(80px) scale(0.4)",
-        }}
-      >
-        CONCOLABS
-      </span>
+      <div className="absolute inset-x-0 bottom-12 flex items-center justify-center h-20 md:h-36">
+        <Image
+          ref={spanRef}
+          src={nameConcolabs}
+          alt="CONCOLABS"
+          className="w-[85vw] max-w-[1200px] h-auto object-contain"
+          priority
+          style={{
+            transformOrigin: "center bottom",
+            willChange: "transform, opacity",
+            opacity: 0,
+            transform: "translateY(80px) scale(0.4)",
+          }}
+        />
+      </div>
     </div>
   );
 }
@@ -137,15 +136,18 @@ export function Footer() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 pb-10">
 
         {/* Top grid */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-x-8 gap-y-10 mb-12">
 
           {/* Brand column */}
-          <div className="col-span-2 md:col-span-2 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">C</span>
-              </div>
-              <span className="text-xl font-semibold text-zinc-900">Concolabs</span>
+          <div className="col-span-1 sm:col-span-2 md:col-span-2 space-y-4">
+            <Link href="/" className="inline-flex items-center">
+              <Image
+                src={concoLogo}
+                alt="Concolabs Logo"
+                height={48}
+                className="h-12 w-auto object-contain"
+                priority
+              />
             </Link>
 
             <p className="text-sm text-zinc-500 max-w-xs leading-relaxed">
@@ -211,30 +213,18 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-zinc-150 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <Link href="/privacy" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
-              Privacy Policy
-            </Link>
-            <Link href="/terms" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
-              Terms of Service
-            </Link>
-            <Link href="/cookies" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors duration-200">
-              Cookie Policy
-            </Link>
-            <div className="flex items-center gap-2 text-sm text-zinc-500">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              All systems operational
-            </div>
-          </div>
-          <p className="text-xs text-zinc-400">
-            &copy; {new Date().getFullYear()} Concolabs, Inc. All rights reserved.
-          </p>
-        </div>
+        {/* Bottom bar divider */}
+        <div className="border-t border-zinc-150" />
 
-        {/* Spacer so watermark text has room below the content */}
-        <div className="h-28 md:h-40" />
+        {/* Spacer so the CONCOLABS watermark has room on all screen sizes */}
+        <div className="h-20 md:h-36" />
+      </div>
+
+      {/* Copyright — absolutely pinned to the very bottom of the footer, above watermark */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 flex justify-center pb-5">
+        <p className="text-xs text-zinc-400">
+          &copy; {new Date().getFullYear()} Concolabs, Inc. All rights reserved.
+        </p>
       </div>
     </footer>
   );

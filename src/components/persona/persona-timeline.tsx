@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { Play, Calendar, CheckCircle2, ChevronRight, ShieldCheck, ArrowRight } from "lucide-react"
+import { CheckCircle2, ArrowRight, ExternalLink, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import type { PersonaData, Product } from "@/lib/persona-data"
+import type { PersonaData } from "@/lib/persona-data"
+import Link from "next/link"
 import { VideoLightbox } from "./video-lightbox"
 
 interface PersonaTimelineProps {
@@ -118,123 +118,112 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
                   {/* Stage Product Cards list */}
                   <div className="space-y-6">
                     {stage.products.map((product) => (
-                      <div 
+                      <Link
                         key={product.id}
-                        className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-xs hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
+                        href={`/learnmore/${product.id}`}
+                        className="block bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 sm:p-8 shadow-xs hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 group/card cursor-pointer"
                       >
-                        {/* Left Side (55%) */}
-                        <div className="md:col-span-7 space-y-4">
-                          <div>
-                            <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
-                              {product.title}
-                            </h3>
-                            <p className="text-[13px] text-zinc-500 italic mt-0.5 leading-relaxed">
-                              {product.painPoint}
-                            </p>
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                          {/* Left Side */}
+                          <div className="md:col-span-7 space-y-4">
+                            <div>
+                              <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
+                                {product.title}
+                                <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover/card:opacity-100 group-hover/card:translate-x-0 transition-all duration-200 text-zinc-400" />
+                              </h3>
+                              <p className="text-[13px] text-zinc-500 italic mt-0.5 leading-relaxed">
+                                {product.painPoint}
+                              </p>
+                            </div>
+
+                            {/* Feature Bullets */}
+                            <ul className="space-y-2">
+                              {product.features.map((feat, idx) => (
+                                <li key={idx} className="flex items-start gap-2 text-[13px] text-zinc-650 dark:text-zinc-400">
+                                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-500 shrink-0 mt-0.5" />
+                                  <span>{feat}</span>
+                                </li>
+                              ))}
+                            </ul>
+
+                            {/* Pill Badges (Target & Status) */}
+                            <div className="flex flex-wrap items-center gap-2 pt-1">
+                              <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200/50 dark:border-zinc-700/50">
+                                {product.targetMarket}
+                              </span>
+                              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${
+                                product.status === "Scaling" 
+                                  ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 border-emerald-200/50 dark:border-emerald-800/40" 
+                                  : "bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-400 border-blue-200/50 dark:border-blue-800/40"
+                              }`}>
+                                {product.status}
+                              </span>
+                            </div>
                           </div>
 
-                          {/* Feature Bullets */}
-                          <ul className="space-y-2">
-                            {product.features.map((feat, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-[13px] text-zinc-650 dark:text-zinc-400">
-                                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-500 shrink-0 mt-0.5" />
-                                <span>{feat}</span>
-                              </li>
-                            ))}
-                          </ul>
-
-                          {/* Pill Badges (Target & Status) */}
-                          <div className="flex flex-wrap items-center gap-2 pt-1">
-                            <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200/50 dark:border-zinc-700/50">
-                              {product.targetMarket}
-                            </span>
-                            <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${
-                              product.status === "Scaling" 
-                                ? "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 border-emerald-200/50 dark:border-emerald-800/40" 
-                                : "bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-400 border-blue-200/50 dark:border-blue-800/40"
-                            }`}>
-                              {product.status}
-                            </span>
-                          </div>
-
-                        </div>
-
-                        {/* Right Side (45%) */}
-                        <div className="md:col-span-5 flex flex-col gap-4">
-                          {/* Video Thumbnail (Opens Modal or Booking Link) */}
-                          {product.requestDemoOnly ? (
-                            <a
-                              href={bookingUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="relative aspect-video rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden flex items-center justify-center group shadow-inner cursor-pointer block"
-                            >
-                              {/* Abstract decorative video background overlay */}
-                              <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover:scale-[1.02] transition-transform duration-500" />
-                              
-                              <div className="relative z-10 flex flex-col items-center gap-1.5 text-center px-4">
-                                <span className="w-10 h-10 rounded-full bg-zinc-950/80 dark:bg-zinc-50/80 text-white dark:text-zinc-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                                  <Play className="w-4.5 h-4.5 fill-current" />
-                                </span>
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-                                  Request Demo
-                                </span>
-                              </div>
-                            </a>
-                          ) : (
-                            <button
-                              onClick={() => handleWatchDemo(product.videoUrl)}
-                              className="relative aspect-video rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden flex items-center justify-center group shadow-inner cursor-pointer block w-full text-left"
-                            >
-                              {/* Abstract decorative video background overlay */}
-                              <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover:scale-[1.02] transition-transform duration-500" />
-                              
-                              <div className="relative z-10 flex flex-col items-center gap-1.5 text-center px-4 mx-auto">
-                                <span className="w-10 h-10 rounded-full bg-zinc-950/80 dark:bg-zinc-50/80 text-white dark:text-zinc-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                                  <Play className="w-4.5 h-4.5 fill-current" />
-                                </span>
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-                                  Watch Product Demo
-                                </span>
-                              </div>
-                            </button>
-                          )}
-
-                          {/* CTA Actions */}
-                          <div className="grid grid-cols-2 gap-3">
+                          {/* Right Side — Video + CTAs */}
+                          <div className="md:col-span-5 flex flex-col gap-3">
+                            {/* Video Thumbnail */}
                             {product.requestDemoOnly ? (
-                              <Button
-                                asChild
-                                variant="outline"
-                                className="col-span-2 rounded-xl text-xs font-bold cursor-pointer"
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+                                }}
+                                className="relative aspect-video rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden flex items-center justify-center group/video shadow-inner cursor-pointer w-full"
                               >
-                                <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
-                                  Request a demo
-                                </a>
-                              </Button>
+                                <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover/video:scale-[1.02] transition-transform duration-500" />
+                                <div className="relative z-10 flex flex-col items-center gap-1.5 text-center px-4">
+                                  <span className="w-10 h-10 rounded-full bg-zinc-950/80 dark:bg-zinc-50/80 text-white dark:text-zinc-950 flex items-center justify-center shadow-lg group-hover/video:scale-110 transition-transform">
+                                    <Play className="w-4 h-4 fill-current" />
+                                  </span>
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                                    Request Demo
+                                  </span>
+                                </div>
+                              </button>
                             ) : (
-                              <>
-                                <Button
-                                  variant="outline"
-                                  onClick={() => handleWatchDemo(product.videoUrl)}
-                                  className="rounded-xl text-xs font-bold cursor-pointer"
-                                >
-                                  Watch demo
-                                </Button>
-                                <Button
-                                  asChild
-                                  className="rounded-xl text-xs font-bold cursor-pointer bg-primary text-black hover:bg-primary/90"
-                                >
-                                  <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
-                                    Book a demo →
-                                  </a>
-                                </Button>
-                              </>
+                              <button
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleWatchDemo(product.videoUrl) }}
+                                className="relative aspect-video rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden flex items-center justify-center group/video shadow-inner cursor-pointer w-full text-left"
+                              >
+                                <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover/video:scale-[1.02] transition-transform duration-500" />
+                                <div className="relative z-10 flex flex-col items-center gap-1.5 text-center px-4">
+                                  <span className="w-10 h-10 rounded-full bg-zinc-950/80 dark:bg-zinc-50/80 text-white dark:text-zinc-950 flex items-center justify-center shadow-lg group-hover/video:scale-110 transition-transform">
+                                    <Play className="w-4 h-4 fill-current" />
+                                  </span>
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                                    Watch Product Demo
+                                  </span>
+                                </div>
+                              </button>
                             )}
+
+                            {/* CTA Buttons */}
+                            <Button
+                              asChild
+                              className="rounded-xl text-xs font-bold cursor-pointer bg-primary text-black hover:bg-primary/90 w-full"
+                            >
+                              <span className="flex items-center justify-center gap-1.5">
+                                <ExternalLink className="w-3.5 h-3.5" />
+                                Full Product Review
+                              </span>
+                            </Button>
+                            <Button
+                              variant="outline"
+                              className="rounded-xl text-xs font-bold cursor-pointer w-full"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.open(bookingUrl, '_blank', 'noopener,noreferrer');
+                              }}
+                            >
+                              Book a demo →
+                            </Button>
                           </div>
                         </div>
-
-                      </div>
+                      </Link>
                     ))}
                   </div>
 
@@ -322,8 +311,7 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
         </div>
       </div>
 
-      {/* Video Lightbox Portal Component */}
-      <VideoLightbox 
+      <VideoLightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
         videoUrl={activeVideoUrl}

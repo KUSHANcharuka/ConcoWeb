@@ -83,7 +83,7 @@ export function Productivity() {
             <div>
               <Button asChild>
                 <Link
-                  href="/pricing"
+                  href="/#"
                   className="inline-flex items-center gap-1.5 font-semibold group"
                 >
                   See pricing plans

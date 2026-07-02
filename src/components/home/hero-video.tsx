@@ -1,14 +1,15 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { Play } from "lucide-react"
+import { Play, Volume2, VolumeX } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function HeroVideo() {
   const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(true)
+  const [isMuted, setIsMuted] = useState(true)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -21,6 +22,7 @@ export function HeroVideo() {
   useEffect(() => {
     const video = videoRef.current
     if (video) {
+      video.muted = true
       video.play().catch(() => {
         setIsPlaying(false)
       })
@@ -40,30 +42,45 @@ export function HeroVideo() {
     }
   }
 
+  const handleSoundToggle = () => {
+    const video = videoRef.current
+    if (video) {
+      const nextMuted = !isMuted
+      video.muted = nextMuted
+      setIsMuted(nextMuted)
+    }
+  }
+
   return (
     <section ref={containerRef} className="relative px-6 pt-6 pb-16 sm:pt-10">
       <motion.div
         style={{ opacity, scale }}
         className="relative max-w-6xl mx-auto"
       >
-        {/* Video Container */}
         <div className="relative aspect-video rounded-2xl overflow-hidden bg-card border border-border shadow-2xl">
-          {/* Video Placeholder - using a construction stock video */}
           <video
             ref={videoRef}
+            src="/videos/Intro/Concolabs Suite Overview.mp4"
             autoPlay
             muted
             loop
             playsInline
-            poster="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80"
             className="w-full h-full object-cover"
+          />
+
+          <button
+            type="button"
+            onClick={handleSoundToggle}
+            className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/55 text-white shadow-lg backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            aria-label={isMuted ? "Turn sound on" : "Turn sound off"}
+            title={isMuted ? "Turn sound on" : "Turn sound off"}
           >
-            {/* Placeholder - replace with actual video */}
-            <source
-              src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
-              type="video/mp4"
-            />
-          </video>
+            {isMuted ? (
+              <VolumeX className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Volume2 className="h-5 w-5" aria-hidden="true" />
+            )}
+          </button>
 
           {/* Overlay */}
           {/* <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" /> */}
@@ -95,7 +112,7 @@ export function HeroVideo() {
 
           {/* Corner Accents */}
           <div className="absolute top-4 left-4 w-12 h-12 border-l-2 border-t-2 border-primary/50 rounded-tl-lg" />
-          <div className="absolute top-4 right-4 w-12 h-12 border-r-2 border-t-2 border-primary/50 rounded-tr-lg" />
+          <div className="absolute top-4 right-16 w-12 h-12 border-r-2 border-t-2 border-primary/50 rounded-tr-lg" />
           <div className="absolute bottom-4 left-4 w-12 h-12 border-l-2 border-b-2 border-primary/50 rounded-bl-lg" />
           <div className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-primary/50 rounded-br-lg" />
         </div>

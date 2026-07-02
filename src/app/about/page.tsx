@@ -76,9 +76,6 @@ const getMilestone = (nodeName: string, currentYear: number, currentMonth: strin
   }
 }
 
-
-
-
 export default function AboutUsPage() {
   const [activeLeader, setActiveLeader] = useState<Leader | null>(null)
   const isMobile = useIsMobile()
@@ -189,7 +186,7 @@ export default function AboutUsPage() {
   const isOfficesInView = useInView(officesRef, { once: true, margin: "-100px" })
 
   return (
-    <main className="min-h-screen bg-lime/10 pt-20">
+    <main className="min-h-screen bg-background pt-20">
       <Navbar />
 
       {/* Hero Section */}
@@ -211,7 +208,7 @@ export default function AboutUsPage() {
             />
           </video>
           {/* Dark overlay for readability */}
-          <div className="absolute inset-0 bg-lime/10 from-black/85 via-black/55 to-black/25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/25" />
         </div>
 
         <div className="max-w-6xl mx-auto w-full relative z-10">
@@ -219,15 +216,15 @@ export default function AboutUsPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-6 max-w-3xl text-zinc-600"
+            className="space-y-6 max-w-3xl"
           >
-            <h1 className="text-zinc-600 sm:text-zinc-600 md:text-zinc-600 font-bold tracking-tight text-white leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-tight">
               We free smart teams <br />
               <span className="text-white/70">
                 to build great things.
               </span>
             </h1>
-            <p className="text-zinc-600 sm:text-zinc-600 text-zinc-300 max-w-2xl leading-relaxed">
+            <p className="text-lg sm:text-xl text-zinc-300 max-w-2xl leading-relaxed">
               Concolabs is on a mission to eliminate administrative drag and busywork from construction operations, freeing field and office teams to focus on building.
             </p>
           </motion.div>
@@ -235,7 +232,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Eliminating Friction Section */}
-      <section ref={frictionRef} className="py-24 px-6 bg-lime/10">
+      <section ref={frictionRef} className="py-24 px-6 bg-zinc-50 dark:bg-zinc-900/30">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -243,17 +240,17 @@ export default function AboutUsPage() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-6 space-y-6"
           >
-            <h2 className="text-zinc-600 sm:text-zinc-600 md:text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50 text-zinc-600 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-955 dark:text-zinc-50 leading-tight">
               Concolabs unifies field operations, finance, and workflows
             </h2>
-            <div className="w-20 h-1 bg-lime/10 rounded-full" />
+            <div className="w-20 h-1 bg-lime rounded-full" />
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isFrictionInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-6 space-y-6 text-zinc-600 dark:text-zinc-400 leading-relaxed text-zinc-600 sm:text-zinc-600"
+            className="lg:col-span-6 space-y-6 text-zinc-600 dark:text-zinc-400 leading-relaxed text-base sm:text-lg"
           >
             <p>
               We believe that running a construction company shouldn&apos;t require shuffling through paper logs, chasing spreadsheet updates, or wrestling with disconnected software.
@@ -266,11 +263,11 @@ export default function AboutUsPage() {
       </section>
 
       {/* Interactive Journey Timeline Section */}
-      <section ref={journeyRef} className="py-24 px-6 bg-lime/10 dark:bg-zinc-950 overflow-hidden">
+      <section ref={journeyRef} className="py-24 px-6 bg-background dark:bg-zinc-955 overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <div className="text-zinc-600 mb-16 space-y-4">
-            <h2 className="text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Our Journey</h2>
-            <p className="text-zinc-600 text-zinc-500">How we are building the future of construction ops</p>
+          <div className="text-left mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Our Journey</h2>
+            <p className="text-sm text-muted-foreground">How we are building the future of construction ops</p>
           </div>
 
           <div className="relative bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-6 sm:p-12 shadow-sm">
@@ -291,7 +288,7 @@ export default function AboutUsPage() {
                 
                 {/* Animated fill line */}
                 <motion.div
-                  className="absolute h-1 bg-lime/10 top-1/2 -translate-y-1/2 z-0 origin-left"
+                  className="absolute h-1 bg-lime top-1/2 -translate-y-1/2 z-0 origin-left"
                   style={{ left: "-24px" }}
                   initial={{ width: "0%" }}
                   animate={{ width: fillPercentages[selectedYear] || "0%" }}
@@ -343,15 +340,15 @@ export default function AboutUsPage() {
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
                 >
                   <div className="lg:col-span-7 space-y-6">
-                    <h3 className="text-zinc-600 font-bold text-zinc-950 dark:text-zinc-50">
+                    <h3 className="text-2xl font-bold text-zinc-950 dark:text-zinc-50">
                       {getMilestone(selectedYear, currentYear, currentMonthName).title}
                     </h3>
-                    <p className="text-zinc-600 font-medium text-zinc-700 dark:text-zinc-300">
+                    <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
                       {getMilestone(selectedYear, currentYear, currentMonthName).description}
                     </p>
                     <ul className="space-y-3">
                       {getMilestone(selectedYear, currentYear, currentMonthName).details.map((detail, idx) => (
-                        <li key={idx} className="flex gap-3 text-zinc-600 dark:text-zinc-400 text-zinc-600 sm:text-zinc-600">
+                        <li key={idx} className="flex gap-3 text-zinc-600 dark:text-zinc-400 text-xs">
                           <ChevronRight className="w-5 h-5 text-lime shrink-0 mt-0.5" />
                           <span>{detail}</span>
                         </li>
@@ -360,11 +357,11 @@ export default function AboutUsPage() {
                   </div>
 
                   {getMilestone(selectedYear, currentYear, currentMonthName).stats && (
-                    <div className="lg:col-span-5 flex flex-col items-center justify-center p-8 bg-lime/10 dark:bg-zinc-950 rounded-2xl border border-zinc-200 dark:border-zinc-800">
-                      <span className="text-zinc-600 sm:text-zinc-600 font-black text-zinc-950 dark:text-zinc-50 tracking-tight">
+                    <div className="lg:col-span-5 flex flex-col items-center justify-center p-8 bg-[#F4F2F0] dark:bg-zinc-900/50 rounded-2xl border border-zinc-200 dark:border-zinc-800">
+                      <span className="text-4xl sm:text-5xl font-black text-zinc-955 dark:text-zinc-50 tracking-tight">
                         {getMilestone(selectedYear, currentYear, currentMonthName).stats?.value}
                       </span>
-                      <span className="text-zinc-600 font-semibold text-zinc-500 uppercase tracking-wider mt-2 text-zinc-600">
+                      <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-2 text-center">
                         {getMilestone(selectedYear, currentYear, currentMonthName).stats?.label}
                       </span>
                     </div>
@@ -377,11 +374,11 @@ export default function AboutUsPage() {
       </section>
 
       {/* Leadership Team Section */}
-      <section ref={teamRef} className="py-24 px-6 bg-lime/10">
+      <section ref={teamRef} className="py-24 px-6 bg-zinc-50 dark:bg-zinc-900/30">
         <div className="max-w-6xl mx-auto">
-          <div className="text-zinc-600 mb-16 space-y-4">
-            <h2 className="text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Meet our leadership team</h2>
-            <p className="text-zinc-600 text-zinc-500">Concolabs executives have helped grow the likes of Autodesk, Procore, and Salesforce.</p>
+          <div className="text-left mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Meet our leadership team</h2>
+            <p className="text-sm text-muted-foreground">Concolabs executives have helped grow the likes of Autodesk, Procore, and Salesforce.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -399,21 +396,21 @@ export default function AboutUsPage() {
                   <div className="relative w-full aspect-square overflow-hidden rounded-xl bg-zinc-200 dark:bg-zinc-800 mb-6 border border-zinc-200 dark:border-zinc-800 shadow-2xs">
                     <img
                       src={leader.image}
-                      alt={leader.name}
+                      alt={`Portrait of ${leader.name}, Concolabs construction software leadership team member`}
                       className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-103 transition-all duration-500"
                     />
                   </div>
-                  <h3 className="text-zinc-600 font-bold text-zinc-950 dark:text-zinc-50">{leader.name}</h3>
-                  <p className="text-zinc-600 font-semibold text-zinc-500 mt-0.5">{leader.role}</p>
-                  <p className="text-zinc-600 text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed">{leader.bio}</p>
+                  <h3 className="text-sm font-bold text-zinc-950 dark:text-zinc-50">{leader.name}</h3>
+                  <p className="text-xs font-semibold text-zinc-500 mt-0.5">{leader.role}</p>
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed">{leader.bio}</p>
                 </div>
-                <div className="mt-6 pt-4 border-lime/20 border-zinc-200 dark:border-zinc-800">
+                <div className="mt-6 pt-4 border-t border-zinc-250 dark:border-zinc-800">
                   <a
                     href={leader.linkedin}
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-zinc-955 dark:hover:text-zinc-50 transition-colors"
                   >
                     <Linkedin className="w-4 h-4" />
                     LinkedIn
@@ -426,11 +423,11 @@ export default function AboutUsPage() {
       </section>
 
       {/* Office Locations Section */}
-      <section ref={officesRef} className="py-24 px-6 bg-lime/10 dark:bg-zinc-950">
+      <section ref={officesRef} className="py-24 px-6 bg-background dark:bg-zinc-950">
         <div className="max-w-6xl mx-auto">
-          <div className="text-zinc-600 mb-16 space-y-4">
-            <h2 className="text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50">Where we work</h2>
-            <p className="text-zinc-600 text-zinc-500">Our offices span four continents, bringing together world-class talent.</p>
+          <div className="text-left mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-955 dark:text-zinc-50">Where we work</h2>
+            <p className="text-sm text-muted-foreground">Our offices span four continents, bringing together world-class talent.</p>
           </div>
 
           <motion.div
@@ -444,20 +441,20 @@ export default function AboutUsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-6 bg-lime/10 relative overflow-hidden">
+      <section className="py-24 px-6 bg-zinc-50 dark:bg-zinc-900/30 relative overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
-          <div className="w-[800px] h-[800px] bg-lime/10 rounded-full blur-3xl" />
+          <div className="w-[800px] h-[800px] bg-lime/20 rounded-full blur-3xl" />
         </div>
 
-        <div className="max-w-4xl mx-auto text-zinc-600 relative z-10 space-y-8">
-          <h2 className="text-zinc-600 sm:text-zinc-600 md:text-zinc-600 font-bold tracking-tight text-zinc-950 dark:text-zinc-50 text-zinc-600 leading-tight">
+        <div className="max-w-4xl mx-auto text-center relative z-10 space-y-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 leading-tight">
             Ready to make an impact?
           </h2>
-          <p className="text-zinc-600 sm:text-zinc-600 text-zinc-500 max-w-xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed">
             Join us to modernize finance and help every business thrive.
           </p>
           <div className="flex justify-center">
-            <Button asChild size="lg" className="bg-lime/10 text-black hover:bg-lime/10 px-8 py-6 rounded-xl font-bold shadow-md min-w-[200px]">
+            <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 rounded-xl font-bold shadow-md min-w-[200px]">
               <Link href="/careers">See open positions</Link>
             </Button>
           </div>

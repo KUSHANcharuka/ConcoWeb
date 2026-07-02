@@ -608,9 +608,7 @@ export default function BuildmonitorPage() {
                   className="w-full mt-8 rounded-xl py-6 font-bold bg-[#FFEF1A] text-black hover:bg-[#FFEF1A]/90 cursor-pointer shadow-md border-0 transition-colors duration-300"
                 >
                   <a
-                    href="/pricing"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/#"
                   >
                     Buy Products <ArrowRight className="w-4 h-4 ml-1 inline" />
                   </a>
@@ -630,9 +628,9 @@ export default function BuildmonitorPage() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/learnmore/erp-automations" className="hover:text-[#FFEF1A] dark:hover:text-[#FFEF1A] transition-colors flex items-center justify-between">
-                      <span>ERP Automations</span>
-                      <span className="text-[10px] font-medium text-zinc-400 bg-zinc-50 dark:bg-zinc-950 px-2 py-0.5 rounded border border-zinc-200/50 dark:border-zinc-800">Back-Office Sync</span>
+                    <Link href="/learnmore/tender-evaluations" className="hover:text-[#FFEF1A] dark:hover:text-[#FFEF1A] transition-colors flex items-center justify-between">
+                      <span>Tender Evaluations</span>
+                      <span className="text-[10px] font-medium text-zinc-400 bg-zinc-50 dark:bg-zinc-950 px-2 py-0.5 rounded border border-zinc-200/50 dark:border-zinc-800">Procurement</span>
                     </Link>
                   </li>
                   <li>
@@ -689,7 +687,7 @@ export default function BuildmonitorPage() {
             "Don't sync to ERP automatically",
             "Still require manual DPR writing",
           ],
-          metric: { value: "UNRELIABLE", label: "FAST /" },
+          metric: { value: "PARTIAL / MANUAL", label: "" },
           button: { text: "Other Apps", href: "#" },
         }}
       />
@@ -808,17 +806,16 @@ export default function BuildmonitorPage() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.5, y: 100, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="w-[320px] aspect-[9/19] bg-black border-[12px] border-zinc-200 dark:border-[#222] rounded-[3rem] shadow-2xl relative overflow-hidden"
+              className="w-full max-w-3xl aspect-[16/9] bg-black border-[12px] border-zinc-200 dark:border-[#222] rounded-[2.5rem] shadow-2xl relative overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* iPhone Notch */}
-              <div className="absolute top-0 inset-x-0 h-7 bg-zinc-200 dark:bg-[#222] rounded-b-[1.5rem] w-40 mx-auto z-20"></div>
-              {/* Embed Google Drive demo video preview on the screen */}
-              <iframe
-                src="https://drive.google.com/file/d/1bof_YpZZdzkxGAQEfGqYNdAASqSkiZ0p/preview?autoplay=1"
-                className="w-full h-full border-0 relative z-10"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
+              {/* Landscape Camera Notch (Dynamic Island) on the left */}
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-10 bg-zinc-350 dark:bg-[#333] rounded-full z-20"></div>
+              <video
+                src="/videos/BuildMonitor%20Mobile%20App/BuildMonitor%20Mobile%20App.mp4"
+                autoPlay
+                controls
+                className="w-full h-full object-contain relative z-10"
               />
             </motion.div>
           </motion.div>

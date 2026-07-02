@@ -20,6 +20,11 @@ import {
   Layers,
   Wrench,
   Scale,
+  ClipboardList,
+  MessageSquare,
+  Timer,
+  UserCheck,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CheckoutModal, type CheckoutProduct } from "./checkout-modal";
@@ -292,6 +297,26 @@ const PRODUCTS: Product[] = [
       "https://drive.google.com/drive/folders/1LjhYwDP6qtu6pAY0qc6H226xLNhB7z-L?usp=sharing",
     externalLink: "https://builderbot.ai",
   },
+  {
+    id: "prelim",
+    name: "Prelim",
+    category: "operations",
+    icon: ClipboardList,
+    description:
+      "Run your QS team from one platform: tasks, time, attendance, team chat and productivity benchmarking.",
+    priceType: "one-off",
+    basePrice: 3900,
+    maintenancePrice: 240, // USD 20/month = 240/year
+    pill: "QS Consultancies & Teams — Sri Lanka, ME, AU",
+    status: "Available",
+    features: [
+      "Task creation with structured IDs and designation-based assignment",
+      "Live timer or manual time entry with five-stage status workflow",
+      "Self-service attendance with check-in/out and leave approvals",
+      "Planned vs actual productivity benchmarking on every task",
+    ],
+    demoLink: "/learnmore/prelim",
+  },
 ];
 
 const FAQS = [
@@ -321,7 +346,7 @@ const FAQS = [
   },
 ];
 
-export function PricingClient() {
+export function PricingClient({ preselectedProduct }: { preselectedProduct?: string }) {
   const [activeTab, setActiveTab] = useState<
     "all" | "design" | "estimation" | "operations" | "legal"
   >("all");
@@ -330,7 +355,9 @@ export function PricingClient() {
   );
   const [seats, setSeats] = useState<number>(10);
   const [selectedProducts, setSelectedProducts] = useState<string[]>(
-    PRODUCTS.filter((p) => p.priceType !== "custom").map((p) => p.id), // Default selecting standard tools
+    preselectedProduct && PRODUCTS.some((p) => p.id === preselectedProduct)
+      ? [preselectedProduct]
+      : PRODUCTS.filter((p) => p.priceType !== "custom").map((p) => p.id), // Default selecting standard tools
   );
 
   // Checkout Modal State

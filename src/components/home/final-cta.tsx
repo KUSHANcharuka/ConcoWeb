@@ -5,6 +5,8 @@ import { motion, useInView } from "framer-motion"
 import { ArrowRight, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
+import concoLogoSign from "@/Images/Conco Logo Sign.png"
 
 export function FinalCTA() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -29,9 +31,18 @@ export function FinalCTA() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="w-20 h-20 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-8"
+          className="w-20 h-20 rounded-2xl bg-zinc-950 flex items-center justify-center mx-auto mb-8 overflow-hidden shadow-xl ring-1 ring-zinc-800/70 p-3"
         >
-          <span className="text-3xl font-bold text-black">C</span>
+          <div className="relative w-full h-full">
+            <Image
+              src={concoLogoSign}
+              alt="Concolabs Sign"
+              fill
+              sizes="56px"
+              className="object-contain scale-[1.85] translate-y-[4.5%]"
+              priority
+            />
+          </div>
         </motion.div>
 
         <motion.h2
@@ -50,7 +61,7 @@ export function FinalCTA() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
         >
-          Join the leading construction companies transforming their operations with Concolabs. 
+          Join the leading construction companies transforming their operations with Concolabs.
           Get started in minutes, not months.
         </motion.p>
 
@@ -67,7 +78,7 @@ export function FinalCTA() {
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg" className="h-14 px-8 text-base group">
-            <Link href="/pricing">
+            <Link href="/#">
               View Pricing
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>

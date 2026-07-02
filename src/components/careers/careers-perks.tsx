@@ -39,7 +39,7 @@ export function CareersPerks() {
   return (
     <section className="py-20 bg-white dark:bg-zinc-950 border-t border-zinc-200/50 dark:border-zinc-900/50">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 space-y-16">
-        
+
         {/* Header */}
         <div className="text-left border-b border-zinc-150 dark:border-zinc-900 pb-8 max-w-5xl mx-auto space-y-4">
           <h2 className="text-3xl md:text-5xl font-extrabold text-zinc-950 dark:text-zinc-50 font-sans tracking-tight">
@@ -64,7 +64,7 @@ export function CareersPerks() {
               >
                 <img
                   src={p.image}
-                  alt={p.title}
+                  alt={`Illustration representing the Concolabs construction technology career perk: ${p.title}`}
                   className="w-full max-w-[140px] sm:max-w-[160px] object-contain dark:invert dark:mix-blend-screen transition-all select-none pointer-events-none"
                 />
                 <div className="space-y-2 text-left">

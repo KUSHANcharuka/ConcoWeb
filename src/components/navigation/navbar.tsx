@@ -2,24 +2,30 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, X } from "lucide-react"
+import { ChevronDown, LogIn, MessageCircle, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SolutionsMenu } from "./solutions-menu"
+import { CustomersMenu } from "./customers-menu"
 import { PartnersMenu } from "./partners-menu"
 import { ResourcesMenu } from "./resources-menu"
 import { ChatModal } from "@/components/ui/chat-modal"
+import concoLogo from "@/Images/Conco Logo.png"
+
 
 const navItems = [
   { id: "solutions", label: "Solutions", hasDropdown: true },
-  { id: "customers", label: "Customers", hasDropdown: false, href: "/customers" },
+  { id: "customers", label: "Customers", hasDropdown: false, href: "/#" },
   { id: "partners", label: "Partners", hasDropdown: true },
   { id: "resources", label: "Resources", hasDropdown: true },
-  { id: "pricing", label: "Pricing", hasDropdown: false, href: "/pricing" },
+  { id: "pricing", label: "Pricing", hasDropdown: false, href: "/#" },
 ]
 
 const menuComponents: Record<string, React.FC> = {
   solutions: SolutionsMenu,
+  customers: CustomersMenu,
   partners: PartnersMenu,
   resources: ResourcesMenu,
 }
@@ -51,8 +57,15 @@ export function Navbar() {
   const [viewportHeight, setViewportHeight] = useState(0)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const measureRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    setExpandedMobileItem(null)
+  }, [pathname])
 
   const handleMouseEnter = (itemId: string) => {
     if (timeoutRef.current) {
@@ -120,12 +133,16 @@ export function Navbar() {
         <nav className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">C</span>
-              </div>
-              <span className="text-xl font-semibold text-foreground">Concolabs</span>
+            <Link href="/" className="flex items-center">
+              <Image
+                src={concoLogo}
+                alt="Concolabs Logo"
+                height={48}
+                className="h-12 w-auto object-contain"
+                priority
+              />
             </Link>
+
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
@@ -142,18 +159,16 @@ export function Navbar() {
                     <button
                       onMouseEnter={() => handleMouseEnter(item.id)}
                       onMouseLeave={handleMouseLeave}
-                      className={`inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
-                        activeMenu === item.id
-                          ? "text-foreground bg-secondary/50"
-                          : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-                      }`}
+                      className={`inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors rounded-lg ${activeMenu === item.id
+                        ? "text-foreground bg-secondary/50"
+                        : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                        }`}
                     >
                       {item.label}
                       {item.hasDropdown && (
                         <ChevronDown
-                          className={`w-4 h-4 transition-transform duration-200 ${
-                            activeMenu === item.id ? "rotate-180" : ""
-                          }`}
+                          className={`w-4 h-4 transition-transform duration-200 ${activeMenu === item.id ? "rotate-180" : ""
+                            }`}
                         />
                       )}
                     </button>
@@ -164,10 +179,18 @@ export function Navbar() {
 
             {/* Actions */}
             <div className="hidden lg:flex items-center gap-3">
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/client-portal/access">Client Portal</Link>
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Link href="/client-portal/access">
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Concolab Portal
+                </Link>
               </Button>
-              <Button size="sm" asChild>
+              <Button asChild>
                 <Link href="/demo">Request a Demo</Link>
               </Button>
             </div>
@@ -240,24 +263,73 @@ export function Navbar() {
             >
               <div className="px-6 py-4 space-y-2">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={item.href || `/${item.id}`}
-                    className="block px-4 py-3 text-foreground hover:bg-secondary/50 rounded-lg transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
+                  <div key={item.id} className="w-full">
+                    {item.hasDropdown ? (
+                      <>
+                        <button
+                          onClick={() =>
+                            setExpandedMobileItem(
+                              expandedMobileItem === item.id ? null : item.id
+                            )
+                          }
+                          className="w-full flex items-center justify-between px-4 py-3 text-foreground hover:bg-secondary/50 rounded-lg transition-colors font-medium text-left"
+                        >
+                          <span>{item.label}</span>
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform duration-200 ${expandedMobileItem === item.id ? "rotate-180" : ""
+                              }`}
+                          />
+                        </button>
+                        <AnimatePresence initial={false}>
+                          {expandedMobileItem === item.id && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.25, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <div className="px-4 py-3 bg-secondary/10 dark:bg-secondary/5 rounded-lg border border-border/20 my-1 space-y-1">
+                                {item.id === "solutions" && (
+                                  <SolutionsMenu />
+                                )}
+                                {item.id === "partners" && (
+                                  <PartnersMenu />
+                                )}
+                                {item.id === "resources" && (
+                                  <ResourcesMenu />
+                                )}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href || `/${item.id}`}
+                        className="block px-4 py-3 text-foreground hover:bg-secondary/50 rounded-lg transition-colors font-medium"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                  </div>
                 ))}
                 <div className="pt-4 space-y-2">
-                  <Button variant="outline" className="w-full" asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start"
+                    asChild
+                  >
                     <Link href="/client-portal/access" onClick={() => setIsMobileMenuOpen(false)}>
-                      Client Portal
+                      <LogIn className="w-4 h-4 mr-2" />
+                      Concolab Portal
                     </Link>
                   </Button>
                   <Button asChild className="w-full">
-                    <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>Request a Demo</Link>
+                    <Link href="/demo">Request a Demo</Link>
                   </Button>
+
                 </div>
               </div>
             </motion.div>

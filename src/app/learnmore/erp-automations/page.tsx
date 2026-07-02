@@ -696,7 +696,7 @@ export default function ERPAutomationsPage() {
                 asChild
                 className="w-full rounded-2xl py-7 font-bold shadow-lg bg-lime text-black hover:bg-lime/90 cursor-pointer border-0 mt-8"
               >
-                <a href="/pricing">
+                <a href="/#">
                   Buy Products →
                 </a>
               </Button>
@@ -751,7 +751,7 @@ export default function ERPAutomationsPage() {
                 "High administrative labor cost",
               ],
               metric: { value: "DAYS", label: "LAG TIME" },
-              button: { text: "Traditional Route", href: "/pricing" },
+              button: { text: "Traditional Route", href: "/#" },
             }}
             card2={{
               title: "ERP Automations",

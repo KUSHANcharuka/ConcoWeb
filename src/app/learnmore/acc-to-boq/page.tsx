@@ -147,7 +147,7 @@ export default function AccToBoqPage() {
               </p>
 
               <p className="text-base sm:text-lg text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-xl font-medium">
-                Your UK and Australian clients work in Autodesk Construction Cloud. Generate a BOQ natively from the cloud model — with automatic repricing when design changes. No export, no Excel, no re-entry.
+                Working in Autodesk Construction Cloud? Generate a BOQ natively from the cloud model, with automatic repricing when the design changes. No export, no Excel, no re-entry.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
@@ -228,26 +228,20 @@ export default function AccToBoqPage() {
                           BOQ from ACC (the manual way)
                         </div>
                         <ul className="space-y-3.5">
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                            <span>Download model data from ACC</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                            <span>Export to Excel</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                            <span>Manually apply measurement rules and rates</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                            <span>When design changes, start over completely</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                            <span>Takes 1–2 weeks per BOQ</span>
-                          </li>
+                          {[
+                            "Get model data: Export the ACC model out to Excel",
+                            "Measurement rules: Applied by hand, every time",
+                            "Rates: Typed in manually",
+                            "Design changes: Re-export, recalculate, re-price",
+                            "Version control: Many Excel files, no single truth",
+                            "Client visibility: Sees cost impact days later",
+                            "Time per BOQ: 1 to 2 weeks"
+                          ].map((item, i) => (
+                            <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-400 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
+                              <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
                         </ul>
                       </motion.div>
                     ) : (
@@ -263,26 +257,20 @@ export default function AccToBoqPage() {
                           ACC to BOQ
                         </div>
                         <ul className="space-y-3.5">
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Model changes in ACC</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Click &quot;Generate BOQ&quot; directly in cloud</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>BOQ updated with new costs automatically</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
-                            <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Repricing done instantly</span>
-                          </li>
-                          <li className="flex gap-3 text-zinc-900 dark:text-zinc-100 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50 font-bold">
-                            <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>Takes 5 minutes per BOQ</span>
-                          </li>
+                          {[
+                            "Get model data: BOQ generated natively from the cloud model, no export",
+                            "Measurement rules: Applied automatically to every element",
+                            "Rates: Your firm's standard rates applied automatically",
+                            "Design changes: BOQ reprices automatically on sync",
+                            "Version control: One cloud source of truth",
+                            "Client visibility: Sees cost impact in real time",
+                            "Time per BOQ: 5 minutes"
+                          ].map((item, i) => (
+                            <li key={i} className="flex gap-3 text-zinc-650 dark:text-zinc-355 text-sm items-start bg-white/40 dark:bg-zinc-800/40 p-3 rounded-xl border border-white/60 dark:border-zinc-700/50">
+                              <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
                         </ul>
                       </motion.div>
                     )}
@@ -303,16 +291,16 @@ export default function AccToBoqPage() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-zinc-950 dark:text-white mb-6 uppercase">
-              Cloud-first workflow.<br />
-              <span className="text-zinc-400 dark:text-zinc-600">Excel-bound BOQ.</span>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-zinc-955 dark:text-white mb-6 uppercase">
+              Your workflow is cloud-first.<br />
+              <span className="text-zinc-400 dark:text-zinc-600">Your BOQ isn't.</span>
             </h2>
-            <div className="space-y-6 text-zinc-550 dark:text-zinc-450 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto font-medium">
+            <div className="space-y-6 text-zinc-550 dark:text-zinc-455 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto font-medium">
               <p>
                 UK and Australian QS firms are moving to Autodesk Construction Cloud for cloud-native collaboration. But the BOQ still gets produced by exporting model data to Excel, manually applying measurement rules, and typing rates.
               </p>
               <p>
-                The workflow breaks at the most time-consuming step. When the design changes (and it always does), the cost consultant has to re-export, recalculate, and re-price, a process that takes days.
+                The workflow breaks at the most time-consuming step. When the design changes (and it always does), the cost consultant has to re-export, recalculate, and re-price, a process that takes 1 to 2 weeks.
               </p>
               <p className="font-bold text-zinc-900 dark:text-zinc-200">
                 ACC to BOQ builds the BOQ directly in the cloud, eliminating the export step entirely. When design changes, the BOQ reprices automatically.
@@ -342,11 +330,11 @@ export default function AccToBoqPage() {
             <div 
               ref={videoAreaRef}
               onDoubleClick={toggleFullscreen}
-              className="relative w-full aspect-video rounded-3xl border-2 border-red-500/85 shadow-[0_0_35px_rgba(239,68,68,0.12)] bg-black overflow-hidden group select-none cursor-pointer"
+              className="relative w-full aspect-video rounded-3xl border border-zinc-700/40 shadow-[0_0_35px_rgba(0,0,0,0.10)] bg-black overflow-hidden group select-none cursor-pointer"
             >
               <video
                 ref={videoRef}
-                src="/videos/MVP_Vid_1_202606081311.mp4"
+                src="/videos/Quanto%20for%20ACC/Quanto_%20Revit%20to%20BOQ%20Automation_1080p%20(1)-h264.mp4"
                 autoPlay
                 loop
                 muted
@@ -356,7 +344,7 @@ export default function AccToBoqPage() {
 
               {/* Blue color square overlay card for benefits */}
               <div 
-                className={`absolute left-8 top-8 bottom-8 w-[320px] bg-zinc-950/90 backdrop-blur-md rounded-2xl p-6 border-2 border-blue-500/85 shadow-[0_0_30px_rgba(59,130,246,0.18)] flex flex-col justify-between text-white z-20 transition-all duration-500 ${
+                className={`absolute left-8 top-8 bottom-8 w-[320px] bg-zinc-950/90 backdrop-blur-md rounded-2xl p-6 border border-lime/30 shadow-[0_0_30px_rgba(0,0,0,0.15)] flex flex-col justify-between text-white z-20 transition-all duration-500 ${
                   isFullscreen ? "opacity-0 scale-95 pointer-events-none" : "opacity-100 scale-100"
                 }`}
                 onClick={(e) => e.stopPropagation()}
@@ -365,7 +353,7 @@ export default function AccToBoqPage() {
                   <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">
                     Product Advantage
                   </span>
-                  <div className="h-[2px] bg-blue-500/50 w-12" />
+                  <div className="h-[2px] bg-lime/50 w-12" />
                 </div>
 
                 <div className="flex-1 flex flex-col justify-center">
@@ -395,7 +383,7 @@ export default function AccToBoqPage() {
                       key={i}
                       onClick={() => setActiveBenefit(i)}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
-                        i === activeBenefit ? "w-6 bg-blue-500" : "w-1.5 bg-zinc-700 hover:bg-zinc-500"
+                        i === activeBenefit ? "w-6 bg-lime" : "w-1.5 bg-zinc-700 hover:bg-zinc-500"
                       }`}
                     />
                   ))}
@@ -600,7 +588,7 @@ export default function AccToBoqPage() {
               <div className="sm:w-1/2 space-y-4">
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm text-zinc-650 dark:text-zinc-400">
-                    <Check className="w-4 h-4 text-emerald-500" /> Integration with Revit standards
+                    <Check className="w-4 h-4 text-emerald-500" /> Syncs Revit-authored models through Autodesk Construction Cloud
                   </li>
                   <li className="flex items-center gap-2 text-sm text-zinc-650 dark:text-zinc-400">
                     <Check className="w-4 h-4 text-emerald-500" /> 1–2 weeks implementation
@@ -649,7 +637,7 @@ export default function AccToBoqPage() {
                 asChild
                 className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
               >
-                <a href="/pricing" target="_blank" rel="noopener noreferrer">
+                <a href="/#">
                   Buy Products <ArrowUpRight />
                 </a>
               </Button>
@@ -758,7 +746,7 @@ export default function AccToBoqPage() {
             "Client sees proposals days later",
           ],
           metric: { value: "1-2", label: "WEEKS" },
-          button: { text: "Traditional Route", href: "/pricing" },
+          button: { text: "Traditional Route", href: "#" },
         }}
         card2={{
           title: "ACC to BOQ",
@@ -782,7 +770,7 @@ export default function AccToBoqPage() {
             "Do not eliminate export and re-entry",
           ],
           metric: { value: "UNRELIABLE", label: "FAST /" },
-          button: { text: "Other Tools", href: "https://chat.openai.com" },
+          button: { text: "Other Tools", href: "#" },
         }}
       />
 

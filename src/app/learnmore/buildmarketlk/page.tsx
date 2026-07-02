@@ -173,7 +173,7 @@ export default function BuildmarketlkPage() {
               asChild
               className="w-full sm:w-auto rounded-full px-8 py-7 text-lg font-bold shadow-xl cursor-pointer bg-primary text-primary-foreground border-0 hover:scale-105 transition-transform duration-300"
             >
-              <Link href="/pricing" className="flex items-center gap-2">
+              <Link href="/#" className="flex items-center gap-2">
                 Buy products <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
@@ -221,13 +221,9 @@ export default function BuildmarketlkPage() {
             <div className="relative p-1 bg-zinc-100 dark:bg-zinc-900/80 backdrop-blur-md rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center">
               {/* Sliding Background */}
               <motion.div
-                layout
+                animate={{ x: isAfterMode ? "100%" : "0%" }}
                 transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                className="absolute inset-y-1 left-1 rounded-full bg-lime"
-                style={{
-                  width: "calc(50% - 4px)",
-                  transform: isAfterMode ? "translateX(100%)" : "translateX(0%)"
-                }}
+                className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-full bg-lime"
               />
               <button
                 onClick={() => setIsAfterMode(false)}
@@ -376,11 +372,11 @@ export default function BuildmarketlkPage() {
 
         {/* Embedded Iframe Player from Google Drive */}
         <div className="relative w-full aspect-video bg-black rounded-[2.5rem] overflow-hidden border border-zinc-200 dark:border-zinc-900 shadow-2xl">
-          <iframe
-            src="https://drive.google.com/file/d/1SZPURCcouuLthXbbxqzcg7uSmoWpw2fQ/preview"
-            className="absolute inset-0 w-full h-full border-0"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            controls
+            preload="metadata"
+            src="/videos/BuildMarketlk.com/Buildmarketlk%20Video-h264.mp4"
           />
         </div>
       </section>
@@ -409,7 +405,7 @@ export default function BuildmarketlkPage() {
                   When a contractor needs to buy concrete, there is no quick way to compare prices across Colombo suppliers. When a consultant wants to benchmark labour rates, they call peers and hope the information is current.
                 </p>
                 <p className="text-zinc-950 dark:text-white font-medium text-left">
-                  The lack of transparency means projects are quoted without competitive context — clients can be overcharged, and suppliers don't compete on quality. BuildMarketlk.com brings the transparency of eBay or Amazon to Sri Lankan construction.
+                  The lack of transparency means projects are quoted without competitive context, clients can be overcharged, and suppliers don't compete on quality. BuildMarketlk.com brings the transparency of a modern online marketplace to Sri Lankan construction.
                 </p>
               </div>
             </div>
@@ -642,6 +638,9 @@ export default function BuildmarketlkPage() {
                       <span className="text-sm font-semibold text-zinc-950 dark:text-white">BuildMarketPK.com</span>
                     </div>
                   </div>
+                  <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-2">
+                    Example domains shown for illustration. Your licensed deployment runs on your own local domain.
+                  </p>
                 </div>
 
                 <div className="w-full md:w-64 aspect-square rounded-2xl border border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-900/30 flex flex-col items-center justify-center p-6 relative group overflow-hidden shrink-0">
@@ -799,7 +798,7 @@ export default function BuildmarketlkPage() {
                   asChild
                   className="w-full rounded-2xl py-6 font-bold bg-lime text-black hover:bg-lime/90 border-0 shadow-md"
                 >
-                  <Link href="/pricing" className="flex items-center justify-center gap-1.5">
+                  <Link href="/#" className="flex items-center justify-center gap-1.5">
                     Buy products <ArrowRight className="w-4 h-4" />
                   </Link>
                 </Button>
@@ -824,12 +823,12 @@ export default function BuildmarketlkPage() {
 
                 <div className="space-y-3 pt-4">
                   <Link
-                    href="/learnmore/erp-automations"
+                    href="/learnmore/revit-to-boq"
                     className="flex justify-between items-center p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-900 hover:border-lime/40 dark:hover:border-lime/30 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 group"
                   >
                     <div className="text-left">
-                      <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-zinc-955 dark:group-hover:text-white transition-colors block">ERP Automations</span>
-                      <span className="text-[10px] text-zinc-400 dark:text-zinc-550 mt-0.5 block">Procurement workflow fit</span>
+                      <span className="font-bold text-sm text-zinc-900 dark:text-white group-hover:text-zinc-955 dark:group-hover:text-white transition-colors block">Revit to BOQ</span>
+                      <span className="text-[10px] text-zinc-400 dark:text-zinc-550 mt-0.5 block">Estimation baseline</span>
                     </div>
                     <ArrowRight className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-955 dark:group-hover:text-white group-hover:translate-x-1 transition-all" />
                   </Link>
@@ -892,7 +891,7 @@ export default function BuildmarketlkPage() {
               asChild
               className="w-full sm:w-auto rounded-full px-10 py-8 text-xl font-bold shadow-xl cursor-pointer bg-primary text-primary-foreground border-0 hover:scale-105 transition-transform duration-300"
             >
-              <Link href="/pricing" className="flex items-center gap-2">
+              <Link href="/#" className="flex items-center gap-2">
                 Buy products <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>

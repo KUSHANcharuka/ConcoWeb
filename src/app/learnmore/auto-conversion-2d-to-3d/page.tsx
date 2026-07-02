@@ -770,11 +770,13 @@ export default function AutoConversion2Dto3DPage() {
       >
         {/* Cinematic Ambient Background Video with Glass overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#FAFAF8] dark:bg-zinc-950 pointer-events-none">
-          <iframe
-            src="https://drive.google.com/file/d/10a6IQ2YKLMWgCIn-HqG3iDM5bagnZWwc/preview?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0"
+          <video
+            src="/videos/Auto%20Conversion%202D%20to%203D/Auto%20Conversion%20from%202D%20to%203D_1080p-h264.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
             className="absolute top-1/2 left-1/2 w-[150%] h-[150%] -translate-x-1/2 -translate-y-1/2 scale-110 object-cover opacity-20 dark:opacity-30"
-            allow="autoplay; encrypted-media"
-            title="Ambient Hero Background Video"
           />
           {/* Glass Overlay Layer */}
           <div className="absolute inset-0 bg-white/50 dark:bg-zinc-950/65 backdrop-blur-[4px] z-10 pointer-events-none" />
@@ -877,11 +879,13 @@ export default function AutoConversion2Dto3DPage() {
             style={{ scale: videoScale }}
             className="relative w-full max-w-6xl aspect-video rounded-3xl bg-zinc-950 border border-white/10 overflow-hidden shadow-2xl z-20 flex items-center justify-center"
           >
-            <iframe
-              src="https://drive.google.com/file/d/10a6IQ2YKLMWgCIn-HqG3iDM5bagnZWwc/preview?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0"
-              className="w-full h-full border-0 pointer-events-none"
-              title="Demo Showcase Video"
-              allow="autoplay; encrypted-media"
+            <video
+              src="/videos/Auto%20Conversion%202D%20to%203D/Auto%20Conversion%20from%202D%20to%203D_1080p-h264.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
             />
           </motion.div>
         </div>
@@ -1402,7 +1406,7 @@ export default function AutoConversion2Dto3DPage() {
               "No audit trail of conversion process.",
             ],
             metric: { value: "1-2", label: "WEEKS" },
-            button: { text: "Traditional Route", href: "/pricing" },
+            button: { text: "Traditional Route", href: "/#" },
           }}
           card2={{
             title: "Auto Conversion",
@@ -1426,7 +1430,7 @@ export default function AutoConversion2Dto3DPage() {
               "Slab automation is the only complete, production-ready solution on the market.",
             ],
             metric: { value: "UNRELIABLE", label: "FAST /" },
-            button: { text: "Other Tools", href: "https://chat.openai.com" },
+            button: { text: "Other Tools", href: "#" },
           }}
         />
       </div>
@@ -1499,7 +1503,7 @@ export default function AutoConversion2Dto3DPage() {
                 asChild
                 className="w-full rounded-2xl py-7 font-bold shadow-xl border-0 bg-lime text-black hover:bg-lime/90 cursor-pointer mt-8"
               >
-                <a href="/pricing" target="_blank" rel="noopener noreferrer">
+                <a href="/#">
                   Buy Products <ArrowRight />
                 </a>
               </Button>
