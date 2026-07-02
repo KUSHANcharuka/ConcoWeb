@@ -1,0 +1,27 @@
+# ConcoLabs
+
+> ConcoLabs is a platform providing specialized software solutions for the construction, design, and real estate industries.
+
+## Main Pages
+- [Home](https://www.concolabs.com/): The main landing page.
+- [About](https://www.concolabs.com/about): Information about ConcoLabs.
+- [Contact](https://www.concolabs.com/contact): Get in touch with the team.
+- [Partner](https://www.concolabs.com/partner): Partner program details.
+- [Learn More](https://www.concolabs.com/learnmore): Learn more about ConcoLabs features.
+- [Blog](https://www.concolabs.com/resources/blog): News, articles, and updates.
+- [Careers](https://www.concolabs.com/careers): Career opportunities at ConcoLabs.
+- [Chat](https://www.concolabs.com/chat): Interactive chat assistant/interface.
+
+## Solutions
+- [Architects](https://www.concolabs.com/solutions/architects): Tailored solutions for architects.
+- [Real Estate Developers](https://www.concolabs.com/solutions/real-estate-developers): Tailored solutions for real estate developers.
+- [Contractors](https://www.concolabs.com/solutions/contractors): Construction contracting management.
+- [Construction Consultancies](https://www.concolabs.com/solutions/construction-consultancies): Consultancy services and tools.
+- [Modellers](https://www.concolabs.com/solutions/modellers): 3D modeling and BIM solutions.
+- [Legal Professionals](https://www.concolabs.com/solutions/legal-professionals): Legal and compliance support.
+
+## Legal and Policy
+- [Privacy Policy](https://www.concolabs.com/privacy): Privacy guidelines.
+- [Terms of Service](https://www.concolabs.com/terms): Terms and conditions.
+- [Cookies Policy](https://www.concolabs.com/cookies): Cookie usage policy.
+- [Security](https://www.concolabs.com/security): Security practices and compliance.
