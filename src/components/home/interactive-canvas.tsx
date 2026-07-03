@@ -101,11 +101,11 @@ function Particles() {
         // Subtle floating motion
         const floatX = Math.sin(time * 0.3 + phases[i]) * 0.015
         const floatY = Math.cos(time * 0.25 + phases[i] * 1.3) * 0.015
-        
+
         // Return to original with drift
         const origX = originalPositions[i3]
         const origY = originalPositions[i3 + 1]
-        
+
         x += (origX + floatX - x) * 0.02 + velocities[i3]
         y += (origY + floatY - y) * 0.02 + velocities[i3 + 1]
       }
@@ -196,8 +196,8 @@ export function InteractiveCanvas() {
     <div className="absolute inset-0 w-full h-full">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 60 }}
-        gl={{ 
-          antialias: true, 
+        gl={{
+          antialias: true,
           alpha: true,
           powerPreference: 'high-performance'
         }}

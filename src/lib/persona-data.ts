@@ -64,7 +64,7 @@ const planningLawChatbot: Product = {
     targetMarket: "Architecture firms, Developers — Middle East, Sri Lanka, UK",
     status: "Scaling",
     pricing: "USD 4,500 one-off enterprise. USD 400/year maintenance.",
-    videoUrl: "https://drive.google.com/drive/folders/1WbhlgnVj0X2F73J6R_TlOxBr1JHJmkDI?usp=sharing"
+    videoUrl: "/videos/planning-law-chatbot/planning-law-chatbot-intro.mp4"
 };
 
 const costPlanCalculator: Product = {
@@ -79,7 +79,7 @@ const costPlanCalculator: Product = {
     targetMarket: "Real Estate Developers, QS firms — universal",
     status: "Scaling",
     pricing: "USD 3,500 one-off. USD 300/year maintenance.",
-    videoUrl: "https://drive.google.com/file/d/1hCtxWtFzPzOcWqu7VBon84aMdadLac35/view?usp=sharing"
+    videoUrl: "/videos/Cost Plan Calculator + Financial Management/CostsPrediction.mp4"
 };
 
 const handDrawnToAutocad: Product = {
@@ -94,7 +94,7 @@ const handDrawnToAutocad: Product = {
     targetMarket: "Architects — UK, Australia",
     status: "Scaling",
     pricing: "USD 4,000 one-off per architect. USD 300/year maintenance.",
-    videoUrl: "https://drive.google.com/file/d/11wUzRrAVFkZ9ODdBVGoduafccBcFRRqP/view?usp=sharing"
+    videoUrl: "/videos/Hand Drawn to AutoCAD/Scan to CAD_ From Sketch to AutoCAD in Seconds-h264.mp4"
 };
 
 const autoConversion2dTo3d: Product = {
@@ -109,7 +109,7 @@ const autoConversion2dTo3d: Product = {
     targetMarket: "Architecture firms, Modellers — Australia",
     status: "Custom / R&D",
     pricing: "USD 2,200 per customised module.",
-    videoUrl: "https://drive.google.com/drive/folders/1H63HxhRAEjOyEDD424G4Yh1BNrKz-6U9?usp=sharing"
+    videoUrl: "/videos/Auto Conversion 2D to 3D/Auto Conversion from 2D to 3D_1080p-h264.mp4"
 };
 
 const wordtobim: Product = {
@@ -124,7 +124,7 @@ const wordtobim: Product = {
     targetMarket: "Architecture firms — universal",
     status: "Custom / R&D",
     pricing: "USD 10/month. USD 1,000–6,000 one-off for customisations.",
-    videoUrl: "https://drive.google.com/drive/folders/1C8KTwemod1FyxAuZr7jefJLqbs1LCn2L?usp=sharing"
+    videoUrl: "/videos/WordtoBIM/word2bim_final_product_video-h264.mp4"
 };
 
 const quantoRevit: Product = {
@@ -139,7 +139,7 @@ const quantoRevit: Product = {
     targetMarket: "QS firms — Middle East, Sri Lanka",
     status: "Scaling",
     pricing: "USD 1,000/month with customisations.",
-    videoUrl: "https://drive.google.com/file/d/15uOlpBeHmQtmWE9ONeX3FOEfpz2OhTfU/view?usp=sharing"
+    videoUrl: "/videos/Quanto for Revit/Quanto_ Revit to BOQ Automation_1080p (1)-h264.mp4"
 };
 
 const quantoAcc: Product = {
@@ -154,7 +154,7 @@ const quantoAcc: Product = {
     targetMarket: "QS firms — UK, Australia",
     status: "Scaling",
     pricing: "USD 1,200/month with customisations.",
-    videoUrl: "https://drive.google.com/file/d/1V0bIZCuIMfOVcrqw2iaIcLcD-pksGPXU/view?usp=sharing"
+    videoUrl: "/videos/Quanto for ACC/Quanto_ Revit to BOQ Automation_1080p (1)-h264.mp4"
 };
 
 const quanto2d: Product = {
@@ -185,7 +185,7 @@ const costxToBoq: Product = {
     targetMarket: "QS firms, cost consultancies and contractors already using RIB CostX — Middle East, Sri Lanka, Australia",
     status: "Available",
     pricing: "USD 1,200/month per seat.",
-    videoUrl: "https://calendar.app.google/mCq7zBhXrDnEAJvB7"
+    videoUrl: "/videos/CostX to BOQ/CostX to BOQ Product Demo_1080p-h264.mp4"
 };
 
 const quantoCostx: Product = {
@@ -200,7 +200,7 @@ const quantoCostx: Product = {
     targetMarket: "QS Firms — UK, Australia, UAE",
     status: "Scaling",
     pricing: "USD 1,200/month with customisations.",
-    videoUrl: "https://drive.google.com/file/d/15uOlpBeHmQtmWE9ONeX3FOEfpz2OhTfU/view?usp=sharing"
+    videoUrl: "/videos/Quanto for CostX/Quanto_ Revit to BOQ Automation_1080p (1)-h264.mp4"
 };
 
 const autoReinforcement: Product = {
@@ -215,7 +215,7 @@ const autoReinforcement: Product = {
     targetMarket: "QS consultancies, Contractors — UAE, Australia",
     status: "Custom / R&D",
     pricing: "USD 800/month with customisations.",
-    videoUrl: "https://drive.google.com/file/d/1XBMGXEbDW-rCS--nutSVrk7YtacQY0KW/view?usp=sharing"
+    videoUrl: "/videos/Auto Reinforcement Plugin/auto_reinforcement_plugin_video-h264.mp4"
 };
 
 const tenderEvaluations: Product = {
@@ -230,7 +230,7 @@ const tenderEvaluations: Product = {
     targetMarket: "Contractors, QS — Middle East, Sri Lanka",
     status: "Scaling",
     pricing: "USD 1,500 one-off customised solution.",
-    videoUrl: "https://drive.google.com/file/d/1D9wgpsdrfEMBNuGDxDVoDXgRtpkwTegW/view?usp=sharing"
+    videoUrl: "/videos/Tender Evaluations/Concolabs Tender Evaluation Explainer-h264.mp4"
 };
 
 const buildmarketlk: Product = {
@@ -245,7 +245,7 @@ const buildmarketlk: Product = {
     targetMarket: "Contractors — Sri Lanka (primary), global licensing",
     status: "Scaling",
     pricing: "USD 14/month for Sri Lanka. USD 7,000 to develop for other countries.",
-    videoUrl: "https://drive.google.com/file/d/1SZPURCcouuLthXbbxqzcg7uSmoWpw2fQ/view?usp=sharing"
+    videoUrl: "/videos/BuildMarketlk.com/Buildmarketlk Video-h264.mp4"
 };
 
 const buildmonitor: Product = {
@@ -260,7 +260,7 @@ const buildmonitor: Product = {
     targetMarket: "Contractors, builders — Middle East, Sri Lanka",
     status: "Scaling",
     pricing: "USD 100 per user per year.",
-    videoUrl: "https://drive.google.com/file/d/1bof_YpZZdzkxGAQEfGqYNdAASqSkiZ0p/view?usp=sharing"
+    videoUrl: "/videos/BuildMonitor Mobile App/BuildMonitor Mobile App.mp4"
 };
 
 const measureonair: Product = {
@@ -275,7 +275,7 @@ const measureonair: Product = {
     targetMarket: "Construction consultancies, Contractors — Middle East, Sri Lanka",
     status: "Scaling",
     pricing: "USD 200/month per enterprise.",
-    videoUrl: "https://www.youtube.com/watch?v=1u8_royKFEE&t=1s"
+    videoUrl: "/videos/MeasureonAir/Measureonair-h264.mp4"
 };
 
 const builderbot: Product = {
@@ -290,7 +290,7 @@ const builderbot: Product = {
     targetMarket: "Construction legal, Contractors, QS — UAE (primary), global",
     status: "Scaling",
     pricing: "USD 20/month single user. USD 250/month enterprise.",
-    videoUrl: "https://drive.google.com/drive/folders/1LjhYwDP6qtu6pAY0qc6H226xLNhB7z-L?usp=sharing",
+    videoUrl: "/videos/BuilderBot.ai/Builderbot whatsapp integration (Kushan can you add this to the builderbot video)-h264.mp4",
     visitUrl: "https://builderbot.ai"
 };
 
@@ -306,7 +306,7 @@ const prelim: Product = {
     targetMarket: "QS Consultancies",
     status: "Available",
     pricing: "USD 50/month per team.",
-    videoUrl: "https://drive.google.com/file/d/1XBMGXEbDW-rCS--nutSVrk7YtacQY0KW/view?usp=sharing"
+    videoUrl: "/videos/Prelim/prelim_product_walkthrough_16x9_master-h264.mp4"
 };
 
 const sArchModel = (products: Product[]): Stage => ({

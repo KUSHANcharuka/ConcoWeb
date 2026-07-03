@@ -411,7 +411,7 @@ export default function MeasureonairPage() {
       <VideoLightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        videoUrl="/videos/BuildMonitor%20Mobile%20App/BuildMonitor%20Mobile%20App.mp4"
+        videoUrl="/videos/MeasureonAir/Measureonair-h264.mp4"
       />
 
       {/* ─── PROBLEM SECTION ─── */}

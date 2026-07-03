@@ -27,6 +27,8 @@ import {
   Bot,
   Building2,
   Box,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComparisonGrid from "@/components/learnmore/comparison-grid";
@@ -149,7 +151,61 @@ export default function Quanto2DPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoAreaRef = useRef<HTMLDivElement>(null);
 
+  const [isInlinePlaying, setIsInlinePlaying] = useState(true);
+  const [isInlineMuted, setIsInlineMuted] = useState(true);
+  const inlineVideoRef = useRef<HTMLVideoElement>(null);
+  const watchSectionRef = useRef<HTMLDivElement>(null);
+
   const stopHeroVideo = useCallback(() => setHeroVideoActive(false), []);
+
+  const handleInlinePlayToggle = () => {
+    const video = inlineVideoRef.current;
+    if (video) {
+      if (video.paused) {
+        video.play();
+        setIsInlinePlaying(true);
+        video.muted = false;
+        setIsInlineMuted(false);
+      } else {
+        video.pause();
+        setIsInlinePlaying(false);
+      }
+    }
+  };
+
+  const handleInlineSoundToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = inlineVideoRef.current;
+    if (video) {
+      const nextMuted = !isInlineMuted;
+      video.muted = nextMuted;
+      setIsInlineMuted(nextMuted);
+    }
+  };
+
+  const handleInlineFullScreen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setHeroVideoActive(true);
+  };
+
+  const scrollToWatchSection = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    watchSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const video = inlineVideoRef.current;
+      if (video && !video.paused && !video.muted) {
+        video.muted = true;
+        setIsInlineMuted(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const onFSChange = () =>
@@ -227,7 +283,7 @@ export default function Quanto2DPage() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="absolute inset-0 z-40 bg-zinc-950 flex items-center justify-center"
+              className="fixed inset-0 z-[100] bg-zinc-950 flex items-center justify-center"
             >
               <div
                 ref={videoAreaRef}
@@ -239,11 +295,23 @@ export default function Quanto2DPage() {
                   src="/videos/Quanto%20for%202D%20Drawings/Quanto_%20Revit%20to%20BOQ%20Automation_1080p%20(1)-h264.mp4"
                   autoPlay
                   loop
-                  muted
+                  muted={false}
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
                 <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+                
+                {/* Exit button */}
+                <div className="absolute top-6 left-6 z-[60]">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); stopHeroVideo(); }}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/20 bg-black/60 text-white text-xs font-bold hover:bg-black/80 transition-colors shadow-lg cursor-pointer backdrop-blur-md"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    Exit Video
+                  </button>
+                </div>
+
                 {isFullscreen && (
                   <button
                     onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
@@ -263,8 +331,8 @@ export default function Quanto2DPage() {
                     {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
                   </button>
                 </div>
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900/90 backdrop-blur-md border border-zinc-800 text-[10px] text-zinc-400 font-extrabold tracking-widest px-4 py-2.5 rounded-full pointer-events-none select-none z-40 uppercase">
-                  Scroll anywhere to exit
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/80 border border-white/10 text-[10px] text-white/70 font-extrabold tracking-widest px-4 py-2.5 rounded-full pointer-events-none select-none z-40 uppercase backdrop-blur-md">
+                  Click or Scroll anywhere to exit
                 </div>
               </div>
             </motion.div>
@@ -343,7 +411,7 @@ export default function Quanto2DPage() {
             <div className="flex flex-col items-center justify-center space-y-3 pt-2">
               <div className="flex gap-3">
                 <Button
-                  onClick={(e) => { e.stopPropagation(); setHeroVideoActive(true); }}
+                  onClick={scrollToWatchSection}
                   variant="outline"
                   className="rounded-full bg-white dark:bg-zinc-950 font-extrabold text-xs px-5 py-3 cursor-pointer border-zinc-200 dark:border-zinc-800"
                 >
@@ -461,7 +529,7 @@ export default function Quanto2DPage() {
       </section>
 
       {/* ─── SECTION 3: DEMO VIDEO ─── */}
-      <section className="py-24 px-6 bg-zinc-950 border-t border-zinc-900">
+      <section ref={watchSectionRef} className="py-24 px-6 bg-zinc-950 border-t border-zinc-900">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest block">Quanto in Action</span>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
@@ -472,24 +540,50 @@ export default function Quanto2DPage() {
           </p>
           <div
             className="relative w-full aspect-video rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl cursor-pointer group"
-            onClick={() => setHeroVideoActive(true)}
+            onClick={handleInlinePlayToggle}
           >
             <video
+              ref={inlineVideoRef}
               src="/videos/Quanto%20for%202D%20Drawings/Quanto_%20Revit%20to%20BOQ%20Automation_1080p%20(1)-h264.mp4"
-              muted
-              playsInline
-              loop
               autoPlay
+              loop
+              muted={isInlineMuted}
+              playsInline
               className="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity duration-500"
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Play className="w-6 h-6 text-white fill-white ml-1" />
+            
+            {/* Sound toggle button */}
+            <button
+              type="button"
+              onClick={handleInlineSoundToggle}
+              className="absolute top-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/55 text-white shadow-lg backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline-none cursor-pointer"
+              title={isInlineMuted ? "Unmute" : "Mute"}
+            >
+              {isInlineMuted ? (
+                <VolumeX className="h-5 w-5" />
+              ) : (
+                <Volume2 className="h-5 w-5" />
+              )}
+            </button>
+
+            {/* Fullscreen button */}
+            <button
+              type="button"
+              onClick={handleInlineFullScreen}
+              className="absolute bottom-4 right-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/55 text-white shadow-lg backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline-none cursor-pointer"
+              title="Full Screen"
+            >
+              <Maximize className="h-5 w-5" />
+            </button>
+
+            {/* Central Play Button when paused */}
+            {!isInlinePlaying && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none">
+                <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center scale-110 transition-transform">
+                  <Play className="w-6 h-6 text-white fill-white ml-1" />
+                </div>
               </div>
-            </div>
-            <div className="absolute bottom-4 left-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400 bg-zinc-950/80 px-3 py-1.5 rounded-full border border-zinc-800">
-              Click to expand
-            </div>
+            )}
           </div>
         </div>
       </section>

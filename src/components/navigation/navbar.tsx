@@ -187,7 +187,7 @@ export function Navbar() {
               >
                 <Link href="/client-portal/access">
                   <LogIn className="w-4 h-4 mr-2" />
-                  Concolab Portal
+                  Client Portal
                 </Link>
               </Button>
               <Button asChild>

@@ -62,7 +62,7 @@ const getMilestone = (nodeName: string, currentYear: number, currentMonth: strin
       stats: { value: "$5B+", label: "Project Volume Managed" }
     }
   }
-  
+
   // Fallback for intermediate years Y < currentYear (e.g. 2026 if today is 2027)
   return {
     title: `${nodeName}: Global Scale`,
@@ -132,7 +132,7 @@ export default function AboutUsPage() {
     const pct: Record<string, string> = {}
     const btnWidth = isMobile ? 40 : 56 // w-10 vs w-14
     const offset = 24 + btnWidth / 2 // offset from left: "-24px"
-    
+
     visibleNodes.forEach((node, i) => {
       if (i === 0) {
         pct[node] = `${offset}px`
@@ -203,7 +203,7 @@ export default function AboutUsPage() {
             poster="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80"
           >
             <source
-              src="/team-video.mp4"
+              src="/videos/Aboutus/Professional Class AI.mp4"
               type="video/mp4"
             />
           </video>
@@ -277,7 +277,7 @@ export default function AboutUsPage() {
                 <button
                   onClick={handlePrev}
                   disabled={startIndex === 0}
-                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm transition-all ${ startIndex === 0 ? "opacity-30 cursor-not-allowed" : "opacity-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer" }`}
+                  className={`absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm transition-all ${startIndex === 0 ? "opacity-30 cursor-not-allowed" : "opacity-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer"}`}
                 >
                   <ChevronLeft className="w-5 h-5 text-zinc-500" />
                 </button>
@@ -285,7 +285,7 @@ export default function AboutUsPage() {
 
               <div className="relative flex items-center justify-between w-full">
                 <div className="absolute -left-6 -right-6 h-1 bg-zinc-200 dark:bg-zinc-800 top-1/2 -translate-y-1/2 z-0" />
-                
+
                 {/* Animated fill line */}
                 <motion.div
                   className="absolute h-1 bg-lime top-1/2 -translate-y-1/2 z-0 origin-left"
@@ -300,12 +300,11 @@ export default function AboutUsPage() {
                     key={node}
                     disabled={node === futureYear}
                     onClick={() => setSelectedYear(node)}
-                    className={`relative z-10 focus:outline-none group ${
-                      node === futureYear ? "cursor-not-allowed" : "cursor-pointer"
-                    }`}
+                    className={`relative z-10 focus:outline-none group ${node === futureYear ? "cursor-not-allowed" : "cursor-pointer"
+                      }`}
                   >
                     <div
-                      className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold transition-all duration-300 border ${ node === currentMonthName ? "text-xs sm:text-sm" : "text-sm sm:text-base" } ${ node === futureYear ? "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500" : selectedYear === node ? "bg-primary border-primary text-primary-foreground shadow-md scale-110" : "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 hover:border-zinc-800 dark:hover:border-zinc-200 hover:text-zinc-800 dark:hover:text-zinc-200" }`}
+                      className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center font-bold transition-all duration-300 border ${node === currentMonthName ? "text-xs sm:text-sm" : "text-sm sm:text-base"} ${node === futureYear ? "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500" : selectedYear === node ? "bg-primary border-primary text-primary-foreground shadow-md scale-110" : "bg-white dark:bg-zinc-900 border-zinc-300 dark:border-zinc-700 text-zinc-400 hover:border-zinc-800 dark:hover:border-zinc-200 hover:text-zinc-800 dark:hover:text-zinc-200"}`}
                     >
                       {node}
                     </div>
@@ -317,11 +316,10 @@ export default function AboutUsPage() {
                 <button
                   onClick={handleNext}
                   disabled={startIndex + visibleCount >= allNodes.length}
-                  className={`absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm transition-all ${
-                    startIndex + visibleCount >= allNodes.length
-                      ? "opacity-30 cursor-not-allowed"
-                      : "opacity-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer"
-                  }`}
+                  className={`absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm transition-all ${startIndex + visibleCount >= allNodes.length
+                    ? "opacity-30 cursor-not-allowed"
+                    : "opacity-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 cursor-pointer"
+                    }`}
                 >
                   <ChevronRight className="w-5 h-5 text-zinc-500" />
                 </button>
@@ -455,7 +453,7 @@ export default function AboutUsPage() {
           </p>
           <div className="flex justify-center">
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 rounded-xl font-bold shadow-md min-w-[200px]">
-              <Link href="/careers">See open positions</Link>
+              <Link href="/#">See open positions</Link>
             </Button>
           </div>
         </div>

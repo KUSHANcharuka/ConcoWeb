@@ -85,18 +85,7 @@ export function FinalCTA() {
           </Button>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground"
-        >
-          <span>14-day free trial</span>
-          <span className="hidden sm:inline">•</span>
-          <span>No credit card required</span>
-          <span className="hidden sm:inline">•</span>
-          <span>Setup in 5 minutes</span>
-        </motion.div>
+
       </motion.div>
     </section>
   )

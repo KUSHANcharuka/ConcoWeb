@@ -638,6 +638,45 @@ export default function AutoConversion2Dto3DPage() {
   const [activeWorkflowStep, setActiveWorkflowStep] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
+  const [isDemoMuted, setIsDemoMuted] = useState(true);
+  const demoVideoRef = useRef<HTMLVideoElement>(null);
+  const isAutoScrollingRef = useRef(false);
+
+  const handleWatchDemo = () => {
+    const el = document.getElementById("demo-showcase");
+    if (el) {
+      isAutoScrollingRef.current = true;
+      el.scrollIntoView({ behavior: "smooth" });
+      
+      // Unmute once scroll arrives at position (approx 800ms)
+      setTimeout(() => {
+        const video = demoVideoRef.current;
+        if (video) {
+          video.muted = false;
+          setIsDemoMuted(false);
+        }
+        setTimeout(() => {
+          isAutoScrollingRef.current = false;
+        }, 100);
+      }, 800);
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isAutoScrollingRef.current) return;
+      const video = demoVideoRef.current;
+      if (video && !video.muted) {
+        video.muted = true;
+        setIsDemoMuted(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
@@ -836,7 +875,7 @@ export default function AutoConversion2Dto3DPage() {
               <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
                 <MagneticButton
                   className="rounded-2xl h-14 px-6 font-bold shadow-md cursor-pointer border border-zinc-300 dark:border-white/10 bg-white/50 dark:bg-white/5 text-zinc-900 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/15 hover:scale-105 transition-all duration-300 backdrop-blur-sm"
-                  onClick={() => document.getElementById("demo-showcase")?.scrollIntoView({ behavior: "smooth" })}
+                  onClick={handleWatchDemo}
                 >
                   <Play className="w-4 h-4 mr-2 text-zinc-900 dark:text-zinc-300" />
                   Watch Demo
@@ -880,10 +919,11 @@ export default function AutoConversion2Dto3DPage() {
             className="relative w-full max-w-6xl aspect-video rounded-3xl bg-zinc-950 border border-white/10 overflow-hidden shadow-2xl z-20 flex items-center justify-center"
           >
             <video
+              ref={demoVideoRef}
               src="/videos/Auto%20Conversion%202D%20to%203D/Auto%20Conversion%20from%202D%20to%203D_1080p-h264.mp4"
               autoPlay
               loop
-              muted
+              muted={isDemoMuted}
               playsInline
               className="w-full h-full object-cover"
             />

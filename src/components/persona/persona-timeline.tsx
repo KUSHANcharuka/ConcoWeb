@@ -173,7 +173,19 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
                                 }}
                                 className="relative aspect-video rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden flex items-center justify-center group/video shadow-inner cursor-pointer w-full"
                               >
-                                <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover/video:scale-[1.02] transition-transform duration-500" />
+                                {product.videoUrl?.startsWith("/") ? (
+                                  <div className="absolute inset-0 overflow-hidden bg-black">
+                                    <video 
+                                      src={product.videoUrl}
+                                      className="w-full h-full object-cover opacity-60 group-hover/video:scale-[1.02] transition-transform duration-500 group-hover/video:opacity-80"
+                                      preload="metadata"
+                                      muted
+                                      playsInline
+                                    />
+                                  </div>
+                                ) : (
+                                  <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover/video:scale-[1.02] transition-transform duration-500" />
+                                )}
                                 <div className="relative z-10 flex flex-col items-center gap-1.5 text-center px-4">
                                   <span className="w-10 h-10 rounded-full bg-zinc-950/80 dark:bg-zinc-50/80 text-white dark:text-zinc-950 flex items-center justify-center shadow-lg group-hover/video:scale-110 transition-transform">
                                     <Play className="w-4 h-4 fill-current" />
@@ -188,12 +200,24 @@ export function PersonaTimeline({ data }: PersonaTimelineProps) {
                                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleWatchDemo(product.videoUrl) }}
                                 className="relative aspect-video rounded-2xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden flex items-center justify-center group/video shadow-inner cursor-pointer w-full text-left"
                               >
-                                <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover/video:scale-[1.02] transition-transform duration-500" />
+                                {product.videoUrl?.startsWith("/") ? (
+                                  <div className="absolute inset-0 overflow-hidden bg-black">
+                                    <video 
+                                      src={product.videoUrl}
+                                      className="w-full h-full object-cover opacity-60 group-hover/video:scale-[1.02] transition-transform duration-500 group-hover/video:opacity-80"
+                                      preload="metadata"
+                                      muted
+                                      playsInline
+                                    />
+                                  </div>
+                                ) : (
+                                  <div className="absolute inset-0 bg-gradient-to-br from-zinc-100 to-zinc-200/60 dark:from-zinc-900 dark:to-zinc-950 group-hover/video:scale-[1.02] transition-transform duration-500" />
+                                )}
                                 <div className="relative z-10 flex flex-col items-center gap-1.5 text-center px-4">
                                   <span className="w-10 h-10 rounded-full bg-zinc-950/80 dark:bg-zinc-50/80 text-white dark:text-zinc-950 flex items-center justify-center shadow-lg group-hover/video:scale-110 transition-transform">
                                     <Play className="w-4 h-4 fill-current" />
                                   </span>
-                                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 text-white dark:text-zinc-300 drop-shadow-md">
                                     Watch Product Demo
                                   </span>
                                 </div>

@@ -1,55 +1,75 @@
-"use client"
+"use client";
 
-import React, { useRef, useEffect, useState } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { Play, Volume2, VolumeX } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Play, Volume2, VolumeX } from "lucide-react";
 
 export function HeroVideo() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [isMuted, setIsMuted] = useState(true)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
-  })
+    offset: ["start end", "end start"],
+  });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3])
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 0.95])
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [0.3, 1, 1, 0.3],
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [0.95, 1, 1, 0.95],
+  );
 
   useEffect(() => {
-    const video = videoRef.current
+    const video = videoRef.current;
     if (video) {
-      video.muted = true
+      video.muted = true;
       video.play().catch(() => {
-        setIsPlaying(false)
-      })
+        setIsPlaying(false);
+      });
     }
-  }, [])
+
+    const handleScroll = () => {
+      const video = videoRef.current;
+      if (video && !video.paused && !video.muted) {
+        video.muted = true;
+        setIsMuted(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handlePlayClick = () => {
-    const video = videoRef.current
+    const video = videoRef.current;
     if (video) {
       if (video.paused) {
-        video.play()
-        setIsPlaying(true)
+        video.play();
+        setIsPlaying(true);
       } else {
-        video.pause()
-        setIsPlaying(false)
+        video.pause();
+        setIsPlaying(false);
       }
     }
-  }
+  };
 
-  const handleSoundToggle = () => {
-    const video = videoRef.current
+  const handleSoundToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRef.current;
     if (video) {
-      const nextMuted = !isMuted
-      video.muted = nextMuted
-      setIsMuted(nextMuted)
+      const nextMuted = !isMuted;
+      video.muted = nextMuted;
+      setIsMuted(nextMuted);
     }
-  }
+  };
 
   return (
     <section ref={containerRef} className="relative px-6 pt-6 pb-16 sm:pt-10">
@@ -57,7 +77,10 @@ export function HeroVideo() {
         style={{ opacity, scale }}
         className="relative max-w-6xl mx-auto"
       >
-        <div className="relative aspect-video rounded-2xl overflow-hidden bg-card border border-border shadow-2xl">
+        <div
+          onClick={handlePlayClick}
+          className="relative aspect-video rounded-2xl overflow-hidden bg-card border border-border shadow-2xl cursor-pointer group"
+        >
           <video
             ref={videoRef}
             src="/videos/Intro/Concolabs Suite Overview.mp4"
@@ -82,11 +105,21 @@ export function HeroVideo() {
             )}
           </button>
 
-          {/* Overlay */}
-          {/* <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" /> */}
+          {/* Centered Play Button when paused */}
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-black shadow-lg transition hover:scale-110"
+              >
+                <Play className="h-8 w-8 ml-1" fill="currentColor" />
+              </motion.div>
+            </div>
+          )}
 
           {/* Content Overlay */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 sm:p-8">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 sm:p-8 pointer-events-none select-none z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -99,14 +132,6 @@ export function HeroVideo() {
               <p className="mx-auto mb-6 hidden max-w-xl text-sm text-white/80 drop-shadow-md sm:block sm:text-base">
                 See how Concolabs transforms the way construction teams work
               </p>
-              <Button
-                onClick={handlePlayClick}
-                size="lg"
-                className="bg-primary text-black hover:bg-primary/90"
-              >
-                <Play className="w-5 h-5 mr-2" fill="currentColor" />
-                {isPlaying ? "Pause Video" : "Watch Video"}
-              </Button>
             </motion.div>
           </div>
 
@@ -135,12 +160,16 @@ export function HeroVideo() {
               key={stat.label}
               className="text-center p-4 rounded-xl bg-card/50 border border-border/50"
             >
-              <div className="text-2xl sm:text-3xl font-bold text-zinc-500">{stat.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+              <div className="text-2xl sm:text-3xl font-bold text-zinc-500">
+                {stat.value}
+              </div>
+              <div className="text-sm text-muted-foreground mt-1">
+                {stat.label}
+              </div>
             </div>
           ))}
         </motion.div>
       </motion.div>
     </section>
-  )
+  );
 }

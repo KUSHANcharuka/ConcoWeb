@@ -17,7 +17,7 @@ const footerLinks = {
       { label: "Consultancies & QS", href: "/solutions/construction-consultancies" },
       { label: "3D Modellers", href: "/solutions/modellers" },
       { label: "Legal & Contracts", href: "/solutions/legal-professionals" },
-      { label: "View all solutions →", href: "/solutions" },
+      { label: "View all solutions →", href: "/learnmore#products" },
     ],
   },
   resources: {
@@ -32,7 +32,7 @@ const footerLinks = {
     title: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Careers", href: "/careers" },
+      { label: "Careers", href: "/#" },
       { label: "Contact", href: "/contact" },
       { label: "Partners", href: "/partner" },
     ],

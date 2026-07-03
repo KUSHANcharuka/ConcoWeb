@@ -72,6 +72,13 @@ export default function HandDrawnToAutoCADPage() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [activeStep, setActiveStep] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isVideoPlaying;
+    }
+  }, [isVideoPlaying]);
 
   const stepImages = [
     "/images/2d_structural_drawing.png",
@@ -167,11 +174,12 @@ export default function HandDrawnToAutoCADPage() {
         >
           {/* Background Video */}
           <video
+            ref={videoRef}
             src="/videos/Hand%20Drawn%20to%20AutoCAD/Scan%20to%20CAD_%20From%20Sketch%20to%20AutoCAD%20in%20Seconds-h264.mp4"
             className="absolute inset-0 w-full h-full object-cover"
             autoPlay
             loop
-            muted
+            muted={!isVideoPlaying}
             playsInline
           />
           {/* Overlay for readability - reduced when video playing */}

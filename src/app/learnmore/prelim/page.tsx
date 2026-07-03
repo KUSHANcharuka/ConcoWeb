@@ -218,8 +218,8 @@ export default function PrelimPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0 z-40 bg-zinc-950 flex items-center justify-center"
+              transition={{ duration: 0.4 }}
+              className="fixed inset-0 z-[100] bg-zinc-950 flex items-center justify-center"
             >
               <div
                 ref={videoAreaRef}
@@ -231,11 +231,22 @@ export default function PrelimPage() {
                   src="/videos/Prelim/prelim_product_walkthrough_16x9_master-h264.mp4"
                   autoPlay
                   loop
-                  muted
+                  muted={false}
                   playsInline
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
                 <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+
+                {/* Exit button */}
+                <div className="absolute top-6 left-6 z-[60]">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); stopHeroVideo(); }}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/20 bg-black/60 text-white text-xs font-bold hover:bg-black/80 transition-colors shadow-lg cursor-pointer backdrop-blur-md"
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    Exit Video
+                  </button>
+                </div>
 
                 {isFullscreen && (
                   <button
@@ -250,24 +261,9 @@ export default function PrelimPage() {
                 )}
 
                 <div
-                  className="absolute bottom-4 right-4 z-30 flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute bottom-4 right-4 z-30 flex items-center gap-3 bg-zinc-950/80 border border-zinc-800 rounded-xl px-3.5 py-2.5 backdrop-blur-md"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button
-                    onClick={() => {
-                      if (videoRef.current) {
-                        if (videoRef.current.paused) {
-                          videoRef.current.play();
-                        } else {
-                          videoRef.current.pause();
-                        }
-                      }
-                    }}
-                    className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
-                  >
-                    <Play className="w-4 h-4 fill-current" />
-                  </button>
-                  <div className="h-4 w-[1px] bg-zinc-800" />
                   <button
                     onClick={toggleFullscreen}
                     className="text-zinc-400 hover:text-white transition-colors cursor-pointer"
@@ -276,8 +272,8 @@ export default function PrelimPage() {
                   </button>
                 </div>
 
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900/90 backdrop-blur-md border border-zinc-800 text-[10px] text-zinc-400 font-extrabold tracking-widest px-4 py-2.5 rounded-full pointer-events-none select-none z-40 uppercase">
-                  Scroll anywhere to exit
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/80 border border-white/10 text-[10px] text-white/70 font-extrabold tracking-widest px-4 py-2.5 rounded-full pointer-events-none select-none z-40 uppercase backdrop-blur-md">
+                  Click or Scroll anywhere to exit
                 </div>
               </div>
             </motion.div>
